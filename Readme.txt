@@ -1,6 +1,9 @@
-Thanks for downloading this template!
+<p>Thanks for your interest in my code! I keep an online resume/portfolio as up to date as possible.<br>
 
-Template Name: iPortfolio
-Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+View this page live: <a href="https://misskonstruction.github.io/">misskonstruction.github.io</a></p>
+
+
+&copy; 2021 MissKonstruction Code <br>
+
+<img src="assets/img/Octopus-icon.png"/>
+
