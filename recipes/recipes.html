@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>MissKonstruction | Recipes</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/album/">
+   
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<meta name="theme-color" content="#712cf9">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        background-color: #efece5;
+        
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+          background-color: #efece5;
+          
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+        background-color: #efece5;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+        background-color: #efece5;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      a{
+        color: rgba(184, 160, 241, 0.918);
+      }
+
+      a:hover{
+        color: blueviolet;
+      }
+
+      body{
+        background-color: #efece5;
+        background-image: url("assets/img/food.jpg");
+      }
+
+      .card-body{
+        background-color: #efece5;
+      }
+
+      footer{
+        margin-top: 8px;
+        margin-bottom: 6px;
+        color: #fff;
+      }
+
+      .well{
+        background-color: #000;
+        opacity: 0.8;
+        color: #fff;
+        padding-top: 1px;
+        padding-bottom: 2px;
+        border-style: solid;
+        border-color: aquamarine;
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">Awesome Food</h4>
+          <p class="text-muted">is what this page is about. Here you will find all kinds of recipes.<br>Most of them will be spicy
+          as I am a Cajun Girl by birth and heart.</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <ul class="list-unstyled">
+            <li><a href= "../index.html" class="text-white">Home</a></li>
+            <li><a href= "../carousel/about.html" class="text-white">About</a></li>
+            <li><a href= "../blog-main-page/index.html" class="text-white">Blog</a></li>
+            <li><a href= "../art/art.html" class="text-white">Art</a></li>
+            <li><a href= "../faith/index.html" class="text-white">Faith</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center"> 
+        <strong>Recipes</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="well">
+        <h1 class="fw-light">My Recipes</h1>
+        <p class="lead text-muted">Here are my recipes.<br> Some of them I found online and made my own,<br>some came from my mom<br> and others
+        I just kind of came up with.<br> Feel free to use them and check for regular updates!<br></p>
+        </div> 
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-dark">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/lasagne.jpg" width="100%" height="225">
+
+            <div class="card-body">
+              <p class="card-text">Bad Ass Lasagne<br><br> </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group"> 
+                  <a class="btn btn-sm btn-outline-secondary" href="lasagne.html">Create!</a>  
+                </div>
+                <small class="text-muted">1 hr 30 min</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/trout.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Bad Ass Grilled Steelhead Trout<br><br></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="steelhead.html">Create!</a>  
+                 
+                </div>
+                <small class="text-muted">25 minutes</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/rbr.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Mom's Bad Ass Red Beans and Rice<br><br>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="redbeans.html">Create!</a>  
+                  
+                </div>
+                <small class="text-muted">1 hour</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/chicken.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Bad Ass Baked Chicken<br><br>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="chicken.html">Create!</a>  
+                 
+                </div>
+                <small class="text-muted">45 minutes</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/gumbo.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Bad Ass Louisiana Gumbo<br><br>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="gumbo.html">Create!</a>
+                </div>
+                <small class="text-muted">10 minutes</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/spag-meat-plate.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Bad Ass Spaghetti And Meatballs<br><br> </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="spaghetti.html">Create!</a>
+                </div>
+                <small class="text-muted">1 hour</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/gumbo.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text"><br><br>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="#">Create!</a>
+                </div>
+                <small class="text-muted">2 hours</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/oysters.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">all work and no play makes jack a dull boy all work and no play makes jack a dull boy all work
+                and no play makes jack a dull boy all work and no play makes jack a dull boy 
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="#">Create!</a>
+                </div>
+                <small class="text-muted">10 minutes</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/juice.jpg" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">all work and no play makes jack a dull boy all work and no play makes jack a dull boy all work
+                 and no play makes jack a dull boy all work and no play makes jack a dull boy 
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="#">Create!</a>
+                </div>
+                <small class="text-muted">10 minutes</small>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+     
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class=" text-center text-white-50"><div class="container px-4 px-lg-5"> &copy; MissKonstruction Code 2022<br>
+    <img src="assets/Octopus-icon.png"/><br><a href="#">Back to top</a></div> 
+</footer>
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+      
+  </body>
+</html>
+
