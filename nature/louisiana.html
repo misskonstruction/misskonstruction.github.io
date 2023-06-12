@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>MissKonstruction | The Duck Park</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/album/">
+   
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="assets/Octopus-icon.png" />
+<meta name="theme-color" content="#712cf9">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        background-color: #efece5;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+          background-color: #efece5;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+        background-color: #efece5;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+        background-color: #efece5;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      a{
+        color: rgba(184, 160, 241, 0.918);
+      }
+
+      a:hover{
+        color: blueviolet;
+      }
+
+      body{
+        background-color: #efece5;
+      }
+
+      .card-body{
+        background-color: #efece5;
+      }
+
+      footer{
+        margin-top: 8px;
+        margin-bottom: 6px;
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">About This Page</h4>
+          <p class="text-muted">I created this page to show off photography I did while I was visiting my family where I grew up in Louisiana.
+           </p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <ul class="list-unstyled">
+            <li><a href= "../index.html" class="text-white">Home</a></li>
+            <li><a href= "birdingAndWildlife.html" class="text-white">Birding and Wildlife</a></li>
+            <li><a href= "ibisFamily.html" class="text-white">My WoodStork Family</a></li>
+            <li><a href= "flowersPage.html" class="text-white">Flower Project</a></li>
+            <li><a href= "homes.html" class="text-white">Unique Homes</a></li>
+            <li><a href= "town.html" class="text-white">My Town</a></li>
+            <li><a href= "featured.html" class="text-white">Featured Photography</a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 
+        <strong>Louisiana Trip 2023</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">The Duck Park</h1>
+        <p class="lead text-muted">Photography by MissKonstruction</p>
+        
+        
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-dark">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="assets/img/dp1.jpg" width="100%" height="225">
+
+            <div class="card-body">
+              <p class="card-text">The Duck Park, Shreveport, La<br>
+                June 1-5 2023</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group"> 
+                  <a class="btn btn-sm btn-outline-secondary" href="dp1.html">View</a>  
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp2.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp2.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp3.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp3.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp4.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp4.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp5.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp5.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp6.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp6.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp7.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp7.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp8.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp8.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp9.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp9.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp10.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp10.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp11.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp11.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp12.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp12.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp13.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp13.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp14.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp14.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp15.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp15.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp16.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp16.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp17.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp17.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp18.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp18.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp19.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp19.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp20.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp20.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp21.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp21.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp22.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp22.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp23.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp23.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp24.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp24.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp25.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp25.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp26.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp26.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp27.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp27.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp28.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp28.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp29.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp29.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp30.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp30.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp31.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp31.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp32.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp32.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp33.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp33.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp34.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp34.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp35.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp35.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp36.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp36.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp37.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp37.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="assets/img/dp38.jpg" width="100%" height="225">
+  
+              <div class="card-body">
+                <p class="card-text">The Duck Park, Shreveport, La<br>
+                  June 1-5 2023</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group"> 
+                    <a class="btn btn-sm btn-outline-secondary" href="dp38.html">View</a>  
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class=" text-center text-black-50"><div class="container px-4 px-lg-5">Copyright &copy; MissKonstruction Code 2023<br>
+<img src="assets/Octopus-icon.png"/><br><a href="#">Back to top</a></div> 
+</footer>
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+
+  
+</body>
+</html>
+
