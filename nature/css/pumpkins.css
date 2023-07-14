@@ -1,9 +1,0 @@
-.icon-list li::before {
-    display: block;
-    flex-shrink: 0;
-    width: 1.5em;
-    height: 1.5em;
-    margin-right: .5rem;
-    content: "";
-    background-color: #efece5;
-}
