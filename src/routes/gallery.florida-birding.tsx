@@ -40,7 +40,7 @@ function FloridaBirdingGallery() {
   return (
     <GalleryPage
       title="Florida Birding"
-      intro="Herons, egrets, cardinals, and cormorants — quiet wild moments captured along the Florida coast."
+      intro="Herons, egrets, cardinals, and cormorants — quiet wild moments captured along Florida's gulf coast."
       items={items}
     />
   );
