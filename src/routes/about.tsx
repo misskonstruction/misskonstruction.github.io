@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import profileImage from "@/assets/profile-misskonstruction.jpg";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -28,9 +29,17 @@ function About() {
             slow rhythm of saltlife. Each gallery is curated and refreshed as
             new work comes in.
           </p>
-          <p className="text-sm">
-            Replace this copy with your own bio whenever you're ready.
-          </p>
+        </div>
+        <div className="mt-10 flex justify-end">
+          <div className="h-40 w-40 rounded-full overflow-hidden border-4 border-primary/30 bg-card">
+            <img
+              src={profileImage}
+              alt="MissKonstruction — photographer portrait"
+              width={320}
+              height={320}
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </section>
     </SiteLayout>
