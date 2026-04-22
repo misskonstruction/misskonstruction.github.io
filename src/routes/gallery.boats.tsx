@@ -24,7 +24,7 @@ export const Route = createFileRoute("/gallery/boats")({
   head: () => ({
     meta: [
       { title: "Boats & Saltlife — MissKonstruction Photography" },
-      { name: "description", content: "Boats, docks, and saltlife photography." },
+      { name: "description", content: "Florida sponge docks, working boats, and the salty in-between." },
     ],
   }),
 });
@@ -40,7 +40,7 @@ function BoatsGallery() {
   return (
     <GalleryPage
       title="Boats and Saltlife"
-      intro="Florida docks, working boats, and the salty in-between."
+      intro="Florida sponge docks, working boats, and the salty in-between."
       items={items}
     />
   );
