@@ -24,7 +24,7 @@ export const Route = createFileRoute("/gallery/florida-birding")({
   head: () => ({
     meta: [
       { title: "Florida Birding — MissKonstruction Photography" },
-      { name: "description", content: "Florida birding photography — herons, egrets, and quiet wild moments along the Florida coast." },
+      { name: "description", content: "Florida birding photography — herons, egrets, cardinals, and cormorants in quiet wild moments along the Florida coast." },
     ],
   }),
 });
@@ -40,7 +40,7 @@ function FloridaBirdingGallery() {
   return (
     <GalleryPage
       title="Florida Birding"
-      intro="Herons, egrets, and quiet wild moments captured along the Florida coast."
+      intro="Herons, egrets, cardinals, and cormorants — quiet wild moments captured along the Florida coast."
       items={items}
     />
   );
