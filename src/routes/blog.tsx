@@ -6,7 +6,7 @@ export const Route = createFileRoute("/blog")({
   component: Blog,
   head: () => ({
     meta: [
-      { title: "Blog — Under Construction | MissKonstruction Photography" },
+      { title: "Blog — Under Konstruction | MissKonstruction Photography" },
       { name: "description", content: "The blog is being rebuilt. Check back soon!" },
       { name: "robots", content: "noindex" },
     ],
@@ -25,7 +25,7 @@ function Blog() {
           loading="lazy"
           className="mx-auto h-auto w-72 md:w-80"
         />
-        <h1 className="text-4xl md:text-5xl font-bold mt-6">Under Construction</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mt-6">Under Konstruction</h1>
         <div className="inline-flex h-px w-16 bg-primary mt-4 mb-6" />
         <p className="text-muted-foreground">
           The blog is taking a little nap while it gets a fresh coat of paint.
