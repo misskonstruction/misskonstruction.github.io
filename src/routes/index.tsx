@@ -2,6 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowRight } from "lucide-react";
 import hero from "@/assets/hero-photography.jpg";
+import teaserMaternity from "@/assets/teaser-maternity.jpg";
+import teaserNature from "@/assets/teaser-nature.jpg";
+import teaserFlowers from "@/assets/teaser-flowers.jpg";
+import teaserBoats from "@/assets/teaser-boats.jpg";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -17,10 +21,10 @@ export const Route = createFileRoute("/")({
 });
 
 const featured = [
-  { to: "/gallery/maternity", label: "Maternity" },
-  { to: "/gallery/nature-wildlife", label: "Nature & Wildlife" },
-  { to: "/gallery/flowers", label: "Flower Project" },
-  { to: "/gallery/boats", label: "Boats & Saltlife" },
+  { to: "/gallery/maternity", label: "Maternity", image: teaserMaternity },
+  { to: "/gallery/nature-wildlife", label: "Nature & Wildlife", image: teaserNature },
+  { to: "/gallery/flowers", label: "Flower Project", image: teaserFlowers },
+  { to: "/gallery/boats", label: "Boats & Saltlife", image: teaserBoats },
 ] as const;
 
 function Home() {
@@ -76,12 +80,24 @@ function Home() {
             <Link
               key={f.to}
               to={f.to}
-              className="group aspect-[3/4] rounded-md border border-border bg-card flex items-end p-5 hover:border-primary transition-colors"
+              className="group relative aspect-[3/4] overflow-hidden rounded-md border border-border bg-card hover:border-primary transition-colors"
             >
-              <span className="font-display text-xl font-semibold group-hover:text-primary transition-colors">
-                {f.label}
-                <ArrowRight className="inline-block h-4 w-4 ml-1 -translate-y-0.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-              </span>
+              <img
+                src={f.image}
+                alt={f.label}
+                width={768}
+                height={1024}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-4 flex items-end min-h-[3.5rem]">
+                <span className="font-display text-base md:text-lg font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
+                  {f.label}
+                  <ArrowRight className="inline-block h-3.5 w-3.5 ml-1 -translate-y-0.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                </span>
+              </div>
             </Link>
           ))}
         </div>
