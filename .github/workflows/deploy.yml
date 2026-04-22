@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+# Builds the TanStack Start app, prerenders every route to static HTML,
+# and publishes the result to GitHub Pages.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Build app
+        run: bun run build
+
+      - name: Prerender static HTML
+        run: bun run prerender
+
+      - name: Add SPA fallback + .nojekyll
+        run: |
+          # GitHub Pages 404 fallback so deep links work
+          cp dist-static/index.html dist-static/404.html
+          touch dist-static/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-static
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
