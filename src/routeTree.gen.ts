@@ -9,38 +9,154 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GalleryNatureWildlifeRouteImport } from './routes/gallery.nature-wildlife'
+import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
+import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
+import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
 
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryNatureWildlifeRoute = GalleryNatureWildlifeRouteImport.update({
+  id: '/gallery/nature-wildlife',
+  path: '/gallery/nature-wildlife',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryMaternityRoute = GalleryMaternityRouteImport.update({
+  id: '/gallery/maternity',
+  path: '/gallery/maternity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryFlowersRoute = GalleryFlowersRouteImport.update({
+  id: '/gallery/flowers',
+  path: '/gallery/flowers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryBoatsRoute = GalleryBoatsRouteImport.update({
+  id: '/gallery/boats',
+  path: '/gallery/boats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery/boats': typeof GalleryBoatsRoute
+  '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/maternity': typeof GalleryMaternityRoute
+  '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery/boats': typeof GalleryBoatsRoute
+  '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/maternity': typeof GalleryMaternityRoute
+  '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
+  '/gallery/boats': typeof GalleryBoatsRoute
+  '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/maternity': typeof GalleryMaternityRoute
+  '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/gallery/boats'
+    | '/gallery/flowers'
+    | '/gallery/maternity'
+    | '/gallery/nature-wildlife'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/gallery/boats'
+    | '/gallery/flowers'
+    | '/gallery/maternity'
+    | '/gallery/nature-wildlife'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/gallery/boats'
+    | '/gallery/flowers'
+    | '/gallery/maternity'
+    | '/gallery/nature-wildlife'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRoute
+  ContactRoute: typeof ContactRoute
+  GalleryBoatsRoute: typeof GalleryBoatsRoute
+  GalleryFlowersRoute: typeof GalleryFlowersRoute
+  GalleryMaternityRoute: typeof GalleryMaternityRoute
+  GalleryNatureWildlifeRoute: typeof GalleryNatureWildlifeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +164,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery/nature-wildlife': {
+      id: '/gallery/nature-wildlife'
+      path: '/gallery/nature-wildlife'
+      fullPath: '/gallery/nature-wildlife'
+      preLoaderRoute: typeof GalleryNatureWildlifeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/maternity': {
+      id: '/gallery/maternity'
+      path: '/gallery/maternity'
+      fullPath: '/gallery/maternity'
+      preLoaderRoute: typeof GalleryMaternityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/flowers': {
+      id: '/gallery/flowers'
+      path: '/gallery/flowers'
+      fullPath: '/gallery/flowers'
+      preLoaderRoute: typeof GalleryFlowersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/boats': {
+      id: '/gallery/boats'
+      path: '/gallery/boats'
+      fullPath: '/gallery/boats'
+      preLoaderRoute: typeof GalleryBoatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BlogRoute: BlogRoute,
+  ContactRoute: ContactRoute,
+  GalleryBoatsRoute: GalleryBoatsRoute,
+  GalleryFlowersRoute: GalleryFlowersRoute,
+  GalleryMaternityRoute: GalleryMaternityRoute,
+  GalleryNatureWildlifeRoute: GalleryNatureWildlifeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
