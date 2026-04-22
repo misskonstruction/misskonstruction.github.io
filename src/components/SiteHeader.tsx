@@ -4,6 +4,7 @@ import { Camera, ChevronDown, Menu, X } from "lucide-react";
 
 const galleries = [
   { to: "/gallery/maternity", label: "Maternity" },
+  { to: "/gallery/newborns", label: "Newborns" },
   { to: "/gallery/nature-wildlife", label: "Nature and Wildlife" },
   { to: "/gallery/flowers", label: "Flower Project" },
   { to: "/gallery/boats", label: "Boats and Saltlife" },

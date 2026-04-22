@@ -13,6 +13,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryNatureWildlifeRouteImport } from './routes/gallery.nature-wildlife'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
@@ -36,6 +37,11 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
+  id: '/gallery/newborns',
+  path: '/gallery/newborns',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryNatureWildlifeRoute = GalleryNatureWildlifeRouteImport.update({
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
+  '/gallery/newborns': typeof GalleryNewbornsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
+  '/gallery/newborns': typeof GalleryNewbornsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/nature-wildlife': typeof GalleryNatureWildlifeRoute
+  '/gallery/newborns': typeof GalleryNewbornsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/nature-wildlife'
+    | '/gallery/newborns'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/nature-wildlife'
+    | '/gallery/newborns'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/nature-wildlife'
+    | '/gallery/newborns'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   GalleryFlowersRoute: typeof GalleryFlowersRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNatureWildlifeRoute: typeof GalleryNatureWildlifeRoute
+  GalleryNewbornsRoute: typeof GalleryNewbornsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/newborns': {
+      id: '/gallery/newborns'
+      path: '/gallery/newborns'
+      fullPath: '/gallery/newborns'
+      preLoaderRoute: typeof GalleryNewbornsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery/nature-wildlife': {
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryFlowersRoute: GalleryFlowersRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNatureWildlifeRoute: GalleryNatureWildlifeRoute,
+  GalleryNewbornsRoute: GalleryNewbornsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
