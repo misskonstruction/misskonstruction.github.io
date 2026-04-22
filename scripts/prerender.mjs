@@ -33,6 +33,15 @@ function findClientDir() {
   throw new Error("Could not locate built client assets. Did `vite build` run?");
 }
 
+function ensurePreviewServerEntry() {
+  const serverEntry = join("dist", "server", "server.js");
+  const fallbackEntry = join("dist", "server", "index.js");
+
+  if (!existsSync(serverEntry) && existsSync(fallbackEntry)) {
+    cpSync(fallbackEntry, serverEntry);
+  }
+}
+
 async function waitForServer(url, timeoutMs = 30000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
@@ -47,6 +56,7 @@ async function waitForServer(url, timeoutMs = 30000) {
 
 async function main() {
   const clientDir = findClientDir();
+  ensurePreviewServerEntry();
   console.log(`📦 Using client assets from: ${clientDir}`);
 
   // Copy static assets first
