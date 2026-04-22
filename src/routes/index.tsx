@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowRight } from "lucide-react";
 import hero from "@/assets/hero-photography.jpg";
 import teaserMaternity from "@/assets/teaser-maternity.jpg";
+import teaserNewborns from "@/assets/teaser-newborns.jpg";
 import teaserNature from "@/assets/teaser-nature.jpg";
 import teaserFlowers from "@/assets/teaser-flowers.jpg";
 import teaserBoats from "@/assets/teaser-boats.jpg";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/")({
 
 const featured = [
   { to: "/gallery/maternity", label: "Maternity", image: teaserMaternity },
+  { to: "/gallery/newborns", label: "Newborns", image: teaserNewborns },
   { to: "/gallery/nature-wildlife", label: "Nature & Wildlife", image: teaserNature },
   { to: "/gallery/flowers", label: "Flower Project", image: teaserFlowers },
   { to: "/gallery/boats", label: "Boats & Saltlife", image: teaserBoats },
@@ -75,7 +77,7 @@ function Home() {
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Explore the galleries</h2>
           <div className="inline-flex h-px w-16 bg-primary mt-4" />
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
           {featured.map((f) => (
             <Link
               key={f.to}
