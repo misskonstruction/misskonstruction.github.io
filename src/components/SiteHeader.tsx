@@ -18,7 +18,7 @@ export function SiteHeader() {
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <Link to="/" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
           <Camera className="h-5 w-5 text-primary" />
-          <span className="font-display text-xl font-bold tracking-tight">MissKonstruction</span>
+          <span className="font-display text-xl font-light tracking-wide">MissKonstruction</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-sm">
