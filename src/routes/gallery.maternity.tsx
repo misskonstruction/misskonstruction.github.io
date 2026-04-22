@@ -17,6 +17,7 @@ import m12 from "@/assets/maternity/maternity-12.jpg";
 import m13 from "@/assets/maternity/maternity-13.jpg";
 import m14 from "@/assets/maternity/maternity-14.jpg";
 import m15 from "@/assets/maternity/maternity-15.jpg";
+import m16 from "@/assets/maternity/maternity-16.jpg";
 
 export const Route = createFileRoute("/gallery/maternity")({
   component: MaternityGallery,
@@ -32,7 +33,7 @@ const items: GalleryItem[] = [
   { src: m01 }, { src: m02 }, { src: m03 }, { src: m04 },
   { src: m05 }, { src: m06 }, { src: m07 }, { src: m08 },
   { src: m09 }, { src: m10 }, { src: m11 }, { src: m12 },
-  { src: m13 }, { src: m14 }, { src: m15 }, {},
+  { src: m13 }, { src: m14 }, { src: m15 }, { src: m16 },
 ];
 
 function MaternityGallery() {
