@@ -25,9 +25,9 @@ function About() {
             things easy to miss.
           </p>
           <p>
-            Work spans maternity sessions, Florida birding, flowers, and the
-            slow rhythm of saltlife. Each gallery is curated and refreshed as
-            new work comes in.
+            Work spans maternity and newborn sessions, Florida gulf coast birding,
+            flowers, and the slow rhythm of saltlife. Each gallery is curated and
+            refreshed as new work comes in.
           </p>
         </div>
         <div className="mt-10 flex justify-end">
