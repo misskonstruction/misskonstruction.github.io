@@ -44,9 +44,9 @@ function Home() {
 
         <div className="relative z-10 max-w-3xl text-center px-4">
           <p className="text-sm uppercase tracking-[0.3em] text-primary mb-4">Welcome to</p>
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight">
+          <h1 className="text-5xl md:text-7xl font-light text-foreground leading-tight tracking-tight">
             MissKonstruction
-            <span className="block text-primary mt-2">Photography</span>
+            <span className="block text-primary mt-2 font-extralight">Photography</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
             A quiet portfolio of maternity, nature, flowers, and saltlife —
