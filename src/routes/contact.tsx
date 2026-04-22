@@ -1,0 +1,50 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SiteLayout } from "@/components/SiteLayout";
+import { Mail, Facebook, Github } from "lucide-react";
+
+export const Route = createFileRoute("/contact")({
+  component: Contact,
+  head: () => ({
+    meta: [
+      { title: "Contact — MissKonstruction Photography" },
+      { name: "description", content: "Get in touch with MissKonstruction Photography." },
+    ],
+  }),
+});
+
+function Contact() {
+  return (
+    <SiteLayout>
+      <section className="container mx-auto px-4 py-16 max-w-2xl text-center">
+        <h1 className="text-4xl md:text-5xl font-bold">Contact</h1>
+        <div className="inline-flex h-px w-16 bg-primary mt-4 mb-8" />
+        <p className="text-muted-foreground">
+          For session bookings, prints, or just to say hello — reach out below.
+        </p>
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="mailto:hello@misskonstruction.com"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-md hover:bg-primary/90 transition-colors"
+          >
+            <Mail className="h-4 w-4" /> Email me
+          </a>
+          <a
+            href="https://www.facebook.com/camihayes72/"
+            target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
+          >
+            <Facebook className="h-4 w-4" /> Facebook
+          </a>
+          <a
+            href="https://github.com/misskonstruction"
+            target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
+          >
+            <Github className="h-4 w-4" /> GitHub
+          </a>
+        </div>
+      </section>
+    </SiteLayout>
+  );
+}
