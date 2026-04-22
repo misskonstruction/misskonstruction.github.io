@@ -25,7 +25,7 @@ function About() {
             things easy to miss.
           </p>
           <p>
-            Work spans maternity sessions, nature and wildlife, flowers, and the
+            Work spans maternity sessions, Florida birding, flowers, and the
             slow rhythm of saltlife. Each gallery is curated and refreshed as
             new work comes in.
           </p>
