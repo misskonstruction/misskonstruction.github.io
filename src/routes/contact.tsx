@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Mail, Facebook, Github, User } from "lucide-react";
+import { Mail, Facebook, Github } from "lucide-react";
 import profilePlaceholder from "@/assets/profile-placeholder.jpg";
 
 export const Route = createFileRoute("/contact")({
@@ -18,7 +18,7 @@ function Contact() {
     <SiteLayout>
       <section className="container mx-auto px-4 py-16 max-w-2xl text-center">
         {/* Profile photo placeholder — swap src for your portrait when ready */}
-        <div className="mx-auto mb-8 h-40 w-40 rounded-full overflow-hidden border-4 border-primary/30 bg-card relative group">
+        <div className="mx-auto mb-8 h-40 w-40 rounded-full overflow-hidden border-4 border-primary/30 bg-card">
           <img
             src={profilePlaceholder}
             alt="MissKonstruction profile placeholder"
@@ -26,9 +26,6 @@ function Contact() {
             height={320}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-muted-foreground gap-1">
-            <User className="h-4 w-4" /> Replace me
-          </div>
         </div>
 
         <h1 className="text-4xl md:text-5xl font-bold">Contact</h1>
