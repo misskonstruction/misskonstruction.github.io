@@ -51,7 +51,7 @@ function Home() {
             <span className="block text-primary mt-2 font-extralight">Photography</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
-            A quiet portfolio of maternity, nature, flowers, and saltlife —
+            A quiet portfolio of maternity, newborns, nature, flowers, and saltlife —
             captured with care along the Florida coast.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
