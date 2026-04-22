@@ -32,6 +32,12 @@ jobs:
       - name: Build app
         run: bun run build
 
+      - name: Add TanStack preview server compatibility shim
+        run: |
+          if [ ! -f dist/server/server.js ] && [ -f dist/server/index.js ]; then
+            cp dist/server/index.js dist/server/server.js
+          fi
+
       - name: Prerender static HTML
         run: bun run prerender
 
