@@ -19,7 +19,7 @@ import n14 from "@/assets/nature-wildlife/nature-14.jpg";
 import n15 from "@/assets/nature-wildlife/nature-15.jpg";
 import n16 from "@/assets/nature-wildlife/nature-16.jpg";
 
-export const Route = createFileRoute("/gallery/nature-wildlife")({
+export const Route = createFileRoute("/gallery/florida-birding")({
   component: NatureGallery,
   head: () => ({
     meta: [
