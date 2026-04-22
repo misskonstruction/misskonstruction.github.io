@@ -1,0 +1,2 @@
+# This file tells GitHub Pages not to process the site with Jekyll.
+# Required so files/folders starting with underscore (e.g. _next, _astro) are served.
