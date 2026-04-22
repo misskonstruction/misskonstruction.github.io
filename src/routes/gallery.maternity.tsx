@@ -24,7 +24,7 @@ export const Route = createFileRoute("/gallery/maternity")({
   head: () => ({
     meta: [
       { title: "Maternity — MissKonstruction Photography" },
-      { name: "description", content: "Maternity photography sessions by MissKonstruction." },
+      { name: "description", content: "Soft, story-driven maternity sessions captured in golden gulf coast light." },
     ],
   }),
 });
@@ -40,7 +40,7 @@ function MaternityGallery() {
   return (
     <GalleryPage
       title="Maternity"
-      intro="Soft, story-driven maternity sessions captured in golden Florida light."
+      intro="Soft, story-driven maternity sessions captured in golden gulf coast light."
       items={items}
     />
   );
