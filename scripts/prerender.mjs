@@ -18,7 +18,7 @@ const ROUTES = [
   "/contact",
   "/blog",
   "/gallery/maternity",
-  "/gallery/nature-wildlife",
+  "/gallery/florida-birding",
   "/gallery/flowers",
   "/gallery/boats",
 ];
