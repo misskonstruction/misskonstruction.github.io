@@ -108,6 +108,32 @@ function readTime(text: string): string {
 
 
 function Blog() {
+  const { posts } = Route.useLoaderData();
+
+  // Build category counts from real posts
+  const counts = new Map<string, number>();
+  for (const p of posts) {
+    for (const c of p.categories) {
+      const key = c.toLowerCase();
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  const categories = categoryDefs.map((c) => ({
+    ...c,
+    posts: counts.get(c.title.toLowerCase()) ?? 0,
+  }));
+
+  // Pick the latest post as featured (with a category-matched fallback image)
+  const latest = posts[0];
+  const featuredImage = (() => {
+    if (!latest) return coastalImg;
+    if (latest.featuredImage) return latest.featuredImage;
+    const match = categoryDefs.find((c) =>
+      latest.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
+    );
+    return match?.image ?? coastalImg;
+  })();
+
   return (
     <SiteLayout>
       {/* Hero */}
@@ -148,74 +174,94 @@ function Blog() {
       </section>
 
       {/* Featured */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="flex items-baseline justify-between mb-8">
-          <h2
-            className="text-3xl md:text-4xl"
-            style={{ fontFamily: "var(--font-journal)" }}
-          >
-            From the latest page
-          </h2>
-          <span
-            className="text-primary text-xl hidden md:inline"
-            style={{ fontFamily: "var(--font-hand)" }}
-          >
-            ~ this week ~
-          </span>
-        </div>
-
-        <article className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div className="relative">
-            <div className="absolute -inset-3 bg-primary/10 rotate-[-1.5deg] rounded-sm" />
-            <img
-              src={featured.image}
-              alt={featured.title}
-              width={1024}
-              height={768}
-              loading="lazy"
-              className="relative w-full h-auto rounded-sm shadow-2xl"
-            />
+      {latest && (
+        <section className="container mx-auto px-4 py-16 md:py-24">
+          <div className="flex items-baseline justify-between mb-8">
+            <h2
+              className="text-3xl md:text-4xl"
+              style={{ fontFamily: "var(--font-journal)" }}
+            >
+              From the latest page
+            </h2>
             <span
-              className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 text-lg shadow-lg rotate-3"
+              className="text-primary text-xl hidden md:inline"
               style={{ fontFamily: "var(--font-hand)" }}
             >
-              new!
+              ~ fresh ink ~
             </span>
           </div>
 
-          <div>
-            <p
-              className="text-primary text-xl mb-3"
-              style={{ fontFamily: "var(--font-hand)" }}
-            >
-              {featured.category}
-            </p>
-            <h3
-              className="text-3xl md:text-4xl leading-tight mb-5"
-              style={{ fontFamily: "var(--font-journal)" }}
-            >
-              {featured.title}
-            </h3>
-            <p
-              className="text-lg text-muted-foreground leading-relaxed mb-6"
-              style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
-            >
-              "{featured.excerpt}"
-            </p>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-              <span>{featured.date}</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-              <span>{featured.readTime}</span>
-            </div>
-            <button className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1">
-              <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
-                Read the full entry
+          <article className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="relative">
+              <div className="absolute -inset-3 bg-primary/10 rotate-[-1.5deg] rounded-sm" />
+              <img
+                src={featuredImage}
+                alt={latest.title}
+                width={1024}
+                height={768}
+                loading="lazy"
+                className="relative w-full h-auto rounded-sm shadow-2xl object-cover aspect-[4/3]"
+              />
+              <span
+                className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 text-lg shadow-lg rotate-3"
+                style={{ fontFamily: "var(--font-hand)" }}
+              >
+                new!
               </span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </article>
-      </section>
+            </div>
+
+            <div>
+              {latest.categories[0] && (
+                <p
+                  className="text-primary text-xl mb-3"
+                  style={{ fontFamily: "var(--font-hand)" }}
+                >
+                  {latest.categories[0]}
+                </p>
+              )}
+              <h3
+                className="text-3xl md:text-4xl leading-tight mb-5"
+                style={{ fontFamily: "var(--font-journal)" }}
+              >
+                {latest.title}
+              </h3>
+              <p
+                className="text-lg text-muted-foreground leading-relaxed mb-6"
+                style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+              >
+                "{latest.excerpt}"
+              </p>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                <span>{formatDate(latest.date)}</span>
+                <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                <span>{readTime(latest.excerpt)}</span>
+              </div>
+              <a
+                href={latest.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1"
+              >
+                <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
+                  Read the full entry
+                </span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </article>
+        </section>
+      )}
+
+      {posts.length === 0 && (
+        <section className="container mx-auto px-4 py-16 text-center">
+          <p
+            className="text-muted-foreground text-lg"
+            style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+          >
+            New entries are on the way — check back soon.
+          </p>
+        </section>
+      )}
 
       {/* Categories */}
       <section className="container mx-auto px-4 pb-20">
@@ -266,7 +312,7 @@ function Blog() {
                       className="text-xl"
                       style={{ fontFamily: "var(--font-hand)" }}
                     >
-                      {cat.posts} entries
+                      {cat.posts} {cat.posts === 1 ? "entry" : "entries"}
                     </span>
                   </div>
                   <h3
