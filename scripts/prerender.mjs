@@ -31,6 +31,55 @@ const ROUTES = [
   "/recipes/shrimp-poboy",
 ];
 
+// Category slugs known to the site (must match src/data/journalCategories.ts)
+const KNOWN_CATEGORIES = new Set([
+  "coastal-photography",
+  "from-the-kitchen",
+  "creative-life",
+  "faith-scripture",
+  "reflections",
+  "wander-roam",
+]);
+
+// Map a WordPress category name to one of our local category slugs.
+function mapCategoryToSlug(names) {
+  const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  for (const n of names) {
+    const s = norm(n);
+    if (KNOWN_CATEGORIES.has(s)) return s;
+    if (s.includes("kitchen") || s.includes("recipe") || s.includes("food")) return "from-the-kitchen";
+    if (s.includes("coastal") || s.includes("photo")) return "coastal-photography";
+    if (s.includes("creative")) return "creative-life";
+    if (s.includes("faith") || s.includes("scripture") || s.includes("bible")) return "faith-scripture";
+    if (s.includes("wander") || s.includes("travel") || s.includes("roam")) return "wander-roam";
+  }
+  return "reflections";
+}
+
+// Fetch all WordPress posts directly from the public API so we can build
+// a route for each one. This runs at build time only.
+async function fetchWordPressPostRoutes() {
+  const SITE_ID = "195471483";
+  const url = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_ID}/posts?number=100&fields=ID,slug,categories`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.warn(`⚠️  Could not fetch WordPress post list (${res.status}). Skipping post prerender.`);
+      return [];
+    }
+    const data = await res.json();
+    const posts = data.posts ?? [];
+    return posts.map((p) => {
+      const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
+      const slug = mapCategoryToSlug(catNames);
+      return `/blog/${slug}/${p.slug}`;
+    });
+  } catch (e) {
+    console.warn(`⚠️  WordPress fetch failed: ${e.message}. Skipping post prerender.`);
+    return [];
+  }
+}
+
 const OUT = "dist-static";
 const PORT = 4321;
 
