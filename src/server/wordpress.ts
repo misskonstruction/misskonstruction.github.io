@@ -14,11 +14,17 @@ export type WPPost = {
   categories: string[];
 };
 
+export type WPPostFull = WPPost & {
+  /** Sanitized HTML content of the post body. */
+  content: string;
+};
+
 type RawPost = {
   ID: number;
   date: string;
   title: string;
   excerpt: string;
+  content?: string;
   URL: string;
   slug: string;
   featured_image?: string;
@@ -85,3 +91,61 @@ export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async
   const data = (await res.json()) as { posts?: RawPost[] };
   return (data.posts ?? []).map(normalize);
 });
+
+/**
+ * Light sanitizer for WordPress post HTML.
+ * Strips <script>/<style>/<iframe> blocks and inline event handlers,
+ * but preserves the structural tags we want to style (p, h2, h3, ul, ol, li,
+ * blockquote, img, a, em, strong, figure, figcaption, br).
+ */
+function sanitizePostHtml(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+    .replace(/\son\w+="[^"]*"/gi, "")
+    .replace(/\son\w+='[^']*'/gi, "");
+}
+
+export const getWordPressPostBySlug = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) => {
+    if (typeof input !== "object" || input === null || !("slug" in input)) {
+      throw new Error("slug is required");
+    }
+    const slug = (input as { slug: unknown }).slug;
+    if (typeof slug !== "string" || slug.length === 0) {
+      throw new Error("slug must be a non-empty string");
+    }
+    return { slug };
+  })
+  .handler(async ({ data }): Promise<WPPostFull | null> => {
+    const lovableKey = process.env.LOVABLE_API_KEY;
+    const wpKey = process.env.WORDPRESS_COM_API_KEY;
+    if (!lovableKey || !wpKey) {
+      console.warn("[wordpress] Missing API keys — returning null for post.");
+      return null;
+    }
+
+    const res = await fetch(
+      `${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}/posts/slug:${encodeURIComponent(data.slug)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${lovableKey}`,
+          "X-Connection-Api-Key": wpKey,
+        },
+      },
+    );
+
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`WordPress.com fetch failed [${res.status}]: ${body}`);
+    }
+
+    const raw = (await res.json()) as RawPost;
+    const base = normalize(raw);
+    return {
+      ...base,
+      content: sanitizePostHtml(raw.content ?? ""),
+    };
+  });
