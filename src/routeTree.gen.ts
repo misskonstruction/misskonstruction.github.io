@@ -20,6 +20,7 @@ import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
 import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
 import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
+import { Route as BlogCategoryRouteImport } from './routes/blog.$category'
 import { Route as BlogCategoryIndexRouteImport } from './routes/blog.$category.index'
 import { Route as BlogCategoryPostSlugRouteImport } from './routes/blog.$category.$postSlug'
 
@@ -78,15 +79,20 @@ const GalleryBoatsRoute = GalleryBoatsRouteImport.update({
   path: '/gallery/boats',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
-  id: '/$category/',
-  path: '/$category/',
+const BlogCategoryRoute = BlogCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
   getParentRoute: () => BlogRoute,
 } as any)
+const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogCategoryRoute,
+} as any)
 const BlogCategoryPostSlugRoute = BlogCategoryPostSlugRouteImport.update({
-  id: '/$category/$postSlug',
-  path: '/$category/$postSlug',
-  getParentRoute: () => BlogRoute,
+  id: '/$postSlug',
+  path: '/$postSlug',
+  getParentRoute: () => BlogCategoryRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/blog/$category': typeof BlogCategoryRouteWithChildren
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
@@ -124,6 +131,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/blog/$category': typeof BlogCategoryRouteWithChildren
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
@@ -141,6 +149,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/blog/$category'
     | '/gallery/boats'
     | '/gallery/florida-birding'
     | '/gallery/flowers'
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/blog/$category'
     | '/gallery/boats'
     | '/gallery/florida-birding'
     | '/gallery/flowers'
@@ -273,33 +283,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryBoatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$category': {
+      id: '/blog/$category'
+      path: '/$category'
+      fullPath: '/blog/$category'
+      preLoaderRoute: typeof BlogCategoryRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/blog/$category/': {
       id: '/blog/$category/'
-      path: '/$category'
+      path: '/'
       fullPath: '/blog/$category/'
       preLoaderRoute: typeof BlogCategoryIndexRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof BlogCategoryRoute
     }
     '/blog/$category/$postSlug': {
       id: '/blog/$category/$postSlug'
-      path: '/$category/$postSlug'
+      path: '/$postSlug'
       fullPath: '/blog/$category/$postSlug'
       preLoaderRoute: typeof BlogCategoryPostSlugRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof BlogCategoryRoute
     }
   }
 }
 
-interface BlogRouteChildren {
-  BlogIndexRoute: typeof BlogIndexRoute
+interface BlogCategoryRouteChildren {
   BlogCategoryPostSlugRoute: typeof BlogCategoryPostSlugRoute
   BlogCategoryIndexRoute: typeof BlogCategoryIndexRoute
 }
 
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogIndexRoute: BlogIndexRoute,
+const BlogCategoryRouteChildren: BlogCategoryRouteChildren = {
   BlogCategoryPostSlugRoute: BlogCategoryPostSlugRoute,
   BlogCategoryIndexRoute: BlogCategoryIndexRoute,
+}
+
+const BlogCategoryRouteWithChildren = BlogCategoryRoute._addFileChildren(
+  BlogCategoryRouteChildren,
+)
+
+interface BlogRouteChildren {
+  BlogCategoryRoute: typeof BlogCategoryRouteWithChildren
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogCategoryRoute: BlogCategoryRouteWithChildren,
+  BlogIndexRoute: BlogIndexRoute,
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
