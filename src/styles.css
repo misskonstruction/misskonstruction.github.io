@@ -31,6 +31,8 @@
   --color-ring-offset-background: var(--background);
   --font-display: "Outfit", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
+  --font-journal: "Cormorant Garamond", Georgia, serif;
+  --font-hand: "Caveat", "Caveat Brush", cursive;
 }
 
 /*
