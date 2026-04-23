@@ -7,9 +7,19 @@ import kitchenImg from "@/assets/blog-kitchen.jpg";
 import creativeImg from "@/assets/blog-creative.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
+import { getWordPressPosts, type WPPost } from "@/server/wordpress";
 
 export const Route = createFileRoute("/blog")({
   component: Blog,
+  loader: async () => {
+    try {
+      const posts = await getWordPressPosts();
+      return { posts };
+    } catch (e) {
+      console.error("Failed to load WordPress posts", e);
+      return { posts: [] as WPPost[] };
+    }
+  },
   head: () => ({
     meta: [
       { title: "The Journal — MissKonstruction" },
@@ -30,65 +40,100 @@ export const Route = createFileRoute("/blog")({
   }),
 });
 
-const categories = [
+const categoryDefs = [
   {
     icon: Camera,
     emoji: "📷",
     title: "Coastal Photography",
+    slug: "coastal-photography",
     blurb:
       "Salt air, soft light, and the slow stories the shoreline keeps telling if you're patient enough to listen.",
     image: coastalImg,
-    posts: 12,
   },
   {
     icon: UtensilsCrossed,
     emoji: "🍳",
     title: "From the Kitchen",
+    slug: "from-the-kitchen",
     blurb:
       "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays, and the smell of rosemary on warm bread.",
     image: kitchenImg,
-    posts: 8,
   },
   {
     icon: Palette,
     emoji: "🎨",
     title: "Creative Life",
+    slug: "creative-life",
     blurb:
       "Sketchbooks, side projects, and the messy middle of making things — a love letter to staying curious.",
     image: creativeImg,
-    posts: 6,
   },
   {
     icon: BookOpen,
     emoji: "✝️",
     title: "Faith & Scripture",
+    slug: "faith-scripture",
     blurb:
       "Verses I keep returning to, prayers half-whispered, and the quiet places where grace meets the ordinary.",
     image: faithImg,
-    posts: 10,
   },
   {
     icon: Leaf,
     emoji: "🌿",
     title: "Reflections",
+    slug: "reflections",
     blurb:
       "Field notes from everyday life — gratitude, growth, and the small thoughts worth slowing down for.",
     image: reflectionsImg,
-    posts: 14,
   },
 ];
 
-const featured = {
-  category: "Coastal Photography",
-  title: "Chasing morning light along the Gulf",
-  excerpt:
-    "There's a particular hush at 6:42 a.m. when the tide is going out and the herons haven't decided whether to forgive you for being there. I packed the camera anyway.",
-  date: "April 14, 2026",
-  readTime: "6 min read",
-  image: coastalImg,
-};
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
+
+function readTime(text: string): string {
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+}
+
 
 function Blog() {
+  const { posts } = Route.useLoaderData();
+
+  // Build category counts from real posts
+  const counts = new Map<string, number>();
+  for (const p of posts) {
+    for (const c of p.categories) {
+      const key = c.toLowerCase();
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  const categories = categoryDefs.map((c) => ({
+    ...c,
+    posts: counts.get(c.title.toLowerCase()) ?? 0,
+  }));
+
+  // Pick the latest post as featured (with a category-matched fallback image)
+  const latest = posts[0];
+  const featuredImage = (() => {
+    if (!latest) return coastalImg;
+    if (latest.featuredImage) return latest.featuredImage;
+    const match = categoryDefs.find((c) =>
+      latest.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
+    );
+    return match?.image ?? coastalImg;
+  })();
+
   return (
     <SiteLayout>
       {/* Hero */}
@@ -129,74 +174,94 @@ function Blog() {
       </section>
 
       {/* Featured */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="flex items-baseline justify-between mb-8">
-          <h2
-            className="text-3xl md:text-4xl"
-            style={{ fontFamily: "var(--font-journal)" }}
-          >
-            From the latest page
-          </h2>
-          <span
-            className="text-primary text-xl hidden md:inline"
-            style={{ fontFamily: "var(--font-hand)" }}
-          >
-            ~ this week ~
-          </span>
-        </div>
-
-        <article className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div className="relative">
-            <div className="absolute -inset-3 bg-primary/10 rotate-[-1.5deg] rounded-sm" />
-            <img
-              src={featured.image}
-              alt={featured.title}
-              width={1024}
-              height={768}
-              loading="lazy"
-              className="relative w-full h-auto rounded-sm shadow-2xl"
-            />
+      {latest && (
+        <section className="container mx-auto px-4 py-16 md:py-24">
+          <div className="flex items-baseline justify-between mb-8">
+            <h2
+              className="text-3xl md:text-4xl"
+              style={{ fontFamily: "var(--font-journal)" }}
+            >
+              From the latest page
+            </h2>
             <span
-              className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 text-lg shadow-lg rotate-3"
+              className="text-primary text-xl hidden md:inline"
               style={{ fontFamily: "var(--font-hand)" }}
             >
-              new!
+              ~ fresh ink ~
             </span>
           </div>
 
-          <div>
-            <p
-              className="text-primary text-xl mb-3"
-              style={{ fontFamily: "var(--font-hand)" }}
-            >
-              {featured.category}
-            </p>
-            <h3
-              className="text-3xl md:text-4xl leading-tight mb-5"
-              style={{ fontFamily: "var(--font-journal)" }}
-            >
-              {featured.title}
-            </h3>
-            <p
-              className="text-lg text-muted-foreground leading-relaxed mb-6"
-              style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
-            >
-              "{featured.excerpt}"
-            </p>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-              <span>{featured.date}</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-              <span>{featured.readTime}</span>
-            </div>
-            <button className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1">
-              <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
-                Read the full entry
+          <article className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="relative">
+              <div className="absolute -inset-3 bg-primary/10 rotate-[-1.5deg] rounded-sm" />
+              <img
+                src={featuredImage}
+                alt={latest.title}
+                width={1024}
+                height={768}
+                loading="lazy"
+                className="relative w-full h-auto rounded-sm shadow-2xl object-cover aspect-[4/3]"
+              />
+              <span
+                className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 text-lg shadow-lg rotate-3"
+                style={{ fontFamily: "var(--font-hand)" }}
+              >
+                new!
               </span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        </article>
-      </section>
+            </div>
+
+            <div>
+              {latest.categories[0] && (
+                <p
+                  className="text-primary text-xl mb-3"
+                  style={{ fontFamily: "var(--font-hand)" }}
+                >
+                  {latest.categories[0]}
+                </p>
+              )}
+              <h3
+                className="text-3xl md:text-4xl leading-tight mb-5"
+                style={{ fontFamily: "var(--font-journal)" }}
+              >
+                {latest.title}
+              </h3>
+              <p
+                className="text-lg text-muted-foreground leading-relaxed mb-6"
+                style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+              >
+                "{latest.excerpt}"
+              </p>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                <span>{formatDate(latest.date)}</span>
+                <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                <span>{readTime(latest.excerpt)}</span>
+              </div>
+              <a
+                href={latest.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1"
+              >
+                <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
+                  Read the full entry
+                </span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </article>
+        </section>
+      )}
+
+      {posts.length === 0 && (
+        <section className="container mx-auto px-4 py-16 text-center">
+          <p
+            className="text-muted-foreground text-lg"
+            style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+          >
+            New entries are on the way — check back soon.
+          </p>
+        </section>
+      )}
 
       {/* Categories */}
       <section className="container mx-auto px-4 pb-20">
@@ -247,7 +312,7 @@ function Blog() {
                       className="text-xl"
                       style={{ fontFamily: "var(--font-hand)" }}
                     >
-                      {cat.posts} entries
+                      {cat.posts} {cat.posts === 1 ? "entry" : "entries"}
                     </span>
                   </div>
                   <h3
