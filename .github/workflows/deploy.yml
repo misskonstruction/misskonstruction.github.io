@@ -39,6 +39,9 @@ jobs:
           fi
 
       - name: Prerender static HTML
+        env:
+          LOVABLE_API_KEY: ${{ secrets.LOVABLE_API_KEY }}
+          WORDPRESS_COM_API_KEY: ${{ secrets.WORDPRESS_COM_API_KEY }}
         run: bun run prerender
 
       - name: Add SPA fallback + .nojekyll
