@@ -382,7 +382,7 @@ function CategoryPage() {
                       Read the full entry <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
