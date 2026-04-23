@@ -105,7 +105,7 @@ function imageForPost(post: WPPost, fallback: string): string {
   return fallback;
 }
 
-export const Route = createFileRoute("/blog/$category")({
+export const Route = createFileRoute("/blog/$category/")({
   component: CategoryPage,
   loader: async ({ params }) => {
     const cat = findCategory(params.category);
