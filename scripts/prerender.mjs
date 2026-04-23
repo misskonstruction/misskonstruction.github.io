@@ -135,8 +135,15 @@ async function main() {
   try {
     await waitForServer(`http://localhost:${PORT}/`);
 
+    // Discover dynamic blog post routes from WordPress
+    const postRoutes = await fetchWordPressPostRoutes();
+    const allRoutes = [...ROUTES, ...postRoutes];
+    if (postRoutes.length) {
+      console.log(`📝 Discovered ${postRoutes.length} WordPress post route(s) to prerender`);
+    }
+
     const failures = [];
-    for (const route of ROUTES) {
+    for (const route of allRoutes) {
       const res = await fetch(`http://localhost:${PORT}${route}`);
       if (!res.ok) {
         console.error(`❌ ${route} → ${res.status}`);
@@ -155,7 +162,7 @@ async function main() {
     if (failures.length) {
       throw new Error(`Prerender failed for ${failures.length} route(s): ${failures.join(", ")}`);
     }
-    console.log(`\n✨ Prerendered ${ROUTES.length} routes → ${OUT}/`);
+    console.log(`\n✨ Prerendered ${allRoutes.length} routes → ${OUT}/`);
   } finally {
     cleanup();
   }
