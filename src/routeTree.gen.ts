@@ -21,6 +21,7 @@ import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
 import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
 import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
 import { Route as BlogCategoryRouteImport } from './routes/blog.$category'
+import { Route as BlogCategoryPostSlugRouteImport } from './routes/blog.$category.$postSlug'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -82,13 +83,18 @@ const BlogCategoryRoute = BlogCategoryRouteImport.update({
   path: '/$category',
   getParentRoute: () => BlogRoute,
 } as any)
+const BlogCategoryPostSlugRoute = BlogCategoryPostSlugRouteImport.update({
+  id: '/$postSlug',
+  path: '/$postSlug',
+  getParentRoute: () => BlogCategoryRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
-  '/blog/$category': typeof BlogCategoryRoute
+  '/blog/$category': typeof BlogCategoryRouteWithChildren
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
@@ -96,12 +102,13 @@ export interface FileRoutesByFullPath {
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/blog/$category': typeof BlogCategoryRoute
+  '/blog/$category': typeof BlogCategoryRouteWithChildren
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,7 +124,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
-  '/blog/$category': typeof BlogCategoryRoute
+  '/blog/$category': typeof BlogCategoryRouteWithChildren
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
     | '/blog/'
+    | '/blog/$category/$postSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
     | '/blog'
+    | '/blog/$category/$postSlug'
   id:
     | '__root__'
     | '/'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
     | '/blog/'
+    | '/blog/$category/$postSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -268,16 +280,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogCategoryRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/blog/$category/$postSlug': {
+      id: '/blog/$category/$postSlug'
+      path: '/$postSlug'
+      fullPath: '/blog/$category/$postSlug'
+      preLoaderRoute: typeof BlogCategoryPostSlugRouteImport
+      parentRoute: typeof BlogCategoryRoute
+    }
   }
 }
 
+interface BlogCategoryRouteChildren {
+  BlogCategoryPostSlugRoute: typeof BlogCategoryPostSlugRoute
+}
+
+const BlogCategoryRouteChildren: BlogCategoryRouteChildren = {
+  BlogCategoryPostSlugRoute: BlogCategoryPostSlugRoute,
+}
+
+const BlogCategoryRouteWithChildren = BlogCategoryRoute._addFileChildren(
+  BlogCategoryRouteChildren,
+)
+
 interface BlogRouteChildren {
-  BlogCategoryRoute: typeof BlogCategoryRoute
+  BlogCategoryRoute: typeof BlogCategoryRouteWithChildren
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
-  BlogCategoryRoute: BlogCategoryRoute,
+  BlogCategoryRoute: BlogCategoryRouteWithChildren,
   BlogIndexRoute: BlogIndexRoute,
 }
 
