@@ -39,6 +39,8 @@ type CategoryDef = {
   icon: typeof Camera;
 };
 
+type SerializableCategory = Omit<CategoryDef, "icon">;
+
 const categories: CategoryDef[] = [
   {
     slug: "coastal-photography",
@@ -94,6 +96,17 @@ function findCategory(slug: string): CategoryDef | undefined {
   return categories.find((c) => c.slug === slug);
 }
 
+function serializeCategory(category: CategoryDef | undefined): SerializableCategory | null {
+  if (!category) return null;
+  return {
+    slug: category.slug,
+    title: category.title,
+    emoji: category.emoji,
+    blurb: category.blurb,
+    image: category.image,
+  };
+}
+
 function formatDate(iso: string): string {
   try {
     return new Date(iso).toLocaleDateString("en-US", {
@@ -115,6 +128,7 @@ export const Route = createFileRoute("/blog/$category")({
   component: CategoryPage,
   loader: async ({ params }) => {
     const cat = findCategory(params.category);
+    const serializableCategory = serializeCategory(cat);
     try {
       const all = await getWordPressPosts();
       const posts = cat
@@ -122,10 +136,10 @@ export const Route = createFileRoute("/blog/$category")({
             p.categories.some((c) => c.toLowerCase() === cat.title.toLowerCase()),
           )
         : [];
-      return { posts, category: cat ?? null };
+      return { posts, category: serializableCategory };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WPPost[], category: cat ?? null };
+      return { posts: [] as WPPost[], category: serializableCategory };
     }
   },
   head: ({ params }) => {
@@ -181,8 +195,9 @@ export const Route = createFileRoute("/blog/$category")({
 
 function CategoryPage() {
   const { posts, category } = Route.useLoaderData();
+  const fullCategory = category ? findCategory(category.slug) : undefined;
 
-  if (!category) {
+  if (!category || !fullCategory) {
     return (
       <SiteLayout>
         <div className="container mx-auto px-4 py-24 text-center">
@@ -200,7 +215,7 @@ function CategoryPage() {
     );
   }
 
-  const Icon = category.icon;
+  const Icon = fullCategory.icon;
 
   return (
     <SiteLayout>
