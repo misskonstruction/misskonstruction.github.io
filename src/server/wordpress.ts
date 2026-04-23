@@ -54,9 +54,13 @@ function normalize(p: RawPost): WPPost {
 
 export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async () => {
   const lovableKey = process.env.LOVABLE_API_KEY;
-  if (!lovableKey) throw new Error("LOVABLE_API_KEY is not configured");
   const wpKey = process.env.WORDPRESS_COM_API_KEY;
-  if (!wpKey) throw new Error("WORDPRESS_COM_API_KEY is not configured");
+  // During static prerender (e.g. GitHub Pages build), these env vars are not
+  // present. Return an empty list instead of throwing so the page still renders.
+  if (!lovableKey || !wpKey) {
+    console.warn("[wordpress] Missing API keys — returning empty post list.");
+    return [] as WPPost[];
+  }
 
   const params = new URLSearchParams({
     number: "30",
