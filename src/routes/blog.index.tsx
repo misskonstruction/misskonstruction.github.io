@@ -9,6 +9,7 @@ import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import { getWordPressPosts, type WPPost } from "@/server/wordpress";
+import { recipes } from "@/data/recipes";
 
 export const Route = createFileRoute("/blog/")({
   component: Blog,
@@ -116,11 +117,15 @@ function readTime(text: string): string {
   return `${minutes} min read`;
 }
 
-// In-house entries (recipes, essays, etc.) authored directly in the site —
-// counted alongside WordPress posts so category cards reflect total entries.
-const inHouseEntriesByCategorySlug: Record<string, number> = {
-  "from-the-kitchen": 1, // Crispy Cajun Shrimp Po'Boy
-};
+// In-house entry counts derived from the recipe registry — counted
+// alongside WordPress posts so category cards reflect total entries.
+const inHouseEntriesByCategorySlug: Record<string, number> = recipes.reduce(
+  (acc, r) => {
+    acc[r.categorySlug] = (acc[r.categorySlug] ?? 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>,
+);
 
 function Blog() {
   const { posts } = Route.useLoaderData();

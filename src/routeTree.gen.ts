@@ -14,7 +14,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as RecipesShrimpPoboyRouteImport } from './routes/recipes.shrimp-poboy'
+import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
@@ -47,9 +47,9 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
-const RecipesShrimpPoboyRoute = RecipesShrimpPoboyRouteImport.update({
-  id: '/recipes/shrimp-poboy',
-  path: '/recipes/shrimp-poboy',
+const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
+  id: '/recipes/$recipeSlug',
+  path: '/recipes/$recipeSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
@@ -94,7 +94,7 @@ export interface FileRoutesByFullPath {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
-  '/recipes/shrimp-poboy': typeof RecipesShrimpPoboyRoute
+  '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
@@ -107,7 +107,7 @@ export interface FileRoutesByTo {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
-  '/recipes/shrimp-poboy': typeof RecipesShrimpPoboyRoute
+  '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
@@ -122,7 +122,7 @@ export interface FileRoutesById {
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
-  '/recipes/shrimp-poboy': typeof RecipesShrimpPoboyRoute
+  '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
@@ -138,7 +138,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
-    | '/recipes/shrimp-poboy'
+    | '/recipes/$recipeSlug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -151,7 +151,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
-    | '/recipes/shrimp-poboy'
+    | '/recipes/$recipeSlug'
     | '/blog'
   id:
     | '__root__'
@@ -165,7 +165,7 @@ export interface FileRouteTypes {
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
-    | '/recipes/shrimp-poboy'
+    | '/recipes/$recipeSlug'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
@@ -179,7 +179,7 @@ export interface RootRouteChildren {
   GalleryFlowersRoute: typeof GalleryFlowersRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
-  RecipesShrimpPoboyRoute: typeof RecipesShrimpPoboyRoute
+  RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -219,11 +219,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/recipes/shrimp-poboy': {
-      id: '/recipes/shrimp-poboy'
-      path: '/recipes/shrimp-poboy'
-      fullPath: '/recipes/shrimp-poboy'
-      preLoaderRoute: typeof RecipesShrimpPoboyRouteImport
+    '/recipes/$recipeSlug': {
+      id: '/recipes/$recipeSlug'
+      path: '/recipes/$recipeSlug'
+      fullPath: '/recipes/$recipeSlug'
+      preLoaderRoute: typeof RecipesRecipeSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery/newborns': {
@@ -293,7 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryFlowersRoute: GalleryFlowersRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
-  RecipesShrimpPoboyRoute: RecipesShrimpPoboyRoute,
+  RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
