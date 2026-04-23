@@ -7,9 +7,19 @@ import kitchenImg from "@/assets/blog-kitchen.jpg";
 import creativeImg from "@/assets/blog-creative.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
+import { getWordPressPosts, type WPPost } from "@/server/wordpress";
 
 export const Route = createFileRoute("/blog")({
   component: Blog,
+  loader: async () => {
+    try {
+      const posts = await getWordPressPosts();
+      return { posts };
+    } catch (e) {
+      console.error("Failed to load WordPress posts", e);
+      return { posts: [] as WPPost[] };
+    }
+  },
   head: () => ({
     meta: [
       { title: "The Journal — MissKonstruction" },
