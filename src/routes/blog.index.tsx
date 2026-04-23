@@ -116,6 +116,12 @@ function readTime(text: string): string {
   return `${minutes} min read`;
 }
 
+// In-house entries (recipes, essays, etc.) authored directly in the site —
+// counted alongside WordPress posts so category cards reflect total entries.
+const inHouseEntriesByCategorySlug: Record<string, number> = {
+  "from-the-kitchen": 1, // Crispy Cajun Shrimp Po'Boy
+};
+
 function Blog() {
   const { posts } = Route.useLoaderData();
 
@@ -128,8 +134,11 @@ function Blog() {
   }
   const categories = categoryDefs.map((c) => ({
     ...c,
-    posts: counts.get(c.title.toLowerCase()) ?? 0,
+    posts:
+      (counts.get(c.title.toLowerCase()) ?? 0) +
+      (inHouseEntriesByCategorySlug[c.slug] ?? 0),
   }));
+
 
   const imageForPost = (post: WPPost): string => {
     if (post.featuredImage) return post.featuredImage;
