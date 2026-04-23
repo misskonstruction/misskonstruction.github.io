@@ -9,6 +9,26 @@ import creativeImg from "@/assets/blog-creative.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
+import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
+
+type FeaturedRecipe = {
+  to: "/recipes/shrimp-poboy";
+  title: string;
+  blurb: string;
+  image: string;
+};
+
+const featuredRecipesByCategory: Record<string, FeaturedRecipe[]> = {
+  "from-the-kitchen": [
+    {
+      to: "/recipes/shrimp-poboy",
+      title: "Crispy Cajun Shrimp Po'Boy",
+      blurb:
+        "Buttermilk-marinated shrimp fried golden, piled on toasted French bread with cool, tangy remoulade.",
+      image: shrimpPoboyImg,
+    },
+  ],
+};
 
 type CategoryDef = {
   slug: string;
