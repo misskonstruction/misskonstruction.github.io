@@ -345,11 +345,10 @@ function CategoryPage() {
             {posts.map((post, i) => {
               const tilt = i % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
               return (
-                <a
+                <Link
                   key={post.id}
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  to="/blog/$category/$postSlug"
+                  params={{ category: category.slug, postSlug: post.slug }}
                   className={`group bg-card border border-border ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm block`}
                 >
                   <div className="relative overflow-hidden aspect-[4/3]">

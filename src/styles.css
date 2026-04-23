@@ -75,3 +75,82 @@
   }
   h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 300; letter-spacing: -0.02em; }
 }
+
+/* Themed prose for WordPress post bodies (rendered via dangerouslySetInnerHTML). */
+.journal-prose {
+  color: var(--color-foreground);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+.journal-prose > * + * { margin-top: 1.25rem; }
+.journal-prose p { color: var(--color-foreground); }
+.journal-prose h2,
+.journal-prose h3,
+.journal-prose h4 {
+  font-family: var(--font-journal);
+  font-weight: 500;
+  color: var(--color-foreground);
+  letter-spacing: 0;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.journal-prose h2 { font-size: 2rem; }
+.journal-prose h3 { font-size: 1.5rem; }
+.journal-prose h2 em,
+.journal-prose h3 em { color: var(--color-primary); font-style: italic; }
+.journal-prose a {
+  color: var(--color-primary);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-primary) 40%, transparent);
+  text-decoration: none;
+  transition: border-color 200ms;
+}
+.journal-prose a:hover { border-bottom-color: var(--color-primary); }
+.journal-prose strong { color: var(--color-foreground); font-weight: 600; }
+.journal-prose em { font-style: italic; color: color-mix(in oklab, var(--color-primary) 80%, var(--color-foreground)); }
+.journal-prose ul,
+.journal-prose ol {
+  padding-left: 1.5rem;
+  color: var(--color-foreground);
+}
+.journal-prose ul { list-style: disc; }
+.journal-prose ol { list-style: decimal; }
+.journal-prose li + li { margin-top: 0.5rem; }
+.journal-prose blockquote {
+  border-left: 3px solid color-mix(in oklab, var(--color-primary) 60%, transparent);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  font-style: italic;
+  color: var(--color-muted-foreground);
+  font-size: 1.25rem;
+  font-family: var(--font-journal);
+}
+.journal-prose img,
+.journal-prose figure {
+  margin: 2rem auto;
+  border-radius: 0.125rem;
+  max-width: 100%;
+  height: auto;
+}
+.journal-prose figure img { margin: 0; }
+.journal-prose figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-muted-foreground);
+  font-style: italic;
+  font-family: var(--font-journal);
+}
+.journal-prose hr {
+  border: 0;
+  height: 1px;
+  background: color-mix(in oklab, var(--color-primary) 30%, transparent);
+  margin: 2.5rem auto;
+  width: 5rem;
+}
+.journal-prose code {
+  background: var(--color-muted);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.95em;
+}
+
