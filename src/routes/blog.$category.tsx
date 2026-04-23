@@ -260,10 +260,16 @@ function CategoryPage() {
           >
             {category.blurb}
           </p>
-          <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
-            <Icon className="h-4 w-4" />
-            {posts.length} {posts.length === 1 ? "entry" : "entries"}
-          </div>
+          {(() => {
+            const totalEntries =
+              posts.length + (featuredRecipesByCategory[category.slug]?.length ?? 0);
+            return (
+              <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
+                <Icon className="h-4 w-4" />
+                {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
+              </div>
+            );
+          })()}
         </div>
       </section>
 
