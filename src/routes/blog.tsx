@@ -40,63 +40,72 @@ export const Route = createFileRoute("/blog")({
   }),
 });
 
-const categories = [
+const categoryDefs = [
   {
     icon: Camera,
     emoji: "📷",
     title: "Coastal Photography",
+    slug: "coastal-photography",
     blurb:
       "Salt air, soft light, and the slow stories the shoreline keeps telling if you're patient enough to listen.",
     image: coastalImg,
-    posts: 12,
   },
   {
     icon: UtensilsCrossed,
     emoji: "🍳",
     title: "From the Kitchen",
+    slug: "from-the-kitchen",
     blurb:
       "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays, and the smell of rosemary on warm bread.",
     image: kitchenImg,
-    posts: 8,
   },
   {
     icon: Palette,
     emoji: "🎨",
     title: "Creative Life",
+    slug: "creative-life",
     blurb:
       "Sketchbooks, side projects, and the messy middle of making things — a love letter to staying curious.",
     image: creativeImg,
-    posts: 6,
   },
   {
     icon: BookOpen,
     emoji: "✝️",
     title: "Faith & Scripture",
+    slug: "faith-scripture",
     blurb:
       "Verses I keep returning to, prayers half-whispered, and the quiet places where grace meets the ordinary.",
     image: faithImg,
-    posts: 10,
   },
   {
     icon: Leaf,
     emoji: "🌿",
     title: "Reflections",
+    slug: "reflections",
     blurb:
       "Field notes from everyday life — gratitude, growth, and the small thoughts worth slowing down for.",
     image: reflectionsImg,
-    posts: 14,
   },
 ];
 
-const featured = {
-  category: "Coastal Photography",
-  title: "Chasing morning light along the Gulf",
-  excerpt:
-    "There's a particular hush at 6:42 a.m. when the tide is going out and the herons haven't decided whether to forgive you for being there. I packed the camera anyway.",
-  date: "April 14, 2026",
-  readTime: "6 min read",
-  image: coastalImg,
-};
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
+
+function readTime(text: string): string {
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+}
+
 
 function Blog() {
   return (
