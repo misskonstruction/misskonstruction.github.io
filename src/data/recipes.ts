@@ -14,6 +14,7 @@
 
 import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
 import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
+import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -248,6 +249,111 @@ export const recipes: Recipe[] = [
       kicker: "easy does it",
       body:
         "Serve it over rice, with greens, or just straight off the foil. However you plate it, that sticky glaze does the heavy lifting.",
+    },
+  },
+  {
+    slug: "louisiana-gumbo",
+    categorySlug: "from-the-kitchen",
+    kicker: "low and slow, the bayou way",
+    title: "My Bad Ass **Louisiana Gumbo**",
+    intro:
+      "Shrimp, crawfish, boudin, and shredded chicken simmered low and slow with a deep caramel roux, gold potatoes, and a generous hand of cayenne. The kind of pot that fills the whole house and tastes even better the next day — when it bites back a little harder.",
+    heroImage: louisianaGumboImg,
+    heroAlt: "A steaming bowl of dark Louisiana gumbo with shrimp, sausage, and crawfish tails",
+    description:
+      "A slow-cooked Louisiana gumbo with shrimp, crawfish, boudin, and chicken in a deep caramel roux. Spicy, soulful, and even better the next day.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "30 min" },
+      { icon: "flame", label: "Cook", value: "2+ hr (slow cooker)" },
+      { icon: "users", label: "Serves", value: "8" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the proteins",
+        items: [
+          "1 lb shrimp, peeled and deveined",
+          "1 package boudin sausage",
+          "3 large chicken breasts",
+          "1 bag Louisiana crawfish tails",
+        ],
+      },
+      {
+        title: "For the pot",
+        items: [
+          "½ lb small gold potatoes, quartered",
+          "1 large box chicken broth",
+          "3 garlic cloves, minced",
+          "2 bay leaves",
+        ],
+      },
+      {
+        title: "For the roux",
+        items: [
+          "1 cup vegetable oil",
+          "1 cup white flour",
+          "½ cup chopped fresh green onion",
+        ],
+      },
+      {
+        title: "Seasonings",
+        items: [
+          "3 tsp Worcestershire sauce",
+          "2 tsp Old Bay seasoning",
+          "1 tbsp onion pepper",
+          "1 tbsp cayenne pepper",
+          "2 tsp kosher salt (plus more to taste)",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Brown the sausage",
+        body:
+          "Cut the boudin sausage into ¼-inch pieces and brown them in a skillet over medium heat until the edges are crisp and rendered.",
+      },
+      {
+        title: "Cook the chicken",
+        body:
+          "Shred the chicken breasts and cook them through in a skillet with a little vegetable oil. Set aside.",
+      },
+      {
+        title: "Start the crockpot",
+        body:
+          "Quarter the potatoes and drop them into the crockpot. Pour in the entire box of chicken broth and turn the slow cooker on high.",
+      },
+      {
+        title: "Add the proteins",
+        body:
+          "Add the shrimp, crawfish tails, cooked shredded chicken, and browned sausage to the pot. Stir gently to combine.",
+      },
+      {
+        title: "Make the roux",
+        body:
+          "This part matters. Heat the vegetable oil in a medium skillet over medium-low heat for about 5 minutes. Gradually add the flour, stirring it in as you go. Add the chopped green onion and keep stirring — constantly — until the roux turns a rich, deep caramel color. Don't walk away. Don't rush it.",
+      },
+      {
+        title: "Combine and season",
+        body:
+          "Stir the finished roux into the crockpot. Add the Worcestershire sauce, Old Bay, onion pepper, cayenne, kosher salt, garlic, and bay leaves while stirring everything together until the broth turns dark and silky.",
+      },
+      {
+        title: "Slow cook",
+        body:
+          "Cover and cook on the slow cooker's high setting for at least 2 hours. The longer it goes, the more tender the meat and the deeper the flavor. Taste and adjust the seasoning before serving — these amounts are a starting point, not a rule.",
+      },
+      {
+        title: "Serve it up",
+        body:
+          "Ladle over white rice with a hunk of crusty French bread on the side for soaking up every last drop.",
+      },
+    ],
+    cooksNote:
+      "Feel free to add or subtract the suggested seasoning amounts — mine are never exact. And save some for tomorrow: the leftovers are MUCH spicier and somehow even better the next day.",
+    signOff: {
+      kicker: "laissez les bons temps rouler",
+      body:
+        "Make a big pot, invite people over, and let it simmer while the afternoon goes by. That's the whole point.",
     },
   },
 ];
