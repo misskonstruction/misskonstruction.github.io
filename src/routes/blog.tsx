@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, ArrowRight } from "lucide-react";
+import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
 import creativeImg from "@/assets/blog-creative.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
+import wanderImg from "@/assets/blog-wander.jpg";
 import { getWordPressPosts, type WPPost } from "@/server/wordpress";
 
 export const Route = createFileRoute("/blog")({
@@ -85,6 +86,15 @@ const categoryDefs = [
     blurb:
       "Field notes from everyday life — gratitude, growth, and the small thoughts worth slowing down for.",
     image: reflectionsImg,
+  },
+  {
+    icon: Plane,
+    emoji: "✈️",
+    title: "Wander & Roam",
+    slug: "wander-roam",
+    blurb:
+      "Travel notes from the road and the in-between places — little towns, long drives, and the quiet wonder of somewhere new.",
+    image: wanderImg,
   },
 ];
 
