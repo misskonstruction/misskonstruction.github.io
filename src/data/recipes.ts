@@ -16,6 +16,7 @@ import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
 import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
 import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
 import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
+import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 
 export type IngredientGroup = {
   title: string;
