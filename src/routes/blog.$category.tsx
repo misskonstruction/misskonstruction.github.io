@@ -327,17 +327,19 @@ function CategoryPage() {
       {/* Posts */}
       <section className="container mx-auto px-4 py-16 md:py-20">
         {posts.length === 0 ? (
-          <div className="text-center py-16">
-            <p
-              className="text-muted-foreground text-lg mb-2"
-              style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
-            >
-              No entries here yet — check back soon.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Posts on WordPress filed under "{category.title}" will appear here.
-            </p>
-          </div>
+          featuredRecipes.length === 0 ? (
+            <div className="text-center py-16">
+              <p
+                className="text-muted-foreground text-lg mb-2"
+                style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+              >
+                No entries here yet — check back soon.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Posts on WordPress filed under "{category.title}" will appear here.
+              </p>
+            </div>
+          ) : null
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post, i) => {
