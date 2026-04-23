@@ -86,10 +86,12 @@ async function main() {
   try {
     await waitForServer(`http://localhost:${PORT}/`);
 
+    const failures = [];
     for (const route of ROUTES) {
       const res = await fetch(`http://localhost:${PORT}${route}`);
       if (!res.ok) {
-        console.warn(`⚠️  ${route} → ${res.status}`);
+        console.error(`❌ ${route} → ${res.status}`);
+        failures.push(`${route} (${res.status})`);
         continue;
       }
       const html = await res.text();
@@ -99,7 +101,10 @@ async function main() {
           : join(OUT, route.replace(/^\//, ""), "index.html");
       mkdirSync(dirname(filePath), { recursive: true });
       writeFileSync(filePath, html);
-      console.log(`✅ ${route}`);
+      console.log(`✅ ${route}  (${html.length} bytes)`);
+    }
+    if (failures.length) {
+      throw new Error(`Prerender failed for ${failures.length} route(s): ${failures.join(", ")}`);
     }
     console.log(`\n✨ Prerendered ${ROUTES.length} routes → ${OUT}/`);
   } finally {
