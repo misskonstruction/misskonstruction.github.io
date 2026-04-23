@@ -13,6 +13,7 @@
  */
 
 import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
+import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -167,6 +168,86 @@ export const recipes: Recipe[] = [
       kicker: "bon appétit, y'all",
       body:
         "If you make this one, I'd love to hear about it. Tag me, write me, or just sit on the porch and enjoy every bite.",
+    },
+  },
+  {
+    slug: "sweet-and-spicy-glazed-salmon",
+    categorySlug: "from-the-kitchen",
+    kicker: "weeknight magic, sticky and bright",
+    title: "Sweet and Spicy **Glazed Salmon**",
+    intro:
+      "Salmon fillets bathed in a soy, brown sugar, and red wine vinegar marinade, then broiled until the glaze turns deep and lacquered. The leftover marinade reduces into a glossy sauce you'll want to spoon over everything on the plate.",
+    heroImage: glazedSalmonImg,
+    heroAlt: "Sweet and spicy glazed salmon fillets on a dark plate with green onions and lemon",
+    description:
+      "Broiled salmon with a sticky soy, brown sugar, and red wine vinegar glaze — bright, savory, and ready in under 25 minutes (after a good marinade soak).",
+    meta: [
+      { icon: "clock", label: "Prep", value: "10 min + 2 hr marinade" },
+      { icon: "flame", label: "Cook", value: "10–15 min" },
+      { icon: "users", label: "Serves", value: "4–6" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the salmon",
+        items: [
+          "4 to 6 fresh salmon fillets",
+          "Salt and ground black pepper, to taste",
+          "Chopped green onion and parsley, to finish",
+        ],
+      },
+      {
+        title: "For the marinade",
+        items: [
+          "¼ cup red wine vinegar",
+          "¼ cup olive oil",
+          "¼ cup soy sauce",
+          "¼ cup water",
+          "1 tbsp lemon juice",
+          "⅓ cup brown sugar",
+          "½ tsp onion powder",
+          "½ tsp garlic powder",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Marinate the salmon",
+        body:
+          "Place the salmon fillets in a shallow, flat dish and set aside. In a medium-large bowl, whisk together the red wine vinegar, olive oil, soy sauce, water, lemon juice, brown sugar, onion powder, and garlic powder until the sugar dissolves. Pour over the salmon, cover, and refrigerate for about 2 hours.",
+      },
+      {
+        title: "Prep the pan",
+        body:
+          "Line a broiling pan with foil. Lift the salmon out of the marinade and lay the fillets on the pan, then season to taste with salt and pepper. Pour the remaining marinade into a small saucepan — you'll cook it down for the sauce.",
+      },
+      {
+        title: "Heat the broiler",
+        body:
+          "Turn the broiler on to low and let it come up to temperature while you finish prepping.",
+      },
+      {
+        title: "Broil and baste",
+        body:
+          "Broil the salmon about 6 inches from the heat for 5 minutes, then brush generously with the marinade. Continue broiling for another 5–10 minutes, brushing periodically, until the salmon is no longer bright red and flakes easily with a fork.",
+      },
+      {
+        title: "Reduce the sauce",
+        body:
+          "While the salmon broils, simmer the reserved marinade over low heat for 5–10 minutes, until it thickens slightly and reduces. Use it as a dipping sauce — or do like we do and spoon it over everything on the plate.",
+      },
+      {
+        title: "Finish and serve",
+        body:
+          "Scatter chopped green onion and parsley over the top, drizzle with the warm glaze, and serve right away while the lacquer is still glossy.",
+      },
+    ],
+    cooksNote:
+      "Don't skip the full 2-hour marinade — that's where the depth comes from. And keep a close eye under the broiler; the brown sugar can go from beautifully caramelized to charred in about a minute.",
+    signOff: {
+      kicker: "easy does it",
+      body:
+        "Serve it over rice, with greens, or just straight off the foil. However you plate it, that sticky glaze does the heavy lifting.",
     },
   },
 ];
