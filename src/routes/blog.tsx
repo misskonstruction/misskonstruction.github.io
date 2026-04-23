@@ -123,16 +123,20 @@ function Blog() {
     posts: counts.get(c.title.toLowerCase()) ?? 0,
   }));
 
-  // Pick the latest post as featured (with a category-matched fallback image)
-  const latest = posts[0];
-  const featuredImage = (() => {
-    if (!latest) return coastalImg;
-    if (latest.featuredImage) return latest.featuredImage;
+  // Resolve a tasteful image for ANY post — uses the post's own featured image
+  // when available, otherwise falls back to a category-matched journal image,
+  // and finally to the coastal hero so nothing is ever blank.
+  const imageForPost = (post: WPPost): string => {
+    if (post.featuredImage) return post.featuredImage;
     const match = categoryDefs.find((c) =>
-      latest.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
+      post.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
     );
     return match?.image ?? coastalImg;
-  })();
+  };
+
+  // Pick the latest post as featured
+  const latest = posts[0];
+  const featuredImage = latest ? imageForPost(latest) : coastalImg;
 
   return (
     <SiteLayout>
