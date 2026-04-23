@@ -17,10 +17,18 @@ const ROUTES = [
   "/about",
   "/contact",
   "/blog",
+  "/blog/coastal-photography",
+  "/blog/from-the-kitchen",
+  "/blog/creative-life",
+  "/blog/faith-scripture",
+  "/blog/reflections",
+  "/blog/wander-roam",
   "/gallery/maternity",
+  "/gallery/newborns",
   "/gallery/florida-birding",
   "/gallery/flowers",
   "/gallery/boats",
+  "/recipes/shrimp-poboy",
 ];
 
 const OUT = "dist-static";
