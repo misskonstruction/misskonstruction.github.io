@@ -87,6 +87,15 @@ const categoryDefs = [
       "Field notes from everyday life — gratitude, growth, and the small thoughts worth slowing down for.",
     image: reflectionsImg,
   },
+  {
+    icon: Plane,
+    emoji: "✈️",
+    title: "Wander & Roam",
+    slug: "wander-roam",
+    blurb:
+      "Travel notes from the road and the in-between places — little towns, long drives, and the quiet wonder of somewhere new.",
+    image: wanderImg,
+  },
 ];
 
 function formatDate(iso: string): string {
