@@ -197,6 +197,7 @@ function CategoryPage() {
   }
 
   const Icon = fullCategory.icon;
+  const featuredRecipes = getRecipesByCategory(category.slug);
 
   return (
     <SiteLayout>
@@ -242,8 +243,7 @@ function CategoryPage() {
             {category.blurb}
           </p>
           {(() => {
-            const totalEntries =
-              posts.length + (featuredRecipesByCategory[category.slug]?.length ?? 0);
+            const totalEntries = posts.length + featuredRecipes.length;
             return (
               <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
                 <Icon className="h-4 w-4" />
@@ -255,7 +255,7 @@ function CategoryPage() {
       </section>
 
       {/* Featured in-house recipes */}
-      {(featuredRecipesByCategory[category.slug] ?? []).length > 0 && (
+      {featuredRecipes.length > 0 && (
         <section className="container mx-auto px-4 pt-16 md:pt-20">
           <div className="max-w-5xl mx-auto mb-8">
             <p
@@ -272,18 +272,20 @@ function CategoryPage() {
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {(featuredRecipesByCategory[category.slug] ?? []).map((r, i) => {
+            {featuredRecipes.map((r, i) => {
               const tilt = i % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
+              const cardTitle = r.title.replace(/\*\*/g, "");
               return (
                 <Link
-                  key={r.to}
-                  to={r.to}
+                  key={r.slug}
+                  to="/recipes/$recipeSlug"
+                  params={{ recipeSlug: r.slug }}
                   className={`group bg-card border border-primary/30 ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm block`}
                 >
                   <div className="relative overflow-hidden aspect-[4/3]">
                     <img
-                      src={r.image}
-                      alt={r.title}
+                      src={r.heroImage}
+                      alt={cardTitle}
                       width={1024}
                       height={768}
                       loading="lazy"
@@ -302,13 +304,13 @@ function CategoryPage() {
                       className="text-2xl mb-3 text-foreground leading-tight"
                       style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
                     >
-                      {r.title}
+                      {cardTitle}
                     </h3>
                     <p
                       className="text-muted-foreground leading-relaxed mb-4 line-clamp-3"
                       style={{ fontFamily: "var(--font-journal)" }}
                     >
-                      {r.blurb}
+                      {r.intro}
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:gap-3 transition-all">
                       View the recipe <ArrowRight className="h-3.5 w-3.5" />
