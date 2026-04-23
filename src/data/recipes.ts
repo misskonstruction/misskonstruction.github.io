@@ -17,6 +17,7 @@ import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
 import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
 import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
 import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
+import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -492,6 +493,90 @@ export const recipes: Recipe[] = [
       kicker: "from her kitchen to mine",
       body:
         "Some recipes are more than food — they're a way of keeping people close. ENJOY!!",
+    },
+  },
+  {
+    slug: "moms-jambalaya",
+    categorySlug: "from-the-kitchen",
+    kicker: "the way mom always made it",
+    title: "Mom's **Jambalaya**",
+    intro:
+      "One pot, a deep red simmer, and just about every good thing Louisiana has to offer — chicken, sausage, shrimp, and long-grain rice soaking up all that tomato and Old Bay. The kind of dinner that fills the house with the smell of home before you even sit down.",
+    heroImage: jambalayaImg,
+    heroAlt: "A rustic cast-iron pot of Louisiana jambalaya with shrimp, sausage, chicken, and green onions",
+    description:
+      "A classic Louisiana jambalaya — chicken, sausage, and shrimp simmered with long-grain rice, crushed tomatoes, and Old Bay. Mom's one-pot recipe.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "15 min" },
+      { icon: "flame", label: "Cook", value: "35 min" },
+      { icon: "users", label: "Serves", value: "6" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "The base",
+        items: [
+          "1 tbsp extra-virgin olive oil",
+          "1 onion, chopped",
+          "2 bell peppers, chopped",
+          "Kosher salt and freshly ground black pepper",
+          "1 tsp dried oregano",
+          "2 cloves garlic, minced",
+          "2 tbsp tomato paste",
+        ],
+      },
+      {
+        title: "The proteins",
+        items: [
+          "1 rotisserie chicken, shredded",
+          "6 oz sausage, sliced",
+          "1 lb medium shrimp, peeled and deveined (or 12 oz crawfish tails)",
+        ],
+      },
+      {
+        title: "The pot",
+        items: [
+          "2 cups chicken stock",
+          "1 (15 oz) can crushed tomatoes",
+          "1 cup long-grain rice",
+          "2 tsp Old Bay seasoning",
+          "2 green onions, sliced",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Sweat the trinity",
+        body:
+          "In a large pot over medium heat, warm the olive oil. Add the onion and bell peppers, season with salt and pepper, and cook until softened, about 5 minutes.",
+      },
+      {
+        title: "Build the flavor",
+        body:
+          "Stir in the shredded rotisserie chicken and season with another pinch of salt, pepper, and the oregano. Cook for about 5 minutes, then add the sausage, garlic, and tomato paste. Cook until everything turns deep and fragrant, about 1 minute more.",
+      },
+      {
+        title: "Simmer the rice",
+        body:
+          "Pour in the chicken stock, crushed tomatoes, rice, and Old Bay. Stir well, reduce heat to medium-low, and cover with a tight-fitting lid. Cook until the rice is tender and most of the liquid is absorbed, about 20 minutes.",
+      },
+      {
+        title: "Add the shellfish",
+        body:
+          "Stir in the shrimp (or crawfish tails) and cook just until the shrimp turn pink and curl, 2 to 5 minutes. Don't walk away — they cook fast.",
+      },
+      {
+        title: "Finish and serve",
+        body:
+          "Stir in the sliced green onions right before serving so they stay bright and fresh. Ladle into bowls and serve straight from the pot.",
+      },
+    ],
+    cooksNote:
+      "A rotisserie chicken from the grocery store keeps this a true weeknight one-pot. If you like a little more heat, a few dashes of hot sauce at the end never hurt anybody.",
+    signOff: {
+      kicker: "thanks, mom",
+      body:
+        "Some recipes you cook. Others you inherit. This one's both — and it tastes better every time you make it.",
     },
   },
 ];
