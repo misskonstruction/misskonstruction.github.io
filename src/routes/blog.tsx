@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
@@ -300,9 +300,11 @@ function Blog() {
             const Icon = cat.icon;
             const tilt = i % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
             return (
-              <article
+              <Link
                 key={cat.title}
-                className={`group bg-card border border-border ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm`}
+                to="/blog/$category"
+                params={{ category: cat.slug }}
+                className={`group bg-card border border-border ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm block`}
               >
                 <div className="relative overflow-hidden aspect-[4/3]">
                   <img
@@ -345,7 +347,7 @@ function Blog() {
                     Browse the page <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>
