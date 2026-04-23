@@ -16,6 +16,7 @@ import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
 import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
 import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
 import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
+import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -418,6 +419,79 @@ export const recipes: Recipe[] = [
       kicker: "easy like that",
       body:
         "Some nights call for fancy. Most nights call for this. A warm bowl, a soft couch, and not much else.",
+    },
+  },
+  {
+    slug: "natchitoches-meatpies",
+    categorySlug: "from-the-kitchen",
+    kicker: "passed down from my grandmother",
+    title: "My Grandmother's **Natchitoches Meat Pies**",
+    intro:
+      "If you're not from Louisiana, you've probably never heard of these — and that's a shame. Spiced ground beef and green onion tucked inside a flaky biscuit shell, fried golden in a hot skillet. My mom passed this recipe down from my dad's mother, whom I only met once at age two. Every time I make them, a little piece of her shows up in the kitchen.",
+    heroImage: natchitochesMeatpiesImg,
+    heroAlt: "Golden-fried Louisiana Natchitoches meat pies on a dark wooden board, one broken open showing seasoned beef filling",
+    description:
+      "A family recipe for Louisiana Natchitoches meat pies — spiced ground beef and green onion fried golden in flaky biscuit dough. Passed down through three generations.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "20 min + chill" },
+      { icon: "flame", label: "Cook", value: "15 min" },
+      { icon: "users", label: "Serves", value: "8 pies" },
+      { icon: "utensils-crossed", label: "Course", value: "Appetizer / Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the filling",
+        items: [
+          "1 lb lean ground beef",
+          "½ cup chopped green onion",
+          "1½ tbsp flour",
+          "Garlic powder (or 1 fresh garlic clove, minced)",
+          "Cayenne pepper, to taste",
+          "2 tbsp water",
+          "Salt and pepper, to taste",
+        ],
+      },
+      {
+        title: "For the shell",
+        items: [
+          "1 can refrigerated jumbo biscuits",
+          "Vegetable oil, for frying",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Brown the filling",
+        body:
+          "In a skillet over medium heat, brown the ground beef together with the green onion, flour, garlic powder, cayenne, water, salt, and pepper. Cook until the meat is fully done and the mixture is well combined and slightly thickened.",
+      },
+      {
+        title: "Chill the meat",
+        body:
+          "Transfer the cooked filling to a bowl and let it chill in the refrigerator. Cooling it down makes the pies much easier to fill and seal — don't skip this step.",
+      },
+      {
+        title: "Roll out the biscuits",
+        body:
+          "Open the can of jumbo biscuits and roll each one out flat with a rolling pin. (Or in my case, a glass bottle when I forgot to grab the rolling pin earlier — it works just fine.)",
+      },
+      {
+        title: "Fill and fold",
+        body:
+          "Spoon a generous portion of the chilled meat onto one side of each rolled biscuit. Fold over like a taco, then press and crimp the edges firmly with the tines of a fork to seal.",
+      },
+      {
+        title: "Fry until golden",
+        body:
+          "Heat oil in a skillet until hot but not smoking. Fry the meat pies a few at a time, browning each side until deeply golden and crisp. Drain on paper towels and serve hot.",
+      },
+    ],
+    cooksNote:
+      "These have a rich history — Natchitoches is a small Louisiana town that takes its meat pies seriously. Don't be afraid of the cayenne; that little kick is what makes them feel like home.",
+    signOff: {
+      kicker: "from her kitchen to mine",
+      body:
+        "Some recipes are more than food — they're a way of keeping people close. ENJOY!!",
     },
   },
 ];
