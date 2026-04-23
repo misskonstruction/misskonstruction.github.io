@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
