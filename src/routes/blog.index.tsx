@@ -256,17 +256,24 @@ function Blog() {
                 <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
                 <span>{readTime(latest.excerpt)}</span>
               </div>
-              <a
-                href={latest.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1"
-              >
-                <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
-                  Read the full entry
-                </span>
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              {(() => {
+                const latestCat = categoryDefs.find((c) =>
+                  latest.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
+                );
+                const categorySlug = latestCat?.slug ?? "reflections";
+                return (
+                  <Link
+                    to="/blog/$category/$postSlug"
+                    params={{ category: categorySlug, postSlug: latest.slug }}
+                    className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all border-b border-primary/40 pb-1"
+                  >
+                    <span style={{ fontFamily: "var(--font-journal)" }} className="text-lg">
+                      Read the full entry
+                    </span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                );
+              })()}
             </div>
           </article>
         </section>
