@@ -15,6 +15,7 @@
 import shrimpPoboyImg from "@/assets/recipe-shrimp-poboy.jpg";
 import glazedSalmonImg from "@/assets/recipe-glazed-salmon.jpg";
 import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
+import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -354,6 +355,69 @@ export const recipes: Recipe[] = [
       kicker: "laissez les bons temps rouler",
       body:
         "Make a big pot, invite people over, and let it simmer while the afternoon goes by. That's the whole point.",
+    },
+  },
+  {
+    slug: "easy-chicken-and-dumplings",
+    categorySlug: "from-the-kitchen",
+    kicker: "the cure for a long week",
+    title: "Easy **Chicken & Dumplings**",
+    intro:
+      "Creamy, soul-warming, and on the table in under thirty minutes. Pantry soup and canned biscuits do all the heavy lifting — pillowy dumplings simmered into a rich, savory broth with shredded chicken. The kind of weeknight shortcut that tastes like Sunday.",
+    heroImage: chickenDumplingsImg,
+    heroAlt: "A rustic bowl of creamy chicken and dumplings with fresh parsley",
+    description:
+      "An easy, creamy chicken and dumplings recipe using canned biscuits and pantry soup — comfort food on the table in under 30 minutes.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "5 min" },
+      { icon: "flame", label: "Cook", value: "20 min" },
+      { icon: "users", label: "Serves", value: "6" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "From the pantry",
+        items: [
+          "2 (10.5 oz) cans condensed cream of chicken soup",
+          "3 (14 oz) cans chicken broth",
+          "3 cups shredded cooked chicken",
+          "2 (10 oz) cans refrigerated biscuit dough",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Gather everything",
+        body:
+          "Pull out your ingredients and a large saucepan or Dutch oven. Having the biscuits opened and the chicken pre-shredded makes the whole thing come together fast.",
+      },
+      {
+        title: "Build the broth",
+        body:
+          "Stir the condensed cream of chicken soup, chicken broth, and shredded chicken together in a large saucepan over medium-high heat. Keep stirring occasionally until the mixture begins to gently simmer.",
+      },
+      {
+        title: "Cut and drop the dumplings",
+        body:
+          "Cut each refrigerated biscuit into quarters. Gently drop them into the simmering soup, stirring just enough to keep them from clumping together.",
+      },
+      {
+        title: "Cover and simmer",
+        body:
+          "Reduce the heat to medium-low, cover the pot, and let everything simmer for 10 to 15 minutes — until the biscuits have puffed up and are no longer doughy in the center.",
+      },
+      {
+        title: "Serve it warm",
+        body:
+          "Ladle into deep bowls, crack some fresh black pepper over the top, and serve right away while the dumplings are at their pillowy best.",
+      },
+    ],
+    cooksNote:
+      "Rotisserie chicken is a perfect shortcut here. And if the broth gets too thick as it sits, just splash in a little more chicken broth to loosen it back up.",
+    signOff: {
+      kicker: "easy like that",
+      body:
+        "Some nights call for fancy. Most nights call for this. A warm bowl, a soft couch, and not much else.",
     },
   },
 ];
