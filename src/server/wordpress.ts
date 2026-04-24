@@ -95,7 +95,7 @@ export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async
   });
 
   const data = await fetchWordPressApi<{ posts?: RawPost[] }>(`/posts?${params.toString()}`);
-  return (data.posts ?? []).map(normalize);
+  return (data?.posts ?? []).map(normalize);
 });
 
 /**
