@@ -20,6 +20,7 @@ import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
 import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
 import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
+import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -814,6 +815,84 @@ export const recipes: Recipe[] = [
       kicker: "wag, wag 🐾",
       body:
         "A little something different for the pups who deserve the world. As always — check with your vet before any big diet changes, especially for puppies, seniors, or dogs with health conditions.",
+    },
+  },
+  {
+    slug: "bitchin-slow-cooker-porkchops",
+    categorySlug: "from-the-kitchen",
+    kicker: "set it, forget it, devour it",
+    title: "Bitchin Slow Cooker **Porkchops**",
+    intro:
+      "Thick center-cut chops scored, rubbed with a smoky paprika-garlic spice mix, and slow-simmered in a garlicky broth until they're fork-tender. Two hours of hands-off cooking, one knife-optional dinner.",
+    heroImage: bitchinPorkchopsImg,
+    heroAlt: "Slow cooker pork chops in a rich broth with paprika and fresh herbs",
+    description:
+      "Smoky, garlicky slow cooker pork chops — fork-tender after two hours in a paprika and herb broth. Knife optional, flavor mandatory.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "10 min" },
+      { icon: "flame", label: "Cook", value: "2 hr" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the chops",
+        items: [
+          "4 (1½-inch thick) center-cut boneless pork chops",
+          "1½ tsp kosher salt",
+          "1½ tsp freshly ground pepper",
+        ],
+      },
+      {
+        title: "For the spice rub & broth",
+        items: [
+          "1 tbsp paprika",
+          "1 tbsp garlic powder",
+          "1 tsp dried oregano",
+          "1 tsp dried basil",
+          "1¾ cups chicken broth",
+          "2 garlic cloves, minced",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Score and season",
+        body:
+          "Cut small slits in a diamond pattern into each pork chop with the tip of a knife, then season generously with salt and pepper.",
+      },
+      {
+        title: "Mix the spice rub",
+        body:
+          "Whisk the paprika, garlic powder, oregano, and basil together in a medium bowl. Remove about 2 tablespoons of the mixture and rub it generously onto the chops, working it down into the slits.",
+      },
+      {
+        title: "Build the braising liquid",
+        body:
+          "Whisk the chicken broth and fresh minced garlic into the remaining spice mix until everything is evenly combined.",
+      },
+      {
+        title: "Layer the slow cooker",
+        body:
+          "Pour the broth mixture into a 6-quart slow cooker and arrange the seasoned chops on top in a single layer.",
+      },
+      {
+        title: "Cook low and slow",
+        body:
+          "Cover and cook on HIGH for about 2 hours, basting periodically with the sauce, until the chops are slightly pink in the center. A thermometer inserted into the thickest part should read at least 145°F / 63°C.",
+      },
+      {
+        title: "Walk away (the best part)",
+        body:
+          "Read a good book, watch a movie, or do something else you enjoy. When the timer's up, serve hot with your choice of sides — I recommend something green. You know you did good when the knife isn't even necessary.",
+      },
+    ],
+    cooksNote:
+      "Don't skip scoring the chops — those little diamond cuts let the rub sink in and the broth do its thing. And don't be shy with the basting; that's where the lacquered, glossy finish comes from.",
+    signOff: {
+      kicker: "knife optional",
+      body:
+        "Serve it up, sit down, and enjoy. Sometimes the best dinners are the ones that practically cook themselves.",
     },
   },
 ];
