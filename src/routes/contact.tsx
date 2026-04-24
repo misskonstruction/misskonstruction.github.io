@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Mail, BookOpen } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Mail, Facebook } from "lucide-react";
 import profilePlaceholder from "@/assets/profile-placeholder.jpg";
 
 export const Route = createFileRoute("/contact")({
@@ -42,12 +41,14 @@ function Contact() {
           >
             <Mail className="h-4 w-4" /> Email me
           </a>
-          <Link
-            to="/blog"
+          <a
+            href="https://www.facebook.com/misskonstruction"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
           >
-            <BookOpen className="h-4 w-4" /> Journal
-          </Link>
+            <Facebook className="h-4 w-4" /> Facebook
+          </a>
         </div>
       </section>
     </SiteLayout>
