@@ -62,9 +62,39 @@ export type Prayer = {
 };
 
 export const prayers: Prayer[] = [
-  // Prayers will be added here as you share them.
-  // The first entry — Ruth D. Calk's prayer study — will go here once
-  // you paste the text.
+  {
+    slug: "prayer-ii-ruth-d-calk",
+    categorySlug: "faith-scripture",
+    kicker: "a study on prayer",
+    title: "Prayer **II**",
+    author: "Ruth D. Calk",
+    attribution: "February 2002 · sent to me by my mother",
+    intro:
+      "The second in a series on prayer — on praying without ceasing, on the peace and rest that prayer produces, and on the quiet, steady work God does through it.",
+    scripture: {
+      reference: "Philippians 4:6–7",
+      text: "Be anxious for nothing, but in everything, by prayer and supplication with thanksgiving, let your requests be made known to God, and the peace of God, which surpasses all understanding will guard your hearts and minds through Christ Jesus.",
+    },
+    body: [
+      "Last month we started a series on prayer because of the importance of having a relationship with God. It is only through reading His word and talking to Him in prayer that we can have this relationship. We have talked about simple, believing prayer, knowing that He hears us and wants to help us; about humble prayer coming from a sincere heart; that we have authority through prayer, and that the habit of prayer should become a part of us.",
+      "In 1 Thessalonians, we are told to “pray without ceasing.” For years I thought, how could you possibly do that? Now, I have a better understanding of what Paul was saying. He meant that prayer should be like breathing, something we do continually, but usually unconsciously. Our physical bodies require breathing to stay alive. Likewise, our spiritual bodies are designed to be nurtured and sustained by continual prayer. The problem is that, because of religious thinking, we have the mistaken idea that if we don’t keep up a certain schedule of prayer, we are missing the mark. The important lesson about prayer is not the posture or the time or place, but learning to pray in faith — at all times — unceasingly. It is the Holy Spirit who will lead you into prayer without ceasing.",
+      "**Prayer produces peace.** Philippians 4:6–7 says, “Be anxious for nothing, but in everything, by prayer and supplication with thanksgiving, let your requests be made known to God, and the peace of God, which surpasses all understanding will guard your hearts and minds through Christ Jesus.” In this passage, it does not say, pray and worry. It says pray and DON’T worry. Why are we to pray and not worry? Because prayer is the way we cast our care upon the Lord. When the devil tries to give us care, we are supposed to turn and give that care to God. That is what prayer is: our acknowledgment to the Lord that we cannot carry our burden of care — so we lay it all on Him. If we pray about something and then keep on worrying about it, we are mixing a positive with a negative. The two cancel each other out, so that we end up right back where we started — at zero! Prayer is a positive force. Worry is a negative force. You cancel out the positive power of prayer by giving in to the negative power of worry. As long as we are worrying, we are not trusting God and are unable to enter into His rest. Make a decision now to cast ALL your care on the Lord and begin to watch Him take care of you.",
+      "**Prayer produces rest.** In the gospel according to Matthew we hear Jesus say, “Come to me all you who are heavy laden, and I will give you rest.” If we are not at rest, we are not believing, because the fruit of believing is rest. God wants us not only to enter into His rest in our body, He also wants us to enter into His rest in our soul. To me, finding rest, relief, ease, refreshment, recreation, and blessed quiet for my soul means finding freedom from mental activity. It means not having to live in the torment of reasoning — always trying to come up with an answer I don’t have. I don’t have to worry — instead, I can remain in a place of quiet peace and rest through prayer.",
+      "**Prayer produces patience and hope.** It is easy to say, “Don’t worry.” But to actually DO that requires experience with God. It takes years of experience to fully overcome the habit of worry, anxiety, and fear, and to develop the habit of peace, rest, and hope. When you and I are in the midst of battle against our spiritual enemy, every round we go through produces valuable experience and strength. Each time we endure an attack, we become stronger. If we hang in there and refuse to give up, sooner or later, we will be more than the devil can handle. When that happens, we will have reached spiritual maturity.",
+      "**Corporate prayer.** Whenever believers are united in corporate prayer (praying together as a group), there is great power present. Jesus said, “For when two or three are gathered in My name, there I am in the midst of them.” Throughout the book of Acts, we read that the people of God came together with one accord. It was their united faith, their corporate agreement, and the presence of Jesus by means of the Holy Spirit that made their prayers so effective. They saw God move in mighty ways. When you come together to prayer, expect God to show His power.",
+      "**God changes people through prayer.** People who are hurting don’t need someone with a spirit of pride trying to fix them. They need acceptance, love, and prayer. In Exodus, Moses interceded for the children of Israel, when God would have destroyed them for being a stiff-necked people. We need to do the praying, and let God do the working. Jesus told the disciples at Gethsemane to watch and pray. We need to pray for one another — not judge and criticize each other. If you know that someone you care about is doing wrong, don’t gossip about it. Remember, we are not the potter — God is — and we certainly don’t know how to fix the broken vessels that we are. Pray, pray, pray! It is the only way to get things accomplished in God’s economy. If we do things His way, we always get good results.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "Ruth returns again and again to one quiet idea: prayer is meant to be as ordinary as breath. Not a performance, not a posture, not a schedule to keep — just the steady inhale and exhale of a soul that knows where to turn.",
+        "If there is a worry sitting heavy on you today, try the small experiment she offers. Hand it over. Notice the impulse to take it back, and hand it over again. The peace she promises isn’t the absence of trouble; it’s the presence of Someone willing to carry it with you.",
+      ],
+    },
+    description:
+      "Prayer II by Ruth D. Calk (February 2002) — a meditation on praying without ceasing, and the peace, rest, patience, and hope that prayer produces.",
+  },
 ];
 
 export function getPrayer(slug: string): Prayer | undefined {
