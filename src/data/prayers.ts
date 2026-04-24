@@ -13,6 +13,7 @@
  */
 
 import candlelightHero from "@/assets/prayer-candlelight-hero.jpg";
+import channingHero from "@/assets/prayer-channing-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -28,6 +29,12 @@ export type Prayer = {
   slug: string;
   /** Which blog category this prayer lives under. */
   categorySlug: string;
+  /**
+   * Layout variant. "study" (default) is a full prayer/teaching with body
+   * paragraphs and a closing reflection. "quote" renders a single passage
+   * large and centered — for short devotional quotes.
+   */
+  format?: "study" | "quote";
   /** Short kicker above the title in handwriting font. */
   kicker: string;
   /** Title — `**bold**` segments render in primary italic. */
@@ -46,10 +53,11 @@ export type Prayer = {
   /**
    * The body of the prayer / study. An array of paragraphs, rendered with
    * generous spacing. Use blank strings sparingly to add visual breathing room.
+   * For "quote" format, this holds the quote paragraphs (rendered large).
    */
   body: string[];
-  /** Closing reflection / meditation section. */
-  reflection: {
+  /** Closing reflection / meditation section. Optional for "quote" format. */
+  reflection?: {
     /** Small heading, e.g. "to sit with". */
     kicker: string;
     /** Heading, e.g. "A Reflection". */
