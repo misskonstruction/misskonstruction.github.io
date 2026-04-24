@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Mail, BookOpen, Github } from "lucide-react";
+import { Mail, BookOpen } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import profilePlaceholder from "@/assets/profile-placeholder.jpg";
 
@@ -48,13 +48,6 @@ function Contact() {
           >
             <BookOpen className="h-4 w-4" /> Journal
           </Link>
-          <a
-            href="https://github.com/misskonstruction"
-            target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
-          >
-            <Github className="h-4 w-4" /> GitHub
-          </a>
         </div>
       </section>
     </SiteLayout>

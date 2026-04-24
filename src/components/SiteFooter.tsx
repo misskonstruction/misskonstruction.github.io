@@ -1,3 +1,4 @@
+import { Github } from "lucide-react";
 import octopus from "@/assets/octopus-icon.png";
 
 export function SiteFooter() {
@@ -7,6 +8,18 @@ export function SiteFooter() {
         <p>
           &copy; Copyright 2026{" "}
           <strong className="text-foreground">MissKonstruction Photography</strong>. All Rights Reserved.
+        </p>
+        <p className="mt-3">
+          To view my work on GitHub, visit{" "}
+          <a
+            href="https://github.com/misskonstruction"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            <Github className="h-3.5 w-3.5" />
+            github.com/misskonstruction
+          </a>
         </p>
         <img
           src={octopus}
