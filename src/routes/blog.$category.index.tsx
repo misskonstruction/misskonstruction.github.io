@@ -10,6 +10,8 @@ import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import { getRecipesByCategory } from "@/data/recipes";
+import { getPrayersByCategory, prayerSharedHero } from "@/data/prayers";
+import { Flame } from "lucide-react";
 
 type CategoryDef = {
   slug: string;
