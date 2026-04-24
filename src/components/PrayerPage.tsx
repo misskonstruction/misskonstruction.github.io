@@ -22,6 +22,7 @@ function renderTitle(title: string) {
 export function PrayerPage({ prayer }: { prayer: Prayer }) {
   const hero = prayer.heroImage ?? prayerSharedHero;
   const heroAlt = prayer.heroAlt ?? "A candle burning beside an open Bible at dusk";
+  const isQuote = prayer.format === "quote";
 
   return (
     <SiteLayout>
@@ -128,52 +129,84 @@ export function PrayerPage({ prayer }: { prayer: Prayer }) {
             )}
 
             {/* Prayer body */}
-            <article
-              className="prayer-prose"
-              style={{ fontFamily: "var(--font-journal)" }}
-            >
-              {prayer.body.map((para, i) =>
-                para.trim() === "" ? (
-                  <div key={i} className="h-4" aria-hidden />
-                ) : (
-                  <p key={i}>{para}</p>
-                ),
-              )}
-            </article>
+            {isQuote ? (
+              <article style={{ fontFamily: "var(--font-journal)" }}>
+                <div className="text-center">
+                  <span
+                    className="block text-[var(--prayer-ember)]/60 text-[6rem] md:text-[8rem] leading-none"
+                    style={{ fontFamily: "var(--font-hand)" }}
+                    aria-hidden
+                  >
+                    &ldquo;
+                  </span>
+                </div>
+                <blockquote
+                  className="space-y-7 text-2xl md:text-3xl text-[var(--prayer-fg)] leading-[1.55] text-center"
+                  style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+                >
+                  {prayer.body.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </blockquote>
+                <p
+                  className="mt-10 text-center text-[var(--prayer-ember)] tracking-[0.2em] uppercase text-sm"
+                  style={{ fontFamily: "var(--font-journal)" }}
+                >
+                  — {prayer.author}
+                </p>
+              </article>
+            ) : (
+              <article
+                className="prayer-prose"
+                style={{ fontFamily: "var(--font-journal)" }}
+              >
+                {prayer.body.map((para, i) =>
+                  para.trim() === "" ? (
+                    <div key={i} className="h-4" aria-hidden />
+                  ) : (
+                    <p key={i}>{para}</p>
+                  ),
+                )}
+              </article>
+            )}
 
-            {/* Ornament */}
-            <div className="my-16 flex items-center justify-center gap-4">
-              <span className="h-px w-16 bg-[var(--prayer-ember)]/40" />
-              <span
-                className="text-[var(--prayer-ember)] text-2xl"
-                style={{ fontFamily: "var(--font-hand)" }}
-                aria-hidden
-              >
-                ✦
-              </span>
-              <span className="h-px w-16 bg-[var(--prayer-ember)]/40" />
-            </div>
+            {prayer.reflection && (
+              <>
+                {/* Ornament */}
+                <div className="my-16 flex items-center justify-center gap-4">
+                  <span className="h-px w-16 bg-[var(--prayer-ember)]/40" />
+                  <span
+                    className="text-[var(--prayer-ember)] text-2xl"
+                    style={{ fontFamily: "var(--font-hand)" }}
+                    aria-hidden
+                  >
+                    ✦
+                  </span>
+                  <span className="h-px w-16 bg-[var(--prayer-ember)]/40" />
+                </div>
 
-            {/* Reflection */}
-            <div className="mt-4">
-              <p
-                className="text-[var(--prayer-ember)] text-2xl mb-1"
-                style={{ fontFamily: "var(--font-hand)" }}
-              >
-                {prayer.reflection.kicker}
-              </p>
-              <h2
-                className="text-3xl md:text-4xl text-[var(--prayer-fg)] mb-6"
-                style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
-              >
-                {prayer.reflection.heading}
-              </h2>
-              <div className="space-y-5 text-[var(--prayer-fg)]/90 text-lg leading-relaxed" style={{ fontFamily: "var(--font-journal)" }}>
-                {prayer.reflection.paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-            </div>
+                {/* Reflection */}
+                <div className="mt-4">
+                  <p
+                    className="text-[var(--prayer-ember)] text-2xl mb-1"
+                    style={{ fontFamily: "var(--font-hand)" }}
+                  >
+                    {prayer.reflection.kicker}
+                  </p>
+                  <h2
+                    className="text-3xl md:text-4xl text-[var(--prayer-fg)] mb-6"
+                    style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
+                  >
+                    {prayer.reflection.heading}
+                  </h2>
+                  <div className="space-y-5 text-[var(--prayer-fg)]/90 text-lg leading-relaxed" style={{ fontFamily: "var(--font-journal)" }}>
+                    {prayer.reflection.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </section>
 
