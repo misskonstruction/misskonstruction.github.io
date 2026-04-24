@@ -19,6 +19,7 @@ import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
 import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
 import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
+import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 
 export type IngredientGroup = {
   title: string;
