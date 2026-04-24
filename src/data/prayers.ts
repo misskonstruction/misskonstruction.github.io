@@ -103,6 +103,25 @@ export const prayers: Prayer[] = [
     description:
       "Prayer II by Ruth D. Calk (February 2002) — a meditation on praying without ceasing, and the peace, rest, patience, and hope that prayer produces.",
   },
+  {
+    slug: "the-plain-simple-way-channing",
+    categorySlug: "faith-scripture",
+    format: "quote",
+    kicker: "a passage to keep",
+    title: "The Plain, **Simple Way**",
+    author: "William E. Channing",
+    attribution: "shared with me by my mother",
+    intro:
+      "A quiet rebuke to the anxious mind — and an invitation to live, hour by hour, in the small obediences of trust.",
+    heroImage: channingHero,
+    heroAlt: "An open hand releasing a small white feather into warm morning light by a sunlit window",
+    body: [
+      "Why is it that we are so busy with the future? It is not our province; and is there not a criminal interference with Him to whom it belongs, in our feverish, anxious attempts to dispose of it, and in filling it up with shadows of good and evil shaped by our own wild imaginations?",
+      "To do God’s will as fast as it is made known to us, to inquire hourly — I had almost said each moment — what He requires of us, and to leave ourselves, our friends, and every interest at His control, with a cheerful trust that the path which He marks out leads to our perfection and to Himself, — this is at once our duty and happiness; and why will we not walk in the plain, simple way?",
+    ],
+    description:
+      "A devotional passage by William E. Channing on releasing the future and walking in the plain, simple way of trust.",
+  },
 ];
 
 export function getPrayer(slug: string): Prayer | undefined {
