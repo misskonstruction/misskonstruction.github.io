@@ -14,6 +14,7 @@
 
 import candlelightHero from "@/assets/prayer-candlelight-hero.jpg";
 import channingHero from "@/assets/prayer-channing-hero.jpg";
+import maisieHero from "@/assets/prayer-maisie-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -121,6 +122,49 @@ export const prayers: Prayer[] = [
     ],
     description:
       "A devotional passage by William E. Channing on releasing the future and walking in the plain, simple way of trust.",
+  },
+  {
+    slug: "in-celebration-maisie-renee",
+    categorySlug: "faith-scripture",
+    kicker: "a prayer for my grandchild",
+    title: "In **Celebration**",
+    author: "for Maisie Renee",
+    attribution: "a grandmother's prayer",
+    intro:
+      "A small thanksgiving for the gift of a granddaughter — for the joy she carries into a family, and for the quiet promise to be present for every step she takes.",
+    heroImage: maisieHero,
+    heroAlt: "A newborn baby resting peacefully against her mother, tiny fingers curled in tender stillness",
+    scripture: {
+      reference: "Mother Teresa",
+      text: "Joy is very infectious; therefore, be always full of joy.",
+    },
+    body: [
+      "Lord, thank you for my beautiful grandchild Maisie Renee.",
+      "She fills our family with joy.",
+      "",
+      "As I learn my place in her life,",
+      "help me to cherish each moment.",
+      "Her mere presence is a gift.",
+      "",
+      "As she makes her way in this life,",
+      "may she feel my support.",
+      "If she stumbles, may she know that I am here for her.",
+      "",
+      "I am grateful.",
+      "Words cannot express the joy she brings.",
+      "",
+      "Lord, thank you.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Grandmother's Vow",
+      paragraphs: [
+        "There is a particular kind of love that arrives with a grandchild — quieter than a parent's, but no less fierce. It is the love of someone who has lived enough to know how fast the years go, and who promises, in the secret of her heart, to pay attention.",
+        "This is the work of a grandmother: to notice, to delight, to be a soft place to land. To say, again and again, by presence more than by words — I am here. I am grateful. You are a joy.",
+      ],
+    },
+    description:
+      "In Celebration — a grandmother's prayer of thanksgiving for Maisie Renee, on the joy a grandchild brings and the quiet promise to be ever-present.",
   },
 ];
 
