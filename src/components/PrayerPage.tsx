@@ -217,13 +217,15 @@ export function PrayerPage({ prayer }: { prayer: Prayer }) {
               className="text-[var(--prayer-ember)] text-3xl mb-3"
               style={{ fontFamily: "var(--font-hand)" }}
             >
-              amen.
+              {isQuote ? "selah." : "amen."}
             </p>
             <p
               className="text-[var(--prayer-muted)] text-lg leading-relaxed"
               style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
             >
-              May this prayer keep its lamp lit in the quiet hours.
+              {isQuote
+                ? "A few words to carry into the quiet hours."
+                : "May this prayer keep its lamp lit in the quiet hours."}
             </p>
             <Link
               to="/blog/$category"
