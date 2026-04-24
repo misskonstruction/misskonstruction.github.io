@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowLeft, ArrowRight, Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane } from "lucide-react";
-import { getWordPressPosts, type WPPost } from "@/server/wordpress";
+import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -23,95 +23,14 @@ type CategoryDef = {
 type SerializableCategory = Omit<CategoryDef, "icon">;
 
 const categories: CategoryDef[] = [
-  {
-    slug: "coastal-photography",
-    title: "Coastal Photography",
-    emoji: "📷",
-    blurb: "Salt air, soft light, and the slow stories the shoreline keeps telling.",
-    image: coastalImg,
-    icon: Camera,
-  },
-  {
-    slug: "from-the-kitchen",
-    title: "From the Kitchen",
-    emoji: "🍳",
-    blurb: "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays.",
-    image: kitchenImg,
-    icon: UtensilsCrossed,
-  },
-  {
-    slug: "creative-life",
-    title: "Creative Life",
-    emoji: "🎨",
-    blurb: "Sketchbooks, side projects, and the messy middle of making things.",
-    image: creativeImg,
-    icon: Palette,
-  },
-  {
-    slug: "faith-scripture",
-    title: "Faith & Scripture",
-    emoji: "✝️",
-    blurb: "Verses I keep returning to, and the quiet places where grace meets the ordinary.",
-    image: faithImg,
-    icon: BookOpen,
-  },
-  {
-    slug: "reflections",
-    title: "Reflections",
-    emoji: "🌿",
-    blurb: "Field notes from everyday life — gratitude, growth, and small thoughts worth slowing down for.",
-    image: reflectionsImg,
-    icon: Leaf,
-  },
-  {
-    slug: "wander-roam",
-    title: "Wander & Roam",
-    emoji: "✈️",
-    blurb: "Travel notes from the road and the in-between places — little towns, long drives, the quiet wonder of somewhere new.",
-    image: wanderImg,
-    icon: Plane,
-  },
-];
-
-function findCategory(slug: string): CategoryDef | undefined {
-  return categories.find((c) => c.slug === slug);
-}
-
-function serializeCategory(category: CategoryDef | undefined): SerializableCategory | null {
-  if (!category) return null;
-  return {
-    slug: category.slug,
-    title: category.title,
-    emoji: category.emoji,
-    blurb: category.blurb,
-    image: category.image,
-  };
-}
-
-function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return iso;
-  }
-}
-
-function imageForPost(post: WPPost, fallback: string): string {
-  if (post.featuredImage) return post.featuredImage;
-  return fallback;
-}
-
+...
 export const Route = createFileRoute("/blog/$category/")({
   component: CategoryPage,
   loader: async ({ params }) => {
     const cat = findCategory(params.category);
     const serializableCategory = serializeCategory(cat);
     try {
-      const all = await getWordPressPosts();
+      const all = await getPublicWordPressPosts();
       const posts = cat
         ? all.filter((p) =>
             p.categories.some((c) => c.toLowerCase() === cat.title.toLowerCase()),
@@ -120,7 +39,7 @@ export const Route = createFileRoute("/blog/$category/")({
       return { posts, category: serializableCategory };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WPPost[], category: serializableCategory };
+      return { posts: [] as WordPressPost[], category: serializableCategory };
     }
   },
   head: ({ params }) => {

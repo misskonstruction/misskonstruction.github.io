@@ -8,18 +8,18 @@ import creativeImg from "@/assets/blog-creative.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
-import { getWordPressPosts, type WPPost } from "@/server/wordpress";
+import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 import { recipes } from "@/data/recipes";
 
 export const Route = createFileRoute("/blog/")({
   component: Blog,
   loader: async () => {
     try {
-      const posts = await getWordPressPosts();
+      const posts = await getPublicWordPressPosts();
       return { posts };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WPPost[] };
+      return { posts: [] as WordPressPost[] };
     }
   },
   head: () => ({
@@ -145,7 +145,7 @@ function Blog() {
   }));
 
 
-  const imageForPost = (post: WPPost): string => {
+  const imageForPost = (post: WordPressPost): string => {
     if (post.featuredImage) return post.featuredImage;
     const match = categoryDefs.find((c) =>
       post.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
