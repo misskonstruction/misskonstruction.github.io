@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
+import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
@@ -61,6 +62,12 @@ const RecipesSlowCookerCodDogFoodRoute =
   RecipesSlowCookerCodDogFoodRouteImport.update({
     id: '/recipes/slow-cooker-cod-dog-food',
     path: '/recipes/slow-cooker-cod-dog-food',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesBitchinSlowCookerPorkchopsRoute =
+  RecipesBitchinSlowCookerPorkchopsRouteImport.update({
+    id: '/recipes/bitchin-slow-cooker-porkchops',
+    path: '/recipes/bitchin-slow-cooker-porkchops',
     getParentRoute: () => rootRouteImport,
   } as any)
 const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
+  '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/blog/': typeof BlogIndexRoute
@@ -137,6 +145,7 @@ export interface FileRoutesByTo {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
+  '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/blog': typeof BlogIndexRoute
@@ -156,6 +165,7 @@ export interface FileRoutesById {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
+  '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/blog/': typeof BlogIndexRoute
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
+    | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/blog/'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
+    | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/blog'
@@ -210,6 +222,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/recipes/$recipeSlug'
+    | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/blog/'
@@ -228,6 +241,7 @@ export interface RootRouteChildren {
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
+  RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
 }
@@ -281,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/slow-cooker-cod-dog-food'
       fullPath: '/recipes/slow-cooker-cod-dog-food'
       preLoaderRoute: typeof RecipesSlowCookerCodDogFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/bitchin-slow-cooker-porkchops': {
+      id: '/recipes/bitchin-slow-cooker-porkchops'
+      path: '/recipes/bitchin-slow-cooker-porkchops'
+      fullPath: '/recipes/bitchin-slow-cooker-porkchops'
+      preLoaderRoute: typeof RecipesBitchinSlowCookerPorkchopsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/$recipeSlug': {
@@ -386,6 +407,8 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
   RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,
+  RecipesBitchinSlowCookerPorkchopsRoute:
+    RecipesBitchinSlowCookerPorkchopsRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
 }
