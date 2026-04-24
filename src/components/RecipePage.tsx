@@ -58,6 +58,16 @@ export function RecipePage({ recipe }: { recipe: Recipe }) {
             <span style={{ fontFamily: "var(--font-journal)" }}>From the Kitchen</span>
           </Link>
 
+          {recipe.forDogs && (
+            <div
+              className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/40 text-primary"
+              style={{ fontFamily: "var(--font-journal)" }}
+            >
+              <span aria-hidden>🐾</span>
+              <span className="text-sm uppercase tracking-wider">For the Pups — not for humans</span>
+            </div>
+          )}
+
           <p
             className="text-primary text-2xl md:text-3xl mb-2"
             style={{ fontFamily: "var(--font-hand)" }}

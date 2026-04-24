@@ -272,7 +272,7 @@ function CategoryPage() {
                       className="absolute top-3 left-3 bg-background/90 backdrop-blur px-3 py-1 rounded-sm text-xs uppercase tracking-wider text-primary border border-primary/30"
                       style={{ fontFamily: "var(--font-journal)" }}
                     >
-                      Recipe
+                      {r.forDogs ? "🐾 For the Pups" : "Recipe"}
                     </span>
                   </div>
                   <div className="p-6">

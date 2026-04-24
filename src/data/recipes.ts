@@ -18,6 +18,7 @@ import louisianaGumboImg from "@/assets/recipe-louisiana-gumbo.jpg";
 import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
 import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
+import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -71,6 +72,8 @@ export type Recipe = {
   };
   /** SEO meta description. */
   description: string;
+  /** When true, this recipe is for dogs — shown with a 🐾 paw indicator. */
+  forDogs?: boolean;
 };
 
 export const recipes: Recipe[] = [
@@ -577,6 +580,123 @@ export const recipes: Recipe[] = [
       kicker: "thanks, mom",
       body:
         "Some recipes you cook. Others you inherit. This one's both — and it tastes better every time you make it.",
+    },
+  },
+  {
+    slug: "slow-cooker-homemade-dog-food",
+    categorySlug: "from-the-kitchen",
+    forDogs: true,
+    kicker: "made with love, for the pups 🐾",
+    title: "Slow Cooker **Homemade Dog Food**",
+    intro:
+      "A wholesome, vet-friendly bowl for the four-legged loves of my life — lean turkey or chicken slow-simmered with brown rice, sweet potato, and garden vegetables. No salt, no onions, no garlic — just real food that makes tails wag and bellies happy.",
+    heroImage: slowCookerDogFoodImg,
+    heroAlt: "A rustic bowl of homemade slow cooker dog food with turkey, brown rice, sweet potato, carrots, green beans, and peas",
+    description:
+      "An easy slow-cooker homemade dog food recipe with turkey or chicken, brown rice, sweet potato, and vegetables — plus optional senior and puppy add-ins.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "15 min" },
+      { icon: "flame", label: "Cook", value: "6–7 hr (low)" },
+      { icon: "users", label: "Makes", value: "~1 week" },
+      { icon: "utensils-crossed", label: "For", value: "Dogs 🐾" },
+    ],
+    ingredientGroups: [
+      {
+        title: "The base",
+        items: [
+          "2–3 lbs ground turkey or chicken",
+          "1 cup brown rice",
+          "1 large sweet potato, cubed",
+          "1 cup carrots, chopped",
+          "1 cup green beans (fresh or frozen)",
+          "½ cup peas",
+          "4 cups water or unsalted chicken broth",
+        ],
+      },
+      {
+        title: "Stir in at the end",
+        items: [
+          "1 tbsp olive oil or fish oil",
+          "1 tsp ground eggshell powder (for calcium)",
+        ],
+      },
+      {
+        title: "Optional nutrition boosters",
+        items: [
+          "Blueberries",
+          "Pumpkin (plain puree)",
+          "Sardines in water",
+          "Plain Greek yogurt",
+          "Chopped spinach",
+        ],
+      },
+      {
+        title: "For senior dogs (joint support add-ins)",
+        items: [
+          "Fish oil (omega-3 for joints)",
+          "A pinch of turmeric (anti-inflammatory)",
+          "Plain pumpkin (easy digestion)",
+          "Ground eggshell powder (calcium)",
+          "Sardines in water (1–2 a week)",
+          "Bone broth",
+          "Green-lipped mussel powder (optional)",
+        ],
+      },
+      {
+        title: "For young dogs (extra growth fuel)",
+        items: [
+          "About 25% more meat than a senior portion",
+          "1 egg a few times per week",
+          "Fish oil or olive oil",
+          "Cottage cheese",
+          "Plain Greek yogurt",
+          "Blueberries",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Layer the slow cooker",
+        body:
+          "Add the ground turkey or chicken to the slow cooker, followed by the brown rice and all of the chopped vegetables.",
+      },
+      {
+        title: "Add the liquid",
+        body:
+          "Pour in the water or unsalted chicken broth and stir everything together so the rice and vegetables are evenly distributed.",
+      },
+      {
+        title: "Slow cook",
+        body:
+          "Cover and cook on low for 6–7 hours, or on high for 3–4 hours, until the meat is fully cooked, the rice is tender, and the sweet potato is soft.",
+      },
+      {
+        title: "Break it up",
+        body:
+          "Stir well, breaking up the ground meat with a spoon so there are no big clumps. Make sure everything is mixed evenly.",
+      },
+      {
+        title: "Cool and finish",
+        body:
+          "Let the food cool completely before serving. Once cool, mix in the olive oil or fish oil and the ground eggshell powder for calcium.",
+      },
+      {
+        title: "Portion and serve",
+        body:
+          "Serve based on your dog's size — small dogs ½–1 cup per meal, medium dogs 1–1½ cups, large dogs 2–3 cups. Refrigerate leftovers up to 4 days, or freeze portions for 2–3 months.",
+      },
+      {
+        title: "Bonus: joint support gravy for seniors",
+        body:
+          "Warm 2 cups unsalted bone broth in a saucepan (don't boil). Mash in 1 small can of drained sardines in water, then stir in ½ tsp turmeric, ½ tsp ground ginger, 1 tbsp plain pumpkin puree, and (optional) a pinch of black pepper to help turmeric absorption. Simmer gently for 5 minutes, remove from heat, and stir in 1 tsp fish oil. Blend smooth if you like. Spoon 2–4 tablespoons over your senior dog's food at mealtime — it keeps in the fridge up to 5 days, or freeze in ice cube trays for easy portions.",
+      },
+    ],
+    cooksNote:
+      "⚠️ Never season dog food with salt, onions, or garlic — those can be harmful. Senior dogs do best with two smaller meals a day and slightly fewer calories to ease the hips. Warming their bowl slightly and adding a splash of bone broth makes everything easier to eat and digest.",
+    signOff: {
+      kicker: "wag, wag 🐾",
+      body:
+        "Made with love for the pups who follow us from kitchen to porch and back again. As always — check with your vet before any big diet changes, especially for puppies, seniors, or dogs with health conditions.",
     },
   },
 ];
