@@ -1,4 +1,4 @@
-import { Github, Cloud } from "lucide-react";
+import { Github } from "lucide-react";
 import octopus from "@/assets/octopus-icon.png";
 
 export function SiteFooter() {
@@ -19,18 +19,6 @@ export function SiteFooter() {
           >
             <Github className="h-3.5 w-3.5" />
             github.com/misskonstruction
-          </a>
-        </p>
-        <p className="mt-2">
-          Find me on Bluesky at{" "}
-          <a
-            href="https://bsky.app/profile/misskonstruction.bsky.social"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
-          >
-            <Cloud className="h-3.5 w-3.5" />
-            @misskonstruction.bsky.social
           </a>
         </p>
         <img
