@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowLeft, ArrowRight, Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane } from "lucide-react";
-import { getWordPressPosts, type WPPost } from "@/server/wordpress";
+import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -100,7 +100,7 @@ function formatDate(iso: string): string {
   }
 }
 
-function imageForPost(post: WPPost, fallback: string): string {
+function imageForPost(post: WordPressPost, fallback: string): string {
   if (post.featuredImage) return post.featuredImage;
   return fallback;
 }
@@ -111,16 +111,14 @@ export const Route = createFileRoute("/blog/$category/")({
     const cat = findCategory(params.category);
     const serializableCategory = serializeCategory(cat);
     try {
-      const all = await getWordPressPosts();
+      const all = await getPublicWordPressPosts();
       const posts = cat
-        ? all.filter((p) =>
-            p.categories.some((c) => c.toLowerCase() === cat.title.toLowerCase()),
-          )
+        ? all.filter((p) => p.categories.some((c) => c.toLowerCase() === cat.title.toLowerCase()))
         : [];
       return { posts, category: serializableCategory };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WPPost[], category: serializableCategory };
+      return { posts: [] as WordPressPost[], category: serializableCategory };
     }
   },
   head: ({ params }) => {
@@ -182,10 +180,7 @@ function CategoryPage() {
     return (
       <SiteLayout>
         <div className="container mx-auto px-4 py-24 text-center">
-          <h1
-            className="text-3xl mb-4"
-            style={{ fontFamily: "var(--font-journal)" }}
-          >
+          <h1 className="text-3xl mb-4" style={{ fontFamily: "var(--font-journal)" }}>
             That page doesn't exist
           </h1>
           <Link to="/blog" className="text-primary inline-flex items-center gap-2">
@@ -201,7 +196,6 @@ function CategoryPage() {
 
   return (
     <SiteLayout>
-      {/* Header */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0">
           <img
@@ -223,16 +217,10 @@ function CategoryPage() {
             <span style={{ fontFamily: "var(--font-journal)" }}>The Journal</span>
           </Link>
 
-          <p
-            className="text-primary text-2xl md:text-3xl mb-2"
-            style={{ fontFamily: "var(--font-hand)" }}
-          >
+          <p className="text-primary text-2xl md:text-3xl mb-2" style={{ fontFamily: "var(--font-hand)" }}>
             {category.emoji} the page on
           </p>
-          <h1
-            className="text-5xl md:text-6xl text-foreground"
-            style={{ fontFamily: "var(--font-journal)", fontWeight: 400 }}
-          >
+          <h1 className="text-5xl md:text-6xl text-foreground" style={{ fontFamily: "var(--font-journal)", fontWeight: 400 }}>
             <em className="text-primary">{category.title}</em>
           </h1>
           <div className="mx-auto mt-6 mb-6 h-px w-20 bg-primary/60" />
@@ -242,32 +230,20 @@ function CategoryPage() {
           >
             {category.blurb}
           </p>
-          {(() => {
-            const totalEntries = posts.length + featuredRecipes.length;
-            return (
-              <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
-                <Icon className="h-4 w-4" />
-                {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
-              </div>
-            );
-          })()}
+          <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
+            <Icon className="h-4 w-4" />
+            {posts.length + featuredRecipes.length} {posts.length + featuredRecipes.length === 1 ? "entry" : "entries"}
+          </div>
         </div>
       </section>
 
-      {/* Featured in-house recipes */}
       {featuredRecipes.length > 0 && (
         <section className="container mx-auto px-4 pt-16 md:pt-20">
           <div className="max-w-5xl mx-auto mb-8">
-            <p
-              className="text-primary text-2xl mb-1"
-              style={{ fontFamily: "var(--font-hand)" }}
-            >
+            <p className="text-primary text-2xl mb-1" style={{ fontFamily: "var(--font-hand)" }}>
               from the recipe box
             </p>
-            <h2
-              className="text-3xl md:text-4xl text-foreground"
-              style={{ fontFamily: "var(--font-journal)" }}
-            >
+            <h2 className="text-3xl md:text-4xl text-foreground" style={{ fontFamily: "var(--font-journal)" }}>
               Featured <em className="text-primary">recipes</em>
             </h2>
           </div>
@@ -300,16 +276,10 @@ function CategoryPage() {
                     </span>
                   </div>
                   <div className="p-6">
-                    <h3
-                      className="text-2xl mb-3 text-foreground leading-tight"
-                      style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
-                    >
+                    <h3 className="text-2xl mb-3 text-foreground leading-tight" style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}>
                       {cardTitle}
                     </h3>
-                    <p
-                      className="text-muted-foreground leading-relaxed mb-4 line-clamp-3"
-                      style={{ fontFamily: "var(--font-journal)" }}
-                    >
+                    <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3" style={{ fontFamily: "var(--font-journal)" }}>
                       {r.intro}
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:gap-3 transition-all">
@@ -324,20 +294,14 @@ function CategoryPage() {
         </section>
       )}
 
-      {/* Posts */}
       <section className="container mx-auto px-4 py-16 md:py-20">
         {posts.length === 0 ? (
           featuredRecipes.length === 0 ? (
             <div className="text-center py-16">
-              <p
-                className="text-muted-foreground text-lg mb-2"
-                style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
-              >
+              <p className="text-muted-foreground text-lg mb-2" style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}>
                 No entries here yet — check back soon.
               </p>
-              <p className="text-sm text-muted-foreground">
-                Posts on WordPress filed under "{category.title}" will appear here.
-              </p>
+              <p className="text-sm text-muted-foreground">Posts on WordPress filed under "{category.title}" will appear here.</p>
             </div>
           ) : null
         ) : (
@@ -363,19 +327,11 @@ function CategoryPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                   </div>
                   <div className="p-6">
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {formatDate(post.date)}
-                    </p>
-                    <h3
-                      className="text-2xl mb-3 text-foreground leading-tight"
-                      style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
-                    >
+                    <p className="text-sm text-muted-foreground mb-2">{formatDate(post.date)}</p>
+                    <h3 className="text-2xl mb-3 text-foreground leading-tight" style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}>
                       {post.title}
                     </h3>
-                    <p
-                      className="text-muted-foreground leading-relaxed mb-4 line-clamp-3"
-                      style={{ fontFamily: "var(--font-journal)" }}
-                    >
+                    <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3" style={{ fontFamily: "var(--font-journal)" }}>
                       {post.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:gap-3 transition-all">
