@@ -46,7 +46,7 @@ function Contact() {
             to="/blog"
             className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
           >
-            <BookOpen className="h-4 w-4" /> My Blog
+            <BookOpen className="h-4 w-4" /> Journal
           </Link>
           <a
             href="https://github.com/misskonstruction"
