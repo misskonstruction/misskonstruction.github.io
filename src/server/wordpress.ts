@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/wordpress_com";
 const SITE_ID = "195471483"; // misskonstruction.wordpress.com — "Still & Salted"
+const PUBLIC_API_URL = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_ID}`;
 
 export type WPPost = {
   id: number;
@@ -58,38 +59,43 @@ function normalize(p: RawPost): WPPost {
   };
 }
 
-export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async () => {
+async function fetchWordPressApi<T>(endpoint: string, options?: { allowNotFound?: boolean }): Promise<T | null> {
   const lovableKey = process.env.LOVABLE_API_KEY;
   const wpKey = process.env.WORDPRESS_COM_API_KEY;
-  // During static prerender (e.g. GitHub Pages build), these env vars are not
-  // present. Return an empty list instead of throwing so the page still renders.
-  if (!lovableKey || !wpKey) {
-    console.warn("[wordpress] Missing API keys — returning empty post list.");
-    return [] as WPPost[];
+
+  if (lovableKey && wpKey) {
+    const gatewayRes = await fetch(`${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${lovableKey}`,
+        "X-Connection-Api-Key": wpKey,
+      },
+    });
+
+    if (gatewayRes.status === 404 && options?.allowNotFound) return null;
+    if (gatewayRes.ok) return (await gatewayRes.json()) as T;
+
+    const body = await gatewayRes.text();
+    console.warn(`[wordpress] Gateway fetch failed [${gatewayRes.status}], falling back to public API: ${body}`);
   }
 
+  const publicRes = await fetch(`${PUBLIC_API_URL}${endpoint}`);
+  if (publicRes.status === 404 && options?.allowNotFound) return null;
+  if (!publicRes.ok) {
+    const body = await publicRes.text();
+    throw new Error(`WordPress.com fetch failed [${publicRes.status}]: ${body}`);
+  }
+
+  return (await publicRes.json()) as T;
+}
+
+export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async () => {
   const params = new URLSearchParams({
     number: "30",
     fields: "ID,date,title,excerpt,URL,slug,featured_image,categories",
   });
 
-  const res = await fetch(
-    `${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}/posts?${params.toString()}`,
-    {
-      headers: {
-        Authorization: `Bearer ${lovableKey}`,
-        "X-Connection-Api-Key": wpKey,
-      },
-    },
-  );
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`WordPress.com fetch failed [${res.status}]: ${body}`);
-  }
-
-  const data = (await res.json()) as { posts?: RawPost[] };
-  return (data.posts ?? []).map(normalize);
+  const data = await fetchWordPressApi<{ posts?: RawPost[] }>(`/posts?${params.toString()}`);
+  return (data?.posts ?? []).map(normalize);
 });
 
 /**
@@ -119,30 +125,11 @@ export const getWordPressPostBySlug = createServerFn({ method: "GET" })
     return { slug };
   })
   .handler(async ({ data }): Promise<WPPostFull | null> => {
-    const lovableKey = process.env.LOVABLE_API_KEY;
-    const wpKey = process.env.WORDPRESS_COM_API_KEY;
-    if (!lovableKey || !wpKey) {
-      console.warn("[wordpress] Missing API keys — returning null for post.");
-      return null;
-    }
+    const raw = await fetchWordPressApi<RawPost>(`/posts/slug:${encodeURIComponent(data.slug)}`, {
+      allowNotFound: true,
+    });
+    if (!raw) return null;
 
-    const res = await fetch(
-      `${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}/posts/slug:${encodeURIComponent(data.slug)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${lovableKey}`,
-          "X-Connection-Api-Key": wpKey,
-        },
-      },
-    );
-
-    if (res.status === 404) return null;
-    if (!res.ok) {
-      const body = await res.text();
-      throw new Error(`WordPress.com fetch failed [${res.status}]: ${body}`);
-    }
-
-    const raw = (await res.json()) as RawPost;
     const base = normalize(raw);
     return {
       ...base,
