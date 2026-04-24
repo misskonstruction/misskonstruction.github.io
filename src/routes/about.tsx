@@ -20,14 +20,15 @@ function About() {
         <div className="inline-flex h-px w-16 bg-primary mt-4 mb-8" />
         <div className="prose prose-invert max-w-none text-muted-foreground space-y-4 text-base leading-relaxed">
           <p>
-            MissKonstruction Photography is the personal portfolio of a Florida-based
-            photographer with a love for the coast, soft moments, and the small
-            things easy to miss.
+            Hi, I'm Cami LeGrand — the eyes behind the lens and owner of
+            MissKonstruction Photography. I'm a Florida-based photographer with
+            a love for the coast, soft moments, and the small things easy to
+            miss.
           </p>
           <p>
-            Work spans maternity and newborn sessions, Florida gulf coast birding,
-            flowers, and the slow rhythm of saltlife. Each gallery is curated and
-            refreshed as new work comes in.
+            My work spans maternity and newborn sessions, Florida gulf coast
+            birding, flowers, and the slow rhythm of saltlife. Each gallery is
+            curated and refreshed as new work comes in.
           </p>
         </div>
         <div className="mt-10 flex justify-end">
