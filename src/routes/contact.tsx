@@ -42,7 +42,7 @@ function Contact() {
             <Mail className="h-4 w-4" /> Email me
           </a>
           <a
-            href="https://www.facebook.com/camihayes72"
+            href="https://www.facebook.com/misskonstruction/"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
