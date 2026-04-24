@@ -18,6 +18,7 @@ import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/r
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
+import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
@@ -76,6 +77,12 @@ const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
   path: '/recipes/$recipeSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrayersInCelebrationMaisieReneeRoute =
+  PrayersInCelebrationMaisieReneeRouteImport.update({
+    id: '/prayers/in-celebration-maisie-renee',
+    path: '/prayers/in-celebration-maisie-renee',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PrayersPrayerSlugRoute = PrayersPrayerSlugRouteImport.update({
   id: '/prayers/$prayerSlug',
   path: '/prayers/$prayerSlug',
@@ -134,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -152,6 +160,7 @@ export interface FileRoutesByTo {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -173,6 +182,7 @@ export interface FileRoutesById {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/in-celebration-maisie-renee'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/in-celebration-maisie-renee'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -233,6 +245,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/in-celebration-maisie-renee'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -253,6 +266,7 @@ export interface RootRouteChildren {
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
+  PrayersInCelebrationMaisieReneeRoute: typeof PrayersInCelebrationMaisieReneeRoute
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
@@ -322,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/$recipeSlug'
       fullPath: '/recipes/$recipeSlug'
       preLoaderRoute: typeof RecipesRecipeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/in-celebration-maisie-renee': {
+      id: '/prayers/in-celebration-maisie-renee'
+      path: '/prayers/in-celebration-maisie-renee'
+      fullPath: '/prayers/in-celebration-maisie-renee'
+      preLoaderRoute: typeof PrayersInCelebrationMaisieReneeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prayers/$prayerSlug': {
@@ -427,6 +448,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
+  PrayersInCelebrationMaisieReneeRoute: PrayersInCelebrationMaisieReneeRoute,
   RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,
   RecipesBitchinSlowCookerPorkchopsRoute:
     RecipesBitchinSlowCookerPorkchopsRoute,
