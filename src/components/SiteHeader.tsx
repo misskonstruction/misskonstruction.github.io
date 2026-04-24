@@ -46,7 +46,7 @@ export function SiteHeader() {
           </div>
 
           <Link to="/contact" className="hover:text-primary transition-colors" activeProps={{ className: "text-primary" }}>Contact</Link>
-          <Link to="/blog" className="hover:text-primary transition-colors" activeProps={{ className: "text-primary" }}>My Blog</Link>
+          <Link to="/blog" className="hover:text-primary transition-colors" activeProps={{ className: "text-primary" }}>Journal</Link>
         </nav>
 
         <button className="md:hidden text-foreground" onClick={() => setOpen(!open)} aria-label="Toggle menu">
@@ -65,7 +65,7 @@ export function SiteHeader() {
             ))}
           </div>
           <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
-          <Link to="/blog" onClick={() => setOpen(false)}>My Blog</Link>
+          <Link to="/blog" onClick={() => setOpen(false)}>Journal</Link>
         </nav>
       )}
     </header>
