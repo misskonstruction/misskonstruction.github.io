@@ -10,6 +10,8 @@ import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import { getRecipesByCategory } from "@/data/recipes";
+import { getPrayersByCategory, prayerSharedHero } from "@/data/prayers";
+import { Flame } from "lucide-react";
 
 type CategoryDef = {
   slug: string;
@@ -193,6 +195,8 @@ function CategoryPage() {
 
   const Icon = fullCategory.icon;
   const featuredRecipes = getRecipesByCategory(category.slug);
+  const featuredPrayers = getPrayersByCategory(category.slug);
+  const totalEntries = posts.length + featuredRecipes.length + featuredPrayers.length;
 
   return (
     <SiteLayout>
@@ -232,10 +236,72 @@ function CategoryPage() {
           </p>
           <div className="mt-6 inline-flex items-center gap-2 text-primary text-xl" style={{ fontFamily: "var(--font-hand)" }}>
             <Icon className="h-4 w-4" />
-            {posts.length + featuredRecipes.length} {posts.length + featuredRecipes.length === 1 ? "entry" : "entries"}
+            {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
           </div>
         </div>
       </section>
+
+      {featuredPrayers.length > 0 && (
+        <section className="container mx-auto px-4 pt-16 md:pt-20">
+          <div className="max-w-5xl mx-auto mb-8">
+            <p className="text-primary text-2xl mb-1" style={{ fontFamily: "var(--font-hand)" }}>
+              by candlelight
+            </p>
+            <h2 className="text-3xl md:text-4xl text-foreground" style={{ fontFamily: "var(--font-journal)" }}>
+              Prayers & <em className="text-primary">studies</em>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {featuredPrayers.map((p, i) => {
+              const tilt = i % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
+              const cardTitle = p.title.replace(/\*\*/g, "");
+              const cardImage = p.heroImage ?? prayerSharedHero;
+              return (
+                <Link
+                  key={p.slug}
+                  to="/prayers/$prayerSlug"
+                  params={{ prayerSlug: p.slug }}
+                  className={`group bg-card border border-primary/30 ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm block`}
+                >
+                  <div className="relative overflow-hidden aspect-[4/3]">
+                    <img
+                      src={cardImage}
+                      alt={cardTitle}
+                      width={1024}
+                      height={768}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                    <span
+                      className="absolute top-3 left-3 bg-background/90 backdrop-blur px-3 py-1 rounded-sm text-xs uppercase tracking-wider text-primary border border-primary/30 inline-flex items-center gap-1.5"
+                      style={{ fontFamily: "var(--font-journal)" }}
+                    >
+                      <Flame className="h-3 w-3" />
+                      Prayer Study
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl mb-2 text-foreground leading-tight" style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}>
+                      {cardTitle}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-3" style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}>
+                      by {p.author}
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3" style={{ fontFamily: "var(--font-journal)" }}>
+                      {p.intro}
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:gap-3 transition-all">
+                      Sit with this prayer <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mx-auto mt-16 h-px w-20 bg-primary/30" />
+        </section>
+      )}
 
       {featuredRecipes.length > 0 && (
         <section className="container mx-auto px-4 pt-16 md:pt-20">

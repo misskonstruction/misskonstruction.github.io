@@ -154,3 +154,63 @@
   font-size: 0.95em;
 }
 
+/* =========================================================================
+ * Prayer / Faith & Scripture theme — "candlelight & sanctuary"
+ * Scoped under .prayer-theme so it only affects prayer pages, not the rest
+ * of the site. Warm ember on deep walnut, parchment-colored text.
+ * ========================================================================= */
+.prayer-theme {
+  --prayer-bg: oklch(0.18 0.025 45);            /* deep walnut / ember-night */
+  --prayer-card: oklch(0.23 0.03 50);           /* aged leather */
+  --prayer-fg: oklch(0.94 0.025 80);            /* warm parchment */
+  --prayer-muted: oklch(0.78 0.04 65);          /* candle-lit cream */
+  --prayer-ember: oklch(0.74 0.16 55);          /* warm ember/amber */
+  --prayer-glow: oklch(0.82 0.14 70);           /* honey glow */
+  --prayer-border: oklch(0.74 0.16 55 / 22%);   /* ember at low opacity */
+
+  background-color: var(--prayer-bg);
+  color: var(--prayer-fg);
+}
+
+.prayer-prose {
+  color: var(--prayer-fg);
+  font-size: 1.2rem;
+  line-height: 1.85;
+}
+.prayer-prose p {
+  color: var(--prayer-fg);
+}
+.prayer-prose p + p {
+  margin-top: 1.4rem;
+  text-indent: 1.5rem;
+}
+/* No indent on the first paragraph — feels more like a meditation opening. */
+.prayer-prose p:first-child {
+  text-indent: 0;
+}
+.prayer-prose p:first-child::first-letter {
+  font-family: var(--font-journal);
+  font-size: 3.6rem;
+  font-weight: 500;
+  float: left;
+  line-height: 0.9;
+  padding: 0.35rem 0.6rem 0 0;
+  color: var(--prayer-ember);
+}
+.prayer-prose em {
+  font-style: italic;
+  color: color-mix(in oklab, var(--prayer-ember) 70%, var(--prayer-fg));
+}
+.prayer-prose strong {
+  color: var(--prayer-ember);
+  font-weight: 600;
+}
+.prayer-prose blockquote {
+  margin: 2rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  border-left: 3px solid color-mix(in oklab, var(--prayer-ember) 60%, transparent);
+  font-style: italic;
+  color: var(--prayer-muted);
+  font-size: 1.25rem;
+}
+
