@@ -14,6 +14,7 @@
 
 import candlelightHero from "@/assets/prayer-candlelight-hero.jpg";
 import channingHero from "@/assets/prayer-channing-hero.jpg";
+import maisieHero from "@/assets/prayer-maisie-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
