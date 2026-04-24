@@ -64,28 +64,50 @@ async function fetchWordPressApi<T>(endpoint: string, options?: { allowNotFound?
   const wpKey = process.env.WORDPRESS_COM_API_KEY;
 
   if (lovableKey && wpKey) {
-    const gatewayRes = await fetch(`${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${lovableKey}`,
-        "X-Connection-Api-Key": wpKey,
-      },
-    });
+    try {
+      const gatewayRes = await fetch(`${GATEWAY_URL}/rest/v1.1/sites/${SITE_ID}${endpoint}`, {
+        headers: {
+          Authorization: `Bearer ${lovableKey}`,
+          "X-Connection-Api-Key": wpKey,
+        },
+      });
 
-    if (gatewayRes.status === 404 && options?.allowNotFound) return null;
-    if (gatewayRes.ok) return (await gatewayRes.json()) as T;
+      if (gatewayRes.status === 404 && options?.allowNotFound) return null;
+      if (gatewayRes.ok) return (await gatewayRes.json()) as T;
 
-    const body = await gatewayRes.text();
-    console.warn(`[wordpress] Gateway fetch failed [${gatewayRes.status}], falling back to public API: ${body}`);
+      const body = await gatewayRes.text();
+      console.warn(`[wordpress] Gateway fetch failed [${gatewayRes.status}], falling back to public API: ${body}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[wordpress] Gateway request threw, falling back to public API: ${message}`);
+    }
   }
 
-  const publicRes = await fetch(`${PUBLIC_API_URL}${endpoint}`);
-  if (publicRes.status === 404 && options?.allowNotFound) return null;
-  if (!publicRes.ok) {
-    const body = await publicRes.text();
-    throw new Error(`WordPress.com fetch failed [${publicRes.status}]: ${body}`);
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      const publicRes = await fetch(`${PUBLIC_API_URL}${endpoint}`);
+      if (publicRes.status === 404 && options?.allowNotFound) return null;
+      if (!publicRes.ok) {
+        const body = await publicRes.text();
+        if (attempt < 2 && (publicRes.status === 429 || publicRes.status >= 500)) {
+          console.warn(`[wordpress] Public API fetch failed [${publicRes.status}], retrying once: ${body}`);
+          continue;
+        }
+        throw new Error(`WordPress.com fetch failed [${publicRes.status}]: ${body}`);
+      }
+
+      return (await publicRes.json()) as T;
+    } catch (error) {
+      if (attempt === 2) {
+        throw error instanceof Error ? error : new Error(String(error));
+      }
+
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[wordpress] Public API request failed, retrying once: ${message}`);
+    }
   }
 
-  return (await publicRes.json()) as T;
+  return null;
 }
 
 export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async () => {
