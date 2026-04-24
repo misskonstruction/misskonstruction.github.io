@@ -19,6 +19,7 @@ import chickenDumplingsImg from "@/assets/recipe-chicken-dumplings.jpg";
 import natchitochesMeatpiesImg from "@/assets/recipe-natchitoches-meatpies.jpg";
 import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
 import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
+import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -701,6 +702,118 @@ export const recipes: Recipe[] = [
       kicker: "wag, wag 🐾",
       body:
         "Made with love for the pups who follow us from kitchen to porch and back again. As always — check with your vet before any big diet changes, especially for puppies, seniors, or dogs with health conditions.",
+    },
+  },
+  {
+    slug: "slow-cooker-cod-dog-food",
+    categorySlug: "from-the-kitchen",
+    forDogs: true,
+    kicker: "made with love, for the pups 🐾",
+    title: "Slow Cooker **Cod Dog Food**",
+    intro:
+      "A lighter, fish-forward bowl for the pups — flaky cod simmered low and slow with white rice, sweet potato, broccoli, and a little fresh rosemary. No salt, no onions, no garlic — just clean, gentle nourishment for happy bellies and shiny coats.",
+    heroImage: codDogFoodImg,
+    heroAlt: "A rustic bowl of homemade slow cooker cod dog food with white rice, sweet potato, broccoli, carrots, green beans, peas, spinach, and fresh rosemary",
+    description:
+      "An easy slow-cooker homemade dog food recipe with cod, white rice, sweet potato, broccoli, and garden vegetables — a fish-based variation for variety.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "15 min" },
+      { icon: "flame", label: "Cook", value: "6–7 hr (low)" },
+      { icon: "users", label: "Makes", value: "~1 week" },
+      { icon: "utensils-crossed", label: "For", value: "Dogs 🐾" },
+    ],
+    ingredientGroups: [
+      {
+        title: "The base",
+        items: [
+          "3 lbs cod fillets (boneless, skinless)",
+          "1 cup white rice",
+          "1 large sweet potato, cubed",
+          "1 cup carrots, chopped",
+          "1 cup broccoli florets, chopped",
+          "1 cup green beans (fresh or frozen)",
+          "½ cup peas",
+          "1 cup spinach",
+          "1 raw egg",
+          "1 tsp fresh rosemary, finely chopped (or ½ tsp dried)",
+          "4 cups water or unsalted chicken broth",
+        ],
+      },
+      {
+        title: "Stir in at the end",
+        items: [
+          "1 tbsp olive oil",
+          "1 tsp ground eggshell powder (for calcium)",
+        ],
+      },
+      {
+        title: "Optional nutrition boosters",
+        items: [
+          "Blueberries",
+          "Pumpkin (plain puree)",
+          "Plain Greek yogurt",
+          "Chopped spinach",
+        ],
+      },
+      {
+        title: "For senior dogs (joint support add-ins)",
+        items: [
+          "A pinch of turmeric (anti-inflammatory)",
+          "Plain pumpkin (easy digestion)",
+          "Ground eggshell powder (calcium)",
+          "Bone broth",
+        ],
+      },
+      {
+        title: "For young dogs (extra growth fuel)",
+        items: [
+          "About 25% more cod than a senior portion",
+          "1 egg a few times per week",
+          "Olive oil",
+          "Cottage cheese",
+          "Plain Greek yogurt",
+          "Blueberries",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Layer the slow cooker",
+        body:
+          "Add the cod fillets to the slow cooker, followed by the white rice and all of the chopped vegetables. Sprinkle the rosemary over the top.",
+      },
+      {
+        title: "Add the liquid",
+        body:
+          "Pour in the water or unsalted chicken broth and stir gently so the rice and vegetables are evenly distributed around the fish.",
+      },
+      {
+        title: "Slow cook",
+        body:
+          "Cover and cook on low for 6–7 hours, or on high for 3–4 hours, until the cod flakes easily, the rice is tender, and the sweet potato is soft.",
+      },
+      {
+        title: "Flake it up",
+        body:
+          "Stir well, breaking the cod into small flakes with a spoon and checking carefully for any stray bones. Make sure everything is mixed evenly.",
+      },
+      {
+        title: "Cool and finish",
+        body:
+          "Let the food cool completely before serving. Once cool, mix in the olive oil, ground eggshell powder, and the raw egg for an extra protein and nutrient boost.",
+      },
+      {
+        title: "Portion and serve",
+        body:
+          "Serve based on your dog's size — small dogs ½–1 cup per meal, medium dogs 1–1½ cups, large dogs 2–3 cups. Refrigerate leftovers up to 4 days, or freeze portions for 2–3 months.",
+      },
+    ],
+    cooksNote:
+      "⚠️ Never season dog food with salt, onions, or garlic — those can be harmful. Always double-check cod for tiny pin bones before serving. This fish-based bowl is a nice rotation from the turkey or chicken version — variety keeps mealtime interesting and balances nutrients across the week.",
+    signOff: {
+      kicker: "wag, wag 🐾",
+      body:
+        "A little something different for the pups who deserve the world. As always — check with your vet before any big diet changes, especially for puppies, seniors, or dogs with health conditions.",
     },
   },
 ];
