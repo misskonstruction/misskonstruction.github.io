@@ -286,7 +286,7 @@ function CategoryPage() {
                       {cardTitle}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-3" style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}>
-                      by {p.author}
+                      {p.author.startsWith("for ") ? p.author : `by ${p.author}`}
                     </p>
                     <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3" style={{ fontFamily: "var(--font-journal)" }}>
                       {p.intro}
