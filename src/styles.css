@@ -126,12 +126,42 @@
 }
 .journal-prose img,
 .journal-prose figure {
-  margin: 2rem auto;
-  border-radius: 0.125rem;
+  margin: 2.5rem auto;
   max-width: 100%;
   height: auto;
 }
-.journal-prose figure img { margin: 0; }
+.journal-prose img {
+  border-radius: 0.5rem;
+  /* Soft glow + vignette so the photo melts into the dark page */
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-foreground) 6%, transparent),
+    0 25px 60px -20px color-mix(in oklab, var(--color-primary) 35%, transparent),
+    0 10px 35px -10px rgba(0, 0, 0, 0.55);
+  /* Feathered edges that fade into the background */
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 70%,
+    rgba(0, 0, 0, 0.85) 88%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+          mask-image: radial-gradient(
+    ellipse at center,
+    black 70%,
+    rgba(0, 0, 0, 0.85) 88%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  transition: transform 500ms ease, box-shadow 500ms ease;
+}
+.journal-prose a img:hover,
+.journal-prose img:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-primary) 25%, transparent),
+    0 30px 80px -20px color-mix(in oklab, var(--color-primary) 50%, transparent),
+    0 15px 45px -10px rgba(0, 0, 0, 0.6);
+}
+.journal-prose figure { text-align: center; }
+.journal-prose figure img { margin: 0 auto; }
 .journal-prose figcaption {
   margin-top: 0.5rem;
   text-align: center;
