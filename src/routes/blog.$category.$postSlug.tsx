@@ -2,6 +2,7 @@ import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-rout
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { JournalPostBody } from "@/components/JournalPostBody";
+import { SharePostBar } from "@/components/SharePostBar";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
 import { findJournalCategory, findJournalCategoryByName } from "@/data/journalCategories";
 
@@ -158,6 +159,13 @@ function PostPage() {
       {/* Body */}
       <section className="container mx-auto px-4 py-16 md:py-20 max-w-3xl">
         <JournalPostBody html={post.content} />
+
+        <SharePostBar
+          title={post.title}
+          url={typeof window !== "undefined" ? window.location.href : post.url}
+          image={post.featuredImage ?? category?.image ?? null}
+          description={post.excerpt}
+        />
 
         <div className="mt-16 text-center">
           {category && (
