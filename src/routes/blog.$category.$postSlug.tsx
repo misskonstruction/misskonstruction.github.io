@@ -160,6 +160,13 @@ function PostPage() {
       <section className="container mx-auto px-4 py-16 md:py-20 max-w-3xl">
         <JournalPostBody html={post.content} />
 
+        <SharePostBar
+          title={post.title}
+          url={typeof window !== "undefined" ? window.location.href : post.url}
+          image={post.featuredImage ?? category?.image ?? null}
+          description={post.excerpt}
+        />
+
         <div className="mt-16 text-center">
           {category && (
             <Link
