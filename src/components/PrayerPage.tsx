@@ -211,8 +211,24 @@ export function PrayerPage({ prayer }: { prayer: Prayer }) {
           </div>
         </section>
 
+        {/* Share */}
+        <section className="container mx-auto px-4 max-w-3xl">
+          <SharePostBar
+            title={prayer.title.replace(/\*\*/g, "")}
+            url={
+              typeof window !== "undefined"
+                ? window.location.href
+                : `https://misskonstruction.com/prayers/${prayer.slug}`
+            }
+            image={prayer.heroImage ?? prayerSharedHero}
+            description={isQuote ? "A quiet word to carry with you." : "A prayer to keep its lamp lit."}
+            kicker="✦ did this stir your spirit?"
+            heading="Share this with a heart that needs it"
+          />
+        </section>
+
         {/* Sign-off */}
-        <section className="border-t border-[var(--prayer-border)] bg-[var(--prayer-card)]/40">
+        <section className="border-t border-[var(--prayer-border)] bg-[var(--prayer-card)]/40 mt-12">
           <div className="container mx-auto px-4 py-16 text-center max-w-2xl">
             <p
               className="text-[var(--prayer-ember)] text-3xl mb-3"
