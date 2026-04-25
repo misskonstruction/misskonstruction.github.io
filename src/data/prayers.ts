@@ -126,9 +126,9 @@ export const prayers: Prayer[] = [
   {
     slug: "in-celebration-maisie-renee",
     categorySlug: "faith-scripture",
-    kicker: "a prayer for my grandchild",
+    kicker: "for my grandchild",
     title: "In **Celebration**",
-    author: "for Maisie Renee",
+    author: "Maisie Renee",
     attribution: "a grandmother's prayer",
     intro:
       "A small thanksgiving for the gift of a granddaughter — for the joy she carries into a family, and for the quiet promise to be present for every step she takes.",
