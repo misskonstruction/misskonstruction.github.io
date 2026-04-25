@@ -7,6 +7,10 @@ type Props = {
   url: string;
   image?: string | null;
   description?: string;
+  /** Optional override for the small kicker line (e.g. "✦ enjoyed this entry?"). */
+  kicker?: string;
+  /** Optional override for the headline (e.g. "Share it with someone you love"). */
+  heading?: string;
 };
 
 // Simple Pinterest "P" mark (lucide doesn't ship one)
@@ -18,7 +22,14 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
-export function SharePostBar({ title, url, image, description }: Props) {
+export function SharePostBar({
+  title,
+  url,
+  image,
+  description,
+  kicker = "✦ enjoyed this entry?",
+  heading = "Share it with someone you love",
+}: Props) {
   const [copied, setCopied] = useState(false);
 
   const enc = encodeURIComponent;
@@ -105,13 +116,13 @@ export function SharePostBar({ title, url, image, description }: Props) {
           className="text-primary text-2xl mb-1"
           style={{ fontFamily: "var(--font-hand)" }}
         >
-          ✦ enjoyed this entry?
+          {kicker}
         </p>
         <h3
           className="text-2xl md:text-3xl text-foreground mb-6"
           style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
         >
-          Share it with someone you love
+          {heading}
         </h3>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
