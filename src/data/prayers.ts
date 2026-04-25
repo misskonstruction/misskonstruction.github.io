@@ -16,6 +16,7 @@ import candlelightHero from "@/assets/prayer-candlelight-hero.jpg";
 import channingHero from "@/assets/prayer-channing-hero.jpg";
 import maisieHero from "@/assets/prayer-maisie-hero.jpg";
 import deSalesHero from "@/assets/prayer-de-sales-hero.jpg";
+import chittisterHero from "@/assets/prayer-chittister-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -194,6 +195,34 @@ export const prayers: Prayer[] = [
     },
     description:
       "On Household Troubles — a quiet counsel from St. Francis de Sales on bearing the small vexations of daily life with gentleness, patience, and kindness.",
+  },
+  {
+    slug: "the-will-of-god-chittister",
+    categorySlug: "faith-scripture",
+    format: "quote",
+    kicker: "a passage to keep",
+    title: "The **Will of God**",
+    author: "Joan Chittister",
+    attribution: "from Wisdom Distilled from the Daily",
+    intro:
+      "A clear-eyed word for the seasons that will not lift — that the circumstances we cannot change may be the very ground God is using to grow us beyond ourselves.",
+    heroImage: chittisterHero,
+    heroAlt: "An open weathered book on a wooden windowsill, soft morning light filtering through linen curtains with a small sprig of olive leaves",
+    body: [
+      "If God is present in my life then I must accept the will of God for me. When circumstances persist even though I bend every effort to eliminate them, then clearly those are the will of God for me.",
+      "There is something in them that I must learn to deal with. There is something about them that is essential to my growth.",
+      "There are, at least, other ways and other answers and other plans than mine that obviously bear recognition if I am to grow beyond myself and come to appreciate the beauty in others.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "Chittister offers a hard, honest grace: the thing you have prayed to be rid of — and cannot — may not be a failure of prayer. It may be the classroom. The slow teacher. The shape of the hands God is using to widen your heart.",
+        "Sit today with whatever circumstance has refused to move. Ask, gently, what it is asking of you. Not why it is here, but who you might become because it is.",
+      ],
+    },
+    description:
+      "The Will of God — a passage from Joan Chittister's Wisdom Distilled from the Daily on accepting the circumstances we cannot change as the ground of our growth.",
   },
 ];
 
