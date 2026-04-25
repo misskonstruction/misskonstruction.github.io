@@ -79,7 +79,7 @@ export function PrayerPage({ prayer }: { prayer: Prayer }) {
               className="text-[var(--prayer-fg)] text-lg"
               style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
             >
-              by {prayer.author}
+              {prayer.author.startsWith("for ") ? prayer.author : `by ${prayer.author}`}
             </p>
             {prayer.attribution && (
               <p
