@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { SharePostBar } from "@/components/SharePostBar";
 import {
   ArrowLeft,
   Clock,
