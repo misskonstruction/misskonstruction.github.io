@@ -161,19 +161,27 @@ function PostPage() {
         <JournalPostBody html={post.content} />
 
         {(() => {
-          const coastal = category?.slug === "coastal-photography";
+          const slug = category?.slug;
+          const coastal = slug === "coastal-photography";
+          const faith = slug === "faith-scripture";
+          const kicker = coastal
+            ? "✦ caught the salt air?"
+            : faith
+              ? "✦ a word that stirred your spirit?"
+              : undefined;
+          const heading = coastal
+            ? "Send this gulf-coast moment to someone who needs the shore"
+            : faith
+              ? "Pass this scripture along to a heart that needs it"
+              : undefined;
           return (
             <SharePostBar
               title={post.title}
               url={typeof window !== "undefined" ? window.location.href : post.url}
               image={post.featuredImage ?? category?.image ?? null}
               description={post.excerpt}
-              kicker={coastal ? "✦ caught the salt air?" : undefined}
-              heading={
-                coastal
-                  ? "Send this gulf-coast moment to someone who needs the shore"
-                  : undefined
-              }
+              kicker={kicker}
+              heading={heading}
             />
           );
         })()}
