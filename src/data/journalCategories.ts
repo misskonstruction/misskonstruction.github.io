@@ -67,12 +67,25 @@ export const journalCategories: JournalCategory[] = [
   },
 ];
 
+function normalizeJournalCategory(value: string): string {
+  return value
+    .replace(/&amp;/gi, "&")
+    .replace(/\band\b/gi, "&")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+export function journalCategoryMatches(categoryName: string, category: JournalCategory): boolean {
+  const normalized = normalizeJournalCategory(categoryName);
+  return normalized === normalizeJournalCategory(category.title) || normalized === normalizeJournalCategory(category.slug);
+}
+
 export function findJournalCategory(slug: string): JournalCategory | undefined {
   return journalCategories.find((c) => c.slug === slug);
 }
 
 /** Find a category by the WordPress display name (case-insensitive). */
 export function findJournalCategoryByName(name: string): JournalCategory | undefined {
-  const lc = name.toLowerCase();
-  return journalCategories.find((c) => c.title.toLowerCase() === lc);
+  return journalCategories.find((c) => journalCategoryMatches(name, c));
 }

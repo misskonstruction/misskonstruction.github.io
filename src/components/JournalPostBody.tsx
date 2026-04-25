@@ -41,23 +41,37 @@ export function JournalPostBody({ html }: { html: string }) {
     };
 
     const extract = (el: HTMLElement): CarouselItem | null => {
+      const images = Array.from(el.querySelectorAll("img"));
       let img: HTMLImageElement | null = null;
       let caption: string | undefined;
       if (el.tagName === "IMG") {
         img = el as HTMLImageElement;
-      } else if (el.tagName === "FIGURE") {
-        img = el.querySelector("img");
+      } else if ((el.tagName === "FIGURE" || el.tagName === "P") && images.length === 1) {
+        img = images[0];
         const fc = el.querySelector("figcaption");
         if (fc?.textContent) caption = fc.textContent.trim();
-      } else if (el.tagName === "P" && el.children.length === 1 && el.firstElementChild?.tagName === "IMG") {
-        // <p><img></p> wrapper produced by some editors
-        img = el.firstElementChild as HTMLImageElement;
       }
       if (!img || !img.src) return null;
       return { src: img.src, alt: img.alt ?? "", caption };
     };
 
     for (const child of children) {
+      const galleryImages = Array.from(child.querySelectorAll("img"));
+      if (galleryImages.length >= 2) {
+        flushRun();
+        const groupIndex = collected.length;
+        const placeholder = document.createElement("div");
+        placeholder.setAttribute("data-journal-carousel", String(groupIndex));
+        child.replaceWith(placeholder);
+        collected.push(
+          galleryImages.map((img) => ({
+            src: img.src,
+            alt: img.alt ?? "",
+            caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim(),
+          })),
+        );
+        continue;
+      }
       const item = extract(child);
       if (item) {
         run.push({ node: child, item });

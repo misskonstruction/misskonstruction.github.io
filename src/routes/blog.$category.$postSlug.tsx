@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { JournalPostBody } from "@/components/JournalPostBody";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
-import { findJournalCategory } from "@/data/journalCategories";
+import { findJournalCategory, findJournalCategoryByName } from "@/data/journalCategories";
 
 function formatDate(iso: string): string {
   try {
@@ -20,9 +20,9 @@ function formatDate(iso: string): string {
 export const Route = createFileRoute("/blog/$category/$postSlug")({
   component: PostPage,
   loader: async ({ params }) => {
-    const cat = findJournalCategory(params.category);
     const post = await getPublicWordPressPostBySlug(params.postSlug);
     if (!post) throw notFound();
+    const cat = post.categories.map(findJournalCategoryByName).find(Boolean) ?? findJournalCategory(params.category);
     return {
       post,
       category: cat
