@@ -2,6 +2,7 @@ import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-rout
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { JournalPostBody } from "@/components/JournalPostBody";
+import { SharePostBar } from "@/components/SharePostBar";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
 import { findJournalCategory, findJournalCategoryByName } from "@/data/journalCategories";
 
