@@ -160,12 +160,23 @@ function PostPage() {
       <section className="container mx-auto px-4 py-16 md:py-20 max-w-3xl">
         <JournalPostBody html={post.content} />
 
-        <SharePostBar
-          title={post.title}
-          url={typeof window !== "undefined" ? window.location.href : post.url}
-          image={post.featuredImage ?? category?.image ?? null}
-          description={post.excerpt}
-        />
+        {(() => {
+          const coastal = category?.slug === "coastal-photography";
+          return (
+            <SharePostBar
+              title={post.title}
+              url={typeof window !== "undefined" ? window.location.href : post.url}
+              image={post.featuredImage ?? category?.image ?? null}
+              description={post.excerpt}
+              kicker={coastal ? "✦ caught the salt air?" : undefined}
+              heading={
+                coastal
+                  ? "Send this gulf-coast moment to someone who needs the shore"
+                  : undefined
+              }
+            />
+          );
+        })()}
 
         <div className="mt-16 text-center">
           {category && (
