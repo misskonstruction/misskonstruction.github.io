@@ -28,18 +28,23 @@ type RawPost = {
 const SITE_ID = "195471483";
 const PUBLIC_API_URL = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_ID}`;
 
-function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, "")
+function decodeHtmlEntities(value: string): string {
+  return value
     .replace(/&hellip;/g, "…")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8216;/g, "'")
+    .replace(/&apos;|&#0*39;|&#8217;|&#8216;/g, "'")
     .replace(/&#8220;/g, "\u201C")
     .replace(/&#8221;/g, "\u201D")
-    .trim();
+    .replace(/&ndash;/g, "–")
+    .replace(/&mdash;/g, "—")
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number.parseInt(code, 10)));
+}
+
+function stripHtml(html: string): string {
+  return decodeHtmlEntities(html.replace(/<[^>]*>/g, "")).trim();
 }
 
 function sanitizePostHtml(html: string): string {
@@ -60,7 +65,7 @@ function normalize(post: RawPost): WordPressPost {
     url: post.URL,
     slug: post.slug,
     featuredImage: post.featured_image && post.featured_image.length > 0 ? post.featured_image : null,
-    categories: post.categories ? Object.values(post.categories).map((category) => category.name) : [],
+    categories: post.categories ? Object.values(post.categories).map((category) => decodeHtmlEntities(category.name).trim()) : [],
   };
 }
 
