@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { JournalPostBody } from "@/components/JournalPostBody";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
 import { findJournalCategory } from "@/data/journalCategories";
 
@@ -156,11 +157,7 @@ function PostPage() {
 
       {/* Body */}
       <section className="container mx-auto px-4 py-16 md:py-20 max-w-3xl">
-        <article
-          className="journal-prose"
-          style={{ fontFamily: "var(--font-journal)" }}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <JournalPostBody html={post.content} />
 
         <div className="mt-16 text-center">
           {category && (
