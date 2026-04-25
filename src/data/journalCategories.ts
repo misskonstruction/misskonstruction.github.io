@@ -14,6 +14,8 @@ export type JournalCategory = {
   blurb: string;
   image: string;
   icon: LucideIcon;
+  /** Alternate WordPress category names that should resolve to this category. */
+  aliases?: string[];
 };
 
 export const journalCategories: JournalCategory[] = [
@@ -24,6 +26,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Salt air, soft light, and the slow stories the shoreline keeps telling.",
     image: coastalImg,
     icon: Camera,
+    aliases: ["coastal", "photography", "coastal photo"],
   },
   {
     slug: "from-the-kitchen",
@@ -32,6 +35,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays.",
     image: kitchenImg,
     icon: UtensilsCrossed,
+    aliases: ["kitchen", "recipes", "food"],
   },
   {
     slug: "creative-life",
@@ -40,6 +44,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Sketchbooks, side projects, and the messy middle of making things.",
     image: creativeImg,
     icon: Palette,
+    aliases: ["creative", "creativity"],
   },
   {
     slug: "faith-scripture",
@@ -48,6 +53,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Verses I keep returning to, and the quiet places where grace meets the ordinary.",
     image: faithImg,
     icon: BookOpen,
+    aliases: ["faith", "scripture", "faith and scripture"],
   },
   {
     slug: "reflections",
@@ -56,6 +62,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Field notes from everyday life — gratitude, growth, and small thoughts worth slowing down for.",
     image: reflectionsImg,
     icon: Leaf,
+    aliases: ["reflection"],
   },
   {
     slug: "wander-roam",
@@ -64,6 +71,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "Travel notes from the road and the in-between places — little towns, long drives, the quiet wonder of somewhere new.",
     image: wanderImg,
     icon: Plane,
+    aliases: ["wander", "roam", "wander and roam", "travel"],
   },
 ];
 
@@ -78,7 +86,11 @@ function normalizeJournalCategory(value: string): string {
 
 export function journalCategoryMatches(categoryName: string, category: JournalCategory): boolean {
   const normalized = normalizeJournalCategory(categoryName);
-  return normalized === normalizeJournalCategory(category.title) || normalized === normalizeJournalCategory(category.slug);
+  if (normalized === normalizeJournalCategory(category.title)) return true;
+  if (normalized === normalizeJournalCategory(category.slug)) return true;
+  return (category.aliases ?? []).some(
+    (alias) => normalized === normalizeJournalCategory(alias),
+  );
 }
 
 export function findJournalCategory(slug: string): JournalCategory | undefined {
