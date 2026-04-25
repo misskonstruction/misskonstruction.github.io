@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 type CarouselItem = { src: string; alt: string; caption?: string };
@@ -13,29 +13,55 @@ type CarouselItem = { src: string; alt: string; caption?: string };
  */
 export function JournalPostBody({ html }: { html: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [groups, setGroups] = useState<CarouselItem[][]>([]);
-  const [mounted, setMounted] = useState(false);
   const [lightbox, setLightbox] = useState<{ items: CarouselItem[]; index: number } | null>(null);
 
-  useEffect(() => {
+  const openLightbox = useCallback((items: CarouselItem[], index: number) => {
+    setLightbox({ items, index });
+  }, []);
+
+  // Use a layout effect so mutations happen before paint and we never flash
+  // the un-grouped images. Build the carousel DOM directly here too.
+  const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+  useIsoLayoutEffect(() => {
     if (!containerRef.current) return;
     const root = containerRef.current;
 
-    // Find all top-level children
     const children = Array.from(root.children) as HTMLElement[];
-
-    const collected: CarouselItem[][] = [];
+    const collectedGroups: CarouselItem[][] = [];
     let run: { node: HTMLElement; item: CarouselItem }[] = [];
+
+    const buildCarousel = (items: CarouselItem[]): HTMLElement => {
+      const wrap = document.createElement("div");
+      wrap.className = "journal-carousel";
+      const track = document.createElement("div");
+      track.className = "journal-carousel-track";
+      wrap.appendChild(track);
+      items.forEach((it, i) => {
+        const fig = document.createElement("figure");
+        fig.className = "journal-carousel-item";
+        const img = document.createElement("img");
+        img.src = it.src;
+        img.alt = it.alt;
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.addEventListener("click", () => openLightbox(items, i));
+        fig.appendChild(img);
+        if (it.caption) {
+          const cap = document.createElement("figcaption");
+          cap.textContent = it.caption;
+          fig.appendChild(cap);
+        }
+        track.appendChild(fig);
+      });
+      return wrap;
+    };
 
     const flushRun = () => {
       if (run.length >= 2) {
-        // Replace the first node with a placeholder marker, remove the rest
-        const groupIndex = collected.length;
-        const placeholder = document.createElement("div");
-        placeholder.setAttribute("data-journal-carousel", String(groupIndex));
-        run[0].node.replaceWith(placeholder);
+        const items = run.map((r) => r.item);
+        run[0].node.replaceWith(buildCarousel(items));
         for (let i = 1; i < run.length; i++) run[i].node.remove();
-        collected.push(run.map((r) => r.item));
+        collectedGroups.push(items);
       }
       run = [];
     };
@@ -59,17 +85,13 @@ export function JournalPostBody({ html }: { html: string }) {
       const galleryImages = Array.from(child.querySelectorAll("img"));
       if (galleryImages.length >= 2) {
         flushRun();
-        const groupIndex = collected.length;
-        const placeholder = document.createElement("div");
-        placeholder.setAttribute("data-journal-carousel", String(groupIndex));
-        child.replaceWith(placeholder);
-        collected.push(
-          galleryImages.map((img) => ({
-            src: img.src,
-            alt: img.alt ?? "",
-            caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim(),
-          })),
-        );
+        const items = galleryImages.map((img) => ({
+          src: img.src,
+          alt: img.alt ?? "",
+          caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim(),
+        }));
+        child.replaceWith(buildCarousel(items));
+        collectedGroups.push(items);
         continue;
       }
       const item = extract(child);
@@ -80,14 +102,8 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
+  }, [html, openLightbox]);
 
-    setGroups(collected);
-    setMounted(true);
-  }, [html]);
-
-  const openLightbox = useCallback((items: CarouselItem[], index: number) => {
-    setLightbox({ items, index });
-  }, []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const stepLightbox = useCallback((dir: 1 | -1) => {
     setLightbox((lb) => {
@@ -107,47 +123,6 @@ export function JournalPostBody({ html }: { html: string }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, closeLightbox, stepLightbox]);
-
-  // Render carousels into placeholder slots after mount
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const placeholders = containerRef.current.querySelectorAll<HTMLElement>("[data-journal-carousel]");
-    placeholders.forEach((p) => {
-      // mark for React-managed slot rendering via portals would be heavier;
-      // instead we build the DOM directly and attach click handlers.
-      const idx = Number(p.getAttribute("data-journal-carousel"));
-      const items = groups[idx];
-      if (!items || p.dataset.rendered === "1") return;
-      p.dataset.rendered = "1";
-
-      const wrap = document.createElement("div");
-      wrap.className = "journal-carousel";
-
-      const track = document.createElement("div");
-      track.className = "journal-carousel-track";
-      wrap.appendChild(track);
-
-      items.forEach((it, i) => {
-        const fig = document.createElement("figure");
-        fig.className = "journal-carousel-item";
-        const img = document.createElement("img");
-        img.src = it.src;
-        img.alt = it.alt;
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.addEventListener("click", () => openLightbox(items, i));
-        fig.appendChild(img);
-        if (it.caption) {
-          const cap = document.createElement("figcaption");
-          cap.textContent = it.caption;
-          fig.appendChild(cap);
-        }
-        track.appendChild(fig);
-      });
-
-      p.appendChild(wrap);
-    });
-  }, [groups, mounted, openLightbox]);
 
   return (
     <>
