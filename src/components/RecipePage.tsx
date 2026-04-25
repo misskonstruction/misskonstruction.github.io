@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { SharePostBar } from "@/components/SharePostBar";
 import {
   ArrowLeft,
   Clock,
@@ -230,8 +231,20 @@ export function RecipePage({ recipe }: { recipe: Recipe }) {
         </div>
       </section>
 
+      {/* Share */}
+      <section className="container mx-auto px-4 max-w-4xl">
+        <SharePostBar
+          title={recipe.title.replace(/\*\*/g, "")}
+          url={typeof window !== "undefined" ? window.location.href : `https://misskonstruction.com/recipes/${recipe.slug}`}
+          image={recipe.heroImage}
+          description={recipe.description}
+          kicker="✦ tasted something good?"
+          heading="Pass the plate — share this recipe"
+        />
+      </section>
+
       {/* Sign-off */}
-      <section className="border-t border-border bg-card/30">
+      <section className="border-t border-border bg-card/30 mt-12">
         <div className="container mx-auto px-4 py-16 text-center max-w-2xl">
           <p
             className="text-primary text-3xl mb-3"
