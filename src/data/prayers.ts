@@ -184,6 +184,14 @@ export const prayers: Prayer[] = [
       "Keep this ever before you, and remember constantly that God's loving eyes are upon you amid all these little worries and vexations, watching whether you take them as He would desire.",
       "Offer up all such occasions to Him, and if sometimes you are put out, and give way to impatience, do not be discouraged, but make haste to regain your lost composure.",
     ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "There is a quiet permission tucked inside this counsel — permission to be human in the middle of an ordinary day. The burnt toast, the spilled cup, the third interruption before breakfast: de Sales does not call them obstacles to a holy life. He calls them the very material of one.",
+        "If you have lost your composure today, do not waste the afternoon scolding yourself for it. Make haste, he says — gently, without panic — to regain it. God's loving eyes have not left you. They never do.",
+      ],
+    },
     description:
       "On Household Troubles — a quiet counsel from St. Francis de Sales on bearing the small vexations of daily life with gentleness, patience, and kindness.",
   },
