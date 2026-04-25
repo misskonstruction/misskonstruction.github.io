@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, BookOpen, Flame } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { SharePostBar } from "@/components/SharePostBar";
 import type { Prayer } from "@/data/prayers";
 import { prayerSharedHero } from "@/data/prayers";
 
