@@ -15,6 +15,7 @@
 import candlelightHero from "@/assets/prayer-candlelight-hero.jpg";
 import channingHero from "@/assets/prayer-channing-hero.jpg";
 import maisieHero from "@/assets/prayer-maisie-hero.jpg";
+import deSalesHero from "@/assets/prayer-de-sales-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -165,6 +166,26 @@ export const prayers: Prayer[] = [
     },
     description:
       "In Celebration — a grandmother's prayer of thanksgiving for Maisie Renee, on the joy a grandchild brings and the quiet promise to be ever-present.",
+  },
+  {
+    slug: "household-troubles-de-sales",
+    categorySlug: "faith-scripture",
+    format: "quote",
+    kicker: "a passage to keep",
+    title: "On Household **Troubles**",
+    author: "St. Francis de Sales",
+    attribution: "from his counsels on the gentle life",
+    intro:
+      "A tender word for the woman keeping a home — that the small worries and vexations of the day are not obstacles to holiness, but the very ground of it.",
+    heroImage: deSalesHero,
+    heroAlt: "An open book and a simple ceramic mug on a wooden table, warm morning light filtering through sheer curtains",
+    body: [
+      "The many troubles in your household will tend to your edification, if you strive to bear them all in gentleness, patience, and kindness.",
+      "Keep this ever before you, and remember constantly that God's loving eyes are upon you amid all these little worries and vexations, watching whether you take them as He would desire.",
+      "Offer up all such occasions to Him, and if sometimes you are put out, and give way to impatience, do not be discouraged, but make haste to regain your lost composure.",
+    ],
+    description:
+      "On Household Troubles — a quiet counsel from St. Francis de Sales on bearing the small vexations of daily life with gentleness, patience, and kindness.",
   },
 ];
 
