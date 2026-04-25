@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { JournalPostBody } from "@/components/JournalPostBody";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
 import { findJournalCategory } from "@/data/journalCategories";
 
