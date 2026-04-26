@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Facebook, Linkedin, Mail, Link2, Check } from "lucide-react";
+import { Facebook, Mail, Link2, Check } from "lucide-react";
 import { toast } from "sonner";
 
 type Props = {
@@ -22,6 +22,15 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
+// Bluesky butterfly mark (lucide doesn't ship one)
+function BlueskyIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 600 530" aria-hidden="true" className={className} fill="currentColor">
+      <path d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590 -19.473 590 69.187c0 17.7-10.148 148.79-16.103 170.07-20.692 73.984-96.16 92.854-163.296 81.433 117.337 19.974 147.235 86.114 82.795 152.249C370.953 598.443 313.41 459.624 298.7 423.973c-2.696-6.531-3.957-9.583-3.957-6.987 0-2.596-1.26.456-3.957 6.987-14.71 35.65-72.253 174.47-194.69 49.038-64.44-66.135-34.541-132.275 82.795-152.249-67.136 11.421-142.604-7.449-163.296-81.433C9.74 217.978 -.41 86.886-.41 69.187c0-88.66 77.74-61.18 125.72-25.157z" transform="translate(5,5)"/>
+    </svg>
+  );
+}
+
 export function SharePostBar({
   title,
   url,
@@ -36,7 +45,7 @@ export function SharePostBar({
   const shareText = description ? `${title} — ${description}` : title;
 
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`;
-  const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`;
+  const blueskyUrl = `https://bsky.app/intent/compose?text=${enc(`${shareText}\n\n${url}`)}`;
   const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${enc(url)}&media=${enc(
     image ?? "",
   )}&description=${enc(shareText)}`;
@@ -88,9 +97,9 @@ export function SharePostBar({
       icon: <PinterestIcon className="h-5 w-5" />,
     },
     {
-      label: "Share on LinkedIn",
-      onClick: () => openShare(linkedInUrl),
-      icon: <Linkedin className="h-5 w-5" />,
+      label: "Share on Bluesky",
+      onClick: () => openShare(blueskyUrl),
+      icon: <BlueskyIcon className="h-5 w-5" />,
     },
     {
       label: "Share via Email",
