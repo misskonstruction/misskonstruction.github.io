@@ -20,6 +20,7 @@ import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
 import { Route as PrayersWalkingOnTheWavesChambersRouteImport } from './routes/prayers.walking-on-the-waves-chambers'
 import { Route as PrayersTheWillOfGodChittisterRouteImport } from './routes/prayers.the-will-of-god-chittister'
+import { Route as PrayersOneStepIsEnoughGrouRouteImport } from './routes/prayers.one-step-is-enough-grou'
 import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
 import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
@@ -90,6 +91,12 @@ const PrayersTheWillOfGodChittisterRoute =
   PrayersTheWillOfGodChittisterRouteImport.update({
     id: '/prayers/the-will-of-god-chittister',
     path: '/prayers/the-will-of-god-chittister',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersOneStepIsEnoughGrouRoute =
+  PrayersOneStepIsEnoughGrouRouteImport.update({
+    id: '/prayers/one-step-is-enough-grou',
+    path: '/prayers/one-step-is-enough-grou',
     getParentRoute: () => rootRouteImport,
   } as any)
 const PrayersInCelebrationMaisieReneeRoute =
@@ -164,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
+  '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
@@ -186,6 +194,7 @@ export interface FileRoutesByTo {
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
+  '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
@@ -211,6 +220,7 @@ export interface FileRoutesById {
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
+  '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/prayers/$prayerSlug'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
+    | '/prayers/one-step-is-enough-grou'
     | '/prayers/the-will-of-god-chittister'
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
@@ -259,6 +270,7 @@ export interface FileRouteTypes {
     | '/prayers/$prayerSlug'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
+    | '/prayers/one-step-is-enough-grou'
     | '/prayers/the-will-of-god-chittister'
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
@@ -283,6 +295,7 @@ export interface FileRouteTypes {
     | '/prayers/$prayerSlug'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
+    | '/prayers/one-step-is-enough-grou'
     | '/prayers/the-will-of-god-chittister'
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
@@ -307,6 +320,7 @@ export interface RootRouteChildren {
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
   PrayersHouseholdTroublesDeSalesRoute: typeof PrayersHouseholdTroublesDeSalesRoute
   PrayersInCelebrationMaisieReneeRoute: typeof PrayersInCelebrationMaisieReneeRoute
+  PrayersOneStepIsEnoughGrouRoute: typeof PrayersOneStepIsEnoughGrouRoute
   PrayersTheWillOfGodChittisterRoute: typeof PrayersTheWillOfGodChittisterRoute
   PrayersWalkingOnTheWavesChambersRoute: typeof PrayersWalkingOnTheWavesChambersRoute
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
@@ -392,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/prayers/the-will-of-god-chittister'
       fullPath: '/prayers/the-will-of-god-chittister'
       preLoaderRoute: typeof PrayersTheWillOfGodChittisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/one-step-is-enough-grou': {
+      id: '/prayers/one-step-is-enough-grou'
+      path: '/prayers/one-step-is-enough-grou'
+      fullPath: '/prayers/one-step-is-enough-grou'
+      preLoaderRoute: typeof PrayersOneStepIsEnoughGrouRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prayers/in-celebration-maisie-renee': {
@@ -513,6 +534,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
   PrayersHouseholdTroublesDeSalesRoute: PrayersHouseholdTroublesDeSalesRoute,
   PrayersInCelebrationMaisieReneeRoute: PrayersInCelebrationMaisieReneeRoute,
+  PrayersOneStepIsEnoughGrouRoute: PrayersOneStepIsEnoughGrouRoute,
   PrayersTheWillOfGodChittisterRoute: PrayersTheWillOfGodChittisterRoute,
   PrayersWalkingOnTheWavesChambersRoute: PrayersWalkingOnTheWavesChambersRoute,
   RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,

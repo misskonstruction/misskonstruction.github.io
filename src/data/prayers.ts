@@ -18,6 +18,7 @@ import maisieHero from "@/assets/prayer-maisie-hero.jpg";
 import deSalesHero from "@/assets/prayer-de-sales-hero.jpg";
 import chittisterHero from "@/assets/prayer-chittister-hero.jpg";
 import chambersHero from "@/assets/prayer-chambers-hero.jpg";
+import grouHero from "@/assets/prayer-grou-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -253,6 +254,34 @@ export const prayers: Prayer[] = [
     },
     description:
       "Walking on the Waves — a passage from Oswald Chambers on God's purpose as a process of dependence and trust, not a finish line to cross.",
+  },
+  {
+    slug: "one-step-is-enough-grou",
+    categorySlug: "faith-scripture",
+    format: "quote",
+    kicker: "a passage to keep",
+    title: "One **Step** is Enough",
+    author: "Jean Nicolas Grou",
+    attribution: "shared with me by my mother",
+    intro:
+      "A tender reminder that God knows every corner of our soul — and that the single step set before us today is enough to walk in.",
+    heroImage: grouHero,
+    heroAlt: "A quiet path winding through soft golden morning light, gentle clouds parting above distant hills",
+    body: [
+      "God only is holy; He alone knows how to lead His children in the paths of holiness. He knows every aspect of your soul, every thought of your heart, every secret of your character, its difficulties and hindrances; He knows how to mould you to His will, and lead you onwards to perfect sanctification; He knows exactly how each event, each trial, each temptation, will tell upon you, and He disposes all things accordingly.",
+      "The consequences of this belief, if fully grasped, will influence your whole life. You will seek to give yourself up to God more and more unreservedly, asking nothing, refusing nothing, wishing nothing, but what He wills; not seeking to bring things about for yourself, taking all He sends joyfully, and believing the “one step” set before you to be enough for you.",
+      "You will be satisfied that even though there are clouds around, and your way seems dark, He is directing all, and that what seems a hindrance will prove a blessing, since He wills it.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "Grou offers an antidote to the exhausting work of trying to see the whole road. We are not asked to map the journey — only to take the one step set before us today, and to take it joyfully, trusting the One who knows the soul better than we know it ourselves.",
+        "If the way feels dark right now, let this be your quiet permission to stop straining for the horizon. The next step is enough. The hindrance you cannot move may yet prove a blessing. He is directing all.",
+      ],
+    },
+    description:
+      "One Step is Enough — a passage from Jean Nicolas Grou on trusting that God, who knows every corner of the soul, is leading us one step at a time.",
   },
 ];
 
