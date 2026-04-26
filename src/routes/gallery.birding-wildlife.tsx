@@ -19,12 +19,12 @@ import n14 from "@/assets/florida-birding/birding-14.jpg";
 import n15 from "@/assets/florida-birding/birding-15.jpg";
 import n16 from "@/assets/florida-birding/birding-16.jpg";
 
-export const Route = createFileRoute("/gallery/florida-birding")({
-  component: FloridaBirdingGallery,
+export const Route = createFileRoute("/gallery/birding-wildlife")({
+  component: BirdingWildlifeGallery,
   head: () => ({
     meta: [
-      { title: "Florida Birding — MissKonstruction Photography" },
-      { name: "description", content: "Florida birding photography — herons, egrets, cardinals, and cormorants in quiet wild moments along the Florida coast." },
+      { title: "Birding & Wildlife — MissKonstruction Photography" },
+      { name: "description", content: "Birding & wildlife photography — herons, egrets, cardinals, and cormorants in quiet wild moments along the Florida coast." },
     ],
   }),
 });
@@ -36,10 +36,10 @@ const items: GalleryItem[] = [
   { src: n13 }, { src: n14 }, { src: n15 }, { src: n16 },
 ];
 
-function FloridaBirdingGallery() {
+function BirdingWildlifeGallery() {
   return (
     <GalleryPage
-      title="Florida Birding"
+      title="Birding & Wildlife"
       intro="Herons, egrets, cardinals, and cormorants — quiet wild moments captured along Florida's gulf coast."
       items={items}
     />

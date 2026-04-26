@@ -30,8 +30,8 @@ import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerS
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
-import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
 import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
+import { Route as GalleryBirdingWildlifeRouteImport } from './routes/gallery.birding-wildlife'
 import { Route as BlogCategoryRouteImport } from './routes/blog.$category'
 import { Route as BlogCategoryIndexRouteImport } from './routes/blog.$category.index'
 import { Route as BlogCategoryPostSlugRouteImport } from './routes/blog.$category.$postSlug'
@@ -150,14 +150,14 @@ const GalleryFlowersRoute = GalleryFlowersRouteImport.update({
   path: '/gallery/flowers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GalleryFloridaBirdingRoute = GalleryFloridaBirdingRouteImport.update({
-  id: '/gallery/florida-birding',
-  path: '/gallery/florida-birding',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalleryBoatsRoute = GalleryBoatsRouteImport.update({
   id: '/gallery/boats',
   path: '/gallery/boats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryBirdingWildlifeRoute = GalleryBirdingWildlifeRouteImport.update({
+  id: '/gallery/birding-wildlife',
+  path: '/gallery/birding-wildlife',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogCategoryRoute = BlogCategoryRouteImport.update({
@@ -182,8 +182,8 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/blog/$category': typeof BlogCategoryRouteWithChildren
+  '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
-  '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
@@ -208,8 +208,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
-  '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
@@ -237,8 +237,8 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/blog/$category': typeof BlogCategoryRouteWithChildren
+  '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
-  '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
@@ -267,8 +267,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/blog/$category'
+    | '/gallery/birding-wildlife'
     | '/gallery/boats'
-    | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
@@ -293,8 +293,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/gallery/birding-wildlife'
     | '/gallery/boats'
-    | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
@@ -321,8 +321,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/blog/$category'
+    | '/gallery/birding-wildlife'
     | '/gallery/boats'
-    | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/maternity'
     | '/gallery/newborns'
@@ -349,8 +349,8 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
+  GalleryBirdingWildlifeRoute: typeof GalleryBirdingWildlifeRoute
   GalleryBoatsRoute: typeof GalleryBoatsRoute
-  GalleryFloridaBirdingRoute: typeof GalleryFloridaBirdingRoute
   GalleryFlowersRoute: typeof GalleryFlowersRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
@@ -518,18 +518,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryFlowersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gallery/florida-birding': {
-      id: '/gallery/florida-birding'
-      path: '/gallery/florida-birding'
-      fullPath: '/gallery/florida-birding'
-      preLoaderRoute: typeof GalleryFloridaBirdingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/gallery/boats': {
       id: '/gallery/boats'
       path: '/gallery/boats'
       fullPath: '/gallery/boats'
       preLoaderRoute: typeof GalleryBoatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/birding-wildlife': {
+      id: '/gallery/birding-wildlife'
+      path: '/gallery/birding-wildlife'
+      fullPath: '/gallery/birding-wildlife'
+      preLoaderRoute: typeof GalleryBirdingWildlifeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$category': {
@@ -587,8 +587,8 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
+  GalleryBirdingWildlifeRoute: GalleryBirdingWildlifeRoute,
   GalleryBoatsRoute: GalleryBoatsRoute,
-  GalleryFloridaBirdingRoute: GalleryFloridaBirdingRoute,
   GalleryFlowersRoute: GalleryFlowersRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
