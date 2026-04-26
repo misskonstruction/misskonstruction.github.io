@@ -22,6 +22,7 @@ import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
 import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
+import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -961,6 +962,98 @@ export const recipes: Recipe[] = [
       kicker: "taco night, sorted",
       body:
         "Make a big batch and let everyone build their own. Leftovers are even better the next day — and they make incredible nachos.",
+    },
+  },
+  {
+    slug: "deep-fried-tilapia",
+    categorySlug: "from-the-kitchen",
+    kicker: "crispy on the outside, flaky on the inside",
+    title: "Deep Fried **Tilapia**",
+    intro:
+      "Light, flaky tilapia dredged in a buttermilk-and-egg bath, then dressed in a seasoned cornmeal-and-flour crust and fried golden in a hot cast-iron skillet. A squeeze of lemon at the end and a pinch of salt while it's still hissing — that's all the magic this one needs.",
+    heroImage: deepFriedTilapiaImg,
+    heroAlt: "Crispy golden deep-fried tilapia fillets on a dark plate with lemon wedges, coleslaw, and wedge fries",
+    description:
+      "Crispy deep-fried tilapia with a buttermilk-and-cornmeal crust, fried golden in cast iron and finished with a squeeze of lemon. Serves 10.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "10 min" },
+      { icon: "flame", label: "Cook", value: "15 min" },
+      { icon: "users", label: "Serves", value: "10" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the fish",
+        items: [
+          "10 (4 oz) tilapia fillets",
+          "Salt and ground black pepper, to taste",
+          "⅓ cup flour (for dusting)",
+          "Canola or vegetable oil, for frying",
+        ],
+      },
+      {
+        title: "For the wet dip",
+        items: [
+          "1 cup buttermilk",
+          "1 large egg",
+        ],
+      },
+      {
+        title: "For the seasoned crust",
+        items: [
+          "½ cup flour",
+          "½ cup yellow cornmeal",
+          "2 tbsp Old Bay (or seafood seasoning of your choice)",
+          "½ tsp baking powder",
+          "½ tsp baking soda",
+        ],
+      },
+      {
+        title: "To finish",
+        items: [
+          "Flaky salt",
+          "Fresh lemon wedges",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Season and dust",
+        body:
+          "Pat the tilapia fillets dry, then season both sides with salt and pepper. Dust each fillet lightly with the ⅓ cup of flour — this gives the wet dip something to grab.",
+      },
+      {
+        title: "Mix the wet and dry",
+        body:
+          "In one bowl, beat the buttermilk and egg together until smooth. In a second bowl, stir together the ½ cup flour, yellow cornmeal, Old Bay, baking powder, and baking soda until evenly combined.",
+      },
+      {
+        title: "Dredge the fillets",
+        body:
+          "Dip each flour-dusted fillet into the buttermilk-egg mixture, letting the excess drip off, then press it firmly into the seasoned cornmeal mixture so the crust really sticks.",
+      },
+      {
+        title: "Heat the oil",
+        body:
+          "Heat about an inch of canola or vegetable oil in a large cast iron skillet over medium-high — or in a deep fryer set to 350°F. A pinch of breading should sizzle on contact.",
+      },
+      {
+        title: "Fry in batches",
+        body:
+          "Working in small batches so the oil stays hot, fry the fillets for about 2–3 minutes per side, until deep golden and cooked through. Cook time depends on the thickness of the fillet, so peek under one to check.",
+      },
+      {
+        title: "Drain and finish",
+        body:
+          "Transfer the fried fish to a paper-towel-lined plate to drain. Sprinkle with flaky salt while they're still hot, then squeeze fresh lemon juice generously over the top.",
+      },
+    ],
+    cooksNote:
+      "Salt the fish the moment it comes out of the oil — it sticks better when the crust is still hissing. And don't crowd the skillet; smaller batches keep the oil temperature steady, which is the real secret to that shatter-crisp crust.",
+    signOff: {
+      kicker: "crispy, golden, gone",
+      body:
+        "Enjoy with whatever side you love — I always reach for coleslaw and wedge fries. A cold drink and a porch don't hurt either.",
     },
   },
 ];
