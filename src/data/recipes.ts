@@ -22,6 +22,7 @@ import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
 import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
+import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
 
 export type IngredientGroup = {
   title: string;
