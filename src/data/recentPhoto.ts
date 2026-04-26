@@ -2,7 +2,7 @@
 // To update: change the fields below to point at the newest photo.
 // `addedAt` controls the "New!" badge (shown for 14 days).
 
-import recentImage from "@/assets/flowers/flowers-01.jpg";
+import recentImage from "@/assets/recent-egret-siblings.jpg";
 
 export type RecentPhoto = {
   image: string;
@@ -15,11 +15,11 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "A butterfly resting on a flower, captured in soft natural light",
-  galleryName: "Flower Project",
-  galleryPath: "/gallery/flowers",
+  alt: "Two young great egret siblings nestled together in a cypress tree",
+  galleryName: "Birding & Wildlife",
+  galleryPath: "/gallery/birding-wildlife",
   reflection:
-    "A quiet visitor pausing between blooms — a small reminder that new life is always arriving, often without announcement.",
+    "Sibling rivalry, egret edition — somebody's clearly hogging the good twig. The look on the left says it all.",
   addedAt: "2026-04-26",
 };
 
