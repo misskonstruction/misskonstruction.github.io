@@ -7,6 +7,7 @@ import teaserNewborns from "@/assets/teaser-newborns.jpg";
 import teaserNature from "@/assets/teaser-nature.jpg";
 import teaserFlowers from "@/assets/teaser-flowers.jpg";
 import teaserBoats from "@/assets/teaser-boats.jpg";
+import { recentPhoto, isRecent } from "@/data/recentPhoto";
 
 export const Route = createFileRoute("/")({
   component: Home,
