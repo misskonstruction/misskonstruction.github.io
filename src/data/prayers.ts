@@ -19,6 +19,7 @@ import deSalesHero from "@/assets/prayer-de-sales-hero.jpg";
 import chittisterHero from "@/assets/prayer-chittister-hero.jpg";
 import chambersHero from "@/assets/prayer-chambers-hero.jpg";
 import grouHero from "@/assets/prayer-grou-hero.jpg";
+import macdonaldHero from "@/assets/prayer-macdonald-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -282,6 +283,34 @@ export const prayers: Prayer[] = [
     },
     description:
       "One Step is Enough — a passage from Jean Nicolas Grou on trusting that God, who knows every corner of the soul, is leading us one step at a time.",
+  },
+  {
+    slug: "fold-the-arms-of-thy-faith-macdonald",
+    categorySlug: "faith-scripture",
+    kicker: "a passage to keep",
+    title: "Fold the **Arms of Thy Faith**",
+    author: "George MacDonald",
+    attribution: "shared with me by my mother",
+    intro:
+      "A tender word for the dull, low, hard days — when feeling has gone, and the only honest prayer is to turn toward the Father anyway, and then to quietly do the next small thing.",
+    heroImage: macdonaldHero,
+    heroAlt: "Warm golden sunrise breaking softly through dark clouds, light pushing gently through the gloom",
+    body: [
+      "He has an especial tenderness of love towards thee for that thou art in the dark and hast no light, and His heart is glad when thou dost arise and say, “I will go to my Father.”",
+      "For He sees thee through all the gloom through which thou canst not see Him.",
+      "Say to Him, “My God, I am very dull and low and hard; but Thou art wise and high and tender, and Thou art my God. I am Thy child. Forsake me not.”",
+      "Then fold the arms of thy faith, and wait in quietness until light goes up in the darkness. Fold the arms of thy Faith, I say, but not of thy Action: bethink thee of something that thou oughtest to do, and go and do it, if it be but the sweeping of a room, or the preparing of a meal, or a visit to a friend; heed not thy feelings: do thy work.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "MacDonald gives us two folded hands and one moving pair of feet. The faith may rest — may simply lean, dull and quiet, against the Father who sees what we cannot. But the hands are not to fold with it. Sweep the room. Make the meal. Visit the friend. The smallest right action, done without waiting for the feeling to return, is itself a prayer.",
+        "If today is one of the gloomy days, take heart: the tenderness of God is not withheld until you feel it. He is especially near now. Say the honest word — I am dull and low; do not forsake me — and then go do the next small thing set before you.",
+      ],
+    },
+    description:
+      "Fold the Arms of Thy Faith — a passage from George MacDonald on God's tender love in the dark days, and the quiet work of trusting Him while we go on doing the next small thing.",
   },
 ];
 

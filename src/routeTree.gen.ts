@@ -23,6 +23,7 @@ import { Route as PrayersTheWillOfGodChittisterRouteImport } from './routes/pray
 import { Route as PrayersOneStepIsEnoughGrouRouteImport } from './routes/prayers.one-step-is-enough-grou'
 import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
 import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
+import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './routes/prayers.fold-the-arms-of-thy-faith-macdonald'
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
@@ -111,6 +112,12 @@ const PrayersHouseholdTroublesDeSalesRoute =
     path: '/prayers/household-troubles-de-sales',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PrayersFoldTheArmsOfThyFaithMacdonaldRoute =
+  PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport.update({
+    id: '/prayers/fold-the-arms-of-thy-faith-macdonald',
+    path: '/prayers/fold-the-arms-of-thy-faith-macdonald',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PrayersPrayerSlugRoute = PrayersPrayerSlugRouteImport.update({
   id: '/prayers/$prayerSlug',
   path: '/prayers/$prayerSlug',
@@ -169,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
@@ -192,6 +200,7 @@ export interface FileRoutesByTo {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
@@ -218,6 +227,7 @@ export interface FileRoutesById {
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
+  '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/one-step-is-enough-grou': typeof PrayersOneStepIsEnoughGrouRoute
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/one-step-is-enough-grou'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/one-step-is-enough-grou'
@@ -293,6 +305,7 @@ export interface FileRouteTypes {
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/prayers/$prayerSlug'
+    | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/one-step-is-enough-grou'
@@ -318,6 +331,7 @@ export interface RootRouteChildren {
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
+  PrayersFoldTheArmsOfThyFaithMacdonaldRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   PrayersHouseholdTroublesDeSalesRoute: typeof PrayersHouseholdTroublesDeSalesRoute
   PrayersInCelebrationMaisieReneeRoute: typeof PrayersInCelebrationMaisieReneeRoute
   PrayersOneStepIsEnoughGrouRoute: typeof PrayersOneStepIsEnoughGrouRoute
@@ -429,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrayersHouseholdTroublesDeSalesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prayers/fold-the-arms-of-thy-faith-macdonald': {
+      id: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      path: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      fullPath: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      preLoaderRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/prayers/$prayerSlug': {
       id: '/prayers/$prayerSlug'
       path: '/prayers/$prayerSlug'
@@ -532,6 +553,8 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
+  PrayersFoldTheArmsOfThyFaithMacdonaldRoute:
+    PrayersFoldTheArmsOfThyFaithMacdonaldRoute,
   PrayersHouseholdTroublesDeSalesRoute: PrayersHouseholdTroublesDeSalesRoute,
   PrayersInCelebrationMaisieReneeRoute: PrayersInCelebrationMaisieReneeRoute,
   PrayersOneStepIsEnoughGrouRoute: PrayersOneStepIsEnoughGrouRoute,
