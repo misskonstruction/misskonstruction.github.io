@@ -18,6 +18,7 @@ import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/r
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
+import { Route as PrayersWalkingOnTheWavesChambersRouteImport } from './routes/prayers.walking-on-the-waves-chambers'
 import { Route as PrayersTheWillOfGodChittisterRouteImport } from './routes/prayers.the-will-of-god-chittister'
 import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
 import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
@@ -79,6 +80,12 @@ const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
   path: '/recipes/$recipeSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrayersWalkingOnTheWavesChambersRoute =
+  PrayersWalkingOnTheWavesChambersRouteImport.update({
+    id: '/prayers/walking-on-the-waves-chambers',
+    path: '/prayers/walking-on-the-waves-chambers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PrayersTheWillOfGodChittisterRoute =
   PrayersTheWillOfGodChittisterRouteImport.update({
     id: '/prayers/the-will-of-god-chittister',
@@ -158,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
+  '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -179,6 +187,7 @@ export interface FileRoutesByTo {
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
+  '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -203,6 +212,7 @@ export interface FileRoutesById {
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
   '/prayers/in-celebration-maisie-renee': typeof PrayersInCelebrationMaisieReneeRoute
   '/prayers/the-will-of-god-chittister': typeof PrayersTheWillOfGodChittisterRoute
+  '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -228,6 +238,7 @@ export interface FileRouteTypes {
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/the-will-of-god-chittister'
+    | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/the-will-of-god-chittister'
+    | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -272,6 +284,7 @@ export interface FileRouteTypes {
     | '/prayers/household-troubles-de-sales'
     | '/prayers/in-celebration-maisie-renee'
     | '/prayers/the-will-of-god-chittister'
+    | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -295,6 +308,7 @@ export interface RootRouteChildren {
   PrayersHouseholdTroublesDeSalesRoute: typeof PrayersHouseholdTroublesDeSalesRoute
   PrayersInCelebrationMaisieReneeRoute: typeof PrayersInCelebrationMaisieReneeRoute
   PrayersTheWillOfGodChittisterRoute: typeof PrayersTheWillOfGodChittisterRoute
+  PrayersWalkingOnTheWavesChambersRoute: typeof PrayersWalkingOnTheWavesChambersRoute
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
@@ -364,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/$recipeSlug'
       fullPath: '/recipes/$recipeSlug'
       preLoaderRoute: typeof RecipesRecipeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/walking-on-the-waves-chambers': {
+      id: '/prayers/walking-on-the-waves-chambers'
+      path: '/prayers/walking-on-the-waves-chambers'
+      fullPath: '/prayers/walking-on-the-waves-chambers'
+      preLoaderRoute: typeof PrayersWalkingOnTheWavesChambersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prayers/the-will-of-god-chittister': {
@@ -493,6 +514,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrayersHouseholdTroublesDeSalesRoute: PrayersHouseholdTroublesDeSalesRoute,
   PrayersInCelebrationMaisieReneeRoute: PrayersInCelebrationMaisieReneeRoute,
   PrayersTheWillOfGodChittisterRoute: PrayersTheWillOfGodChittisterRoute,
+  PrayersWalkingOnTheWavesChambersRoute: PrayersWalkingOnTheWavesChambersRoute,
   RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,
   RecipesBitchinSlowCookerPorkchopsRoute:
     RecipesBitchinSlowCookerPorkchopsRoute,

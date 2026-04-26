@@ -17,6 +17,7 @@ import channingHero from "@/assets/prayer-channing-hero.jpg";
 import maisieHero from "@/assets/prayer-maisie-hero.jpg";
 import deSalesHero from "@/assets/prayer-de-sales-hero.jpg";
 import chittisterHero from "@/assets/prayer-chittister-hero.jpg";
+import chambersHero from "@/assets/prayer-chambers-hero.jpg";
 
 export type PrayerScripture = {
   /** e.g. "Philippians 4:6–7" */
@@ -223,6 +224,35 @@ export const prayers: Prayer[] = [
     },
     description:
       "The Will of God — a passage from Joan Chittister's Wisdom Distilled from the Daily on accepting the circumstances we cannot change as the ground of our growth.",
+  },
+  {
+    slug: "walking-on-the-waves-chambers",
+    categorySlug: "faith-scripture",
+    format: "quote",
+    kicker: "a passage to keep",
+    title: "Walking **on the Waves**",
+    author: "Oswald Chambers",
+    attribution: "shared with me by my mother",
+    intro:
+      "A reframing of God's purpose for us — not a finish line to cross, but a steady, trusting walk through the turmoil with our eyes fixed on Him.",
+    heroImage: chambersHero,
+    heroAlt: "A solitary figure of light walking gently across calm open water at dawn, no shore in sight, golden mist on the horizon",
+    body: [
+      "What is my dream of God's purpose? His purpose is that I depend on Him and on His power now.",
+      "If I can stay in the middle of the turmoil calm and unperplexed, that is the end of the purpose of God.",
+      "God is not working towards a particular finish; His end is the process — that I see Him walking on the waves, no shore in sight, no success, no goal, just the absolute certainty that it is all right because I see Him walking on the sea.",
+      "It is the process, not the end, which is glorifying to God.",
+    ],
+    reflection: {
+      kicker: "to sit with",
+      heading: "A Reflection",
+      paragraphs: [
+        "We so often measure a faithful life by its arrivals — the answered prayer, the resolved season, the shore in sight. Chambers gently turns the question. What if the point was never the shore? What if the point was the looking, the trusting, the staying calm in the middle of the wave?",
+        "If today feels like open water with no horizon, take heart. You are not lost. You are exactly where He is — out on the sea, walking. Keep your eyes on Him. That is the whole of it.",
+      ],
+    },
+    description:
+      "Walking on the Waves — a passage from Oswald Chambers on God's purpose as a process of dependence and trust, not a finish line to cross.",
   },
 ];
 
