@@ -24,7 +24,7 @@ export const Route = createFileRoute("/gallery/birding-wildlife")({
   head: () => ({
     meta: [
       { title: "Birding & Wildlife — MissKonstruction Photography" },
-      { name: "description", content: "Birding & wildlife photography — herons, egrets, cardinals, and cormorants in quiet wild moments along the Florida coast." },
+      { name: "description", content: "Birding & wildlife photography — quiet wild moments captured along Florida's gulf coast." },
     ],
   }),
 });
@@ -40,7 +40,7 @@ function BirdingWildlifeGallery() {
   return (
     <GalleryPage
       title="Birding & Wildlife"
-      intro="Herons, egrets, cardinals, and cormorants — quiet wild moments captured along Florida's gulf coast."
+      intro="Birds, beasts, and everything in between — quiet wild moments captured along Florida's gulf coast."
       items={items}
     />
   );
