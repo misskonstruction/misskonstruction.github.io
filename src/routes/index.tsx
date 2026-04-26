@@ -105,6 +105,45 @@ function Home() {
           ))}
         </div>
       </section>
+
+      {/* Recently Captured */}
+      <section className="container mx-auto px-4 pb-20">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Recently Captured</h2>
+          <div className="inline-flex h-px w-16 bg-primary mt-4" />
+        </div>
+        <Link
+          to={recentPhoto.galleryPath}
+          className="group grid md:grid-cols-5 gap-6 md:gap-10 items-center max-w-5xl mx-auto rounded-lg border border-border bg-card p-4 md:p-6 hover:border-primary transition-colors"
+        >
+          <div className="md:col-span-3 relative aspect-[4/3] overflow-hidden rounded-md">
+            <img
+              src={recentPhoto.image}
+              alt={recentPhoto.alt}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </div>
+          <div className="md:col-span-2">
+            {isRecent(recentPhoto.addedAt) && (
+              <span className="inline-flex items-center rounded-full bg-primary/15 text-primary text-xs font-medium uppercase tracking-wider px-2.5 py-1 mb-3">
+                New!
+              </span>
+            )}
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">
+              From the {recentPhoto.galleryName}
+            </p>
+            <p className="font-display text-lg md:text-xl text-foreground leading-relaxed">
+              {recentPhoto.reflection}
+            </p>
+            <span className="mt-5 inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
+              View in {recentPhoto.galleryName}
+              <ArrowRight className="h-4 w-4" />
+            </span>
+          </div>
+        </Link>
+      </section>
     </SiteLayout>
   );
 }
