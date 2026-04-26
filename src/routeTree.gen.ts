@@ -17,6 +17,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
+import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
 import { Route as PrayersWalkingOnTheWavesChambersRouteImport } from './routes/prayers.walking-on-the-waves-chambers'
@@ -75,6 +76,11 @@ const RecipesSlowCookerCodDogFoodRoute =
 const RecipesPulledPorkTacosRoute = RecipesPulledPorkTacosRouteImport.update({
   id: '/recipes/pulled-pork-tacos',
   path: '/recipes/pulled-pork-tacos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesDeepFriedTilapiaRoute = RecipesDeepFriedTilapiaRouteImport.update({
+  id: '/recipes/deep-fried-tilapia',
+  path: '/recipes/deep-fried-tilapia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecipesBitchinSlowCookerPorkchopsRoute =
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
+  '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -215,6 +222,7 @@ export interface FileRoutesByTo {
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
+  '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/prayers/walking-on-the-waves-chambers': typeof PrayersWalkingOnTheWavesChambersRoute
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
+  '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -272,6 +281,7 @@ export interface FileRouteTypes {
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
+    | '/recipes/deep-fried-tilapia'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -297,6 +307,7 @@ export interface FileRouteTypes {
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
+    | '/recipes/deep-fried-tilapia'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/prayers/walking-on-the-waves-chambers'
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
+    | '/recipes/deep-fried-tilapia'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -351,6 +363,7 @@ export interface RootRouteChildren {
   PrayersWalkingOnTheWavesChambersRoute: typeof PrayersWalkingOnTheWavesChambersRoute
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
+  RecipesDeepFriedTilapiaRoute: typeof RecipesDeepFriedTilapiaRoute
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/pulled-pork-tacos'
       fullPath: '/recipes/pulled-pork-tacos'
       preLoaderRoute: typeof RecipesPulledPorkTacosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/deep-fried-tilapia': {
+      id: '/recipes/deep-fried-tilapia'
+      path: '/recipes/deep-fried-tilapia'
+      fullPath: '/recipes/deep-fried-tilapia'
+      preLoaderRoute: typeof RecipesDeepFriedTilapiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/bitchin-slow-cooker-porkchops': {
@@ -583,6 +603,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesRecipeSlugRoute: RecipesRecipeSlugRoute,
   RecipesBitchinSlowCookerPorkchopsRoute:
     RecipesBitchinSlowCookerPorkchopsRoute,
+  RecipesDeepFriedTilapiaRoute: RecipesDeepFriedTilapiaRoute,
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
