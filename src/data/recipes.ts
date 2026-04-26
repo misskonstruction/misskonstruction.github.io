@@ -21,6 +21,7 @@ import jambalayaImg from "@/assets/recipe-jambalaya.jpg";
 import slowCookerDogFoodImg from "@/assets/recipe-slow-cooker-dog-food.jpg";
 import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
+import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -893,6 +894,73 @@ export const recipes: Recipe[] = [
       kicker: "knife optional",
       body:
         "Serve it up, sit down, and enjoy. Sometimes the best dinners are the ones that practically cook themselves.",
+    },
+  },
+  {
+    slug: "pulled-pork-tacos",
+    categorySlug: "from-the-kitchen",
+    kicker: "taco night, the easy way",
+    title: "Slow Cooker **Pulled Pork Tacos**",
+    intro:
+      "A pork shoulder, a splash of water, a little taco seasoning, and a chopped serrano if you're feeling brave — eight or nine hours later you've got the most fork-tender shredded pork waiting to be piled into warm tortillas. However you like to dress them up, this one's a win.",
+    heroImage: pulledPorkTacosImg,
+    heroAlt: "Slow cooker pulled pork tacos on warm tortillas with shredded cheese, sour cream, and cilantro",
+    description:
+      "Easy slow cooker pulled pork tacos — fork-tender shredded pork seasoned with taco spice and serrano, piled into warm tortillas with all your favorite toppings.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "5 min" },
+      { icon: "flame", label: "Cook", value: "8–9 hr (low)" },
+      { icon: "users", label: "Serves", value: "8" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the pork",
+        items: [
+          "3–4 lb pork shoulder roast",
+          "1½ cups water",
+          "2 tbsp taco seasoning (or one envelope packet)",
+          "Chopped serrano or pepper of your choice (depending on the heat you want)",
+        ],
+      },
+      {
+        title: "To serve",
+        items: [
+          "Warm tortillas (corn or flour)",
+          "Shredded cheese",
+          "Sour cream",
+          "Your favorite toppings — salsa, cilantro, lime, pickled onion, whatever you love",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Settle the pork in",
+        body:
+          "Place the pork shoulder roast in the bottom of the slow cooker.",
+      },
+      {
+        title: "Mix the seasoning",
+        body:
+          "In a separate bowl, stir the water and taco seasoning together until combined, then pour it evenly over the roast. Scatter the chopped serrano (or your pepper of choice) over the top.",
+      },
+      {
+        title: "Slow and low",
+        body:
+          "Cover and cook on low until the pork is fork-tender, about 8 to 9 hours. Don't rush it — the long simmer is what makes it shred so easily.",
+      },
+      {
+        title: "Shred and serve",
+        body:
+          "Lift the pork out of the cooker and shred it with two forks. Pile it into warm tortillas and dress it up however you like — cheese, sour cream, salsa, the works.",
+      },
+    ],
+    cooksNote:
+      "Don't toss that seasoned juice at the bottom of the slow cooker — spoon it over the pork inside the tortilla, or set out a little bowl as a dip. That's where all the flavor lives.",
+    signOff: {
+      kicker: "taco night, sorted",
+      body:
+        "Make a big batch and let everyone build their own. Leftovers are even better the next day — and they make incredible nachos.",
     },
   },
 ];
