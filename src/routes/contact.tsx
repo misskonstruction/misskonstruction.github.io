@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Mail, Facebook, Instagram, Cloud } from "lucide-react";
-import profilePlaceholder from "@/assets/profile-placeholder.jpg";
+import profilePlaceholder from "@/assets/profile-misskonstruction.jpg";
 
 export const Route = createFileRoute("/contact")({
   component: Contact,
@@ -21,7 +21,7 @@ function Contact() {
         <div className="mx-auto mb-8 h-40 w-40 rounded-full overflow-hidden border-4 border-primary/30 bg-card">
           <img
             src={profilePlaceholder}
-            alt="MissKonstruction profile placeholder"
+            alt="Cami LeGrand — MissKonstruction Photography"
             width={320}
             height={320}
             className="h-full w-full object-cover"
