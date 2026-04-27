@@ -26,7 +26,7 @@ export function FurLifeCard() {
         <div className="md:col-span-3 relative aspect-[4/3] overflow-hidden rounded-md">
           <img
             src={furlifeDogs}
-            alt="Kylo and Blitz — my two rescue dogs napping together"
+            alt="Blitz and Kylo — my two rescue dogs napping together"
             loading="lazy"
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
@@ -37,7 +37,7 @@ export function FurLifeCard() {
             Fur Life — Flea & Tick Care
           </p>
           <p className="text-foreground leading-relaxed mb-5">
-            Kylo and Blitz are the reason I'm picky about flea & tick care.
+            Blitz and Kylo are the reason I'm picky about flea & tick care.
             Fur Life is what we actually use — clean, gentle, and it just
             works. Friends of mine get <strong>15% off</strong> with my link.
           </p>
