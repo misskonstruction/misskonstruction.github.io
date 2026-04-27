@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import furlifeDogs from "@/assets/furlife-dogs.jpg";
 
 export const FURLIFE_URL =
-  "https://email.noreply.snwbl.io/c/eJw0yb1OxCAcAPCngbHh_8FxDAwmhsFHcCsUeiiFS6EafXon59_mKMUIm5HJgTEG7Y1vIB8OtgyMym6KgHRI91WTzVYrBsMQjSwuUI45UcjMFqzRqDKliPe0Bqu1RsGq9TM9688y2neoS-secxyHoRaAX6P9BoO_XFOjf3_zH6---y9MdZYzP3sY8rzhLb4LVfqylLrEf8svhXwAAAP__qL05YA";
+  "https://getfurlife.com/collections/furlife?snowball=CAMILLE87886&utm_source=snowball&utm_medium=default-program&utm_campaign=CAMILLE87886";
 
 export function FurLifeCard() {
   return (

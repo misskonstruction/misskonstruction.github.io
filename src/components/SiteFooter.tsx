@@ -12,7 +12,7 @@ export function SiteFooter() {
         <p className="mt-3">
           Recommended:{" "}
           <a
-            href="https://email.noreply.snwbl.io/c/eJw0yb1OxCAcAPCngbHh_8FxDAwmhsFHcCsUeiiFS6EafXon59_mKMUIm5HJgTEG7Y1vIB8OtgyMym6KgHRI91WTzVYrBsMQjSwuUI45UcjMFqzRqDKliPe0Bqu1RsGq9TM9688y2neoS-secxyHoRaAX6P9BoO_XFOjf3_zH6---y9MdZYzP3sY8rzhLb4LVfqylLrEf8svhXwAAAP__qL05YA"
+            href="https://getfurlife.com/collections/furlife?snowball=CAMILLE87886&utm_source=snowball&utm_medium=default-program&utm_campaign=CAMILLE87886"
             target="_blank"
             rel="noopener noreferrer sponsored"
             className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
