@@ -15,11 +15,11 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "Tangerine sunset over a Florida bay with silhouetted families lingering at the water's edge",
+  alt: "Fiery Florida sunset over the Gulf with silhouettes of friends wading at the shoreline",
   galleryName: "Boats and Saltlife",
   galleryPath: "/gallery/boats",
   reflection:
-    "The sky went full tangerine and nobody wanted to leave. Strangers stood in the shallows like quiet little silhouettes — proof that the best Florida sunsets aren't just watched, they're shared.",
+    "A pillar of gold poured straight from the sun to the shore — the kind of sky that makes everyone stop talking and just stand in the water for a minute. Pure Gulf coast magic.",
   addedAt: "2026-04-27",
 };
 
