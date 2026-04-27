@@ -14,6 +14,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as RecipesVelvetButterChickenRouteImport } from './routes/recipes.velvet-butter-chicken'
 import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
@@ -65,6 +66,12 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
+const RecipesVelvetButterChickenRoute =
+  RecipesVelvetButterChickenRouteImport.update({
+    id: '/recipes/velvet-butter-chicken',
+    path: '/recipes/velvet-butter-chicken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesSuperbSpaghettiAndMeatballsRoute =
   RecipesSuperbSpaghettiAndMeatballsRouteImport.update({
     id: '/recipes/superb-spaghetti-and-meatballs',
@@ -230,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
+  '/recipes/velvet-butter-chicken': typeof RecipesVelvetButterChickenRoute
   '/blog/': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
@@ -260,6 +268,7 @@ export interface FileRoutesByTo {
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
+  '/recipes/velvet-butter-chicken': typeof RecipesVelvetButterChickenRoute
   '/blog': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category': typeof BlogCategoryIndexRoute
@@ -293,6 +302,7 @@ export interface FileRoutesById {
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
+  '/recipes/velvet-butter-chicken': typeof RecipesVelvetButterChickenRoute
   '/blog/': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
+    | '/recipes/velvet-butter-chicken'
     | '/blog/'
     | '/blog/$category/$postSlug'
     | '/blog/$category/'
@@ -357,6 +368,7 @@ export interface FileRouteTypes {
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
+    | '/recipes/velvet-butter-chicken'
     | '/blog'
     | '/blog/$category/$postSlug'
     | '/blog/$category'
@@ -389,6 +401,7 @@ export interface FileRouteTypes {
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
+    | '/recipes/velvet-butter-chicken'
     | '/blog/'
     | '/blog/$category/$postSlug'
     | '/blog/$category/'
@@ -421,6 +434,7 @@ export interface RootRouteChildren {
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
   RecipesSuperbSpaghettiAndMeatballsRoute: typeof RecipesSuperbSpaghettiAndMeatballsRoute
+  RecipesVelvetButterChickenRoute: typeof RecipesVelvetButterChickenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -459,6 +473,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
+    }
+    '/recipes/velvet-butter-chicken': {
+      id: '/recipes/velvet-butter-chicken'
+      path: '/recipes/velvet-butter-chicken'
+      fullPath: '/recipes/velvet-butter-chicken'
+      preLoaderRoute: typeof RecipesVelvetButterChickenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/recipes/superb-spaghetti-and-meatballs': {
       id: '/recipes/superb-spaghetti-and-meatballs'
@@ -694,6 +715,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
   RecipesSuperbSpaghettiAndMeatballsRoute:
     RecipesSuperbSpaghettiAndMeatballsRoute,
+  RecipesVelvetButterChickenRoute: RecipesVelvetButterChickenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

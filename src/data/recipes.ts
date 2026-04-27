@@ -26,6 +26,7 @@ import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
 import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
 import lovelyLasagneImg from "@/assets/recipe-lovely-lasagne.jpg";
 import superbSpaghettiMeatballsImg from "@/assets/recipe-superb-spaghetti-meatballs.jpg";
+import velvetButterChickenImg from "@/assets/recipe-velvet-butter-chicken.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1307,6 +1308,93 @@ export const recipes: Recipe[] = [
       kicker: "buon appetito",
       body:
         "Twirl a forkful, tear off a corner of garlic bread, and let dinner take its time. That's the whole point.",
+    },
+  },
+  {
+    slug: "velvet-butter-chicken",
+    categorySlug: "from-the-kitchen",
+    kicker: "a warm bowl for a cool evening",
+    title: "Velvet **Butter Chicken**",
+    intro:
+      "Tender chicken simmered in a silky tomato-cream sauce, gently spiced with garam masala, fresh ginger, and garlic. Finished with yogurt and half-and-half until the whole pan turns that signature glossy orange. Served with basmati rice and warm naan for scooping every last drop.",
+    heroImage: velvetButterChickenImg,
+    heroAlt: "An overhead shot of butter chicken in a dark skillet with a swirl of cream and fresh cilantro, served with basmati rice and naan",
+    description:
+      "A silky, gently spiced butter chicken simmered with garam masala, tomato, yogurt, and cream. Served with basmati rice and warm naan.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "10 min" },
+      { icon: "flame", label: "Cook", value: "20 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the curry",
+        items: [
+          "1 tbsp extra virgin olive oil",
+          "1 yellow onion, diced (or sliced — your call)",
+          "¼ cup unsalted butter",
+          "1 tbsp fresh ginger, grated",
+          "2 garlic cloves, minced",
+          "1 lb boneless skinless chicken breasts, cut into bite-sized pieces",
+          "1 tbsp garam masala",
+          "1 tsp chili powder",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "8 oz tomato sauce",
+          "2 tbsp tomato paste",
+          "2 tsp lemon juice",
+          "¼ cup plain yogurt",
+          "1 cup half and half",
+        ],
+      },
+      {
+        title: "To serve",
+        items: [
+          "Basmati rice",
+          "Warm naan",
+          "Fresh cilantro, for garnish (optional)",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Soften the onion",
+        body:
+          "Heat the olive oil in a large skillet over medium heat. Add the diced onion and stir regularly until translucent, about 4 minutes.",
+      },
+      {
+        title: "Bloom the ginger and garlic",
+        body:
+          "Add the butter and let it melt completely. Stir in the ginger and garlic and cook for 30 seconds to a minute, just until fragrant — keep it moving so the garlic doesn't catch.",
+      },
+      {
+        title: "Sear the chicken",
+        body:
+          "Add the chicken pieces and cook, stirring often, until the outside is no longer pink — about 2 minutes. It doesn't need to be cooked through; it'll finish in the sauce.",
+      },
+      {
+        title: "Spice and sauce",
+        body:
+          "Stir in the garam masala, chili powder, salt, and black pepper, then pour in the tomato paste, tomato sauce, lemon juice, yogurt, and half-and-half. Stir until the sauce comes together into a smooth, glossy orange.",
+      },
+      {
+        title: "Simmer",
+        body:
+          "Bring the pan to a gentle simmer and cook for about 10 minutes, until the sauce reduces slightly and the chicken is cooked through. It should still be plenty saucy — that's the whole point.",
+      },
+      {
+        title: "Serve",
+        body:
+          "Spoon over a bed of basmati rice with warm naan alongside for scooping. A little fresh cilantro on top if you've got it.",
+      },
+    ],
+    cooksNote:
+      "Don't rush the simmer — those ten quiet minutes are when the spices, butter, and cream stop being separate things and become one velvety sauce. If it tightens up more than you like, loosen it with a splash more half-and-half right before serving.",
+    signOff: {
+      kicker: "warm bowls, soft naan",
+      body:
+        "Tear, scoop, repeat. The kind of dinner that asks you to slow down and use your hands.",
     },
   },
 ];
