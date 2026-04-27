@@ -2,7 +2,7 @@
 // To update: change the fields below to point at the newest photo.
 // `addedAt` controls the "New!" badge (shown for 14 days).
 
-import recentImage from "@/assets/recent-sunset-bay.jpg";
+import recentImage from "@/assets/recent-wood-stork-family.jpg";
 
 export type RecentPhoto = {
   image: string;
@@ -15,11 +15,11 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "Fiery Florida sunset over the Gulf with silhouettes of friends wading at the shoreline",
-  galleryName: "Boats and Saltlife",
-  galleryPath: "/gallery/boats",
+  alt: "Mama wood stork standing watch over two fluffy chicks in a stick nest tucked into bright green cypress",
+  galleryName: "Birding & Wildlife",
+  galleryPath: "/gallery/florida-birding",
   reflection:
-    "A pillar of gold poured straight from the sun to the shore — the kind of sky that makes everyone stop talking and just stand in the water for a minute. Pure Gulf coast magic.",
+    "A mama wood stork keeping a quiet eye on her two fuzzy little ones, the whole nest tucked into a wall of spring-green cypress. You could stand under that rookery for an hour and never get tired of watching her watch them.",
   addedAt: "2026-04-27",
 };
 
