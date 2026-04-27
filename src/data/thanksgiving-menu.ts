@@ -23,6 +23,46 @@ export const thanksgivingHeroImage = thanksgivingHero;
 
 export const thanksgivingDishes: ThanksgivingDish[] = [
   {
+    id: "roasted-cornish-hens",
+    name: "Roasted Cornish Hens",
+    intro:
+      "Our main — herb-rubbed Cornish hens roasted over a bed of onion, garlic, lemon, and rosemary. Crispy skin, juicy meat, and pan drippings worth fighting over.",
+    note:
+      "Smoked paprika is my secret weapon — it packs so much more flavor than regular paprika.",
+    ingredientGroups: [
+      {
+        title: "For the hens",
+        items: [
+          "2 Cornish hens (about 1.5 lbs each)",
+          "Fresh rosemary and thyme sprigs",
+          "1 yellow onion, sliced (more or less to taste)",
+          "1 head of garlic, cloves smashed",
+          "1 lemon, sliced",
+          "Olive oil (or avocado, safflower, sunflower, or vegetable oil)",
+        ],
+      },
+      {
+        title: "For the dry rub",
+        items: [
+          "Salt and pepper, to taste",
+          "Italian seasoning (no-salt-added blend, if you can find it)",
+          "Smoked paprika",
+          "Red pepper flakes (more, less, or none — your call)",
+        ],
+      },
+    ],
+    steps: [
+      "Prep the hens: combine all the dry rub ingredients in a small bowl. Pat the hens dry with paper towel and season generously with the dry rub, both inside and out.",
+      "Preheat the oven to 425°F.",
+      "Build the bed: scatter the fresh herbs, garlic, onion, and half the lemon slices across the bottom of the roasting pan — this is your au naturale roasting rack.",
+      "Place the hens on top of the bed and drizzle olive oil all over them.",
+      "Roast, uncovered, for 50 minutes — or until an instant-read thermometer registers 165°F in the thickest part of the breast.",
+      "Let the hens rest for a full 20 minutes before serving. Don't skip this — that's where the juices settle.",
+      "To serve: a whole hen per person is a lot of meat (especially with hens closer to 2 lbs). I like to halve them after resting — sharp long knife, cleaver, or kitchen shears work. Slice between the breasts with steady, intentional pressure all the way through.",
+      "Serve over the remaining lemon slices, garnish with any leftover fresh herbs, and spoon those pan drippings over everything.",
+    ],
+  },
+  {
     id: "green-bean-casserole",
     name: "Green Bean Casserole",
     intro:
