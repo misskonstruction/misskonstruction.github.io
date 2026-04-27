@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import profileImage from "@/assets/profile-misskonstruction.jpg";
+import { FurLifeCard } from "@/components/FurLifeCard";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -42,6 +43,7 @@ function About() {
             />
           </div>
         </div>
+        <FurLifeCard />
       </section>
     </SiteLayout>
   );
