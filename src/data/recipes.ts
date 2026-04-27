@@ -23,6 +23,7 @@ import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
 import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
+import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1054,6 +1055,70 @@ export const recipes: Recipe[] = [
       kicker: "crispy, golden, gone",
       body:
         "Enjoy with whatever side you love — I always reach for coleslaw and wedge fries. A cold drink and a porch don't hurt either.",
+    },
+  },
+  {
+    slug: "honey-glazed-chicken",
+    categorySlug: "from-the-kitchen",
+    kicker: "five ingredients, twenty minutes",
+    title: "Honey **Glazed Chicken**",
+    intro:
+      "Sticky, glossy, and on the table in twenty minutes flat — just five pantry ingredients turn boneless chicken into a sweet-and-savory weeknight hero. Spoon it over steamed rice, scatter green onions on top, and call it dinner.",
+    heroImage: honeyGlazedChickenImg,
+    heroAlt: "Honey glazed chicken bites over steamed rice in a rustic bowl, topped with green onions and red pepper flakes",
+    description:
+      "An easy 5-ingredient honey glazed chicken — sweet, savory, and a little spicy. Ready in 20 minutes and perfect over steamed rice.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "10 min" },
+      { icon: "flame", label: "Cook", value: "10 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "Just five things",
+        items: [
+          "¼ cup honey",
+          "2 tbsp soy sauce",
+          "⅛ tsp red pepper flakes",
+          "1 ½ tbsp olive oil",
+          "2 skinless, boneless chicken breast halves, cut into bite-size pieces",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Gather everything",
+        body:
+          "Pull all your ingredients to the counter and cut the chicken into bite-size pieces. With only five things on the list, the prep is half the battle.",
+      },
+      {
+        title: "Whisk the glaze",
+        body:
+          "In a small bowl, whisk together the honey, soy sauce, and red pepper flakes until smooth. Set aside — you'll pour it in at the end.",
+      },
+      {
+        title: "Sear the chicken",
+        body:
+          "Heat the olive oil in a skillet over medium heat. Add the chicken and cook, stirring often, until it's lightly browned all over — about 5 minutes.",
+      },
+      {
+        title: "Glaze and finish",
+        body:
+          "Pour the honey mixture into the skillet and keep cooking and stirring until the chicken is no longer pink in the center and the sauce has thickened into a glossy glaze, about 5 minutes more.",
+      },
+      {
+        title: "Serve hot",
+        body:
+          "Spoon over a bowl of steamed white rice, scatter sliced green onions across the top, and dig in while the glaze is still glossy.",
+      },
+    ],
+    cooksNote:
+      "Want it a touch spicier? Bump the red pepper flakes up to ¼ teaspoon. And don't be afraid to let the sauce reduce another minute — that's where the lacquered, sticky finish comes from.",
+    signOff: {
+      kicker: "easy as that",
+      body:
+        "Five ingredients, one skillet, twenty minutes — proof that a really good dinner doesn't have to be complicated.",
     },
   },
 ];
