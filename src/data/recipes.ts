@@ -24,6 +24,7 @@ import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
 import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
 import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
+import lovelyLasagneImg from "@/assets/recipe-lovely-lasagne.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1119,6 +1120,103 @@ export const recipes: Recipe[] = [
       kicker: "easy as that",
       body:
         "Five ingredients, one skillet, twenty minutes — proof that a really good dinner doesn't have to be complicated.",
+    },
+  },
+  {
+    slug: "my-lovely-lasagne",
+    categorySlug: "from-the-kitchen",
+    kicker: "Sunday-supper, layer by layer",
+    title: "My **Lovely Lasagne**",
+    intro:
+      "Layers of seasoned beef, marinara, pillowy ricotta, and a generous blanket of melted mozzarella and Parmesan — baked low and slow until the edges go golden and the whole kitchen smells like home. The kind of pan you set in the middle of the table and let everyone fight over the corner pieces.",
+    heroImage: lovelyLasagneImg,
+    heroAlt: "A homemade beef and ricotta lasagne in a glass baking dish, golden cheese on top with fresh basil and parsley",
+    description:
+      "A cozy homemade lasagne with seasoned beef, marinara, ricotta, mozzarella and Parmesan — baked until golden and bubbling. Pure Sunday-supper comfort.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "20 min" },
+      { icon: "flame", label: "Cook", value: "1 hr 20 min" },
+      { icon: "users", label: "Serves", value: "8" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the meat sauce",
+        items: [
+          "1 lb lean ground beef",
+          "1 jar marinara sauce",
+          "1 cup vegetable broth",
+        ],
+      },
+      {
+        title: "For the layers",
+        items: [
+          "Lasagne noodles",
+          "32 oz ricotta cheese",
+          "¾ lb shredded mozzarella cheese",
+          "¾ lb shredded Parmesan cheese",
+          "Fresh (or dried) parsley or basil, to finish",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Heat the oven",
+        body:
+          "Preheat the oven to 365°F so it's ready and steady by the time the pan is built.",
+      },
+      {
+        title: "Brown the beef",
+        body:
+          "Cook the ground beef in a skillet over medium heat until no pink remains, then drain off the excess fat.",
+      },
+      {
+        title: "Build the sauce",
+        body:
+          "Remove the skillet from the heat and stir in the vegetable broth and the jar of marinara until smooth and silky.",
+      },
+      {
+        title: "Start the first layer",
+        body:
+          "Spread enough of the meat sauce across the bottom of a glass baking pan to fully cover it — this keeps the noodles from sticking.",
+      },
+      {
+        title: "Layer noodles, ricotta, and cheese",
+        body:
+          "Cover the sauce with a layer of lasagne noodles. Spread the ricotta evenly over the pasta, then scatter half Parmesan, half mozzarella across the ricotta.",
+      },
+      {
+        title: "Repeat the layer",
+        body:
+          "Spoon another even layer of meat sauce over the cheese, top with more lasagne noodles, spread ricotta evenly across the pasta, then finish with another even layer of half Parmesan, half mozzarella.",
+      },
+      {
+        title: "Season the top",
+        body:
+          "Sprinkle the top with some basil, oregano, or a mix of both — whatever's calling your name from the spice drawer.",
+      },
+      {
+        title: "Bake covered",
+        body:
+          "Cover the pan tightly with foil and bake for 1 hour and 10 minutes, letting everything melt together gently under the foil.",
+      },
+      {
+        title: "Uncover and finish",
+        body:
+          "Remove the foil and bake for 10 more minutes, until the cheese on top is bubbling and just beginning to turn golden at the edges.",
+      },
+      {
+        title: "Rest and serve",
+        body:
+          "Let the lasagne rest for 5 minutes before slicing — this is what gives you those clean, holds-its-shape squares. Garnish with fresh parsley and serve.",
+      },
+    ],
+    cooksNote:
+      "Don't skip the rest at the end — five quiet minutes on the counter is the difference between a beautiful slice and a delicious puddle. And if you've got time, this is even better made a day ahead and reheated; the layers settle into themselves overnight.",
+    signOff: {
+      kicker: "with love, from the oven",
+      body:
+        "Set it in the middle of the table, pour something cold, and let everyone go back for seconds. That's the whole idea.",
     },
   },
 ];
