@@ -17,6 +17,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
+import { Route as RecipesHoneyGlazedChickenRouteImport } from './routes/recipes.honey-glazed-chicken'
 import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
@@ -79,6 +80,12 @@ const RecipesPulledPorkTacosRoute = RecipesPulledPorkTacosRouteImport.update({
   path: '/recipes/pulled-pork-tacos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesHoneyGlazedChickenRoute =
+  RecipesHoneyGlazedChickenRouteImport.update({
+    id: '/recipes/honey-glazed-chicken',
+    path: '/recipes/honey-glazed-chicken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesDeepFriedTilapiaRoute = RecipesDeepFriedTilapiaRouteImport.update({
   id: '/recipes/deep-fried-tilapia',
   path: '/recipes/deep-fried-tilapia',
@@ -204,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -231,6 +239,7 @@ export interface FileRoutesByTo {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -261,6 +270,7 @@ export interface FileRoutesById {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -292,6 +302,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/honey-glazed-chicken'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -319,6 +330,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/honey-glazed-chicken'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -348,6 +360,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/honey-glazed-chicken'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
@@ -377,6 +390,7 @@ export interface RootRouteChildren {
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesDeepFriedTilapiaRoute: typeof RecipesDeepFriedTilapiaRoute
+  RecipesHoneyGlazedChickenRoute: typeof RecipesHoneyGlazedChickenRoute
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
@@ -438,6 +452,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/pulled-pork-tacos'
       fullPath: '/recipes/pulled-pork-tacos'
       preLoaderRoute: typeof RecipesPulledPorkTacosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/honey-glazed-chicken': {
+      id: '/recipes/honey-glazed-chicken'
+      path: '/recipes/honey-glazed-chicken'
+      fullPath: '/recipes/honey-glazed-chicken'
+      preLoaderRoute: typeof RecipesHoneyGlazedChickenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/deep-fried-tilapia': {
@@ -625,6 +646,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesBitchinSlowCookerPorkchopsRoute:
     RecipesBitchinSlowCookerPorkchopsRoute,
   RecipesDeepFriedTilapiaRoute: RecipesDeepFriedTilapiaRoute,
+  RecipesHoneyGlazedChickenRoute: RecipesHoneyGlazedChickenRoute,
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
