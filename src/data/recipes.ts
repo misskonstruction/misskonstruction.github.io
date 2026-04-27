@@ -1415,7 +1415,7 @@ export const recipes: Recipe[] = [
       { icon: "users", label: "Feeds", value: "a full table" },
       { icon: "utensils-crossed", label: "Course", value: "Holiday menu" },
       { icon: "clock", label: "When", value: "Thanksgiving + Christmas" },
-      { icon: "flame", label: "Dishes", value: "4 family favorites" },
+      { icon: "flame", label: "Dishes", value: "5 family favorites" },
     ],
     // The custom /recipes/thanksgiving-table route renders its own layout
     // and does not use these arrays — they're only here to satisfy the
