@@ -2,7 +2,7 @@
 // To update: change the fields below to point at the newest photo.
 // `addedAt` controls the "New!" badge (shown for 14 days).
 
-import recentImage from "@/assets/recent-egret-siblings.jpg";
+import recentImage from "@/assets/recent-sunset-bay.jpg";
 
 export type RecentPhoto = {
   image: string;
@@ -15,12 +15,12 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "Two young great egret siblings nestled together in a cypress tree",
-  galleryName: "Birding & Wildlife",
-  galleryPath: "/gallery/birding-wildlife",
+  alt: "Tangerine sunset over a Florida bay with silhouetted families lingering at the water's edge",
+  galleryName: "Boats and Saltlife",
+  galleryPath: "/gallery/boats",
   reflection:
-    "Sibling rivalry, egret edition — somebody's clearly hogging the good twig. The look on the left says it all.",
-  addedAt: "2026-04-26",
+    "The sky went full tangerine and nobody wanted to leave. Strangers stood in the shallows like quiet little silhouettes — proof that the best Florida sunsets aren't just watched, they're shared.",
+  addedAt: "2026-04-27",
 };
 
 export function isRecent(addedAt: string, days = 14): boolean {
