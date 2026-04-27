@@ -23,6 +23,7 @@ import codDogFoodImg from "@/assets/recipe-cod-dog-food.jpg";
 import bitchinPorkchopsImg from "@/assets/recipe-bitchin-porkchops.jpg";
 import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
 import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
+import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
 
 export type IngredientGroup = {
   title: string;
