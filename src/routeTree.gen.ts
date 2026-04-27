@@ -14,6 +14,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
@@ -64,6 +65,12 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
+const RecipesSuperbSpaghettiAndMeatballsRoute =
+  RecipesSuperbSpaghettiAndMeatballsRouteImport.update({
+    id: '/recipes/superb-spaghetti-and-meatballs',
+    path: '/recipes/superb-spaghetti-and-meatballs',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesSlowCookerHomemadeDogFoodRoute =
   RecipesSlowCookerHomemadeDogFoodRouteImport.update({
     id: '/recipes/slow-cooker-homemade-dog-food',
@@ -222,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
+  '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
   '/blog/': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
@@ -251,6 +259,7 @@ export interface FileRoutesByTo {
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
+  '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
   '/blog': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category': typeof BlogCategoryIndexRoute
@@ -283,6 +292,7 @@ export interface FileRoutesById {
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
+  '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
   '/blog/': typeof BlogIndexRoute
   '/blog/$category/$postSlug': typeof BlogCategoryPostSlugRoute
   '/blog/$category/': typeof BlogCategoryIndexRoute
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
+    | '/recipes/superb-spaghetti-and-meatballs'
     | '/blog/'
     | '/blog/$category/$postSlug'
     | '/blog/$category/'
@@ -345,6 +356,7 @@ export interface FileRouteTypes {
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
+    | '/recipes/superb-spaghetti-and-meatballs'
     | '/blog'
     | '/blog/$category/$postSlug'
     | '/blog/$category'
@@ -376,6 +388,7 @@ export interface FileRouteTypes {
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
+    | '/recipes/superb-spaghetti-and-meatballs'
     | '/blog/'
     | '/blog/$category/$postSlug'
     | '/blog/$category/'
@@ -407,6 +420,7 @@ export interface RootRouteChildren {
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
+  RecipesSuperbSpaghettiAndMeatballsRoute: typeof RecipesSuperbSpaghettiAndMeatballsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -445,6 +459,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
+    }
+    '/recipes/superb-spaghetti-and-meatballs': {
+      id: '/recipes/superb-spaghetti-and-meatballs'
+      path: '/recipes/superb-spaghetti-and-meatballs'
+      fullPath: '/recipes/superb-spaghetti-and-meatballs'
+      preLoaderRoute: typeof RecipesSuperbSpaghettiAndMeatballsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/recipes/slow-cooker-homemade-dog-food': {
       id: '/recipes/slow-cooker-homemade-dog-food'
@@ -671,6 +692,8 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
+  RecipesSuperbSpaghettiAndMeatballsRoute:
+    RecipesSuperbSpaghettiAndMeatballsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

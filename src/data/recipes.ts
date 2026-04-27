@@ -25,6 +25,7 @@ import pulledPorkTacosImg from "@/assets/recipe-pulled-pork-tacos.jpg";
 import deepFriedTilapiaImg from "@/assets/recipe-deep-fried-tilapia.jpg";
 import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
 import lovelyLasagneImg from "@/assets/recipe-lovely-lasagne.jpg";
+import superbSpaghettiMeatballsImg from "@/assets/recipe-superb-spaghetti-meatballs.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1217,6 +1218,95 @@ export const recipes: Recipe[] = [
       kicker: "with love, from the oven",
       body:
         "Set it in the middle of the table, pour something cold, and let everyone go back for seconds. That's the whole idea.",
+    },
+  },
+  {
+    slug: "superb-spaghetti-and-meatballs",
+    categorySlug: "from-the-kitchen",
+    kicker: "a little something for a slow Sunday",
+    title: "Superb **Spaghetti & Meatballs**",
+    intro:
+      "Tender herb-flecked beef meatballs browned in olive oil, then simmered in a simple bright tomato sauce with a single bay leaf doing quiet magic in the background. Spooned over spaghetti, served with garlic bread, and kept honest — no fuss, no chunks, no fancy business.",
+    heroImage: superbSpaghettiMeatballsImg,
+    heroAlt: "A rustic plate of spaghetti topped with browned meatballs, fresh basil, and chives, with garlic bread alongside",
+    description:
+      "Tender herb-and-garlic meatballs simmered in a simple tomato sauce, served over spaghetti with garlic bread. Honest, fuss-free comfort food.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "15 min" },
+      { icon: "flame", label: "Cook", value: "25 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the meatballs",
+        items: [
+          "1 lb lean ground beef",
+          "⅓ cup bread crumbs",
+          "1 egg",
+          "2 garlic cloves, minced",
+          "¼ cup fresh basil, chopped",
+          "¼ cup fresh oregano, chopped",
+          "Fresh chives, chopped",
+          "1 tbsp onion pepper",
+          "1 tsp kosher salt",
+          "Black pepper, to taste",
+        ],
+      },
+      {
+        title: "For the sauce & to serve",
+        items: [
+          "1 tbsp extra virgin olive oil",
+          "1 can tomato sauce",
+          "1 bay leaf",
+          "1 package spaghetti pasta",
+          "Garlic bread, for serving",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Mix the meatballs",
+        body:
+          "In a large bowl, combine the ground beef, bread crumbs, fresh herbs, garlic, egg, onion pepper, 1 teaspoon kosher salt, and a few grinds of black pepper. Mix gently with your hands — just until everything is incorporated.",
+      },
+      {
+        title: "Roll them out",
+        body:
+          "Shape the mixture into meatballs about 1 inch in diameter. Try to keep them roughly the same size so they cook evenly.",
+      },
+      {
+        title: "Brown in olive oil",
+        body:
+          "Heat the olive oil in a large pot over medium-low heat. Add the meatballs and cook, turning occasionally, until browned on all sides.",
+      },
+      {
+        title: "Build the sauce",
+        body:
+          "Pour in the tomato sauce, drop in the bay leaf, and give everything a gentle stir so the meatballs are tucked into the sauce.",
+      },
+      {
+        title: "Simmer",
+        body:
+          "Let the pot simmer for 8–10 minutes, until the sauce has warmed through and the meatballs are cooked all the way through.",
+      },
+      {
+        title: "Boil the pasta",
+        body:
+          "While the sauce simmers, cook the spaghetti in well-salted water until al dente. Drain and divide between bowls.",
+      },
+      {
+        title: "Plate and enjoy",
+        body:
+          "Spoon the meatballs and sauce over the spaghetti, fish out the bay leaf, and serve right away with warm garlic bread on the side.",
+      },
+    ],
+    cooksNote:
+      "This one is meant to stay simple — a clean tomato sauce, no chunks, no mushrooms, just the meatballs and the herbs doing the talking. Spice it up however you like at home: a pinch of red pepper flakes, a glug of red wine, a heavier hand with the garlic. As for Parmesan — I'll be honest, it's not for me, but my family always grates a little over their bowls at the table and swears by it. Set some out and let everyone make it their own.",
+    signOff: {
+      kicker: "buon appetito",
+      body:
+        "Twirl a forkful, tear off a corner of garlic bread, and let dinner take its time. That's the whole point.",
     },
   },
 ];
