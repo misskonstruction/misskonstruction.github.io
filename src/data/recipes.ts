@@ -27,6 +27,7 @@ import honeyGlazedChickenImg from "@/assets/recipe-honey-glazed-chicken.jpg";
 import lovelyLasagneImg from "@/assets/recipe-lovely-lasagne.jpg";
 import superbSpaghettiMeatballsImg from "@/assets/recipe-superb-spaghetti-meatballs.jpg";
 import velvetButterChickenImg from "@/assets/recipe-velvet-butter-chicken.jpg";
+import thanksgivingTableImg from "@/assets/recipe-thanksgiving-table.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1395,6 +1396,36 @@ export const recipes: Recipe[] = [
       kicker: "warm bowls, soft naan",
       body:
         "Tear, scoop, repeat. The kind of dinner that asks you to slow down and use your hands.",
+    },
+  },
+  {
+    slug: "thanksgiving-table",
+    categorySlug: "from-the-kitchen",
+    kicker: "the whole spread, every year",
+    title: "Our **Thanksgiving Table**",
+    subtitle: "every dish, every year",
+    intro:
+      "The same menu we make every November (and December — Christmas is the same dishes around here). Green bean casserole, Marcelo's sweet potato pie, southern mac & cheese, and a double-glazed spiral ham — all in one long, scrollable family booklet.",
+    heroImage: thanksgivingTableImg,
+    heroAlt:
+      "An overhead Thanksgiving table with roasted turkey, sweet potato casserole, green bean casserole, mac and cheese, and a glazed spiral ham",
+    description:
+      "Our full Thanksgiving menu in one place — green bean casserole, Marcelo's sweet potato pie, southern mac & cheese, and a double-glazed spiral ham. The same spread, every year.",
+    meta: [
+      { icon: "users", label: "Feeds", value: "a full table" },
+      { icon: "utensils-crossed", label: "Course", value: "Holiday menu" },
+      { icon: "clock", label: "When", value: "Thanksgiving + Christmas" },
+      { icon: "flame", label: "Dishes", value: "4 family favorites" },
+    ],
+    // The custom /recipes/thanksgiving-table route renders its own layout
+    // and does not use these arrays — they're only here to satisfy the
+    // Recipe type for the From the Kitchen card grid.
+    ingredientGroups: [],
+    steps: [],
+    signOff: {
+      kicker: "happy thanksgiving, y'all",
+      body:
+        "Pull up a chair. The table's set, the candles are lit, and there's enough for everyone.",
     },
   },
 ];
