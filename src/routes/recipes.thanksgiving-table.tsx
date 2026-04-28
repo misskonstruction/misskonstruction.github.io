@@ -32,14 +32,14 @@ export const Route = createFileRoute("/recipes/thanksgiving-table")({
 
 function SprigDivider() {
   return (
-    <div className="my-12 md:my-14 flex justify-center" aria-hidden>
+    <div className="my-14 md:my-16 flex justify-center" aria-hidden>
       <img
         src={sprigDivider}
         alt=""
         width={1280}
         height={512}
         loading="lazy"
-        className="h-10 md:h-12 w-auto opacity-80 select-none pointer-events-none"
+        className="h-20 md:h-24 w-auto opacity-90 select-none pointer-events-none"
       />
     </div>
   );
