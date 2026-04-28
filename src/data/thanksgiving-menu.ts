@@ -5,6 +5,11 @@
  */
 
 import thanksgivingHero from "@/assets/recipe-thanksgiving-table.jpg";
+import dishCornishHens from "@/assets/thanksgiving/dish-cornish-hens.jpg";
+import dishGreenBeanCasserole from "@/assets/thanksgiving/dish-green-bean-casserole.jpg";
+import dishSweetPotato from "@/assets/thanksgiving/dish-sweet-potato.jpg";
+import dishMacAndCheese from "@/assets/thanksgiving/dish-mac-and-cheese.jpg";
+import dishGlazedHam from "@/assets/thanksgiving/dish-glazed-ham.jpg";
 
 export type ThanksgivingDish = {
   /** Anchor id for the in-page jump menu (kebab-case). */
@@ -15,6 +20,8 @@ export type ThanksgivingDish = {
   intro?: string;
   /** Optional honest aside in handwriting font. */
   note?: string;
+  /** Small square thumbnail shown under the ingredients list. */
+  image?: string;
   ingredientGroups: { title?: string; items: string[] }[];
   steps: string[];
 };
