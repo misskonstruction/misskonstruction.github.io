@@ -36,6 +36,7 @@ export const thanksgivingDishes: ThanksgivingDish[] = [
       "Our main — herb-rubbed Cornish hens roasted over a bed of onion, garlic, lemon, and rosemary. Crispy skin, juicy meat, and pan drippings worth fighting over.",
     note:
       "Smoked paprika is my secret weapon — it packs so much more flavor than regular paprika.",
+    image: dishCornishHens,
     ingredientGroups: [
       {
         title: "For the hens",
@@ -76,6 +77,7 @@ export const thanksgivingDishes: ThanksgivingDish[] = [
       "The one dish nobody on the table will let me skip. Creamy, peppery, crowned with crispy fried onions.",
     note:
       "I detest mushrooms — and until I discovered cream of chicken as a stand-in, I never enjoyed this dish. But you do you.",
+    image: dishGreenBeanCasserole,
     ingredientGroups: [
       {
         items: [
@@ -102,6 +104,7 @@ export const thanksgivingDishes: ThanksgivingDish[] = [
     name: "Marcelo's Sweet Potato Pie",
     intro:
       "Soft, brown-sugary sweet potatoes baked under a buttery pecan crumble — the way Marcelo taught me.",
+    image: dishSweetPotato,
     ingredientGroups: [
       {
         title: "For the sweet potatoes",
@@ -141,6 +144,7 @@ export const thanksgivingDishes: ThanksgivingDish[] = [
     name: "Southern Mac & Cheese Casserole",
     intro:
       "Old Bay-spiked cheese sauce, layered noodles, panko butter crumb topping. The pan that disappears first.",
+    image: dishMacAndCheese,
     ingredientGroups: [
       {
         title: "For the casserole",
@@ -180,6 +184,7 @@ export const thanksgivingDishes: ThanksgivingDish[] = [
     name: "Double-Glazed Brown Sugar Spiral Ham",
     intro:
       "We buy the pre-cooked ham that comes with the glaze packet. Not gonna lie — these directions came straight off the box, and they don't miss.",
+    image: dishGlazedHam,
     ingredientGroups: [
       {
         items: [
