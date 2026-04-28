@@ -122,6 +122,27 @@ function DishSection({ dish, index }: { dish: ThanksgivingDish; index: number })
               </div>
             ))}
           </div>
+
+          {dish.image && (
+            <figure className="mt-8 hidden md:block">
+              <div className="overflow-hidden rounded-2xl border border-primary/20 shadow-lg shadow-primary/5">
+                <img
+                  src={dish.image}
+                  alt={dish.name}
+                  width={768}
+                  height={768}
+                  loading="lazy"
+                  className="block h-auto w-full object-cover aspect-square"
+                />
+              </div>
+              <figcaption
+                className="mt-3 text-center text-primary/80 text-lg"
+                style={{ fontFamily: "var(--font-hand)" }}
+              >
+                {dish.name.toLowerCase()}
+              </figcaption>
+            </figure>
+          )}
         </aside>
 
         {/* Steps */}
