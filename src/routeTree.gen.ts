@@ -23,6 +23,7 @@ import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pul
 import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
 import { Route as RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport } from './routes/recipes.lemon-turmeric-cabbage-white-bean-soup'
 import { Route as RecipesHoneyGlazedChickenRouteImport } from './routes/recipes.honey-glazed-chicken'
+import { Route as RecipesHighProteinDillChickenOrzoRouteImport } from './routes/recipes.high-protein-dill-chicken-orzo'
 import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
 import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
@@ -118,6 +119,12 @@ const RecipesHoneyGlazedChickenRoute =
   RecipesHoneyGlazedChickenRouteImport.update({
     id: '/recipes/honey-glazed-chicken',
     path: '/recipes/honey-glazed-chicken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesHighProteinDillChickenOrzoRoute =
+  RecipesHighProteinDillChickenOrzoRouteImport.update({
+    id: '/recipes/high-protein-dill-chicken-orzo',
+    path: '/recipes/high-protein-dill-chicken-orzo',
     getParentRoute: () => rootRouteImport,
   } as any)
 const RecipesDeepFriedTilapiaRoute = RecipesDeepFriedTilapiaRouteImport.update({
@@ -245,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/high-protein-dill-chicken-orzo': typeof RecipesHighProteinDillChickenOrzoRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
@@ -278,6 +286,7 @@ export interface FileRoutesByTo {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/high-protein-dill-chicken-orzo': typeof RecipesHighProteinDillChickenOrzoRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
@@ -314,6 +323,7 @@ export interface FileRoutesById {
   '/recipes/$recipeSlug': typeof RecipesRecipeSlugRoute
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
+  '/recipes/high-protein-dill-chicken-orzo': typeof RecipesHighProteinDillChickenOrzoRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/high-protein-dill-chicken-orzo'
     | '/recipes/honey-glazed-chicken'
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
@@ -384,6 +395,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/high-protein-dill-chicken-orzo'
     | '/recipes/honey-glazed-chicken'
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
@@ -419,6 +431,7 @@ export interface FileRouteTypes {
     | '/recipes/$recipeSlug'
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
+    | '/recipes/high-protein-dill-chicken-orzo'
     | '/recipes/honey-glazed-chicken'
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
@@ -454,6 +467,7 @@ export interface RootRouteChildren {
   RecipesRecipeSlugRoute: typeof RecipesRecipeSlugRoute
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesDeepFriedTilapiaRoute: typeof RecipesDeepFriedTilapiaRoute
+  RecipesHighProteinDillChickenOrzoRoute: typeof RecipesHighProteinDillChickenOrzoRoute
   RecipesHoneyGlazedChickenRoute: typeof RecipesHoneyGlazedChickenRoute
   RecipesLemonTurmericCabbageWhiteBeanSoupRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   RecipesMyLovelyLasagneRoute: typeof RecipesMyLovelyLasagneRoute
@@ -563,6 +577,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/honey-glazed-chicken'
       fullPath: '/recipes/honey-glazed-chicken'
       preLoaderRoute: typeof RecipesHoneyGlazedChickenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/high-protein-dill-chicken-orzo': {
+      id: '/recipes/high-protein-dill-chicken-orzo'
+      path: '/recipes/high-protein-dill-chicken-orzo'
+      fullPath: '/recipes/high-protein-dill-chicken-orzo'
+      preLoaderRoute: typeof RecipesHighProteinDillChickenOrzoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/deep-fried-tilapia': {
@@ -750,6 +771,8 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesBitchinSlowCookerPorkchopsRoute:
     RecipesBitchinSlowCookerPorkchopsRoute,
   RecipesDeepFriedTilapiaRoute: RecipesDeepFriedTilapiaRoute,
+  RecipesHighProteinDillChickenOrzoRoute:
+    RecipesHighProteinDillChickenOrzoRoute,
   RecipesHoneyGlazedChickenRoute: RecipesHoneyGlazedChickenRoute,
   RecipesLemonTurmericCabbageWhiteBeanSoupRoute:
     RecipesLemonTurmericCabbageWhiteBeanSoupRoute,

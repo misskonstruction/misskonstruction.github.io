@@ -29,6 +29,9 @@ import superbSpaghettiMeatballsImg from "@/assets/recipe-superb-spaghetti-meatba
 import velvetButterChickenImg from "@/assets/recipe-velvet-butter-chicken.jpg";
 import thanksgivingTableImg from "@/assets/recipe-thanksgiving-table.jpg";
 import lemonTurmericCabbageImg from "@/assets/recipes/lemon-turmeric-cabbage-white-bean-soup.jpg";
+import dillChickenOrzoImg from "@/assets/recipes/dill-chicken-orzo.jpg";
+import dillChickenOrzoStep3Img from "@/assets/recipes/dill-chicken-orzo-step3.jpg";
+import dillChickenOrzoStep4Img from "@/assets/recipes/dill-chicken-orzo-step4.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -38,6 +41,9 @@ export type IngredientGroup = {
 export type RecipeStep = {
   title: string;
   body: string;
+  /** Optional inline illustration shown beneath the step body. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type RecipeMetaItem = {
@@ -1495,6 +1501,84 @@ export const recipes: Recipe[] = [
       kicker: "small bowls, long game",
       body:
         "Some things you can't out-medicate. So you out-cook them — one bright, golden bowl at a time.",
+    },
+  },
+  {
+    slug: "high-protein-dill-chicken-orzo",
+    categorySlug: "from-the-kitchen",
+    kicker: "one pan, weeknight gold",
+    title: "High-Protein **Dill Chicken Orzo**",
+    intro:
+      "Tender chicken cutlets over whole-wheat orzo and wilted lacinato kale, all pulled together by a creamy lemon-dill pan sauce. This is another one I keep on heavy rotation as part of my cholesterol-lowering path — familial high cholesterol runs in my family and the medications rarely move the number, so I lean into the things I *can* control: more lean protein, more fiber, more greens, more lemon. (Recipe credit: Alex Loh.)",
+    heroImage: dillChickenOrzoImg,
+    heroAlt:
+      "Sliced lemon-pepper chicken cutlets over creamy whole-wheat orzo with kale and dill in a teal cast-iron skillet",
+    description:
+      "A one-pan high-protein dill chicken orzo with whole-wheat orzo, kale and a creamy lemon sauce — part of my hereditary-high-cholesterol eating plan.",
+    meta: [
+      { icon: "clock", label: "Active", value: "30 min" },
+      { icon: "flame", label: "Total", value: "40 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the chicken",
+        items: [
+          "1½ tablespoons salt-free lemon-pepper seasoning",
+          "1½ pounds chicken cutlets (or boneless, skinless chicken breasts pounded thin)",
+          "3 tablespoons extra-virgin olive oil, divided",
+        ],
+      },
+      {
+        title: "For the orzo",
+        items: [
+          "1¼ cups whole-wheat orzo",
+          "4 cloves garlic, minced",
+          "1 small bunch lacinato (Tuscan) kale, stemmed and thinly sliced (about 4 cups)",
+          "3½ cups low-sodium chicken broth",
+          "¼ cup half-and-half",
+          "2 teaspoons chopped fresh dill, plus more for garnish",
+          "1 teaspoon lemon zest, plus more for garnish",
+          "1 tablespoon lemon juice",
+          "4 scallions, thinly sliced",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Season the chicken",
+        body:
+          "Stir the lemon-pepper seasoning together in a small bowl — you'll use part of it on the chicken and the rest in the orzo. Pat the chicken cutlets dry and rub them all over with about half of the spice mixture. Set the rest aside.",
+      },
+      {
+        title: "Sear the cutlets",
+        body:
+          "Heat 2 tablespoons oil in a large cast-iron skillet over medium heat. Arrange the chicken in a single layer and cook, undisturbed, until browned on the bottom and an instant-read thermometer inserted into the thickest part registers 160°F — about 3 to 4 minutes per side. Transfer to a clean cutting board. Don't wipe the skillet clean; that fond is flavor.",
+      },
+      {
+        title: "Toast the orzo and wilt the kale",
+        body:
+          "Add the remaining 1 tablespoon oil to the skillet. Stir in the orzo and minced garlic and cook, stirring often, until the orzo is lightly toasted, about 1 minute. Add the sliced kale, broth, and the remaining spice mixture, scraping up any browned bits. Bring to a simmer over medium-high heat, then reduce to a gentle simmer and cook, stirring occasionally, until the orzo is tender and the mixture is saucy, 8 to 10 minutes. Stir in the half-and-half, dill, lemon zest, lemon juice, and scallions. Spread the mixture into an even layer.",
+        image: dillChickenOrzoStep3Img,
+        imageAlt:
+          "Overhead view of creamy whole-wheat orzo with wilted kale, scallions, dill and lemon zest in a cast-iron skillet",
+      },
+      {
+        title: "Nestle the chicken back in",
+        body:
+          "Slice the chicken cutlets and arrange them on top of the orzo in a single layer. Cover and cook over medium-low heat until the chicken is warmed through, about 3 minutes. Remove from heat and let stand for 5 minutes. Garnish with extra dill and/or lemon zest, if you like.",
+        image: dillChickenOrzoStep4Img,
+        imageAlt:
+          "Sliced chicken cutlets nestled over creamy orzo and kale in a teal cast-iron skillet, garnished with dill",
+      },
+    ],
+    cooksNote:
+      "This is another keeper on my heart-healthy rotation. Familial high cholesterol is a hereditary issue I've fought for years — the medications rarely move the number much — so I do as much as I can on my own with food: lean protein, whole grains, greens, garlic, lemon. Whole-wheat orzo gives a little more fiber and protein than the regular kind, and lacinato kale brings soluble fiber too (a quick note for anyone on blood thinners — kale is high in vitamin K, so check with your doctor first). To make ahead: take it through Step 3, refrigerate the chicken and orzo separately for up to 2 days, then reheat gently and finish with Step 4. Roughly 545 calories, 17g fat, 61g carbs, 40g protein per serving.",
+    signOff: {
+      kicker: "one pan, full plate",
+      body:
+        "Lean, lemony, green, and gone in 40 minutes. The kind of dinner that quietly does the right thing while still tasting like dinner.",
     },
   },
 ];
