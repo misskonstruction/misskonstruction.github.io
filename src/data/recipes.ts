@@ -38,6 +38,9 @@ export type IngredientGroup = {
 export type RecipeStep = {
   title: string;
   body: string;
+  /** Optional inline illustration shown beneath the step body. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type RecipeMetaItem = {
