@@ -28,6 +28,7 @@ import lovelyLasagneImg from "@/assets/recipe-lovely-lasagne.jpg";
 import superbSpaghettiMeatballsImg from "@/assets/recipe-superb-spaghetti-meatballs.jpg";
 import velvetButterChickenImg from "@/assets/recipe-velvet-butter-chicken.jpg";
 import thanksgivingTableImg from "@/assets/recipe-thanksgiving-table.jpg";
+import lemonTurmericCabbageImg from "@/assets/recipes/lemon-turmeric-cabbage-white-bean-soup.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -1426,6 +1427,74 @@ export const recipes: Recipe[] = [
       kicker: "happy thanksgiving, y'all",
       body:
         "Pull up a chair. The table's set, the candles are lit, and there's enough for everyone.",
+    },
+  },
+  {
+    slug: "lemon-turmeric-cabbage-white-bean-soup",
+    categorySlug: "from-the-kitchen",
+    kicker: "a bowl that loves my heart back",
+    title: "Lemon-Turmeric **Cabbage & White Bean Soup**",
+    intro:
+      "A bright, golden, anti-inflammatory bowl that comes together in 30 minutes. This one's part of a quiet little path I'm walking — eating my way toward a lower cholesterol number that genetics keeps trying to hand me back. Familial high cholesterol runs in my family, and the medications rarely do what they're supposed to, so I'm leaning hard on the things I *can* control: more plants, more fiber, more turmeric, more lemon. (Recipe credit: Carolyn Casner.)",
+    heroImage: lemonTurmericCabbageImg,
+    heroAlt:
+      "Overhead bowl of golden lemon-turmeric cabbage and white bean soup with carrots and dill, lemon wedge on the side",
+    description:
+      "A 30-minute lemon-turmeric cabbage and white bean soup — bright, anti-inflammatory, and part of my hereditary-high-cholesterol eating plan.",
+    meta: [
+      { icon: "clock", label: "Active", value: "15 min" },
+      { icon: "flame", label: "Total", value: "30 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Soup" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the pot",
+        items: [
+          "2 tablespoons extra-virgin olive oil",
+          "1 cup chopped onion",
+          "1 medium carrot, halved and sliced (about ½ cup)",
+          "3 cloves garlic, minced",
+          "4 cups coarsely chopped green cabbage",
+          "1 teaspoon ground turmeric",
+          "1 teaspoon paprika",
+          "1 teaspoon dried dill",
+          "1 teaspoon kosher salt",
+          "¼ teaspoon ground pepper",
+          "4 cups low-sodium vegetable broth",
+          "1 (15-oz) can no-salt-added cannellini beans, rinsed",
+          "2 tablespoons lemon juice",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Sweat the aromatics",
+        body:
+          "Heat the olive oil in a large saucepan over medium heat. Add the chopped onion and sliced carrot and cook, stirring occasionally, for about 2 minutes. Stir in the minced garlic and cook for 1 minute more, just until fragrant.",
+      },
+      {
+        title: "Bloom the spices",
+        body:
+          "Add the chopped cabbage along with the turmeric, paprika, dill, salt, and pepper. Cook, stirring occasionally, for about 2 minutes — long enough for the spices to wake up and coat everything in that sunshine yellow.",
+      },
+      {
+        title: "Simmer the soup",
+        body:
+          "Pour in the vegetable broth and add the rinsed cannellini beans. Increase the heat to high and bring it to a boil, then reduce to a lively simmer. Cook, partially covered, for 12 to 15 minutes, until the vegetables are tender.",
+      },
+      {
+        title: "Finish with lemon",
+        body:
+          "Pull the pot off the heat and stir in the lemon juice. That last hit of acid is what makes the whole bowl come alive — don't skip it.",
+      },
+    ],
+    cooksNote:
+      "This is one of the recipes I keep on rotation as part of a heart-healthy, cholesterol-lowering way of eating. Familial high cholesterol is a hereditary issue I've fought for years — the medications rarely move the number much — so I do as much as I can on my own with food: more fiber, more plants, more turmeric, less of the stuff that works against me. Curcumin (in turmeric) and the soluble fiber in white beans and cabbage are both small, steady allies. Roughly 247 calories, 8g fat, 38g carbs, 10g protein per serving.",
+    signOff: {
+      kicker: "small bowls, long game",
+      body:
+        "Some things you can't out-medicate. So you out-cook them — one bright, golden bowl at a time.",
     },
   },
 ];
