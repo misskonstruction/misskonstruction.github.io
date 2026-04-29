@@ -21,6 +21,7 @@ import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/r
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
 import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
+import { Route as RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport } from './routes/recipes.lemon-turmeric-cabbage-white-bean-soup'
 import { Route as RecipesHoneyGlazedChickenRouteImport } from './routes/recipes.honey-glazed-chicken'
 import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
 import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
@@ -107,6 +108,12 @@ const RecipesMyLovelyLasagneRoute = RecipesMyLovelyLasagneRouteImport.update({
   path: '/recipes/my-lovely-lasagne',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesLemonTurmericCabbageWhiteBeanSoupRoute =
+  RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport.update({
+    id: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
+    path: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesHoneyGlazedChickenRoute =
   RecipesHoneyGlazedChickenRouteImport.update({
     id: '/recipes/honey-glazed-chicken',
@@ -239,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
+  '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -271,6 +279,7 @@ export interface FileRoutesByTo {
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
+  '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -306,6 +315,7 @@ export interface FileRoutesById {
   '/recipes/bitchin-slow-cooker-porkchops': typeof RecipesBitchinSlowCookerPorkchopsRoute
   '/recipes/deep-fried-tilapia': typeof RecipesDeepFriedTilapiaRoute
   '/recipes/honey-glazed-chicken': typeof RecipesHoneyGlazedChickenRoute
+  '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
@@ -342,6 +352,7 @@ export interface FileRouteTypes {
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
     | '/recipes/honey-glazed-chicken'
+    | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -374,6 +385,7 @@ export interface FileRouteTypes {
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
     | '/recipes/honey-glazed-chicken'
+    | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -408,6 +420,7 @@ export interface FileRouteTypes {
     | '/recipes/bitchin-slow-cooker-porkchops'
     | '/recipes/deep-fried-tilapia'
     | '/recipes/honey-glazed-chicken'
+    | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/slow-cooker-cod-dog-food'
@@ -442,6 +455,7 @@ export interface RootRouteChildren {
   RecipesBitchinSlowCookerPorkchopsRoute: typeof RecipesBitchinSlowCookerPorkchopsRoute
   RecipesDeepFriedTilapiaRoute: typeof RecipesDeepFriedTilapiaRoute
   RecipesHoneyGlazedChickenRoute: typeof RecipesHoneyGlazedChickenRoute
+  RecipesLemonTurmericCabbageWhiteBeanSoupRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   RecipesMyLovelyLasagneRoute: typeof RecipesMyLovelyLasagneRoute
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
@@ -535,6 +549,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/my-lovely-lasagne'
       fullPath: '/recipes/my-lovely-lasagne'
       preLoaderRoute: typeof RecipesMyLovelyLasagneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/lemon-turmeric-cabbage-white-bean-soup': {
+      id: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      path: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      fullPath: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      preLoaderRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/honey-glazed-chicken': {
@@ -730,6 +751,8 @@ const rootRouteChildren: RootRouteChildren = {
     RecipesBitchinSlowCookerPorkchopsRoute,
   RecipesDeepFriedTilapiaRoute: RecipesDeepFriedTilapiaRoute,
   RecipesHoneyGlazedChickenRoute: RecipesHoneyGlazedChickenRoute,
+  RecipesLemonTurmericCabbageWhiteBeanSoupRoute:
+    RecipesLemonTurmericCabbageWhiteBeanSoupRoute,
   RecipesMyLovelyLasagneRoute: RecipesMyLovelyLasagneRoute,
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
