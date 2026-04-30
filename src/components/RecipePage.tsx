@@ -97,6 +97,22 @@ export function RecipePage({ recipe }: { recipe: Recipe }) {
         </div>
       </section>
 
+      {/* Optional intro image */}
+      {recipe.introImage && (
+        <section className="container mx-auto px-4 pt-10 md:pt-14 max-w-3xl">
+          <figure className="overflow-hidden rounded-sm border border-primary/20 shadow-lg rotate-[-0.4deg]">
+            <img
+              src={recipe.introImage}
+              alt={recipe.introImageAlt ?? recipe.heroAlt}
+              width={1200}
+              height={1200}
+              loading="lazy"
+              className="h-auto w-full object-cover"
+            />
+          </figure>
+        </section>
+      )}
+
       {/* Meta strip */}
       <section className="border-b border-border bg-card/30">
         <div className="container mx-auto px-4 py-6 max-w-4xl">
