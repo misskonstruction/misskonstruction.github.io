@@ -1599,9 +1599,6 @@ export const recipes: Recipe[] = [
     heroImage: saagAlooMatarImg,
     heroAlt:
       "Overhead bowl of saag aloo matar — golden Yukon potatoes, kale, spinach and peas in a tomato curry, with a gold spoon",
-    introImage: saagAlooMatarInsideImg,
-    introImageAlt:
-      "Mise en place for saag aloo matar — kale, diced potatoes, diced tomatoes, red onion, ginger, garlic, serrano, spices, broth, oil and frozen peas",
     description:
       "A one-skillet saag aloo matar with potatoes, spinach, kale and peas in an aromatic tomato curry — part of my hereditary-high-cholesterol eating plan.",
     meta: [
