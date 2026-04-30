@@ -32,6 +32,11 @@ import lemonTurmericCabbageImg from "@/assets/recipes/lemon-turmeric-cabbage-whi
 import dillChickenOrzoImg from "@/assets/recipes/dill-chicken-orzo.jpg";
 import dillChickenOrzoStep3Img from "@/assets/recipes/dill-chicken-orzo-step3.jpg";
 import dillChickenOrzoStep4Img from "@/assets/recipes/dill-chicken-orzo-step4.jpg";
+import saagAlooMatarImg from "@/assets/recipes/saag-aloo-matar.jpg";
+import saagAlooMatarInsideImg from "@/assets/recipes/saag-aloo-matar-inside.jpg";
+import saagAlooMatarStep2Img from "@/assets/recipes/saag-aloo-matar-step-2.jpg";
+import saagAlooMatarStep3Img from "@/assets/recipes/saag-aloo-matar-step-3.jpg";
+import saagAlooMatarStep4Img from "@/assets/recipes/saag-aloo-matar-step-4.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -73,6 +78,9 @@ export type Recipe = {
   heroImage: string;
   /** Alt text for the hero image. */
   heroAlt: string;
+  /** Optional image rendered between the intro paragraph and the meta strip. */
+  introImage?: string;
+  introImageAlt?: string;
   /** Meta strip: prep/cook/serves/course (or whatever fits). */
   meta: RecipeMetaItem[];
   ingredientGroups: IngredientGroup[];
@@ -1579,6 +1587,96 @@ export const recipes: Recipe[] = [
       kicker: "one pan, full plate",
       body:
         "Lean, lemony, green, and gone in 40 minutes. The kind of dinner that quietly does the right thing while still tasting like dinner.",
+    },
+  },
+  {
+    slug: "saag-aloo-matar",
+    categorySlug: "from-the-kitchen",
+    kicker: "one skillet, all the greens",
+    title: "**Saag Aloo Matar**",
+    intro:
+      "A cozy one-skillet dish inspired by two Indian classics — saag aloo and aloo matar — leafy greens, Yukon golds and sweet peas all simmered down into an aromatic tomato gravy. This is another keeper on my cholesterol-lowering rotation. Familial high cholesterol runs in my family and the medications rarely move the number much, so I lean into the things I *can* control: more plants, more fiber, more turmeric, more greens. Lovely on its own, even better with warm naan or basmati rice. (Recipe credit: Amanda Stanfield.)",
+    heroImage: saagAlooMatarImg,
+    heroAlt:
+      "Overhead bowl of saag aloo matar — golden Yukon potatoes, kale, spinach and peas in a tomato curry, with a gold spoon",
+    introImage: saagAlooMatarInsideImg,
+    introImageAlt:
+      "Mise en place for saag aloo matar — kale, diced potatoes, diced tomatoes, red onion, ginger, garlic, serrano, spices, broth, oil and frozen peas",
+    description:
+      "A one-skillet saag aloo matar with potatoes, spinach, kale and peas in an aromatic tomato curry — part of my hereditary-high-cholesterol eating plan.",
+    meta: [
+      { icon: "clock", label: "Active", value: "20 min" },
+      { icon: "flame", label: "Total", value: "45 min" },
+      { icon: "users", label: "Serves", value: "6" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "Aromatics & spices",
+        items: [
+          "3 tablespoons extra-virgin olive oil",
+          "½ teaspoon cumin seeds",
+          "1 medium red onion, finely chopped (about 1 cup)",
+          "1 small serrano pepper, finely chopped, seeded if desired (about 1 tablespoon)",
+          "2 teaspoons grated garlic",
+          "2 teaspoons grated fresh ginger",
+          "1 teaspoon ground coriander",
+          "1 teaspoon salt",
+          "¾ teaspoon chili powder",
+          "½ teaspoon garam masala",
+          "¼ teaspoon ground turmeric",
+        ],
+      },
+      {
+        title: "Vegetables & broth",
+        items: [
+          "1 (15-ounce) can no-salt-added diced tomatoes",
+          "1½ pounds Yukon Gold potatoes, scrubbed and diced (about 4 cups)",
+          "2¼ cups no-salt-added vegetable broth",
+          "4 cups chopped baby spinach",
+          "2 cups chopped stemmed lacinato kale",
+          "1¼ cups frozen peas",
+          "Fresh cilantro (or parsley, in my kitchen) leaves for garnish, optional",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Bloom the cumin and aromatics",
+        body:
+          "Heat 3 tablespoons oil in a large, deep-sided skillet over medium heat. Add ½ teaspoon cumin seeds and cook, stirring often, until fragrant — about 1 minute. Stir in the chopped red onion and serrano and cook, stirring occasionally, until the onion turns translucent, 2 to 3 minutes. Add 2 teaspoons garlic and 2 teaspoons ginger and cook, stirring often, until fragrant, about 1 minute.",
+      },
+      {
+        title: "Toast the spices and start the tomato base",
+        body:
+          "Add 1 teaspoon coriander, 1 teaspoon salt, ¾ teaspoon chili powder, ½ teaspoon garam masala and ¼ teaspoon turmeric. Cook, stirring constantly, until fragrant — about 2 minutes. Stir in the can of tomatoes and bring to a simmer over medium heat. Cook, stirring occasionally, until slightly thickened, about 2 minutes.",
+        image: saagAlooMatarStep2Img,
+        imageAlt:
+          "Diced red onion and serrano sweating in olive oil with cumin seeds in a stainless skillet",
+      },
+      {
+        title: "Add the potatoes and simmer",
+        body:
+          "Add the diced potatoes and cook, stirring often, until well coated, about 2 minutes. Stir in 2¼ cups broth, raise heat to high and bring to a boil. Cover, reduce heat to medium, and simmer, stirring occasionally, until the potatoes are fork-tender — 15 to 18 minutes.",
+        image: saagAlooMatarStep3Img,
+        imageAlt:
+          "Yukon Gold potato chunks coated in tomato and spice mixture in a stainless skillet, ready for broth",
+      },
+      {
+        title: "Wilt the greens and finish with peas",
+        body:
+          "Stir in 4 cups spinach, 2 cups kale and 1¼ cups peas. Cook, uncovered and stirring often, until the greens are wilted and the peas are bright green, about 2 minutes. Garnish with cilantro (or parsley) leaves, if you like.",
+        image: saagAlooMatarStep4Img,
+        imageAlt:
+          "Finished saag aloo matar in a stainless skillet — wilted spinach and kale, tender potatoes, peas and tomato gravy with a wooden spoon",
+      },
+    ],
+    cooksNote:
+      "An easy way to turn up the heat is to leave the seeds in the serrano. To tame it, take the seeds out or swap in a milder pepper like a jalapeño. Adding the spices early lets them bloom and release their oils — just keep things moving in the pan, because dry spices can scorch fast. A few notes from my own plate: dark leafy greens like spinach and kale bring polyphenols and flavonoids that help support heart health; potatoes (skin on, please) bring resistant starch and fiber; cooked tomatoes deliver lycopene that's been linked to lower inflammation and better arteries; and peas add insoluble fiber plus magnesium. Familial high cholesterol is a hereditary fight I've had for a long time and the medications rarely do enough on their own — so meals like this, heavy on plants and fiber, are part of how I quietly chip away at the number.",
+    signOff: {
+      kicker: "warm bowl, quiet win",
+      body:
+        "Scoop it over basmati or tear into warm naan. The kind of dinner that fills the house with cumin and ginger and feels like it's looking out for you.",
     },
   },
 ];
