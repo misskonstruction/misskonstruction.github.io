@@ -130,6 +130,14 @@
   max-width: 100%;
   height: auto;
 }
+/* Standalone in-post images sit smaller and inline-feeling on desktop,
+   while still going full width on small screens. Carousels are excluded. */
+@media (min-width: 768px) {
+  .journal-prose > img,
+  .journal-prose > figure:not(.journal-carousel-item) {
+    max-width: 45%;
+  }
+}
 .journal-prose img {
   border-radius: 0.5rem;
   /* Soft glow + vignette so the photo melts into the dark page */
