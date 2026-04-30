@@ -19,6 +19,7 @@ import { Route as RecipesThanksgivingTableRouteImport } from './routes/recipes.t
 import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
+import { Route as RecipesSaagAlooMatarRouteImport } from './routes/recipes.saag-aloo-matar'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
 import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
 import { Route as RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport } from './routes/recipes.lemon-turmeric-cabbage-white-bean-soup'
@@ -99,6 +100,11 @@ const RecipesSlowCookerCodDogFoodRoute =
     path: '/recipes/slow-cooker-cod-dog-food',
     getParentRoute: () => rootRouteImport,
   } as any)
+const RecipesSaagAlooMatarRoute = RecipesSaagAlooMatarRouteImport.update({
+  id: '/recipes/saag-aloo-matar',
+  path: '/recipes/saag-aloo-matar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesPulledPorkTacosRoute = RecipesPulledPorkTacosRouteImport.update({
   id: '/recipes/pulled-pork-tacos',
   path: '/recipes/pulled-pork-tacos',
@@ -257,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
+  '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -291,6 +298,7 @@ export interface FileRoutesByTo {
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
+  '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -328,6 +336,7 @@ export interface FileRoutesById {
   '/recipes/lemon-turmeric-cabbage-white-bean-soup': typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
+  '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -366,6 +375,7 @@ export interface FileRouteTypes {
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
+    | '/recipes/saag-aloo-matar'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -400,6 +410,7 @@ export interface FileRouteTypes {
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
+    | '/recipes/saag-aloo-matar'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -436,6 +447,7 @@ export interface FileRouteTypes {
     | '/recipes/lemon-turmeric-cabbage-white-bean-soup'
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
+    | '/recipes/saag-aloo-matar'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -472,6 +484,7 @@ export interface RootRouteChildren {
   RecipesLemonTurmericCabbageWhiteBeanSoupRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRoute
   RecipesMyLovelyLasagneRoute: typeof RecipesMyLovelyLasagneRoute
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
+  RecipesSaagAlooMatarRoute: typeof RecipesSaagAlooMatarRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
   RecipesSuperbSpaghettiAndMeatballsRoute: typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/slow-cooker-cod-dog-food'
       fullPath: '/recipes/slow-cooker-cod-dog-food'
       preLoaderRoute: typeof RecipesSlowCookerCodDogFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/saag-aloo-matar': {
+      id: '/recipes/saag-aloo-matar'
+      path: '/recipes/saag-aloo-matar'
+      fullPath: '/recipes/saag-aloo-matar'
+      preLoaderRoute: typeof RecipesSaagAlooMatarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/pulled-pork-tacos': {
@@ -778,6 +798,7 @@ const rootRouteChildren: RootRouteChildren = {
     RecipesLemonTurmericCabbageWhiteBeanSoupRoute,
   RecipesMyLovelyLasagneRoute: RecipesMyLovelyLasagneRoute,
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
+  RecipesSaagAlooMatarRoute: RecipesSaagAlooMatarRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
   RecipesSuperbSpaghettiAndMeatballsRoute:
