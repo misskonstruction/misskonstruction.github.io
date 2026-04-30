@@ -32,6 +32,11 @@ import lemonTurmericCabbageImg from "@/assets/recipes/lemon-turmeric-cabbage-whi
 import dillChickenOrzoImg from "@/assets/recipes/dill-chicken-orzo.jpg";
 import dillChickenOrzoStep3Img from "@/assets/recipes/dill-chicken-orzo-step3.jpg";
 import dillChickenOrzoStep4Img from "@/assets/recipes/dill-chicken-orzo-step4.jpg";
+import saagAlooMatarImg from "@/assets/recipes/saag-aloo-matar.jpg";
+import saagAlooMatarInsideImg from "@/assets/recipes/saag-aloo-matar-inside.jpg";
+import saagAlooMatarStep2Img from "@/assets/recipes/saag-aloo-matar-step-2.jpg";
+import saagAlooMatarStep3Img from "@/assets/recipes/saag-aloo-matar-step-3.jpg";
+import saagAlooMatarStep4Img from "@/assets/recipes/saag-aloo-matar-step-4.jpg";
 
 export type IngredientGroup = {
   title: string;
@@ -73,6 +78,9 @@ export type Recipe = {
   heroImage: string;
   /** Alt text for the hero image. */
   heroAlt: string;
+  /** Optional image rendered between the intro paragraph and the meta strip. */
+  introImage?: string;
+  introImageAlt?: string;
   /** Meta strip: prep/cook/serves/course (or whatever fits). */
   meta: RecipeMetaItem[];
   ingredientGroups: IngredientGroup[];
