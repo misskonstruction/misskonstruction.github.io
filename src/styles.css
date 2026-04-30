@@ -170,6 +170,43 @@
   font-style: italic;
   font-family: var(--font-journal);
 }
+
+/* Reusable "journal photo" treatment — same softened look as inline blog images.
+   Apply to a <figure> wrapping an <img>. */
+.journal-photo {
+  margin-left: auto;
+  margin-right: auto;
+}
+.journal-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-foreground) 6%, transparent),
+    0 25px 60px -20px color-mix(in oklab, var(--color-primary) 35%, transparent),
+    0 10px 35px -10px rgba(0, 0, 0, 0.55);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 70%,
+    rgba(0, 0, 0, 0.85) 88%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+          mask-image: radial-gradient(
+    ellipse at center,
+    black 70%,
+    rgba(0, 0, 0, 0.85) 88%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  transition: transform 500ms ease, box-shadow 500ms ease;
+}
+.journal-photo img:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-primary) 25%, transparent),
+    0 30px 80px -20px color-mix(in oklab, var(--color-primary) 50%, transparent),
+    0 15px 45px -10px rgba(0, 0, 0, 0.6);
+}
 .journal-prose hr {
   border: 0;
   height: 1px;
