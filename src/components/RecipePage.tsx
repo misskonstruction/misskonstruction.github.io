@@ -222,18 +222,13 @@ export function RecipePage({ recipe }: { recipe: Recipe }) {
                       {step.body}
                     </p>
                     {step.image && (
-                      <figure
-                        className={`mt-5 overflow-hidden rounded-sm border border-primary/20 shadow-lg ${
-                          i % 2 === 0 ? "rotate-[-0.5deg]" : "rotate-[0.5deg]"
-                        }`}
-                      >
+                      <figure className="journal-photo mt-6 max-w-md">
                         <img
                           src={step.image}
                           alt={step.imageAlt ?? step.title}
                           width={1200}
                           height={1200}
                           loading="lazy"
-                          className="h-auto w-full object-cover"
                         />
                       </figure>
                     )}
