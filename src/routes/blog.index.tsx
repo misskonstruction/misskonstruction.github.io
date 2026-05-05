@@ -262,7 +262,7 @@ function Blog() {
               </div>
               {(() => {
                 const latestCat = categoryDefs.find((c) =>
-                  latest.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
+                  latest.categories.some((cat: string) => cat.toLowerCase() === c.title.toLowerCase()),
                 );
                 const categorySlug = latestCat?.slug ?? "reflections";
                 return (

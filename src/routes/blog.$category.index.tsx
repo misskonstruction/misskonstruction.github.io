@@ -364,7 +364,7 @@ function CategoryPage() {
       <section className="container mx-auto px-4 py-16 md:py-20">
         {posts.length === 0 ? null : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post, i) => {
+            {posts.map((post: WordPressPost, i: number) => {
               const tilt = i % 2 === 0 ? "rotate-[-0.6deg]" : "rotate-[0.6deg]";
               return (
                 <Link
