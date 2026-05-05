@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Mail, Facebook, Instagram, Cloud } from "lucide-react";
+import { Mail, Facebook, Instagram, Cloud, Youtube } from "lucide-react";
 import profilePlaceholder from "@/assets/profile-misskonstruction.jpg";
 
 export const Route = createFileRoute("/contact")({
@@ -48,6 +48,14 @@ function Contact() {
             className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
           >
             <Facebook className="h-4 w-4" /> Facebook
+          </a>
+          <a
+            href="https://www.youtube.com/@misskonstruction"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
+          >
+            <Youtube className="h-4 w-4" /> YouTube
           </a>
           <a
             href="https://www.instagram.com/misskonstruction"
