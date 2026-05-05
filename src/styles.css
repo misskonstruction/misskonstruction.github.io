@@ -130,12 +130,12 @@
   max-width: 100%;
   height: auto;
 }
-/* Standalone in-post images sit smaller and inline-feeling on desktop,
-   while still going full width on small screens. Carousels are excluded. */
+/* Standalone in-post images fill the full text column width.
+   Carousels are excluded. */
 @media (min-width: 768px) {
   .journal-prose > img,
   .journal-prose > figure:not(.journal-carousel-item) {
-    max-width: 45%;
+    max-width: 100%;
   }
 }
 .journal-prose img {
