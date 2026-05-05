@@ -26,6 +26,59 @@ export function JournalPostBody({ html }: { html: string }) {
     if (!containerRef.current) return;
     const root = containerRef.current;
 
+    // --- 1) Convert bare YouTube/Vimeo URLs into responsive embeds ---
+    const getYouTubeId = (url: string): string | null => {
+      try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^www\./, "");
+        if (host === "youtu.be") return u.pathname.slice(1).split("/")[0] || null;
+        if (host.endsWith("youtube.com") || host === "youtube-nocookie.com") {
+          if (u.pathname === "/watch") return u.searchParams.get("v");
+          const m = u.pathname.match(/^\/(embed|shorts|live)\/([^/?#]+)/);
+          if (m) return m[2];
+        }
+        return null;
+      } catch {
+        return null;
+      }
+    };
+
+    const buildVideo = (id: string): HTMLElement => {
+      const wrap = document.createElement("div");
+      wrap.className = "journal-video";
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}`;
+      iframe.title = "YouTube video";
+      iframe.loading = "lazy";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      wrap.appendChild(iframe);
+      return wrap;
+    };
+
+    // Replace <p> elements that contain only a YouTube URL (text or single link)
+    const paragraphs = Array.from(root.querySelectorAll("p"));
+    for (const p of paragraphs) {
+      // Skip if it contains an image — leave for the carousel pass below
+      if (p.querySelector("img")) continue;
+      const text = (p.textContent ?? "").trim();
+      let id: string | null = null;
+      const onlyLink = p.children.length === 1 && p.firstElementChild?.tagName === "A";
+      if (onlyLink) {
+        const href = (p.firstElementChild as HTMLAnchorElement).getAttribute("href") ?? "";
+        // Treat as embed only if the visible text is also just the URL (or empty)
+        const linkText = p.firstElementChild!.textContent?.trim() ?? "";
+        if (!linkText || linkText === href) id = getYouTubeId(href);
+      } else if (p.children.length === 0) {
+        // Bare URL as text
+        if (/^https?:\/\/\S+$/.test(text)) id = getYouTubeId(text);
+      }
+      if (id) p.replaceWith(buildVideo(id));
+    }
+
+    // --- 2) Group consecutive images into carousels (existing behavior) ---
     const children = Array.from(root.children) as HTMLElement[];
     const collectedGroups: CarouselItem[][] = [];
     let run: { node: HTMLElement; item: CarouselItem }[] = [];
