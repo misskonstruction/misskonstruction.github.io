@@ -274,6 +274,10 @@
   margin: 0;
   scroll-snap-align: start;
   text-align: center;
+  position: relative;
+}
+.journal-carousel-item:hover {
+  z-index: 5;
 }
 @media (max-width: 768px) {
   .journal-carousel-item { flex-basis: calc((100% - 1rem) / 2); }
@@ -304,14 +308,14 @@
     rgba(0, 0, 0, 0.85) 88%,
     rgba(0, 0, 0, 0.4) 100%
   );
-  transition: transform 500ms ease, box-shadow 500ms ease;
+  transition: transform 400ms ease, box-shadow 400ms ease;
 }
 .journal-carousel-item img:hover {
-  transform: scale(1.02);
+  transform: scale(1.15);
   box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--color-primary) 25%, transparent),
-    0 30px 80px -20px color-mix(in oklab, var(--color-primary) 50%, transparent),
-    0 15px 45px -10px rgba(0, 0, 0, 0.6);
+    0 0 0 1px color-mix(in oklab, var(--color-primary) 30%, transparent),
+    0 40px 100px -20px color-mix(in oklab, var(--color-primary) 55%, transparent),
+    0 20px 60px -10px rgba(0, 0, 0, 0.7);
 }
 .journal-carousel-item figcaption {
   margin-top: 0.5rem;
