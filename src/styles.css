@@ -179,6 +179,28 @@
   font-family: var(--font-journal);
 }
 
+/* Embedded video (e.g. YouTube) — matches the soft journal photo treatment */
+.journal-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 2.5rem auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-foreground) 6%, transparent),
+    0 25px 60px -20px color-mix(in oklab, var(--color-primary) 35%, transparent),
+    0 10px 35px -10px rgba(0, 0, 0, 0.55);
+}
+.journal-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
 /* Reusable "journal photo" treatment — same softened look as inline blog images.
    Apply to a <figure> wrapping an <img>. */
 .journal-photo {
