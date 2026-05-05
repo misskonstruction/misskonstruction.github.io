@@ -1,5 +1,13 @@
-import { Github } from "lucide-react";
+import { Github, Mail, Facebook, Youtube, Instagram, Cloud } from "lucide-react";
 import octopus from "@/assets/octopus-icon.png";
+
+const socialLinks = [
+  { href: "mailto:hello@misskonstruction.com", label: "Email", Icon: Mail },
+  { href: "https://www.facebook.com/misskonstruction/", label: "Facebook", Icon: Facebook },
+  { href: "https://www.youtube.com/@misskonstruction", label: "YouTube", Icon: Youtube },
+  { href: "https://www.instagram.com/misskonstruction", label: "Instagram", Icon: Instagram },
+  { href: "https://bsky.app/profile/misskonstruction.bsky.social", label: "Bluesky", Icon: Cloud },
+];
 
 export function SiteFooter() {
   return (
@@ -9,6 +17,21 @@ export function SiteFooter() {
           &copy; Copyright 2026{" "}
           <strong className="text-foreground">MissKonstruction Photography</strong>. All Rights Reserved.
         </p>
+        <nav aria-label="Social links" className="mt-4 flex items-center justify-center gap-4 flex-nowrap">
+          {socialLinks.map(({ href, label, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              aria-label={label}
+              title={label}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Icon className="h-4 w-4" />
+            </a>
+          ))}
+        </nav>
         <p className="mt-3">
           Recommended:{" "}
           <a
