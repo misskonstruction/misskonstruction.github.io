@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
-import creativeImg from "@/assets/blog-creative.jpg";
+import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
@@ -63,13 +63,13 @@ const categoryDefs = [
     image: kitchenImg,
   },
   {
-    icon: Palette,
-    emoji: "🎨",
-    title: "Creative Life",
-    slug: "creative-life",
+    icon: Fish,
+    emoji: "🐠",
+    title: "Platy Pals",
+    slug: "platy-pals",
     blurb:
-      "Sketchbooks, side projects, and the messy middle of making things — a love letter to staying curious.",
-    image: creativeImg,
+      "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
+    image: platysImg,
   },
   {
     icon: BookOpen,
