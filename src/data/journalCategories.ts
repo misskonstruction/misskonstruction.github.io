@@ -1,8 +1,8 @@
-import { Camera, UtensilsCrossed, Palette, BookOpen, Leaf, Plane, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
-import creativeImg from "@/assets/blog-creative.jpg";
+import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
@@ -38,13 +38,13 @@ export const journalCategories: JournalCategory[] = [
     aliases: ["kitchen", "recipes", "food"],
   },
   {
-    slug: "creative-life",
-    title: "Creative Life",
-    emoji: "🎨",
-    blurb: "Sketchbooks, side projects, and the messy middle of making things.",
-    image: creativeImg,
-    icon: Palette,
-    aliases: ["creative", "creativity"],
+    slug: "platy-pals",
+    title: "Platy Pals",
+    emoji: "🐠",
+    blurb: "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
+    image: platysImg,
+    icon: Fish,
+    aliases: ["platy", "platys", "platy pals", "fish", "creative life", "creative", "creativity"],
   },
   {
     slug: "faith-scripture",
