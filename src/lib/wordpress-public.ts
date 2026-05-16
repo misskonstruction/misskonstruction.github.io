@@ -48,7 +48,19 @@ function stripHtml(html: string): string {
 }
 
 function sanitizePostHtml(html: string): string {
-  return html
+  // Preserve YouTube / Vimeo embeds: before stripping iframes, convert any
+  // YouTube/Vimeo iframe into a bare URL paragraph so JournalPostBody's
+  // embed handler can re-render it as a responsive player.
+  const withEmbeds = html.replace(
+    /<iframe\b[^>]*\bsrc=["']([^"']+)["'][^>]*>\s*<\/iframe>/gi,
+    (match, src: string) => {
+      const isYouTube = /(?:youtube\.com|youtube-nocookie\.com|youtu\.be)/i.test(src);
+      const isVimeo = /vimeo\.com/i.test(src);
+      if (!isYouTube && !isVimeo) return match;
+      return `<p>${src}</p>`;
+    },
+  );
+  return withEmbeds
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
     .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")

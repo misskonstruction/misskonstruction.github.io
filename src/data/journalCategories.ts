@@ -44,7 +44,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
     image: platysImg,
     icon: Fish,
-    aliases: ["platy", "platys", "platy pals", "fish", "creative life", "creative", "creativity"],
+    aliases: ["platy", "platys", "platy pals", "fish"],
   },
   {
     slug: "faith-scripture",
@@ -74,6 +74,30 @@ export const journalCategories: JournalCategory[] = [
     aliases: ["wander", "roam", "wander and roam", "travel"],
   },
 ];
+
+/**
+ * Per-post category overrides — used when a WordPress post is mis-categorized
+ * (e.g. left in the old "Creative Life" category that was renamed to Platy Pals).
+ * Maps WordPress post slug → the category slug it should actually appear under.
+ */
+export const postCategoryOverrides: Record<string, string> = {
+  "sibling-squabbles-in-the-cypress-tops": "coastal-photography",
+  "test-post": "coastal-photography", // "Stillness on the Gulf"
+};
+
+/** Resolve the journal category a post should actually appear under. */
+export function effectiveJournalCategoryFor(post: {
+  slug: string;
+  categories: string[];
+}): JournalCategory | undefined {
+  const override = postCategoryOverrides[post.slug];
+  if (override) return findJournalCategory(override);
+  for (const name of post.categories) {
+    const match = journalCategories.find((c) => journalCategoryMatches(name, c));
+    if (match) return match;
+  }
+  return undefined;
+}
 
 function normalizeJournalCategory(value: string): string {
   return value
