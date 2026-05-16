@@ -116,7 +116,7 @@ export const Route = createFileRoute("/blog/$category/")({
     try {
       const all = await getPublicWordPressPosts();
       const posts = cat
-        ? all.filter((p) => p.categories.some((c) => journalCategoryMatches(c, cat)))
+        ? all.filter((p) => effectiveJournalCategoryFor(p)?.slug === cat.slug)
         : [];
       return { posts, category: serializableCategory };
     } catch (e) {
