@@ -2,7 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowLeft, ArrowRight, Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
-import { journalCategoryMatches } from "@/data/journalCategories";
+import { effectiveJournalCategoryFor } from "@/data/journalCategories";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
