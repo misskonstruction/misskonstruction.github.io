@@ -44,7 +44,7 @@ export const journalCategories: JournalCategory[] = [
     blurb: "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
     image: platysImg,
     icon: Fish,
-    aliases: ["platy", "platys", "platy pals", "fish", "creative life", "creative", "creativity"],
+    aliases: ["platy", "platys", "platy pals", "fish"],
   },
   {
     slug: "faith-scripture",
