@@ -11,6 +11,12 @@ import kc07 from "@/assets/konstruction-character/kc-07.jpg";
 import kc08 from "@/assets/konstruction-character/kc-08.jpg";
 import kc09 from "@/assets/konstruction-character/kc-09.jpg";
 import kc10 from "@/assets/konstruction-character/kc-10.jpg";
+import kc11 from "@/assets/konstruction-character/kc-11.jpg";
+import kc12 from "@/assets/konstruction-character/kc-12.jpg";
+import kc13 from "@/assets/konstruction-character/kc-13.jpg";
+import kc14 from "@/assets/konstruction-character/kc-14.jpg";
+import kc15 from "@/assets/konstruction-character/kc-15.jpg";
+import kc16 from "@/assets/konstruction-character/kc-16.jpg";
 
 export const Route = createFileRoute("/gallery/konstruction-character")({
   component: KonstructionCharacterGallery,
@@ -33,6 +39,12 @@ const items: GalleryItem[] = [
   { src: kc08, title: "Historic mural — figures and cypress" },
   { src: kc09, title: "Historic mural — boats and portraits" },
   { src: kc10, title: "Ottaway's Ice Cream Parlor" },
+  { src: kc11, title: "Brick arcade in afternoon light" },
+  { src: kc12, title: "Charlie's Chocolate Factory book bench" },
+  { src: kc13, title: "Downtown corner — Greek Restaurant" },
+  { src: kc14, title: "Historic Theatre on Grand Boulevard" },
+  { src: kc15, title: "Bougainvillea mural & courtyard" },
+  { src: kc16, title: "Shade sails over the promenade" },
 ];
 
 function KonstructionCharacterGallery() {
