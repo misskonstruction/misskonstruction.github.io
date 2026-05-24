@@ -3,11 +3,14 @@ import { useState } from "react";
 import { Camera, ChevronDown, Menu, X } from "lucide-react";
 
 const galleries = [
+  { to: "/gallery/the-collective", label: "The Collective" },
   { to: "/gallery/maternity", label: "Maternity" },
   { to: "/gallery/newborns", label: "Newborns" },
   { to: "/gallery/birding-wildlife", label: "Birding & Wildlife" },
   { to: "/gallery/flowers", label: "Flower Project" },
   { to: "/gallery/boats", label: "Boats and Saltlife" },
+  { to: "/gallery/konstruction-character", label: "Konstruction & Character" },
+  { to: "/gallery/travel", label: "Travel" },
 ] as const;
 
 export function SiteHeader() {
