@@ -3,10 +3,9 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
 import sphinxUnderKonstruction from "@/assets/sphinx-under-konstruction.png";
 import maternitySoloSunset from "@/assets/maternity/maternity-07.jpg";
-import newbornPlaceholder from "@/assets/sphinx-newborn.png";
-import birdingFavorite from "@/assets/florida-birding/birding-09.jpg";
-import flowersFavorite from "@/assets/flowers/flowers-09.jpg";
-import boatsFavorite from "@/assets/boats/boats-09.jpg";
+import birdingFavorite from "@/assets/florida-birding/birding-05.jpg";
+import flowersFavorite from "@/assets/flowers/flowers-05.jpg";
+import boatsFavorite from "@/assets/boats/boats-10.jpg";
 
 export const Route = createFileRoute("/gallery/the-collective")({
   component: TheCollectiveGallery,
@@ -22,10 +21,9 @@ export const Route = createFileRoute("/gallery/the-collective")({
 const items: GalleryItem[] = [
   { src: birdingFavorite, title: "Birding & Wildlife" },
   { src: maternitySoloSunset, title: "Maternity" },
-  { src: newbornPlaceholder, title: "Newborns" },
   { src: flowersFavorite, title: "Flower Project" },
   { src: boatsFavorite, title: "Boats & Saltlife" },
-  ...Array.from({ length: 11 }, () => ({})),
+  ...Array.from({ length: 12 }, () => ({})),
 ];
 
 function TheCollectiveGallery() {
