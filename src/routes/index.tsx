@@ -7,6 +7,9 @@ import teaserNewborns from "@/assets/teaser-newborns.jpg";
 import teaserNature from "@/assets/teaser-nature.jpg";
 import teaserFlowers from "@/assets/teaser-flowers.jpg";
 import teaserBoats from "@/assets/teaser-boats.jpg";
+import teaserCollective from "@/assets/teaser-collective.jpg";
+import teaserKonstructionCharacter from "@/assets/teaser-konstruction-character.jpg";
+import teaserTravel from "@/assets/teaser-travel.jpg";
 import { recentPhoto, isRecent } from "@/data/recentPhoto";
 
 export const Route = createFileRoute("/")({
@@ -23,11 +26,14 @@ export const Route = createFileRoute("/")({
 });
 
 const featured = [
+  { to: "/gallery/the-collective", label: "The Collective", image: teaserCollective },
   { to: "/gallery/maternity", label: "Maternity", image: teaserMaternity },
   { to: "/gallery/newborns", label: "Newborns", image: teaserNewborns },
   { to: "/gallery/birding-wildlife", label: "Birding & Wildlife", image: teaserNature },
   { to: "/gallery/flowers", label: "Flower Project", image: teaserFlowers },
   { to: "/gallery/boats", label: "Boats & Saltlife", image: teaserBoats },
+  { to: "/gallery/konstruction-character", label: "Konstruction & Character", image: teaserKonstructionCharacter },
+  { to: "/gallery/travel", label: "Travel", image: teaserTravel },
 ] as const;
 
 function Home() {
@@ -78,7 +84,7 @@ function Home() {
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Explore the galleries</h2>
           <div className="inline-flex h-px w-16 bg-primary mt-4" />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {featured.map((f) => (
             <Link
               key={f.to}
