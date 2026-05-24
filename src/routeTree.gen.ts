@@ -37,6 +37,7 @@ import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './rou
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
 import { Route as GalleryTravelRouteImport } from './routes/gallery.travel'
 import { Route as GalleryTheCollectiveRouteImport } from './routes/gallery.the-collective'
+import { Route as GalleryTextureFormRouteImport } from './routes/gallery.texture-form'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
 import { Route as GalleryKonstructionCharacterRouteImport } from './routes/gallery.konstruction-character'
@@ -203,6 +204,11 @@ const GalleryTheCollectiveRoute = GalleryTheCollectiveRouteImport.update({
   path: '/gallery/the-collective',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryTextureFormRoute = GalleryTextureFormRouteImport.update({
+  id: '/gallery/texture-form',
+  path: '/gallery/texture-form',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
   id: '/gallery/newborns',
   path: '/gallery/newborns',
@@ -268,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/texture-form': typeof GalleryTextureFormRoute
   '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
@@ -306,6 +313,7 @@ export interface FileRoutesByTo {
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/texture-form': typeof GalleryTextureFormRoute
   '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
@@ -347,6 +355,7 @@ export interface FileRoutesById {
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/texture-form': typeof GalleryTextureFormRoute
   '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
@@ -389,6 +398,7 @@ export interface FileRouteTypes {
     | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/texture-form'
     | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
@@ -427,6 +437,7 @@ export interface FileRouteTypes {
     | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/texture-form'
     | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
@@ -467,6 +478,7 @@ export interface FileRouteTypes {
     | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/texture-form'
     | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
@@ -507,6 +519,7 @@ export interface RootRouteChildren {
   GalleryKonstructionCharacterRoute: typeof GalleryKonstructionCharacterRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
+  GalleryTextureFormRoute: typeof GalleryTextureFormRoute
   GalleryTheCollectiveRoute: typeof GalleryTheCollectiveRoute
   GalleryTravelRoute: typeof GalleryTravelRoute
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
@@ -730,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryTheCollectiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery/texture-form': {
+      id: '/gallery/texture-form'
+      path: '/gallery/texture-form'
+      fullPath: '/gallery/texture-form'
+      preLoaderRoute: typeof GalleryTextureFormRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gallery/newborns': {
       id: '/gallery/newborns'
       path: '/gallery/newborns'
@@ -841,6 +861,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryKonstructionCharacterRoute: GalleryKonstructionCharacterRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
+  GalleryTextureFormRoute: GalleryTextureFormRoute,
   GalleryTheCollectiveRoute: GalleryTheCollectiveRoute,
   GalleryTravelRoute: GalleryTravelRoute,
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
