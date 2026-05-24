@@ -2,26 +2,38 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
 import sphinxUnderKonstruction from "@/assets/sphinx-under-konstruction.png";
+import maternitySoloSunset from "@/assets/maternity/maternity-07.jpg";
+import newbornPlaceholder from "@/assets/sphinx-newborn.png";
+import birdingFavorite from "@/assets/florida-birding/birding-09.jpg";
+import flowersFavorite from "@/assets/flowers/flowers-09.jpg";
+import boatsFavorite from "@/assets/boats/boats-09.jpg";
 
 export const Route = createFileRoute("/gallery/the-collective")({
   component: TheCollectiveGallery,
   head: () => ({
     meta: [
-      { title: "The Collective — Coming Soon | MissKonstruction Photography" },
-      { name: "description", content: "A curated mix of favorites from every MissKonstruction gallery — coming soon." },
+      { title: "The Collective | MissKonstruction Photography" },
+      { name: "description", content: "A curated mix of favorite photographs from the current MissKonstruction galleries." },
       { name: "robots", content: "noindex" },
     ],
   }),
 });
 
-const items: GalleryItem[] = Array.from({ length: 16 }, () => ({}));
+const items: GalleryItem[] = [
+  { src: birdingFavorite, title: "Birding & Wildlife" },
+  { src: maternitySoloSunset, title: "Maternity" },
+  { src: newbornPlaceholder, title: "Newborns" },
+  { src: flowersFavorite, title: "Flower Project" },
+  { src: boatsFavorite, title: "Boats & Saltlife" },
+  ...Array.from({ length: 11 }, () => ({})),
+];
 
 function TheCollectiveGallery() {
   return (
     <SiteLayout>
       <section className="container mx-auto px-4 py-12 md:py-16">
         <header className="text-center max-w-xl mx-auto mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold">The Collective — Coming Soon</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">The Collective</h1>
           <img
             src={sphinxUnderKonstruction}
             alt="Cartoon sphinx kitten in a yellow hard hat resting on an Under Konstruction barricade"
@@ -32,9 +44,8 @@ function TheCollectiveGallery() {
           />
           <div className="inline-flex h-px w-16 bg-primary mt-4 mb-6" />
           <p className="text-muted-foreground">
-            A curated mix of favorites pulled from across every gallery —
-            maternity, birds, flowers, saltlife and beyond. Still hand-picking
-            the lineup. Check back soon.
+            A hand-picked mix of favorite images from each gallery that already has photos,
+            with room to keep growing.
           </p>
         </header>
         <GalleryGrid items={items} />
@@ -42,3 +53,4 @@ function TheCollectiveGallery() {
     </SiteLayout>
   );
 }
+
