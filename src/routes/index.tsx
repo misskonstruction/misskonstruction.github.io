@@ -10,6 +10,7 @@ import teaserBoats from "@/assets/teaser-boats.jpg";
 import teaserCollective from "@/assets/teaser-collective.jpg";
 import teaserKonstructionCharacter from "@/assets/teaser-konstruction-character.jpg";
 import teaserTravel from "@/assets/teaser-travel.jpg";
+import teaserTextureForm from "@/assets/teaser-texture-form.jpg";
 import { recentPhoto, isRecent } from "@/data/recentPhoto";
 
 export const Route = createFileRoute("/")({
@@ -34,6 +35,7 @@ const featured = [
   { to: "/gallery/boats", label: "Boats & Saltlife", image: teaserBoats },
   { to: "/gallery/konstruction-character", label: "Konstruction & Character", image: teaserKonstructionCharacter },
   { to: "/gallery/travel", label: "Travel", image: teaserTravel },
+  { to: "/gallery/texture-form", label: "Texture & Form", image: teaserTextureForm },
 ] as const;
 
 function Home() {
