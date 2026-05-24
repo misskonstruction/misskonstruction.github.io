@@ -35,8 +35,11 @@ import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/pr
 import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
 import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './routes/prayers.fold-the-arms-of-thy-faith-macdonald'
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
+import { Route as GalleryTravelRouteImport } from './routes/gallery.travel'
+import { Route as GalleryTheCollectiveRouteImport } from './routes/gallery.the-collective'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
+import { Route as GalleryKonstructionCharacterRouteImport } from './routes/gallery.konstruction-character'
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
 import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
 import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
@@ -190,6 +193,16 @@ const PrayersPrayerSlugRoute = PrayersPrayerSlugRouteImport.update({
   path: '/prayers/$prayerSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryTravelRoute = GalleryTravelRouteImport.update({
+  id: '/gallery/travel',
+  path: '/gallery/travel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryTheCollectiveRoute = GalleryTheCollectiveRouteImport.update({
+  id: '/gallery/the-collective',
+  path: '/gallery/the-collective',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
   id: '/gallery/newborns',
   path: '/gallery/newborns',
@@ -200,6 +213,12 @@ const GalleryMaternityRoute = GalleryMaternityRouteImport.update({
   path: '/gallery/maternity',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryKonstructionCharacterRoute =
+  GalleryKonstructionCharacterRouteImport.update({
+    id: '/gallery/konstruction-character',
+    path: '/gallery/konstruction-character',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GalleryFlowersRoute = GalleryFlowersRouteImport.update({
   id: '/gallery/flowers',
   path: '/gallery/flowers',
@@ -246,8 +265,11 @@ export interface FileRoutesByFullPath {
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
+  '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
@@ -281,8 +303,11 @@ export interface FileRoutesByTo {
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
+  '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
@@ -319,8 +344,11 @@ export interface FileRoutesById {
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
+  '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
+  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
+  '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   '/prayers/household-troubles-de-sales': typeof PrayersHouseholdTroublesDeSalesRoute
@@ -358,8 +386,11 @@ export interface FileRouteTypes {
     | '/gallery/boats'
     | '/gallery/florida-birding'
     | '/gallery/flowers'
+    | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/the-collective'
+    | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
@@ -393,8 +424,11 @@ export interface FileRouteTypes {
     | '/gallery/boats'
     | '/gallery/florida-birding'
     | '/gallery/flowers'
+    | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/the-collective'
+    | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
@@ -430,8 +464,11 @@ export interface FileRouteTypes {
     | '/gallery/boats'
     | '/gallery/florida-birding'
     | '/gallery/flowers'
+    | '/gallery/konstruction-character'
     | '/gallery/maternity'
     | '/gallery/newborns'
+    | '/gallery/the-collective'
+    | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
     | '/prayers/household-troubles-de-sales'
@@ -467,8 +504,11 @@ export interface RootRouteChildren {
   GalleryBoatsRoute: typeof GalleryBoatsRoute
   GalleryFloridaBirdingRoute: typeof GalleryFloridaBirdingRoute
   GalleryFlowersRoute: typeof GalleryFlowersRoute
+  GalleryKonstructionCharacterRoute: typeof GalleryKonstructionCharacterRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
+  GalleryTheCollectiveRoute: typeof GalleryTheCollectiveRoute
+  GalleryTravelRoute: typeof GalleryTravelRoute
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
   PrayersFoldTheArmsOfThyFaithMacdonaldRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
   PrayersHouseholdTroublesDeSalesRoute: typeof PrayersHouseholdTroublesDeSalesRoute
@@ -676,6 +716,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrayersPrayerSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery/travel': {
+      id: '/gallery/travel'
+      path: '/gallery/travel'
+      fullPath: '/gallery/travel'
+      preLoaderRoute: typeof GalleryTravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/the-collective': {
+      id: '/gallery/the-collective'
+      path: '/gallery/the-collective'
+      fullPath: '/gallery/the-collective'
+      preLoaderRoute: typeof GalleryTheCollectiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gallery/newborns': {
       id: '/gallery/newborns'
       path: '/gallery/newborns'
@@ -688,6 +742,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery/maternity'
       fullPath: '/gallery/maternity'
       preLoaderRoute: typeof GalleryMaternityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/konstruction-character': {
+      id: '/gallery/konstruction-character'
+      path: '/gallery/konstruction-character'
+      fullPath: '/gallery/konstruction-character'
+      preLoaderRoute: typeof GalleryKonstructionCharacterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery/flowers': {
@@ -777,8 +838,11 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryBoatsRoute: GalleryBoatsRoute,
   GalleryFloridaBirdingRoute: GalleryFloridaBirdingRoute,
   GalleryFlowersRoute: GalleryFlowersRoute,
+  GalleryKonstructionCharacterRoute: GalleryKonstructionCharacterRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
+  GalleryTheCollectiveRoute: GalleryTheCollectiveRoute,
+  GalleryTravelRoute: GalleryTravelRoute,
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
   PrayersFoldTheArmsOfThyFaithMacdonaldRoute:
     PrayersFoldTheArmsOfThyFaithMacdonaldRoute,
