@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Camera, ChevronDown, Menu, X } from "lucide-react";
 
 const galleries = [
-  { to: "/gallery/the-collective", label: "Strays" },
+  { to: "/gallery/the-collective", label: "Loose Frames" },
   { to: "/gallery/maternity", label: "Maternity" },
   { to: "/gallery/newborns", label: "Newborns" },
   { to: "/gallery/birding-wildlife", label: "Birding & Wildlife" },
