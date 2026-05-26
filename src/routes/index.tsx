@@ -7,7 +7,7 @@ import teaserNewborns from "@/assets/teaser-newborns.jpg";
 import teaserNature from "@/assets/teaser-nature.jpg";
 import teaserFlowers from "@/assets/teaser-flowers.jpg";
 import teaserBoats from "@/assets/teaser-boats.jpg";
-import teaserCollective from "@/assets/teaser-collective.jpg";
+import teaserLooseFrames from "@/assets/loose-frames-fury.jpg";
 import teaserKonstructionCharacter from "@/assets/teaser-konstruction-character.jpg";
 import teaserTravel from "@/assets/teaser-travel.jpg";
 import teaserTextureForm from "@/assets/teaser-texture-form.jpg";
@@ -27,7 +27,6 @@ export const Route = createFileRoute("/")({
 });
 
 const featured = [
-  { to: "/gallery/the-collective", label: "Strays", image: teaserCollective },
   { to: "/gallery/maternity", label: "Maternity", image: teaserMaternity },
   { to: "/gallery/newborns", label: "Newborns", image: teaserNewborns },
   { to: "/gallery/birding-wildlife", label: "Birding & Wildlife", image: teaserNature },
@@ -36,6 +35,7 @@ const featured = [
   { to: "/gallery/konstruction-character", label: "Konstruction & Character", image: teaserKonstructionCharacter },
   { to: "/gallery/travel", label: "Travel", image: teaserTravel },
   { to: "/gallery/texture-form", label: "Texture & Form", image: teaserTextureForm },
+  { to: "/gallery/the-collective", label: "Loose Frames", image: teaserLooseFrames },
 ] as const;
 
 function Home() {
