@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
 import sphinxUnderKonstruction from "@/assets/sphinx-under-konstruction.png";
-import furyTeaser from "@/assets/loose-frames-fury.jpg";
+
 
 export const Route = createFileRoute("/gallery/the-collective")({
   component: LooseFramesGallery,
@@ -27,14 +27,6 @@ function LooseFramesGallery() {
       <section className="container mx-auto px-4 py-12 md:py-16">
         <header className="text-center max-w-2xl mx-auto mb-12">
           <h1 className="text-4xl md:text-5xl font-bold">Loose Frames — Coming Soon</h1>
-          <img
-            src={furyTeaser}
-            alt="A 1958 Plymouth Fury, red and white, idling on a rain-slick road at dusk"
-            width={1280}
-            height={1280}
-            loading="lazy"
-            className="mx-auto mt-8 w-full max-w-xl h-auto rounded-md shadow-lg"
-          />
           <img
             src={sphinxUnderKonstruction}
             alt="Cartoon sphinx kitten in a yellow hard hat resting on an Under Konstruction barricade"
