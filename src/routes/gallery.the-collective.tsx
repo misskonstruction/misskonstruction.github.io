@@ -11,7 +11,7 @@ export const Route = createFileRoute("/gallery/the-collective")({
   component: TheCollectiveGallery,
   head: () => ({
     meta: [
-      { title: "The Collective | MissKonstruction Photography" },
+      { title: "Strays | MissKonstruction Photography" },
       { name: "description", content: "A curated mix of favorite photographs from the current MissKonstruction galleries." },
       { name: "robots", content: "noindex" },
     ],
@@ -31,7 +31,7 @@ function TheCollectiveGallery() {
     <SiteLayout>
       <section className="container mx-auto px-4 py-12 md:py-16">
         <header className="text-center max-w-xl mx-auto mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold">The Collective</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">Strays</h1>
           <img
             src={sphinxUnderKonstruction}
             alt="Cartoon sphinx kitten in a yellow hard hat resting on an Under Konstruction barricade"
