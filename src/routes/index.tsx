@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 const featured = [
-  { to: "/gallery/the-collective", label: "The Collective", image: teaserCollective },
+  { to: "/gallery/the-collective", label: "Strays", image: teaserCollective },
   { to: "/gallery/maternity", label: "Maternity", image: teaserMaternity },
   { to: "/gallery/newborns", label: "Newborns", image: teaserNewborns },
   { to: "/gallery/birding-wildlife", label: "Birding & Wildlife", image: teaserNature },
