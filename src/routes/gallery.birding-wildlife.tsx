@@ -18,6 +18,7 @@ import n13 from "@/assets/florida-birding/birding-13.jpg";
 import n14 from "@/assets/florida-birding/birding-14.jpg";
 import n15 from "@/assets/florida-birding/birding-15.jpg";
 import n16 from "@/assets/florida-birding/birding-16.jpg";
+import n17 from "@/assets/florida-birding/birding-17.jpg";
 
 export const Route = createFileRoute("/gallery/birding-wildlife")({
   component: BirdingWildlifeGallery,
@@ -34,6 +35,7 @@ const items: GalleryItem[] = [
   { src: n05 }, { src: n06 }, { src: n07 }, { src: n08 },
   { src: n09 }, { src: n10 }, { src: n11 }, { src: n12 },
   { src: n13 }, { src: n14 }, { src: n15 }, { src: n16 },
+  { src: n17, title: "Gopher tortoises" }, {}, {}, {},
 ];
 
 function BirdingWildlifeGallery() {
