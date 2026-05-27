@@ -31,10 +31,22 @@ export const Route = createFileRoute("/gallery/birding-wildlife")({
 });
 
 const items: GalleryItem[] = [
-  { src: n01 }, { src: n02 }, { src: n03 }, { src: n04 },
-  { src: n05 }, { src: n06 }, { src: n07 }, { src: n08 },
-  { src: n09 }, { src: n10 }, { src: n11 }, { src: n12 },
-  { src: n13 }, { src: n14 }, { src: n15 }, { src: n16 },
+  { src: n01, title: "Yellow-bellied slider" },
+  { src: n02, title: "Osprey" },
+  { src: n03, title: "Northern cardinal" },
+  { src: n04, title: "Great egret nestlings" },
+  { src: n05, title: "Great blue heron" },
+  { src: n06, title: "Northern mockingbird" },
+  { src: n07, title: "Pileated woodpecker" },
+  { src: n08, title: "Barred owl" },
+  { src: n09, title: "Common ground doves" },
+  { src: n10, title: "Tricolored heron" },
+  { src: n11, title: "Eastern lubber grasshopper" },
+  { src: n12, title: "Double-crested cormorants" },
+  { src: n13, title: "Wood stork and chicks" },
+  { src: n14, title: "Brown pelicans" },
+  { src: n15, title: "Double-crested cormorants" },
+  { src: n16, title: "Florida red-bellied cooters" },
   { src: n17, title: "Gopher tortoises" }, {}, {}, {},
 ];
 
