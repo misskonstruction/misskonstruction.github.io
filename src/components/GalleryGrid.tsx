@@ -16,7 +16,8 @@ export type GalleryItem = {
  * route file. Empty slots show a "+ add photo" placeholder you can fill later.
  */
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
-  const slots: (GalleryItem | null)[] = Array.from({ length: 16 }, (_, i) => items[i] ?? null);
+  const slotCount = Math.max(16, Math.ceil(items.length / 4) * 4);
+  const slots: (GalleryItem | null)[] = Array.from({ length: slotCount }, (_, i) => items[i] ?? null);
   const filledIndexes = slots
     .map((s, i) => (s && s.src ? i : -1))
     .filter((i) => i !== -1);
