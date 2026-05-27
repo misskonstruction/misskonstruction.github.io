@@ -2,7 +2,7 @@
 // To update: change the fields below to point at the newest photo.
 // `addedAt` controls the "New!" badge (shown for 14 days).
 
-import recentImage from "@/assets/recent-wood-stork-family.jpg";
+import recentImage from "@/assets/florida-birding/birding-17.jpg";
 
 export type RecentPhoto = {
   image: string;
@@ -15,12 +15,12 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "Mama wood stork standing watch over two fluffy chicks in a stick nest tucked into bright green cypress",
+  alt: "A Florida gopher tortoise sunbathing on sandy ground with a curious look",
   galleryName: "Birding & Wildlife",
-  galleryPath: "/gallery/florida-birding",
+  galleryPath: "/gallery/birding-wildlife",
   reflection:
-    "A mama wood stork keeping a quiet eye on her two fuzzy little ones, the whole nest tucked into a wall of spring-green cypress. You could stand under that rookery for an hour and never get tired of watching her watch them.",
-  addedAt: "2026-04-27",
+    "Caught these two gopher tortoises in what can only be described as a very intimate moment — let's call it 'tortoise porn.' Nature's private life, now slightly less private.",
+  addedAt: "2026-05-27",
 };
 
 export function isRecent(addedAt: string, days = 14): boolean {
