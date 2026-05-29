@@ -1684,6 +1684,93 @@ export const recipes: Recipe[] = [
         "Scoop it over basmati or tear into warm naan. The kind of dinner that fills the house with cumin and ginger and feels like it's looking out for you.",
     },
   },
+  {
+    slug: "shrimp-scampi",
+    categorySlug: "from-the-kitchen",
+    kicker: "buttery, garlicky, gone in minutes",
+    title: "Classic **Shrimp Scampi**",
+    subtitle: "over angel hair pasta",
+    intro:
+      "Plump shrimp swimming in garlicky butter and white wine, tossed with delicate angel hair and finished with a squeeze of lemon. Thirty minutes start to finish — the kind of dinner that feels fancier than it has any right to be.",
+    heroImage: shrimpScampiImg,
+    heroAlt: "A plate of shrimp scampi over angel hair pasta with parsley and parmesan",
+    description:
+      "Classic shrimp scampi over angel hair pasta — garlicky butter, dry white wine, fresh parsley and a squeeze of lemon. On the table in 30 minutes.",
+    meta: [
+      { icon: "clock", label: "Prep", value: "15 min" },
+      { icon: "flame", label: "Cook", value: "15 min" },
+      { icon: "users", label: "Serves", value: "4" },
+      { icon: "utensils-crossed", label: "Course", value: "Main" },
+    ],
+    ingredientGroups: [
+      {
+        title: "For the scampi",
+        items: [
+          "1 (8 oz) package angel hair pasta",
+          "½ cup butter, or to taste",
+          "1 lb shrimp, peeled and deveined",
+          "4 cloves garlic, minced",
+          "1 cup dry white wine",
+          "¼ tsp ground black pepper",
+          "¾ cup grated Parmesan cheese (optional — see note)",
+          "1 tbsp chopped fresh parsley",
+          "4 lemon wedges",
+        ],
+      },
+    ],
+    steps: [
+      {
+        title: "Gather all ingredients",
+        body:
+          "Pull everything out and prep before the pan ever hits the heat — scampi moves fast once it starts.",
+        image: shrimpScampiStep1Img,
+        imageAlt:
+          "Mise en place for shrimp scampi: raw shrimp, angel hair pasta, butter, white wine, garlic, parmesan, parsley, lemon, and pepper",
+      },
+      {
+        title: "Cook the pasta",
+        body:
+          "Bring a large pot of lightly salted water to a boil. Cook the angel hair, stirring occasionally, until tender yet firm to the bite — 4 to 5 minutes. Drain, transfer to a serving bowl, and keep warm.",
+        image: shrimpScampiStep2Img,
+        imageAlt: "Drained angel hair pasta resting in a fine-mesh strainer",
+      },
+      {
+        title: "Melt butter, cook the shrimp",
+        body:
+          "Melt the butter in a large saucepan over medium heat. Stir in the shrimp and garlic; cook and stir until the shrimp turns pink, 3 to 5 minutes.",
+        image: shrimpScampiStep3Img,
+        imageAlt: "Shrimp poaching in golden garlicky butter in a stainless saucepan",
+      },
+      {
+        title: "Deglaze with wine",
+        body:
+          "Stir in the white wine and black pepper; bring to a boil. Cook and stir for 30 seconds to let the wine sharpen up and the sauce come together.",
+        image: shrimpScampiStep4Img,
+        imageAlt: "Wooden spoon stirring shrimp in a buttery white wine pan sauce with black pepper",
+      },
+      {
+        title: "Toss with the pasta",
+        body:
+          "Pour the shrimp and all that buttery wine sauce over the pasta in the serving bowl and toss well. Sprinkle with Parmesan cheese (if you want your food to smell like a stinky foot, that is) and the chopped parsley.",
+        image: shrimpScampiStep5Img,
+        imageAlt: "Angel hair pasta tossed with shrimp and parsley in a white serving bowl",
+      },
+      {
+        title: "Serve with lemon",
+        body:
+          "Plate it up and serve immediately with lemon wedges on the side for a fresh squeeze right before the first bite.",
+        image: shrimpScampiStep6Img,
+        imageAlt: "Finished plate of shrimp scampi over angel hair with parmesan, parsley, and a wooden-handled fork",
+      },
+    ],
+    cooksNote:
+      "Don't skimp on the garlic and don't overcook the shrimp — once they curl into a tight C, they're done. About the Parmesan: classic Italian rule says no cheese on seafood pasta, and honestly, a squeeze of lemon does more for this dish than the parm does. Take it or leave it.",
+    signOff: {
+      kicker: "dinner, sorted",
+      body:
+        "Pour yourself the rest of the wine, light a candle, and call it a date night — even if it's a Tuesday.",
+    },
+  },
 ];
 
 export function getRecipe(slug: string): Recipe | undefined {
