@@ -38,6 +38,14 @@ import saagAlooMatarStep2Img from "@/assets/recipes/saag-aloo-matar-step-2.jpg";
 import saagAlooMatarStep3Img from "@/assets/recipes/saag-aloo-matar-step-3.jpg";
 import saagAlooMatarStep4Img from "@/assets/recipes/saag-aloo-matar-step-4.jpg";
 
+import shrimpScampiImg from "@/assets/recipes/shrimp-scampi.jpg";
+import shrimpScampiStep1Img from "@/assets/recipes/shrimp-scampi-step1.jpg";
+import shrimpScampiStep2Img from "@/assets/recipes/shrimp-scampi-step2.jpg";
+import shrimpScampiStep3Img from "@/assets/recipes/shrimp-scampi-step3.jpg";
+import shrimpScampiStep4Img from "@/assets/recipes/shrimp-scampi-step4.jpg";
+import shrimpScampiStep5Img from "@/assets/recipes/shrimp-scampi-step5.jpg";
+import shrimpScampiStep6Img from "@/assets/recipes/shrimp-scampi-step6.jpg";
+
 export type IngredientGroup = {
   title: string;
   items: string[];
