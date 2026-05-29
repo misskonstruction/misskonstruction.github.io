@@ -19,6 +19,7 @@ import { Route as RecipesThanksgivingTableRouteImport } from './routes/recipes.t
 import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
 import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
 import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
+import { Route as RecipesShrimpScampiRouteImport } from './routes/recipes.shrimp-scampi'
 import { Route as RecipesSaagAlooMatarRouteImport } from './routes/recipes.saag-aloo-matar'
 import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
 import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
@@ -104,6 +105,11 @@ const RecipesSlowCookerCodDogFoodRoute =
     path: '/recipes/slow-cooker-cod-dog-food',
     getParentRoute: () => rootRouteImport,
   } as any)
+const RecipesShrimpScampiRoute = RecipesShrimpScampiRouteImport.update({
+  id: '/recipes/shrimp-scampi',
+  path: '/recipes/shrimp-scampi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesSaagAlooMatarRoute = RecipesSaagAlooMatarRouteImport.update({
   id: '/recipes/saag-aloo-matar',
   path: '/recipes/saag-aloo-matar',
@@ -293,6 +299,7 @@ export interface FileRoutesByFullPath {
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
+  '/recipes/shrimp-scampi': typeof RecipesShrimpScampiRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -332,6 +339,7 @@ export interface FileRoutesByTo {
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
+  '/recipes/shrimp-scampi': typeof RecipesShrimpScampiRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/recipes/my-lovely-lasagne': typeof RecipesMyLovelyLasagneRoute
   '/recipes/pulled-pork-tacos': typeof RecipesPulledPorkTacosRoute
   '/recipes/saag-aloo-matar': typeof RecipesSaagAlooMatarRoute
+  '/recipes/shrimp-scampi': typeof RecipesShrimpScampiRoute
   '/recipes/slow-cooker-cod-dog-food': typeof RecipesSlowCookerCodDogFoodRoute
   '/recipes/slow-cooker-homemade-dog-food': typeof RecipesSlowCookerHomemadeDogFoodRoute
   '/recipes/superb-spaghetti-and-meatballs': typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -417,6 +426,7 @@ export interface FileRouteTypes {
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/saag-aloo-matar'
+    | '/recipes/shrimp-scampi'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -456,6 +466,7 @@ export interface FileRouteTypes {
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/saag-aloo-matar'
+    | '/recipes/shrimp-scampi'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -497,6 +508,7 @@ export interface FileRouteTypes {
     | '/recipes/my-lovely-lasagne'
     | '/recipes/pulled-pork-tacos'
     | '/recipes/saag-aloo-matar'
+    | '/recipes/shrimp-scampi'
     | '/recipes/slow-cooker-cod-dog-food'
     | '/recipes/slow-cooker-homemade-dog-food'
     | '/recipes/superb-spaghetti-and-meatballs'
@@ -538,6 +550,7 @@ export interface RootRouteChildren {
   RecipesMyLovelyLasagneRoute: typeof RecipesMyLovelyLasagneRoute
   RecipesPulledPorkTacosRoute: typeof RecipesPulledPorkTacosRoute
   RecipesSaagAlooMatarRoute: typeof RecipesSaagAlooMatarRoute
+  RecipesShrimpScampiRoute: typeof RecipesShrimpScampiRoute
   RecipesSlowCookerCodDogFoodRoute: typeof RecipesSlowCookerCodDogFoodRoute
   RecipesSlowCookerHomemadeDogFoodRoute: typeof RecipesSlowCookerHomemadeDogFoodRoute
   RecipesSuperbSpaghettiAndMeatballsRoute: typeof RecipesSuperbSpaghettiAndMeatballsRoute
@@ -615,6 +628,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/slow-cooker-cod-dog-food'
       fullPath: '/recipes/slow-cooker-cod-dog-food'
       preLoaderRoute: typeof RecipesSlowCookerCodDogFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/shrimp-scampi': {
+      id: '/recipes/shrimp-scampi'
+      path: '/recipes/shrimp-scampi'
+      fullPath: '/recipes/shrimp-scampi'
+      preLoaderRoute: typeof RecipesShrimpScampiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/saag-aloo-matar': {
@@ -884,6 +904,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesMyLovelyLasagneRoute: RecipesMyLovelyLasagneRoute,
   RecipesPulledPorkTacosRoute: RecipesPulledPorkTacosRoute,
   RecipesSaagAlooMatarRoute: RecipesSaagAlooMatarRoute,
+  RecipesShrimpScampiRoute: RecipesShrimpScampiRoute,
   RecipesSlowCookerCodDogFoodRoute: RecipesSlowCookerCodDogFoodRoute,
   RecipesSlowCookerHomemadeDogFoodRoute: RecipesSlowCookerHomemadeDogFoodRoute,
   RecipesSuperbSpaghettiAndMeatballsRoute:
@@ -894,12 +915,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
