@@ -11,7 +11,7 @@ const galleries = [
   { to: "/gallery/konstruction-character", label: "Konstruction & Character" },
   { to: "/gallery/travel", label: "Travel" },
   { to: "/gallery/texture-form", label: "Texture & Form" },
-  { to: "/gallery/the-collective", label: "Loose Frames" },
+  { to: "/gallery/loose-frames", label: "Loose Frames" },
 ] as const;
 
 export function SiteHeader() {
