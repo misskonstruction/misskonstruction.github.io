@@ -8,7 +8,7 @@ import branchLevelSurveillance from "@/assets/loose-frames/branch-level-surveill
 import gingerAmbushInTheLeaves from "@/assets/loose-frames/ginger-ambush-in-the-leaves.jpg";
 import peepingTomcat from "@/assets/loose-frames/peeping-tomcat.jpg";
 
-export const Route = createFileRoute("/gallery/the-collective")({
+export const Route = createFileRoute("/gallery/loose-frames")({
   component: LooseFramesGallery,
   head: () => ({
     meta: [

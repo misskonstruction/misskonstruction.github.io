@@ -35,7 +35,7 @@ const featured = [
   { to: "/gallery/konstruction-character", label: "Konstruction & Character", image: teaserKonstructionCharacter },
   { to: "/gallery/travel", label: "Travel", image: teaserTravel },
   { to: "/gallery/texture-form", label: "Texture & Form", image: teaserTextureForm },
-  { to: "/gallery/the-collective", label: "Loose Frames", image: teaserLooseFrames },
+  { to: "/gallery/loose-frames", label: "Loose Frames", image: teaserLooseFrames },
 ] as const;
 
 function Home() {

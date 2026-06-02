@@ -37,10 +37,10 @@ import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/pr
 import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './routes/prayers.fold-the-arms-of-thy-faith-macdonald'
 import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
 import { Route as GalleryTravelRouteImport } from './routes/gallery.travel'
-import { Route as GalleryTheCollectiveRouteImport } from './routes/gallery.the-collective'
 import { Route as GalleryTextureFormRouteImport } from './routes/gallery.texture-form'
 import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
 import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
+import { Route as GalleryLooseFramesRouteImport } from './routes/gallery.loose-frames'
 import { Route as GalleryKonstructionCharacterRouteImport } from './routes/gallery.konstruction-character'
 import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
 import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
@@ -205,11 +205,6 @@ const GalleryTravelRoute = GalleryTravelRouteImport.update({
   path: '/gallery/travel',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GalleryTheCollectiveRoute = GalleryTheCollectiveRouteImport.update({
-  id: '/gallery/the-collective',
-  path: '/gallery/the-collective',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalleryTextureFormRoute = GalleryTextureFormRouteImport.update({
   id: '/gallery/texture-form',
   path: '/gallery/texture-form',
@@ -223,6 +218,11 @@ const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
 const GalleryMaternityRoute = GalleryMaternityRouteImport.update({
   id: '/gallery/maternity',
   path: '/gallery/maternity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryLooseFramesRoute = GalleryLooseFramesRouteImport.update({
+  id: '/gallery/loose-frames',
+  path: '/gallery/loose-frames',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryKonstructionCharacterRoute =
@@ -278,10 +278,10 @@ export interface FileRoutesByFullPath {
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
+  '/gallery/loose-frames': typeof GalleryLooseFramesRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/gallery/texture-form': typeof GalleryTextureFormRoute
-  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
@@ -318,10 +318,10 @@ export interface FileRoutesByTo {
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
+  '/gallery/loose-frames': typeof GalleryLooseFramesRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/gallery/texture-form': typeof GalleryTextureFormRoute
-  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
@@ -361,10 +361,10 @@ export interface FileRoutesById {
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
   '/gallery/flowers': typeof GalleryFlowersRoute
   '/gallery/konstruction-character': typeof GalleryKonstructionCharacterRoute
+  '/gallery/loose-frames': typeof GalleryLooseFramesRoute
   '/gallery/maternity': typeof GalleryMaternityRoute
   '/gallery/newborns': typeof GalleryNewbornsRoute
   '/gallery/texture-form': typeof GalleryTextureFormRoute
-  '/gallery/the-collective': typeof GalleryTheCollectiveRoute
   '/gallery/travel': typeof GalleryTravelRoute
   '/prayers/$prayerSlug': typeof PrayersPrayerSlugRoute
   '/prayers/fold-the-arms-of-thy-faith-macdonald': typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
@@ -405,10 +405,10 @@ export interface FileRouteTypes {
     | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/konstruction-character'
+    | '/gallery/loose-frames'
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/gallery/texture-form'
-    | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
@@ -445,10 +445,10 @@ export interface FileRouteTypes {
     | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/konstruction-character'
+    | '/gallery/loose-frames'
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/gallery/texture-form'
-    | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
@@ -487,10 +487,10 @@ export interface FileRouteTypes {
     | '/gallery/florida-birding'
     | '/gallery/flowers'
     | '/gallery/konstruction-character'
+    | '/gallery/loose-frames'
     | '/gallery/maternity'
     | '/gallery/newborns'
     | '/gallery/texture-form'
-    | '/gallery/the-collective'
     | '/gallery/travel'
     | '/prayers/$prayerSlug'
     | '/prayers/fold-the-arms-of-thy-faith-macdonald'
@@ -529,10 +529,10 @@ export interface RootRouteChildren {
   GalleryFloridaBirdingRoute: typeof GalleryFloridaBirdingRoute
   GalleryFlowersRoute: typeof GalleryFlowersRoute
   GalleryKonstructionCharacterRoute: typeof GalleryKonstructionCharacterRoute
+  GalleryLooseFramesRoute: typeof GalleryLooseFramesRoute
   GalleryMaternityRoute: typeof GalleryMaternityRoute
   GalleryNewbornsRoute: typeof GalleryNewbornsRoute
   GalleryTextureFormRoute: typeof GalleryTextureFormRoute
-  GalleryTheCollectiveRoute: typeof GalleryTheCollectiveRoute
   GalleryTravelRoute: typeof GalleryTravelRoute
   PrayersPrayerSlugRoute: typeof PrayersPrayerSlugRoute
   PrayersFoldTheArmsOfThyFaithMacdonaldRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRoute
@@ -756,13 +756,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryTravelRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gallery/the-collective': {
-      id: '/gallery/the-collective'
-      path: '/gallery/the-collective'
-      fullPath: '/gallery/the-collective'
-      preLoaderRoute: typeof GalleryTheCollectiveRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/gallery/texture-form': {
       id: '/gallery/texture-form'
       path: '/gallery/texture-form'
@@ -782,6 +775,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery/maternity'
       fullPath: '/gallery/maternity'
       preLoaderRoute: typeof GalleryMaternityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/loose-frames': {
+      id: '/gallery/loose-frames'
+      path: '/gallery/loose-frames'
+      fullPath: '/gallery/loose-frames'
+      preLoaderRoute: typeof GalleryLooseFramesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery/konstruction-character': {
@@ -879,10 +879,10 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryFloridaBirdingRoute: GalleryFloridaBirdingRoute,
   GalleryFlowersRoute: GalleryFlowersRoute,
   GalleryKonstructionCharacterRoute: GalleryKonstructionCharacterRoute,
+  GalleryLooseFramesRoute: GalleryLooseFramesRoute,
   GalleryMaternityRoute: GalleryMaternityRoute,
   GalleryNewbornsRoute: GalleryNewbornsRoute,
   GalleryTextureFormRoute: GalleryTextureFormRoute,
-  GalleryTheCollectiveRoute: GalleryTheCollectiveRoute,
   GalleryTravelRoute: GalleryTravelRoute,
   PrayersPrayerSlugRoute: PrayersPrayerSlugRoute,
   PrayersFoldTheArmsOfThyFaithMacdonaldRoute:
@@ -915,3 +915,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
