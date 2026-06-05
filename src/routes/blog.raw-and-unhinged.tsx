@@ -879,12 +879,16 @@ const rawUnhingedStyles = `
 .ru-flip-face {
   position: absolute; inset: 0;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   background-color: #f8efd9;
   background-image: url(${JSON.stringify(paperTexture)});
   background-size: cover;
+  overflow: hidden;
+  isolation: isolate;
 }
-.ru-flip-front { z-index: 2; }
-.ru-flip-back  { transform: rotateY(180deg); }
+.ru-flip-face > * { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.ru-flip-front { z-index: 2; transform: translateZ(1px); }
+.ru-flip-back  { transform: rotateY(180deg) translateZ(1px); }
 .ru-flip-next .ru-flip-front { border-radius: 0 4px 4px 0; box-shadow: inset 8px 0 16px -8px rgba(60,30,10,0.35); }
 .ru-flip-next .ru-flip-back  { border-radius: 4px 0 0 4px; box-shadow: inset -8px 0 16px -8px rgba(60,30,10,0.35); }
 .ru-flip-prev .ru-flip-front { border-radius: 4px 0 0 4px; box-shadow: inset -8px 0 16px -8px rgba(60,30,10,0.35); }
