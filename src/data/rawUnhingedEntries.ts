@@ -36,7 +36,7 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
     title: "Winston — an unfinished sketch of an old friend",
     entryImages: [
       {
-        src: winstonAsset.url,
+        src: winstonSketch,
         alt: "Pencil sketch of Winston, a ginger tabby cat with a paw-print collar tag, in a sketchbook with the reference photo paper-clipped at the top corner",
       },
     ],
