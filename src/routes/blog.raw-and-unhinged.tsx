@@ -665,7 +665,7 @@ const rawUnhingedStyles = `
 /* ----- Candle flame: positioned over the wick in desk-scene.jpg ----- */
 .ru-flame {
   position: absolute;
-  left: 18.1%;
+  left: 17.4%;
   top: 17.2%;
   width: 3.6%;
   aspect-ratio: 40 / 70;
