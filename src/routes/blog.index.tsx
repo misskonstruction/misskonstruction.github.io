@@ -139,6 +139,7 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
   for (const p of prayers) {
     acc[p.categorySlug] = (acc[p.categorySlug] ?? 0) + 1;
   }
+  acc["raw-and-unhinged"] = (acc["raw-and-unhinged"] ?? 0) + rawUnhingedEntries.length;
   return acc;
 })();
 
