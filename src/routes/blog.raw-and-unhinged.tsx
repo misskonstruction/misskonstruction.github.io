@@ -885,10 +885,11 @@ const rawUnhingedStyles = `
   background-size: cover;
   overflow: hidden;
   isolation: isolate;
+  transform-style: preserve-3d;
 }
 .ru-flip-face > * { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.ru-flip-front { z-index: 2; transform: translateZ(1px); }
-.ru-flip-back  { transform: rotateY(180deg) translateZ(1px); }
+.ru-flip-front { z-index: 2; transform: translateZ(2px); animation: ruFaceFront 750ms steps(1) forwards; }
+.ru-flip-back  { transform: rotateY(180deg) translateZ(2px); animation: ruFaceBack 750ms steps(1) forwards; }
 .ru-flip-next .ru-flip-front { border-radius: 0 4px 4px 0; box-shadow: inset 8px 0 16px -8px rgba(60,30,10,0.35); }
 .ru-flip-next .ru-flip-back  { border-radius: 4px 0 0 4px; box-shadow: inset -8px 0 16px -8px rgba(60,30,10,0.35); }
 .ru-flip-prev .ru-flip-front { border-radius: 4px 0 0 4px; box-shadow: inset -8px 0 16px -8px rgba(60,30,10,0.35); }
@@ -901,6 +902,15 @@ const rawUnhingedStyles = `
 @keyframes ruFlipPrev {
   0% { transform: rotateY(0deg); box-shadow: 0 0 30px rgba(0,0,0,0.2); }
   100% { transform: rotateY(180deg); box-shadow: 30px 0 40px rgba(0,0,0,0.4); }
+}
+/* Hard swap face visibility at the halfway mark to eliminate bleed-through */
+@keyframes ruFaceFront {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes ruFaceBack {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 
 /* Ribbon bookmark */
