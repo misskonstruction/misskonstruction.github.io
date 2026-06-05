@@ -74,6 +74,15 @@ export const journalCategories: JournalCategory[] = [
     icon: Plane,
     aliases: ["wander", "roam", "wander and roam", "travel"],
   },
+  {
+    slug: "raw-and-unhinged",
+    title: "Raw & Unhinged",
+    emoji: "🕯️",
+    blurb: "Unfiltered, handwritten pages from my desk — the thoughts that don't fit anywhere else. Photos of actual ink on actual paper.",
+    image: rawUnhingedImg,
+    icon: Feather,
+    aliases: ["raw", "unhinged", "raw and unhinged", "the longhand"],
+  },
 ];
 
 /**
