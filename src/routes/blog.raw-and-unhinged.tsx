@@ -40,30 +40,58 @@ export const Route = createFileRoute("/blog/raw-and-unhinged")({
 type Spread =
   | { kind: "toc"; entries: RawUnhingedEntry[] }
   | { kind: "entry"; entry: RawUnhingedEntry; pageOfEntry: number; totalPagesInEntry: number }
+  | { kind: "entry-pair"; left: RawUnhingedEntry; right: RawUnhingedEntry }
   | { kind: "final-photos"; entry: RawUnhingedEntry };
+
+/** An entry is "simple" (eligible for pairing onto one spread) when it has
+ *  exactly one entry image, no right-page photos, and no final-page photos. */
+function isSimpleEntry(e: RawUnhingedEntry): boolean {
+  return (
+    e.entryImages.length === 1 &&
+    !(e.rightPagePhotos && e.rightPagePhotos.length > 0) &&
+    !(e.finalPagePhotos && e.finalPagePhotos.length > 0)
+  );
+}
 
 /**
  * Build the full list of spreads. The book opens to the TOC, then each entry
  * gets one spread per entry image (entry photo on the left, right-page photos
  * on the right). If an entry has finalPagePhotos, an extra spread follows.
+ *
+ * As a polish: two consecutive "simple" entries (single image, no extra
+ * photos) are paired onto a single spread — entry image on each side —
+ * so there are no awkward blank pages.
  */
 function buildSpreads(entries: RawUnhingedEntry[]): Spread[] {
   const spreads: Spread[] = [{ kind: "toc", entries }];
-  for (const e of entries) {
+  let i = 0;
+  while (i < entries.length) {
+    const e = entries[i];
+    const next = entries[i + 1];
+    if (isSimpleEntry(e) && next && isSimpleEntry(next)) {
+      spreads.push({ kind: "entry-pair", left: e, right: next });
+      i += 2;
+      continue;
+    }
     const total = e.entryImages.length;
-    e.entryImages.forEach((_, i) => {
-      spreads.push({ kind: "entry", entry: e, pageOfEntry: i, totalPagesInEntry: total });
+    e.entryImages.forEach((_, idx) => {
+      spreads.push({ kind: "entry", entry: e, pageOfEntry: idx, totalPagesInEntry: total });
     });
     if (e.finalPagePhotos && e.finalPagePhotos.length > 0) {
       spreads.push({ kind: "final-photos", entry: e });
     }
+    i += 1;
   }
   return spreads;
 }
 
 /** Index of the first spread for a given entry id. */
 function spreadIndexForEntry(spreads: Spread[], entryId: string): number {
-  return spreads.findIndex((s) => s.kind === "entry" && s.entry.id === entryId);
+  return spreads.findIndex(
+    (s) =>
+      (s.kind === "entry" && s.entry.id === entryId) ||
+      (s.kind === "entry-pair" && (s.left.id === entryId || s.right.id === entryId)),
+  );
 }
 
 /* -------------------------------------------------------------------------- */
@@ -456,6 +484,11 @@ function PageContent({
     // Right page: accompanying photos if first page of entry has them
     const photos = spread.pageOfEntry === 0 ? spread.entry.rightPagePhotos ?? [] : [];
     return <RightPhotoPage entry={spread.entry} photos={photos} />;
+  }
+
+  if (spread.kind === "entry-pair") {
+    const e = side === "left" ? spread.left : spread.right;
+    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} />;
   }
 
   // final-photos

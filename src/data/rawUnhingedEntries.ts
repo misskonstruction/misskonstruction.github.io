@@ -1,4 +1,5 @@
 import winstonSketch from "@/assets/raw-unhinged/entry-winston-sketch.jpg";
+import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -30,6 +31,17 @@ export type RawUnhingedEntry = {
  * Entries are listed newest-first. Add new entries at the top of this list.
  */
 export const rawUnhingedEntries: RawUnhingedEntry[] = [
+  {
+    id: "lets-do-this",
+    date: "2026-06-05",
+    title: "lets do this!",
+    entryImages: [
+      {
+        src: letsDoThis,
+        alt: "Handwritten journal page dated 6/5/26 — Cami's intro to the Raw & Unhinged category, explaining the new journal and her plan to write often",
+      },
+    ],
+  },
   {
     id: "winston",
     date: "2026-06-05",
