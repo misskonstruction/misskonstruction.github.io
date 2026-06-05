@@ -537,15 +537,20 @@ function EntryImagePage({
           </p>
         )}
       </header>
-      <div className="relative flex-1 flex items-center justify-center">
-        <PhotoCorners>
+      <div className="relative flex-1 min-h-0 flex items-center justify-center pb-[calc((1em+0.75rem)/2)]">
+        <span className="ru-photo-mount relative inline-block max-h-full max-w-full">
           <img
             src={image.src}
             alt={image.alt}
-            className="block max-h-full max-w-full object-contain ru-photo"
+            className="block max-h-full max-w-full w-auto h-auto object-contain ru-photo"
+            style={{ maxHeight: '100%' }}
             loading="lazy"
           />
-        </PhotoCorners>
+          <span className="ru-corner ru-corner-tl" />
+          <span className="ru-corner ru-corner-tr" />
+          <span className="ru-corner ru-corner-bl" />
+          <span className="ru-corner ru-corner-br" />
+        </span>
       </div>
     </div>
   );
