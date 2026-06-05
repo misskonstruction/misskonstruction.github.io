@@ -1,4 +1,4 @@
-import winstonAsset from "@/assets/raw-unhinged/entry-winston-sketch.jpg.asset.json";
+import winstonSketch from "@/assets/raw-unhinged/entry-winston-sketch.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
