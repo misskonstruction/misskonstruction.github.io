@@ -719,11 +719,11 @@ const rawUnhingedStyles = `
 /* ----- Clickable journal hotspot (overlaid on the journal in the photo) ----- */
 .ru-journal-hotspot {
   position: absolute;
-  /* Center of journal: ~50.5% x, ~53.7% y. Size: ~32% w, ~62% h. */
-  left: 34.5%;
-  top: 22.5%;
-  width: 32%;
-  height: 62%;
+  /* Journal bounds in desk-scene.jpg (1536x1024): ~x 510-985, y 240-830 */
+  left: 33.2%;
+  top: 23.4%;
+  width: 31%;
+  height: 57.6%;
   border: 0;
   background: transparent;
   cursor: pointer;
