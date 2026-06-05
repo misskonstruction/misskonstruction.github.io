@@ -760,6 +760,7 @@ const rawUnhingedStyles = `
     url(${JSON.stringify(deskScene)});
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .ru-book {
