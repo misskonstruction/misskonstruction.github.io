@@ -665,11 +665,11 @@ const rawUnhingedStyles = `
 /* ----- Candle flame: positioned over the wick in desk-scene.jpg ----- */
 .ru-flame {
   position: absolute;
-  left: 17.2%;
-  top: 12%;
-  width: 5%;
+  left: 16.6%;
+  top: 17.2%;
+  width: 3.6%;
   aspect-ratio: 40 / 70;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -94%);
   pointer-events: none;
   z-index: 2;
 }
@@ -719,11 +719,11 @@ const rawUnhingedStyles = `
 /* ----- Clickable journal hotspot (overlaid on the journal in the photo) ----- */
 .ru-journal-hotspot {
   position: absolute;
-  /* Center of journal: ~50.5% x, ~53.7% y. Size: ~32% w, ~62% h. */
-  left: 34.5%;
-  top: 22.5%;
-  width: 32%;
-  height: 62%;
+  /* Journal bounds in desk-scene.jpg (1536x1024): ~x 510-985, y 240-830 */
+  left: 33.2%;
+  top: 23.4%;
+  width: 31%;
+  height: 57.6%;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -941,6 +941,11 @@ const rawUnhingedStyles = `
 @media (max-width: 760px) {
   .ru-book { aspect-ratio: 8 / 11; }
   .ru-book-inner { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .ru-book-inner::before {
+    left: 0; right: 0; top: 50%; bottom: auto;
+    width: auto; height: 28px; transform: translateY(-50%);
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.45) 50%, transparent);
+  }
   .ru-page-left { border-radius: 4px 4px 0 0; box-shadow: inset 0 -8px 16px -8px rgba(60,30,10,0.35); }
   .ru-page-right { border-radius: 0 0 4px 4px; box-shadow: inset 0 8px 16px -8px rgba(60,30,10,0.35); }
   .ru-flip { width: 100%; height: 50%; }
