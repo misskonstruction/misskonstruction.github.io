@@ -941,6 +941,11 @@ const rawUnhingedStyles = `
 @media (max-width: 760px) {
   .ru-book { aspect-ratio: 8 / 11; }
   .ru-book-inner { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .ru-book-inner::before {
+    left: 0; right: 0; top: 50%; bottom: auto;
+    width: auto; height: 28px; transform: translateY(-50%);
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.45) 50%, transparent);
+  }
   .ru-page-left { border-radius: 4px 4px 0 0; box-shadow: inset 0 -8px 16px -8px rgba(60,30,10,0.35); }
   .ru-page-right { border-radius: 0 0 4px 4px; box-shadow: inset 0 8px 16px -8px rgba(60,30,10,0.35); }
   .ru-flip { width: 100%; height: 50%; }
