@@ -939,7 +939,7 @@ const rawUnhingedStyles = `
 
 /* Mobile: stack pages */
 @media (max-width: 760px) {
-  .ru-book { aspect-ratio: 8 / 11; }
+  .ru-book { width: min(92vw, 520px); aspect-ratio: 8 / 11; }
   .ru-book-inner { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
   .ru-book-inner::before {
     left: 0; right: 0; top: 50%; bottom: auto;
