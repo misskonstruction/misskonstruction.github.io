@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, ArrowRight } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -8,9 +8,11 @@ import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
+import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 import { recipes } from "@/data/recipes";
 import { prayers } from "@/data/prayers";
+import { rawUnhingedEntries } from "@/data/rawUnhingedEntries";
 
 export const Route = createFileRoute("/blog/")({
   component: Blog,
@@ -98,6 +100,15 @@ const categoryDefs = [
       "Travel notes from the road and the in-between places — little towns, long drives, and the quiet wonder of somewhere new.",
     image: wanderImg,
   },
+  {
+    icon: Feather,
+    emoji: "🕯️",
+    title: "Raw & Unhinged",
+    slug: "raw-and-unhinged",
+    blurb:
+      "Unfiltered, handwritten pages from my desk — the thoughts that don't fit anywhere else. Photos of actual ink on actual paper.",
+    image: rawUnhingedImg,
+  },
 ];
 
 function formatDate(iso: string): string {
@@ -128,6 +139,7 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
   for (const p of prayers) {
     acc[p.categorySlug] = (acc[p.categorySlug] ?? 0) + 1;
   }
+  acc["raw-and-unhinged"] = (acc["raw-and-unhinged"] ?? 0) + rawUnhingedEntries.length;
   return acc;
 })();
 
