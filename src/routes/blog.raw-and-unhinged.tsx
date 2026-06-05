@@ -665,11 +665,11 @@ const rawUnhingedStyles = `
 /* ----- Candle flame: positioned over the wick in desk-scene.jpg ----- */
 .ru-flame {
   position: absolute;
-  left: 17.2%;
-  top: 12%;
-  width: 5%;
+  left: 16.6%;
+  top: 17.2%;
+  width: 3.6%;
   aspect-ratio: 40 / 70;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -94%);
   pointer-events: none;
   z-index: 2;
 }
