@@ -248,6 +248,7 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
   const current = spreads[spreadIndex];
   const nextSpread = spreads[spreadIndex + 1];
   const prevSpread = spreads[spreadIndex - 1];
+  const visibleSpread = flip?.direction === "next" ? nextSpread ?? current : flip?.direction === "prev" ? prevSpread ?? current : current;
 
   return (
     <div
@@ -286,11 +287,11 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
         <div className="ru-book-inner">
           {/* Left page (current) */}
           <div className="ru-page ru-page-left">
-            <PageContent spread={current} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent spread={visibleSpread} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
           {/* Right page (current) */}
           <div className="ru-page ru-page-right">
-            <PageContent spread={current} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent spread={visibleSpread} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
 
           {/* Flipping page (forward = right page flips left) */}
