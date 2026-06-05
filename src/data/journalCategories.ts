@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -6,6 +6,7 @@ import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
+import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 
 export type JournalCategory = {
   slug: string;
