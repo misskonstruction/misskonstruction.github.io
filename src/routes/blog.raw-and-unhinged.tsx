@@ -953,11 +953,11 @@ const rawUnhingedStyles = `
 .ru-page {
   position: relative;
   overflow: hidden;
-  background-color: #e8c994;
+  background-color: #d9b274;
   background-image:
-    radial-gradient(ellipse at 30% 20%, rgba(255, 220, 160, 0.35), transparent 60%),
-    radial-gradient(ellipse at 70% 80%, rgba(180, 110, 50, 0.25), transparent 65%),
-    linear-gradient(180deg, rgba(170, 95, 35, 0.18), rgba(140, 75, 25, 0.22)),
+    radial-gradient(ellipse at 30% 20%, rgba(255, 215, 150, 0.3), transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(150, 85, 35, 0.3), transparent 65%),
+    linear-gradient(180deg, rgba(150, 80, 25, 0.28), rgba(115, 60, 15, 0.32)),
     url(${JSON.stringify(paperTexture)});
   background-size: cover, cover, cover, cover;
   background-blend-mode: multiply, multiply, multiply, normal;
