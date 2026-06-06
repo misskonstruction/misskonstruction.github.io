@@ -65,6 +65,10 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
         alt: "Close-up of Blitz dozing in the wagon on the road, white blaze down her nose, ears soft, looking peaceful in the Florida sun",
       },
     ],
+    videoShort: {
+      youtubeId: "P7vX-9sTQ5k",
+      caption: "a moving picture — tap to watch",
+    },
   },
   {
     id: "lets-do-this",
