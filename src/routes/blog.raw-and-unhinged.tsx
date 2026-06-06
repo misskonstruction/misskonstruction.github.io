@@ -436,8 +436,7 @@ function RibbonMenu({
           </button>
           <div className="my-2 h-px bg-amber-900/20" />
           <ul className="space-y-0.5 max-h-72 overflow-y-auto pr-1">
-            {entryJumps.map(({ s, i }) => {
-              const entry = (s as Extract<Spread, { kind: "entry" }>).entry;
+            {entryJumps.map(({ entry, i }) => {
               return (
                 <li key={entry.id}>
                   <button
