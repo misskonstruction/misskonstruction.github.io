@@ -953,9 +953,14 @@ const rawUnhingedStyles = `
 .ru-page {
   position: relative;
   overflow: hidden;
-  background-color: #f8efd9;
-  background-image: url(${JSON.stringify(paperTexture)});
-  background-size: cover;
+  background-color: #e8c994;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 220, 160, 0.35), transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(180, 110, 50, 0.25), transparent 65%),
+    linear-gradient(180deg, rgba(170, 95, 35, 0.18), rgba(140, 75, 25, 0.22)),
+    url(${JSON.stringify(paperTexture)});
+  background-size: cover, cover, cover, cover;
+  background-blend-mode: multiply, multiply, multiply, normal;
 }
 .ru-page-left  { border-radius: 4px 0 0 4px; box-shadow: inset -8px 0 16px -8px rgba(60,30,10,0.35); }
 .ru-page-right { border-radius: 0 4px 4px 0; box-shadow: inset 8px 0 16px -8px rgba(60,30,10,0.35); }
