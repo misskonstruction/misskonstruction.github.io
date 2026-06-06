@@ -28,6 +28,17 @@ export type RawUnhingedEntry = {
    * rather than alongside the entry.
    */
   finalPagePhotos?: { src: string; alt: string }[];
+  /**
+   * Optional companion YouTube short. Rendered as a small "polaroid" tucked
+   * into the right-hand scrapbook page with a hand-drawn play triangle.
+   * Tapping it opens a candlelit modal with the embedded short.
+   */
+  videoShort?: {
+    youtubeId: string;
+    caption?: string;
+    /** Optional poster image (defaults to YouTube's auto thumbnail). */
+    poster?: string;
+  };
 };
 
 /**
