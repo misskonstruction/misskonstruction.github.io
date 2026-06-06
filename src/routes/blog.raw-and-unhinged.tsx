@@ -399,9 +399,13 @@ function RibbonMenu({
 }) {
   const [open, setOpen] = useState(false);
   // Build entry index for jump menu
-  const entryJumps = spreads
-    .map((s, i) => ({ s, i }))
-    .filter(({ s }) => s.kind === "entry" && (s as Extract<Spread, { kind: "entry" }>).pageOfEntry === 0);
+  // Build entry index for jump menu — include both single-entry spreads and
+  // both entries in a paired spread.
+  const entryJumps = spreads.flatMap((s, i) => {
+    if (s.kind === "entry" && s.pageOfEntry === 0) return [{ entry: s.entry, i }];
+    if (s.kind === "entry-pair") return [{ entry: s.left, i }, { entry: s.right, i }];
+    return [];
+  });
 
   return (
     <div className="ru-ribbon-wrap">
