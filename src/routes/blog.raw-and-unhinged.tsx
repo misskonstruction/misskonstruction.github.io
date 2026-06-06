@@ -276,7 +276,13 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
   const current = spreads[spreadIndex];
   const nextSpread = spreads[spreadIndex + 1];
   const prevSpread = spreads[spreadIndex - 1];
-  const visibleSpread = flip?.direction === "next" ? nextSpread ?? current : flip?.direction === "prev" ? prevSpread ?? current : current;
+  // During a forward flip the right page reveals the NEW right beneath the
+  // flipping leaf; the left page stays on the OLD left until the leaf lands.
+  // During a backward flip the mirror is true.
+  const visibleLeftSpread =
+    flip?.direction === "prev" ? prevSpread ?? current : current;
+  const visibleRightSpread =
+    flip?.direction === "next" ? nextSpread ?? current : current;
 
   return (
     <div
