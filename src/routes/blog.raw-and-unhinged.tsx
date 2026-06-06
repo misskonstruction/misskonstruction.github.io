@@ -621,7 +621,7 @@ function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { 
       </div>
     );
   }
-  return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} />;
+  return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} videoShort={entry.videoShort} />;
 }
 
 function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
@@ -644,9 +644,11 @@ function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) 
 function ScrapbookPage({
   photos,
   dateLabel,
+  videoShort,
 }: {
   photos: { src: string; alt: string }[];
   dateLabel?: string;
+  videoShort?: RawUnhingedEntry["videoShort"];
 }) {
   // Pre-computed scattered positions for up to 6 photos
   const layouts = [
@@ -682,8 +684,112 @@ function ScrapbookPage({
             </div>
           );
         })}
+        {videoShort && <VideoPolaroid videoShort={videoShort} />}
       </div>
     </div>
+  );
+}
+
+function VideoPolaroid({ videoShort }: { videoShort: NonNullable<RawUnhingedEntry["videoShort"]> }) {
+  const [open, setOpen] = useState(false);
+  const poster =
+    videoShort.poster ?? `https://i.ytimg.com/vi/${videoShort.youtubeId}/hqdefault.jpg`;
+  const caption = videoShort.caption ?? "a moving picture — tap to watch";
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        aria-label={`Play short: ${caption}`}
+        className="ru-video-polaroid absolute z-20"
+        style={{
+          right: "4%",
+          bottom: "3%",
+          width: "32%",
+          transform: "rotate(5deg)",
+        }}
+      >
+        <span className="ru-polaroid-frame block">
+          <span className="ru-polaroid-photo block relative overflow-hidden">
+            <img
+              src={poster}
+              alt=""
+              className="block w-full h-auto"
+              loading="lazy"
+              aria-hidden="true"
+            />
+            <span className="ru-polaroid-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="100%" height="100%">
+                <path
+                  d="M7 4 L20 12 L7 20 Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </span>
+          <span className="ru-polaroid-caption block ru-script-sm">{caption}</span>
+        </span>
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center p-4 ru-video-modal-bg"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Video short"
+        >
+          <div
+            className="ru-video-modal-frame relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="ru-video-modal-close ru-script-lg"
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <div className="ru-video-modal-inner">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${videoShort.youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+                title="YouTube short"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="ru-video-modal-iframe"
+              />
+            </div>
+            {videoShort.caption && (
+              <p className="ru-video-modal-caption ru-script-sm">{videoShort.caption}</p>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -1022,5 +1128,126 @@ const rawUnhingedStyles = `
     100% { transform: rotateX(-180deg); }
   }
   .ru-ribbon-menu { width: 260px; right: -120px; }
+}
+
+/* ----- Video polaroid (companion YouTube short, scrapbook style) ----- */
+.ru-video-polaroid {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 220ms ease, filter 220ms ease;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 6px 10px rgba(20, 10, 4, 0.35));
+}
+.ru-video-polaroid:hover,
+.ru-video-polaroid:focus-visible {
+  transform: rotate(2deg) translateY(-2px) scale(1.03);
+  outline: none;
+}
+.ru-polaroid-frame {
+  background: #f6ecd6;
+  padding: 6% 6% 14% 6%;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 80, 30, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.ru-polaroid-photo {
+  background: #1a1208;
+  border-radius: 1px;
+  aspect-ratio: 9 / 12;
+}
+.ru-polaroid-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.95;
+}
+.ru-polaroid-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f6ecd6;
+  pointer-events: none;
+}
+.ru-polaroid-play svg {
+  width: 38%;
+  height: 38%;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55));
+  transform: translateX(4%);
+}
+.ru-polaroid-caption {
+  margin-top: 6%;
+  color: #6b3a14;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ----- Video modal (candlelit overlay) ----- */
+.ru-video-modal-bg {
+  background:
+    radial-gradient(ellipse at center, rgba(60, 30, 10, 0.55) 0%, rgba(10, 6, 4, 0.92) 80%);
+  backdrop-filter: blur(6px);
+  animation: ru-fade-in 240ms ease both;
+}
+.ru-video-modal-frame {
+  background: #f6ecd6;
+  padding: 18px 18px 28px;
+  border-radius: 4px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(120, 80, 30, 0.22);
+  max-width: min(420px, 92vw);
+  width: 100%;
+  animation: ru-rise-in 320ms cubic-bezier(.2,.7,.2,1) both;
+}
+.ru-video-modal-close {
+  position: absolute;
+  top: 4px;
+  right: 12px;
+  background: transparent;
+  border: 0;
+  color: #6b3a14;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.ru-video-modal-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(120, 80, 30, 0.25);
+}
+.ru-video-modal-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.ru-video-modal-caption {
+  margin-top: 10px;
+  text-align: center;
+  color: #6b3a14;
+}
+
+@keyframes ru-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ru-rise-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ru-video-modal-bg,
+  .ru-video-modal-frame { animation: none; }
+  .ru-video-polaroid { transition: none; }
 }
 `;
