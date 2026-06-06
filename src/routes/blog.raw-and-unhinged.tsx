@@ -321,11 +321,11 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
         <div className="ru-book-inner">
           {/* Left page (current) */}
           <div className="ru-page ru-page-left">
-            <PageContent spread={visibleSpread} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent spread={visibleLeftSpread} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
           {/* Right page (current) */}
           <div className="ru-page ru-page-right">
-            <PageContent spread={visibleSpread} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent spread={visibleRightSpread} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
 
           {/* Flipping page (forward = right page flips left) */}
