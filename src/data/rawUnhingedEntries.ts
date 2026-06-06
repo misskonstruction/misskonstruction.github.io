@@ -1,5 +1,8 @@
 import winstonSketch from "@/assets/raw-unhinged/entry-winston-sketch.jpg";
 import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
+import myFaithfulBlitz from "@/assets/raw-unhinged/entry-my-faithful-blitz.jpg";
+import blitzWagonDoorway from "@/assets/raw-unhinged/blitz-wagon-doorway.jpg";
+import blitzWagonRoad from "@/assets/raw-unhinged/blitz-wagon-road.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -31,6 +34,27 @@ export type RawUnhingedEntry = {
  * Entries are listed newest-first. Add new entries at the top of this list.
  */
 export const rawUnhingedEntries: RawUnhingedEntry[] = [
+  {
+    id: "my-faithful-blitz",
+    date: "2026-06-06",
+    title: "My Faithful Blitz — celebrating the little things",
+    entryImages: [
+      {
+        src: myFaithfulBlitz,
+        alt: "Handwritten journal page dated 6/6/26 — Cami writing about waking up sick with anxiety, her elderly pitbull Blitz, and giving thanks that the gabapentin is helping Blitz regain some mobility",
+      },
+    ],
+    rightPagePhotos: [
+      {
+        src: blitzWagonDoorway,
+        alt: "Blitz, a grey-muzzled senior pitbull, resting in a black wagon in the front doorway, surrounded by her water bottles and gear, ready for a walk",
+      },
+      {
+        src: blitzWagonRoad,
+        alt: "Close-up of Blitz dozing in the wagon on the road, white blaze down her nose, ears soft, looking peaceful in the Florida sun",
+      },
+    ],
+  },
   {
     id: "lets-do-this",
     date: "2026-06-05",
