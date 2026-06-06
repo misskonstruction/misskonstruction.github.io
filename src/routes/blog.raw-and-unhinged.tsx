@@ -1129,4 +1129,125 @@ const rawUnhingedStyles = `
   }
   .ru-ribbon-menu { width: 260px; right: -120px; }
 }
+
+/* ----- Video polaroid (companion YouTube short, scrapbook style) ----- */
+.ru-video-polaroid {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 220ms ease, filter 220ms ease;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 6px 10px rgba(20, 10, 4, 0.35));
+}
+.ru-video-polaroid:hover,
+.ru-video-polaroid:focus-visible {
+  transform: rotate(2deg) translateY(-2px) scale(1.03);
+  outline: none;
+}
+.ru-polaroid-frame {
+  background: #f6ecd6;
+  padding: 6% 6% 14% 6%;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 80, 30, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.ru-polaroid-photo {
+  background: #1a1208;
+  border-radius: 1px;
+  aspect-ratio: 9 / 12;
+}
+.ru-polaroid-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.95;
+}
+.ru-polaroid-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f6ecd6;
+  pointer-events: none;
+}
+.ru-polaroid-play svg {
+  width: 38%;
+  height: 38%;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55));
+  transform: translateX(4%);
+}
+.ru-polaroid-caption {
+  margin-top: 6%;
+  color: #6b3a14;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ----- Video modal (candlelit overlay) ----- */
+.ru-video-modal-bg {
+  background:
+    radial-gradient(ellipse at center, rgba(60, 30, 10, 0.55) 0%, rgba(10, 6, 4, 0.92) 80%);
+  backdrop-filter: blur(6px);
+  animation: ru-fade-in 240ms ease both;
+}
+.ru-video-modal-frame {
+  background: #f6ecd6;
+  padding: 18px 18px 28px;
+  border-radius: 4px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(120, 80, 30, 0.22);
+  max-width: min(420px, 92vw);
+  width: 100%;
+  animation: ru-rise-in 320ms cubic-bezier(.2,.7,.2,1) both;
+}
+.ru-video-modal-close {
+  position: absolute;
+  top: 4px;
+  right: 12px;
+  background: transparent;
+  border: 0;
+  color: #6b3a14;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.ru-video-modal-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(120, 80, 30, 0.25);
+}
+.ru-video-modal-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.ru-video-modal-caption {
+  margin-top: 10px;
+  text-align: center;
+  color: #6b3a14;
+}
+
+@keyframes ru-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ru-rise-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ru-video-modal-bg,
+  .ru-video-modal-frame { animation: none; }
+  .ru-video-polaroid { transition: none; }
+}
 `;
