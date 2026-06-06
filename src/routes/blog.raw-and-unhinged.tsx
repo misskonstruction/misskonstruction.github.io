@@ -621,7 +621,7 @@ function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { 
       </div>
     );
   }
-  return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} />;
+  return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} videoShort={entry.videoShort} />;
 }
 
 function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
@@ -644,9 +644,11 @@ function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) 
 function ScrapbookPage({
   photos,
   dateLabel,
+  videoShort,
 }: {
   photos: { src: string; alt: string }[];
   dateLabel?: string;
+  videoShort?: RawUnhingedEntry["videoShort"];
 }) {
   // Pre-computed scattered positions for up to 6 photos
   const layouts = [
@@ -682,8 +684,112 @@ function ScrapbookPage({
             </div>
           );
         })}
+        {videoShort && <VideoPolaroid videoShort={videoShort} />}
       </div>
     </div>
+  );
+}
+
+function VideoPolaroid({ videoShort }: { videoShort: NonNullable<RawUnhingedEntry["videoShort"]> }) {
+  const [open, setOpen] = useState(false);
+  const poster =
+    videoShort.poster ?? `https://i.ytimg.com/vi/${videoShort.youtubeId}/hqdefault.jpg`;
+  const caption = videoShort.caption ?? "a moving picture — tap to watch";
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        aria-label={`Play short: ${caption}`}
+        className="ru-video-polaroid absolute z-20"
+        style={{
+          right: "4%",
+          bottom: "3%",
+          width: "32%",
+          transform: "rotate(5deg)",
+        }}
+      >
+        <span className="ru-polaroid-frame block">
+          <span className="ru-polaroid-photo block relative overflow-hidden">
+            <img
+              src={poster}
+              alt=""
+              className="block w-full h-auto"
+              loading="lazy"
+              aria-hidden="true"
+            />
+            <span className="ru-polaroid-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="100%" height="100%">
+                <path
+                  d="M7 4 L20 12 L7 20 Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </span>
+          <span className="ru-polaroid-caption block ru-script-sm">{caption}</span>
+        </span>
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center p-4 ru-video-modal-bg"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Video short"
+        >
+          <div
+            className="ru-video-modal-frame relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="ru-video-modal-close ru-script-lg"
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <div className="ru-video-modal-inner">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${videoShort.youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+                title="YouTube short"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="ru-video-modal-iframe"
+              />
+            </div>
+            {videoShort.caption && (
+              <p className="ru-video-modal-caption ru-script-sm">{videoShort.caption}</p>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
