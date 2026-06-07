@@ -905,24 +905,6 @@ const rawUnhingedStyles = `
   100% { opacity: 1; transform: scale(1.06); }
 }
 
-/* ----- New framed window: uses the GIF as a complete view, not fitted to old panes ----- */
-.ru-new-window {
-  position: absolute;
-  left: 24.4%;
-  top: 2.6%;
-  width: 26.8%;
-  aspect-ratio: 16 / 9;
-  border: clamp(4px, 0.7vw, 11px) solid #2b1509;
-  border-radius: 3px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 2;
-  background: #120905;
-  box-shadow:
-    0 0 0 clamp(2px, 0.28vw, 4px) rgba(107, 55, 21, 0.95),
-    0 clamp(6px, 1vw, 14px) clamp(10px, 1.7vw, 24px) rgba(13, 6, 2, 0.55),
-    inset 0 0 clamp(10px, 1.5vw, 22px) rgba(19, 7, 0, 0.72);
-}
 /* ----- Wall cover: hides the original sunset window in the desk-scene image ----- */
 .ru-wall-cover {
   position: absolute;
