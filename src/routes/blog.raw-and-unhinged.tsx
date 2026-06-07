@@ -139,6 +139,14 @@ function RawAndUnhinged() {
             height={1024}
           />
 
+          {/* Animated ocean view through the window (overlays original sunset) */}
+          <img
+            src={windowOceanAsset.url}
+            alt="Ocean view through the window"
+            aria-hidden="true"
+            className="ru-window"
+          />
+
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
 
