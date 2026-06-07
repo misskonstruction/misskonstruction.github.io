@@ -141,6 +141,12 @@ function RawAndUnhinged() {
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
 
+          {/* Animated steam rising from the teacup */}
+          <TeaSteam />
+
+          {/* Subtle ripple/shimmer over the ocean in the window */}
+          <OceanRipple />
+
           {/* Clickable journal hot-spot, sized & positioned over the journal */}
           <button
             type="button"
@@ -201,6 +207,33 @@ function CandleFlame() {
         />
         <ellipse className="ru-flame-core" cx="20" cy="56" rx="5" ry="9" fill="url(#ruFlameCore)" />
       </svg>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tea steam                                                                   */
+/* -------------------------------------------------------------------------- */
+
+function TeaSteam() {
+  return (
+    <div className="ru-steam" aria-hidden="true">
+      <span className="ru-steam-puff ru-steam-puff--1" />
+      <span className="ru-steam-puff ru-steam-puff--2" />
+      <span className="ru-steam-puff ru-steam-puff--3" />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Ocean ripple                                                                */
+/* -------------------------------------------------------------------------- */
+
+function OceanRipple() {
+  return (
+    <div className="ru-ocean" aria-hidden="true">
+      <span className="ru-ocean-shimmer" />
+      <span className="ru-ocean-shimmer ru-ocean-shimmer--2" />
     </div>
   );
 }
@@ -865,9 +898,94 @@ const rawUnhingedStyles = `
   100% { opacity: 1; transform: scale(1.06); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo { animation: none; }
+/* ----- Tea steam: rising puffs above the teacup ----- */
+.ru-steam {
+  position: absolute;
+  /* Teacup rim in desk-scene.jpg (1536x1024): ~x 1230, y 380 */
+  left: 80.1%;
+  top: 37%;
+  width: 5%;
+  height: 14%;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  opacity: 0.85;
 }
+.ru-steam-puff {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 60%, rgba(255, 240, 220, 0.9), rgba(255, 230, 200, 0.4) 45%, transparent 70%);
+  transform: translate(-50%, 0) scale(0.6);
+  opacity: 0;
+  animation: ruSteamRise 4.2s ease-out infinite;
+}
+.ru-steam-puff--2 { animation-delay: 1.4s; left: 38%; }
+.ru-steam-puff--3 { animation-delay: 2.8s; left: 62%; }
+
+@keyframes ruSteamRise {
+  0%   { transform: translate(-50%, 10%) scale(0.5); opacity: 0; }
+  20%  { opacity: 0.85; }
+  60%  { transform: translate(-30%, -80%) scale(1.1); opacity: 0.55; }
+  100% { transform: translate(-10%, -160%) scale(1.6); opacity: 0; }
+}
+
+/* ----- Ocean ripple: shimmer over the water in the window ----- */
+.ru-ocean {
+  position: absolute;
+  /* Ocean strip in desk-scene.jpg (1536x1024): ~x 175-680, y 55-130 */
+  left: 11.4%;
+  top: 5.4%;
+  width: 32.9%;
+  height: 7.3%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
+}
+.ru-ocean-shimmer {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 4px,
+    rgba(255, 200, 150, 0.35) 5px,
+    transparent 7px
+  );
+  background-size: 100% 14px;
+  animation: ruOceanRipple 6s linear infinite;
+}
+.ru-ocean-shimmer--2 {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 6px,
+    rgba(255, 220, 180, 0.25) 7px,
+    transparent 10px
+  );
+  background-size: 100% 22px;
+  animation: ruOceanRipple 9s linear infinite reverse;
+  opacity: 0.7;
+}
+@keyframes ruOceanRipple {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo,
+  .ru-steam-puff, .ru-ocean-shimmer { animation: none; }
+}
+
 
 /* ----- Clickable journal hotspot (overlaid on the journal in the photo) ----- */
 .ru-journal-hotspot {
