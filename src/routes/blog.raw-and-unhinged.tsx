@@ -138,6 +138,11 @@ function RawAndUnhinged() {
             height={1024}
           />
 
+          {/* Subtle horizontal shimmer on the ocean water inside the existing sunset
+              window. Positioned + tilted to match the sill's slight downward slope. */}
+          <div className="ru-water-shimmer" aria-hidden="true">
+            <span className="ru-water-shimmer-band" />
+          </div>
 
 
           {/* Animated candle flame, positioned over the wick */}
