@@ -905,7 +905,7 @@ const rawUnhingedStyles = `
   left: 0;
   top: 0;
   width: 82%;
-  height: 17%;
+  height: 22%;
   z-index: 1;
   background:
     radial-gradient(ellipse at 40% 55%, rgba(38, 18, 6, 0.0) 0%, rgba(20, 9, 2, 0.55) 45%, rgba(12, 5, 1, 0.95) 78%),
