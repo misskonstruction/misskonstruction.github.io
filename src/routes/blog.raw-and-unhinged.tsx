@@ -225,18 +225,8 @@ function TeaSteam() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Ocean ripple                                                                */
-/* -------------------------------------------------------------------------- */
 
-function OceanRipple() {
-  return (
-    <div className="ru-ocean" aria-hidden="true">
-      <span className="ru-ocean-shimmer" />
-      <span className="ru-ocean-shimmer ru-ocean-shimmer--2" />
-    </div>
-  );
-}
+
 
 /* -------------------------------------------------------------------------- */
 /* Book overlay                                                                */
