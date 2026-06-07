@@ -1001,27 +1001,26 @@ const rawUnhingedStyles = `
   100% { transform: translate(-10%, -160%) scale(1.6); opacity: 0; }
 }
 
-/* ----- Water shimmer: subtle moving sheen on the ocean inside the window -----
-   Sill in desk-scene.jpg slopes from (90,135) to (855,170) → ~2.4° tilt.
-   Water box pre-rotation: top-left (90,70), width 765px, height ~65px.    */
+/* ----- Water shimmer: subtle moving sheen clipped to the ocean pane only ----- */
 .ru-water-shimmer {
   position: absolute;
-  left: 5.86%;
-  top: 6.84%;
-  width: 49.8%;
-  height: 6.4%;
+  left: 12.7%;
+  top: 7.7%;
+  width: 39.4%;
+  height: 5.6%;
   pointer-events: none;
   overflow: hidden;
   z-index: 1;
-  transform: rotate(2.4deg);
+  transform: rotate(1.9deg);
   transform-origin: 0% 0%;
+  clip-path: polygon(2.5% 4%, 100% 0%, 98.4% 100%, 0% 94%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 28%, black 78%, transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0%, black 28%, black 78%, transparent 100%);
 }
 .ru-water-shimmer-band {
   position: absolute;
-  top: 30%;
-  bottom: 18%;
+  top: 18%;
+  bottom: 12%;
   left: -40%;
   width: 60%;
   background: linear-gradient(
