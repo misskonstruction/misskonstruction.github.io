@@ -138,12 +138,22 @@ function RawAndUnhinged() {
             height={1024}
           />
 
-          {/* New framed animated ocean window, separate from the original scene window */}
+          {/* Mask out the original sunset window with a dark wall panel */}
+          <div className="ru-wall-cover" aria-hidden="true" />
+
+          {/* New bay window: single arched pane, no cross muntins, framed in wood */}
           <div className="ru-new-window" aria-hidden="true">
             <img src="/assets/raw-unhinged/window-ocean.gif" alt="" className="ru-new-window-view" />
-            <span className="ru-new-window-cross ru-new-window-cross--vertical" />
-            <span className="ru-new-window-cross ru-new-window-cross--horizontal" />
+            <span className="ru-new-window-glass" />
+            <span className="ru-new-window-sill" />
           </div>
+
+          {/* Stretched ivy leaves draped in front of the new window */}
+          <div
+            className="ru-ivy-overlay"
+            aria-hidden="true"
+            style={{ backgroundImage: `url(${deskScene})` }}
+          />
 
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
