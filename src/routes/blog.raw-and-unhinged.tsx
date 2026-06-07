@@ -947,9 +947,9 @@ const rawUnhingedStyles = `
   z-index: 1;
   overflow: hidden;
   mix-blend-mode: screen;
-  opacity: 0.55;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
+  opacity: 0.9;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 85%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 85%, transparent 100%);
 }
 .ru-ocean-shimmer {
   position: absolute;
@@ -957,28 +957,28 @@ const rawUnhingedStyles = `
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px,
-    transparent 4px,
-    rgba(255, 200, 150, 0.35) 5px,
+    transparent 3px,
+    rgba(255, 210, 165, 0.65) 4px,
     transparent 7px
   );
-  background-size: 100% 14px;
-  animation: ruOceanRipple 6s linear infinite;
+  background-size: 100% 12px;
+  animation: ruOceanRipple 4s linear infinite;
 }
 .ru-ocean-shimmer--2 {
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px,
-    transparent 6px,
-    rgba(255, 220, 180, 0.25) 7px,
+    transparent 5px,
+    rgba(255, 230, 195, 0.5) 6px,
     transparent 10px
   );
-  background-size: 100% 22px;
-  animation: ruOceanRipple 9s linear infinite reverse;
-  opacity: 0.7;
+  background-size: 100% 20px;
+  animation: ruOceanRipple 7s linear infinite reverse;
+  opacity: 0.85;
 }
 @keyframes ruOceanRipple {
   0%   { background-position: 0 0; }
-  100% { background-position: 0 14px; }
+  100% { background-position: 0 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
