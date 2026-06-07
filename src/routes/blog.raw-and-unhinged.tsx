@@ -148,12 +148,6 @@ function RawAndUnhinged() {
             <span className="ru-new-window-sill" />
           </div>
 
-          {/* Stretched ivy leaves draped in front of the new window */}
-          <div
-            className="ru-ivy-overlay"
-            aria-hidden="true"
-            style={{ backgroundImage: `url(${deskScene})` }}
-          />
 
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
