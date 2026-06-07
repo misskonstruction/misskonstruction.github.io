@@ -900,13 +900,13 @@ const rawUnhingedStyles = `
 /* ----- Window: animated ocean view, sized to cover the original window opening ----- */
 .ru-window {
   position: absolute;
-  /* Window opening in desk-scene.jpg (1536x1024) is a slight trapezoid due to
-     perspective; bounding box ~x 215-800, y 0-110 with clip-path to match jambs. */
-  left: 14%;
+  /* Window opening in desk-scene.jpg (1536x1024) is a trapezoid due to
+     perspective; bounding box ~ left 16.3%, right 56.2%, top 0, bottom 10.2%. */
+  left: 16.3%;
   top: 0%;
-  width: 38.2%;
-  height: 10.7%;
-  clip-path: polygon(8.4% 0%, 89.5% 0%, 100% 100%, 0% 100%);
+  width: 39.9%;
+  height: 10.2%;
+  clip-path: polygon(7.5% 0%, 96.5% 0%, 100% 100%, 0% 100%);
   object-fit: cover;
   object-position: center;
   pointer-events: none;
