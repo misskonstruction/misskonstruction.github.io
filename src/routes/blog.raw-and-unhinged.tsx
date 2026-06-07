@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, X } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import deskScene from "@/assets/raw-unhinged/desk-scene.jpg";
 import paperTexture from "@/assets/raw-unhinged/paper-texture.jpg";
+import windowOceanAsset from "@/assets/raw-unhinged/window-ocean.gif.asset.json";
 import {
   rawUnhingedEntries,
   formatEntryDate,
@@ -136,6 +137,14 @@ function RawAndUnhinged() {
             className="block w-full h-auto"
             width={1536}
             height={1024}
+          />
+
+          {/* Animated ocean view through the window (overlays original sunset) */}
+          <img
+            src={windowOceanAsset.url}
+            alt="Ocean view through the window"
+            aria-hidden="true"
+            className="ru-window"
           />
 
           {/* Animated candle flame, positioned over the wick */}
@@ -886,6 +895,23 @@ const rawUnhingedStyles = `
 @keyframes ruFlameHalo {
   0% { opacity: 0.7; transform: scale(1); }
   100% { opacity: 1; transform: scale(1.06); }
+}
+
+/* ----- Window: animated ocean view, sized to cover the original window opening ----- */
+.ru-window {
+  position: absolute;
+  /* Window opening in desk-scene.jpg (1536x1024): ~x 165-880, y 0-150 */
+  left: 10.7%;
+  top: 0%;
+  width: 46.6%;
+  height: 14.6%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  z-index: 1;
+  /* Warm candlelit interior tint + subtle vignette so it sits in the scene */
+  filter: brightness(0.82) saturate(0.92) sepia(0.18) hue-rotate(-8deg);
+  box-shadow: inset 0 -10px 18px rgba(20, 10, 0, 0.55), inset 0 8px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* ----- Tea steam: rising puffs above the teacup ----- */
