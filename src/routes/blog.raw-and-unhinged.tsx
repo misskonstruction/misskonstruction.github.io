@@ -897,6 +897,23 @@ const rawUnhingedStyles = `
   100% { opacity: 1; transform: scale(1.06); }
 }
 
+/* ----- Window: animated ocean view, sized to cover the original window opening ----- */
+.ru-window {
+  position: absolute;
+  /* Window opening in desk-scene.jpg (1536x1024): ~x 165-880, y 0-150 */
+  left: 10.7%;
+  top: 0%;
+  width: 46.6%;
+  height: 14.6%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  z-index: 1;
+  /* Warm candlelit interior tint + subtle vignette so it sits in the scene */
+  filter: brightness(0.82) saturate(0.92) sepia(0.18) hue-rotate(-8deg);
+  box-shadow: inset 0 -10px 18px rgba(20, 10, 0, 0.55), inset 0 8px 14px rgba(0, 0, 0, 0.35);
+}
+
 /* ----- Tea steam: rising puffs above the teacup ----- */
 .ru-steam {
   position: absolute;
