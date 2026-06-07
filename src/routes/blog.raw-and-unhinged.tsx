@@ -895,23 +895,70 @@ const rawUnhingedStyles = `
   100% { opacity: 1; transform: scale(1.06); }
 }
 
-/* ----- Window: animated ocean view, sized to cover the original window opening ----- */
-.ru-window {
+/* ----- New framed window: uses the GIF as a complete view, not fitted to old panes ----- */
+.ru-new-window {
   position: absolute;
-  /* Window opening in desk-scene.jpg (1536x1024) is a trapezoid due to
-     perspective; bounding box ~ left 16.3%, right 56.2%, top 0, bottom 10.2%. */
-  left: 16.3%;
-  top: 0%;
-  width: 39.9%;
-  height: 10.2%;
-  clip-path: polygon(7.5% 0%, 96.5% 0%, 100% 100%, 0% 100%);
+  left: 24.4%;
+  top: 2.6%;
+  width: 26.8%;
+  aspect-ratio: 16 / 9;
+  border: clamp(4px, 0.7vw, 11px) solid #2b1509;
+  border-radius: 3px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+  background: #120905;
+  box-shadow:
+    0 0 0 clamp(2px, 0.28vw, 4px) rgba(107, 55, 21, 0.95),
+    0 clamp(6px, 1vw, 14px) clamp(10px, 1.7vw, 24px) rgba(13, 6, 2, 0.55),
+    inset 0 0 clamp(10px, 1.5vw, 22px) rgba(19, 7, 0, 0.72);
+}
+.ru-new-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(24, 11, 3, 0.42), transparent 18%, transparent 82%, rgba(24, 11, 3, 0.5)),
+    linear-gradient(180deg, rgba(255, 190, 105, 0.22), transparent 36%, rgba(21, 9, 2, 0.52));
+  box-shadow: inset 0 0 clamp(12px, 1.8vw, 26px) rgba(0, 0, 0, 0.65);
+}
+.ru-new-window::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: calc(clamp(4px, 0.7vw, 11px) * -1.2);
+  height: clamp(6px, 0.9vw, 13px);
+  z-index: 4;
+  background: linear-gradient(180deg, #7a431f, #271106);
+  box-shadow: 0 5px 11px rgba(11, 5, 1, 0.6);
+}
+.ru-new-window-view {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  pointer-events: none;
-  z-index: 1;
-  /* Warm candlelit interior tint + subtle vignette so it sits in the scene */
-  filter: brightness(0.82) saturate(0.92) sepia(0.18) hue-rotate(-8deg);
-  box-shadow: inset 0 -10px 18px rgba(20, 10, 0, 0.55), inset 0 8px 14px rgba(0, 0, 0, 0.35);
+  filter: brightness(0.78) saturate(0.95) sepia(0.16) hue-rotate(-8deg);
+}
+.ru-new-window-cross {
+  position: absolute;
+  z-index: 3;
+  background: linear-gradient(90deg, #1d0b03, #6f3b18 45%, #1c0b03);
+  box-shadow: 0 0 8px rgba(5, 2, 0, 0.62);
+}
+.ru-new-window-cross--vertical {
+  top: 0;
+  bottom: 0;
+  left: calc(50% - clamp(2px, 0.22vw, 4px));
+  width: clamp(4px, 0.45vw, 8px);
+}
+.ru-new-window-cross--horizontal {
+  left: 0;
+  right: 0;
+  top: calc(50% - clamp(2px, 0.22vw, 4px));
+  height: clamp(4px, 0.45vw, 8px);
 }
 
 /* ----- Tea steam: rising puffs above the teacup ----- */
