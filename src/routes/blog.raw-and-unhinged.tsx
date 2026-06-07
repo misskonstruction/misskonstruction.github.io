@@ -138,13 +138,6 @@ function RawAndUnhinged() {
             height={1024}
           />
 
-          {/* Subtle horizontal shimmer on the ocean water inside the existing sunset
-              window. Positioned + tilted to match the sill's slight downward slope. */}
-          <div className="ru-water-shimmer" aria-hidden="true">
-            <span className="ru-water-shimmer-band" />
-          </div>
-
-
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
 
@@ -1001,49 +994,9 @@ const rawUnhingedStyles = `
   100% { transform: translate(-10%, -160%) scale(1.6); opacity: 0; }
 }
 
-/* ----- Water shimmer: subtle moving sheen clipped to the ocean pane only ----- */
-.ru-water-shimmer {
-  position: absolute;
-  left: 12.7%;
-  top: 7.7%;
-  width: 39.4%;
-  height: 5.6%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-  transform: rotate(1.9deg);
-  transform-origin: 0% 0%;
-  clip-path: polygon(2.5% 4%, 100% 0%, 98.4% 100%, 0% 94%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 28%, black 78%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0%, black 28%, black 78%, transparent 100%);
-}
-.ru-water-shimmer-band {
-  position: absolute;
-  top: 18%;
-  bottom: 12%;
-  left: -40%;
-  width: 60%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 215, 165, 0) 18%,
-    rgba(255, 220, 170, 0.18) 50%,
-    rgba(255, 215, 165, 0) 82%,
-    transparent 100%
-  );
-  mix-blend-mode: screen;
-  filter: blur(2px);
-  animation: ruWaterShimmer 11s ease-in-out infinite;
-}
-@keyframes ruWaterShimmer {
-  0%   { transform: translateX(0%);   opacity: 0.5; }
-  50%  { transform: translateX(180%); opacity: 0.85; }
-  100% { transform: translateX(0%);   opacity: 0.5; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo,
-  .ru-steam-puff, .ru-water-shimmer-band { animation: none; }
+  .ru-steam-puff { animation: none; }
 }
 
 
