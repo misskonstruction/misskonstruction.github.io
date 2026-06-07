@@ -923,26 +923,40 @@ const rawUnhingedStyles = `
     0 clamp(6px, 1vw, 14px) clamp(10px, 1.7vw, 24px) rgba(13, 6, 2, 0.55),
     inset 0 0 clamp(10px, 1.5vw, 22px) rgba(19, 7, 0, 0.72);
 }
-.ru-new-window::before {
-  content: "";
+/* ----- Wall cover: hides the original sunset window in the desk-scene image ----- */
+.ru-wall-cover {
   position: absolute;
-  inset: 0;
-  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 82%;
+  height: 26%;
+  z-index: 1;
   background:
-    linear-gradient(90deg, rgba(24, 11, 3, 0.42), transparent 18%, transparent 82%, rgba(24, 11, 3, 0.5)),
-    linear-gradient(180deg, rgba(255, 190, 105, 0.22), transparent 36%, rgba(21, 9, 2, 0.52));
-  box-shadow: inset 0 0 clamp(12px, 1.8vw, 26px) rgba(0, 0, 0, 0.65);
+    radial-gradient(ellipse at 40% 55%, rgba(38, 18, 6, 0.0) 0%, rgba(20, 9, 2, 0.55) 45%, rgba(12, 5, 1, 0.95) 78%),
+    linear-gradient(180deg, #160a03 0%, #20100a 55%, #1a0c05 100%);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, black 78%, transparent 100%);
+          mask-image: linear-gradient(180deg, black 78%, transparent 100%);
 }
-.ru-new-window::after {
-  content: "";
+
+/* ----- New bay window: single arched pane sitting above the desk ----- */
+.ru-new-window {
   position: absolute;
-  left: -8%;
-  right: -8%;
-  bottom: calc(clamp(4px, 0.7vw, 11px) * -1.2);
-  height: clamp(6px, 0.9vw, 13px);
-  z-index: 4;
-  background: linear-gradient(180deg, #7a431f, #271106);
-  box-shadow: 0 5px 11px rgba(11, 5, 1, 0.6);
+  left: 6%;
+  top: 0.5%;
+  width: 70%;
+  height: 23%;
+  border: clamp(6px, 0.95vw, 14px) solid #3a1d0b;
+  border-bottom-width: clamp(8px, 1.2vw, 18px);
+  border-radius: 48% 48% 6px 6px / 32% 32% 6px 6px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+  background: #0c0502;
+  box-shadow:
+    0 0 0 clamp(2px, 0.3vw, 5px) rgba(120, 62, 24, 0.95),
+    0 clamp(8px, 1.4vw, 20px) clamp(14px, 2.2vw, 32px) rgba(8, 3, 1, 0.7),
+    inset 0 0 clamp(14px, 2vw, 28px) rgba(18, 7, 0, 0.78);
 }
 .ru-new-window-view {
   display: block;
@@ -950,25 +964,46 @@ const rawUnhingedStyles = `
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.78) saturate(0.95) sepia(0.16) hue-rotate(-8deg);
+  filter: brightness(0.82) saturate(0.95) sepia(0.14) hue-rotate(-6deg);
 }
-.ru-new-window-cross {
+.ru-new-window-glass {
   position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(24, 11, 3, 0.45), transparent 14%, transparent 86%, rgba(24, 11, 3, 0.5)),
+    linear-gradient(180deg, rgba(255, 198, 120, 0.22), transparent 38%, rgba(15, 6, 1, 0.55));
+  box-shadow: inset 0 0 clamp(14px, 2vw, 28px) rgba(0, 0, 0, 0.7);
+}
+.ru-new-window-sill {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  bottom: calc(clamp(8px, 1.2vw, 18px) * -1.3);
+  height: clamp(7px, 1.1vw, 15px);
+  background: linear-gradient(180deg, #8a4c24, #2a1207);
+  box-shadow: 0 6px 13px rgba(8, 4, 1, 0.7);
+  border-radius: 2px;
   z-index: 3;
-  background: linear-gradient(90deg, #1d0b03, #6f3b18 45%, #1c0b03);
-  box-shadow: 0 0 8px rgba(5, 2, 0, 0.62);
 }
-.ru-new-window-cross--vertical {
-  top: 0;
-  bottom: 0;
-  left: calc(50% - clamp(2px, 0.22vw, 4px));
-  width: clamp(4px, 0.45vw, 8px);
-}
-.ru-new-window-cross--horizontal {
-  left: 0;
-  right: 0;
-  top: calc(50% - clamp(2px, 0.22vw, 4px));
-  height: clamp(4px, 0.45vw, 8px);
+
+/* ----- Ivy overlay: stretched pothos leaves draping in front of the window ----- */
+.ru-ivy-overlay {
+  position: absolute;
+  top: -2%;
+  right: -4%;
+  width: 58%;
+  height: 48%;
+  z-index: 3;
+  pointer-events: none;
+  background-size: 240% auto;
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+  transform: scaleX(1.18);
+  transform-origin: right top;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 72% 35%, black 38%, rgba(0,0,0,0.6) 60%, transparent 80%);
+          mask-image: radial-gradient(ellipse 85% 75% at 72% 35%, black 38%, rgba(0,0,0,0.6) 60%, transparent 80%);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
 }
 
 /* ----- Tea steam: rising puffs above the teacup ----- */
