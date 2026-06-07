@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, BookOpen, X } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import deskScene from "@/assets/raw-unhinged/desk-scene.jpg";
 import paperTexture from "@/assets/raw-unhinged/paper-texture.jpg";
-import windowOceanAsset from "@/assets/raw-unhinged/window-ocean.gif.asset.json";
 import {
   rawUnhingedEntries,
   formatEntryDate,
@@ -139,13 +138,12 @@ function RawAndUnhinged() {
             height={1024}
           />
 
-          {/* Animated ocean view through the window (overlays original sunset) */}
-          <img
-            src={windowOceanAsset.url}
-            alt="Ocean view through the window"
-            aria-hidden="true"
-            className="ru-window"
-          />
+          {/* New framed animated ocean window, separate from the original scene window */}
+          <div className="ru-new-window" aria-hidden="true">
+            <img src="/assets/raw-unhinged/window-ocean.gif" alt="" className="ru-new-window-view" />
+            <span className="ru-new-window-cross ru-new-window-cross--vertical" />
+            <span className="ru-new-window-cross ru-new-window-cross--horizontal" />
+          </div>
 
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
