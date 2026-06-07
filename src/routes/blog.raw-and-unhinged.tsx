@@ -900,11 +900,11 @@ const rawUnhingedStyles = `
 /* ----- Window: animated ocean view, sized to cover the original window opening ----- */
 .ru-window {
   position: absolute;
-  /* Window opening in desk-scene.jpg (1536x1024): ~x 165-880, y 0-150 */
-  left: 10.7%;
+  /* Window opening in desk-scene.jpg (1536x1024): ~x 240-750, y 0-110 */
+  left: 15.6%;
   top: 0%;
-  width: 46.6%;
-  height: 14.6%;
+  width: 33.2%;
+  height: 10.75%;
   object-fit: cover;
   object-position: center;
   pointer-events: none;
