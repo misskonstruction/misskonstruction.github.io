@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, X } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import deskScene from "@/assets/raw-unhinged/desk-scene.jpg";
 import paperTexture from "@/assets/raw-unhinged/paper-texture.jpg";
+import windowOceanAsset from "@/assets/raw-unhinged/window-ocean.gif.asset.json";
 import {
   rawUnhingedEntries,
   formatEntryDate,
