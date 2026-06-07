@@ -212,6 +212,33 @@ function CandleFlame() {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Tea steam                                                                   */
+/* -------------------------------------------------------------------------- */
+
+function TeaSteam() {
+  return (
+    <div className="ru-steam" aria-hidden="true">
+      <span className="ru-steam-puff ru-steam-puff--1" />
+      <span className="ru-steam-puff ru-steam-puff--2" />
+      <span className="ru-steam-puff ru-steam-puff--3" />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Ocean ripple                                                                */
+/* -------------------------------------------------------------------------- */
+
+function OceanRipple() {
+  return (
+    <div className="ru-ocean" aria-hidden="true">
+      <span className="ru-ocean-shimmer" />
+      <span className="ru-ocean-shimmer ru-ocean-shimmer--2" />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* Book overlay                                                                */
 /* -------------------------------------------------------------------------- */
 
