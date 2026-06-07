@@ -905,7 +905,7 @@ const rawUnhingedStyles = `
   left: 0;
   top: 0;
   width: 82%;
-  height: 17%;
+  height: 22%;
   z-index: 1;
   background:
     radial-gradient(ellipse at 40% 55%, rgba(38, 18, 6, 0.0) 0%, rgba(20, 9, 2, 0.55) 45%, rgba(12, 5, 1, 0.95) 78%),
@@ -935,6 +935,9 @@ const rawUnhingedStyles = `
     0 0 0 clamp(2px, 0.3vw, 5px) rgba(120, 62, 24, 0.95),
     0 clamp(8px, 1.4vw, 20px) clamp(14px, 2.2vw, 32px) rgba(8, 3, 1, 0.7),
     inset 0 0 clamp(14px, 2vw, 28px) rgba(18, 7, 0, 0.78);
+  /* Match the desk's perspective: sill slopes down toward the right */
+  transform: rotate(2.4deg);
+  transform-origin: 0% 100%;
 }
 .ru-new-window-view {
   display: block;
