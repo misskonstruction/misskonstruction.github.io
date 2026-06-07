@@ -144,8 +144,8 @@ function RawAndUnhinged() {
           {/* Animated steam rising from the teacup */}
           <TeaSteam />
 
-          {/* Subtle ripple/shimmer over the ocean in the window */}
-          <OceanRipple />
+
+
 
           {/* Clickable journal hot-spot, sized & positioned over the journal */}
           <button
