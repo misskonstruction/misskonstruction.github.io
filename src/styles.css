@@ -310,6 +310,13 @@
   );
   transition: transform 400ms ease, box-shadow 400ms ease;
 }
+.journal-carousel-item img:hover {
+  transform: none;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-foreground) 6%, transparent),
+    0 25px 60px -20px color-mix(in oklab, var(--color-primary) 35%, transparent),
+    0 10px 35px -10px rgba(0, 0, 0, 0.55);
+}
 @media (hover: hover) and (pointer: fine) {
   .journal-carousel-item img:hover {
     transform: scale(1.03);
