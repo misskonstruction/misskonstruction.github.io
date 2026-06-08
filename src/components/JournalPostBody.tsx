@@ -13,13 +13,18 @@ type LightboxState = { items: CarouselItem[]; index: number; closeAfterView?: bo
  */
 export function JournalPostBody({ html }: { html: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
 
   const openLightbox = useCallback((items: CarouselItem[], index: number) => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
     setLightbox({ items, index });
   }, []);
 
   const closeLightbox = useCallback(() => {
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
     setLightbox(null);
   }, []);
 
@@ -29,6 +34,13 @@ export function JournalPostBody({ html }: { html: string }) {
       const nextIndex = current.index + direction;
       if (nextIndex < 0) return current;
       if (nextIndex >= current.items.length) return null;
+      if (direction === 1 && nextIndex === current.items.length - 1) {
+        if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = window.setTimeout(() => {
+          closeTimerRef.current = null;
+          setLightbox(null);
+        }, 900);
+      }
       return {
         ...current,
         index: nextIndex,
@@ -36,16 +48,6 @@ export function JournalPostBody({ html }: { html: string }) {
       };
     });
   }, []);
-
-  useEffect(() => {
-    if (!lightbox?.closeAfterView) return;
-
-    const timeout = window.setTimeout(() => {
-      setLightbox(null);
-    }, 900);
-
-    return () => window.clearTimeout(timeout);
-  }, [lightbox?.closeAfterView, lightbox?.index]);
 
   useEffect(() => {
     if (!lightbox) return;
