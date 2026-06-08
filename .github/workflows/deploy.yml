@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: re-publish steam + ocean ripple animations
+# Trigger redeploy: publish watermarked boats-01 + reverted window shimmer
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
