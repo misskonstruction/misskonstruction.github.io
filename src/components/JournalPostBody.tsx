@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type CarouselItem = { src: string; alt: string; caption?: string };
-type LightboxState = { items: CarouselItem[]; index: number; closeAfterView?: boolean };
+type LightboxState = { items: CarouselItem[]; index: number };
 
 /**
  * Renders WordPress post HTML with the .journal-prose styling, and automatically
@@ -34,20 +34,29 @@ export function JournalPostBody({ html }: { html: string }) {
       const nextIndex = current.index + direction;
       if (nextIndex < 0) return current;
       if (nextIndex >= current.items.length) return null;
-      if (direction === 1 && nextIndex === current.items.length - 1) {
-        if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = window.setTimeout(() => {
-          closeTimerRef.current = null;
-          setLightbox(null);
-        }, 900);
-      }
       return {
         ...current,
         index: nextIndex,
-        closeAfterView: direction === 1 && nextIndex === current.items.length - 1,
       };
     });
   }, []);
+
+  useEffect(() => {
+    if (!lightbox || lightbox.items.length < 2 || lightbox.index !== lightbox.items.length - 1) {
+      return;
+    }
+
+    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = window.setTimeout(() => {
+      closeTimerRef.current = null;
+      setLightbox(null);
+    }, 1200);
+
+    return () => {
+      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    };
+  }, [lightbox]);
 
   useEffect(() => {
     if (!lightbox) return;
