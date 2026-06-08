@@ -317,15 +317,6 @@
     0 25px 60px -20px color-mix(in oklab, var(--color-primary) 35%, transparent),
     0 10px 35px -10px rgba(0, 0, 0, 0.55);
 }
-@media (hover: hover) and (pointer: fine) {
-  .journal-carousel-item img:hover {
-    transform: scale(1.03);
-    box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--color-primary) 30%, transparent),
-      0 32px 80px -24px color-mix(in oklab, var(--color-primary) 50%, transparent),
-      0 16px 45px -16px rgba(0, 0, 0, 0.65);
-  }
-}
 .journal-carousel-item figcaption {
   margin-top: 0.5rem;
   font-size: 0.85rem;
