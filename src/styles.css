@@ -279,6 +279,20 @@
 .journal-carousel-item:hover {
   z-index: 5;
 }
+.journal-carousel-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in;
+}
+.journal-carousel-trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 0.25rem;
+  border-radius: 0.5rem;
+}
 @media (max-width: 768px) {
   .journal-carousel-item { flex-basis: calc((100% - 1rem) / 2); }
 }
@@ -323,6 +337,80 @@
   color: var(--color-muted-foreground);
   font-style: italic;
   font-family: var(--font-journal);
+}
+
+.journal-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: color-mix(in oklab, var(--color-background) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+.journal-lightbox-figure {
+  margin: 0;
+  max-width: min(92vw, 72rem);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.journal-lightbox-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-foreground) 10%, transparent),
+    0 35px 90px -25px rgba(0, 0, 0, 0.85);
+}
+.journal-lightbox-figure figcaption {
+  max-width: 60rem;
+  color: var(--color-muted-foreground);
+  font-family: var(--font-journal);
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+}
+.journal-lightbox-close,
+.journal-lightbox-nav {
+  position: fixed;
+  border: 1px solid color-mix(in oklab, var(--color-foreground) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-background) 76%, transparent);
+  color: var(--color-foreground);
+  box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.8);
+}
+.journal-lightbox-close {
+  top: 1rem;
+  right: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 2rem;
+  line-height: 1;
+}
+.journal-lightbox-nav {
+  top: 50%;
+  width: 3rem;
+  height: 3rem;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+.journal-lightbox-prev { left: 1rem; }
+.journal-lightbox-next { right: 1rem; }
+.journal-lightbox-close:hover,
+.journal-lightbox-nav:hover,
+.journal-lightbox-close:focus-visible,
+.journal-lightbox-nav:focus-visible {
+  border-color: color-mix(in oklab, var(--color-primary) 55%, transparent);
+  outline: none;
 }
 
 /* =========================================================================
