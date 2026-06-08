@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 type CarouselItem = { src: string; alt: string; caption?: string };
 
@@ -13,11 +12,6 @@ type CarouselItem = { src: string; alt: string; caption?: string };
  */
 export function JournalPostBody({ html }: { html: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [lightbox, setLightbox] = useState<{ items: CarouselItem[]; index: number } | null>(null);
-
-  const openLightbox = useCallback((items: CarouselItem[], index: number) => {
-    setLightbox({ items, index });
-  }, []);
 
   // Use a layout effect so mutations happen before paint and we never flash
   // the un-grouped images. Build the carousel DOM directly here too.
@@ -97,7 +91,6 @@ export function JournalPostBody({ html }: { html: string }) {
         img.alt = it.alt;
         img.loading = "lazy";
         img.decoding = "async";
-        img.addEventListener("click", () => openLightbox(items, i));
         fig.appendChild(img);
         if (it.caption) {
           const cap = document.createElement("figcaption");
@@ -155,35 +148,7 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
-  }, [html, openLightbox]);
-
-  const closeLightbox = useCallback(() => setLightbox(null), []);
-  const stepLightbox = useCallback((dir: 1 | -1) => {
-    setLightbox((lb) => {
-      if (!lb) return lb;
-      const next = lb.index + dir;
-      // Advancing past the last image closes the lightbox so the reader
-      // returns to the side-by-side gallery view automatically.
-      if (next >= lb.items.length) return null;
-      // Going back before the first image also closes (no wrap-around).
-      if (next < 0) return null;
-      if (dir === 1 && next === lb.items.length - 1) {
-        window.setTimeout(() => setLightbox(null), 900);
-      }
-      return { ...lb, index: next };
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!lightbox) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") stepLightbox(1);
-      if (e.key === "ArrowLeft") stepLightbox(-1);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox, closeLightbox, stepLightbox]);
+  }, [html]);
 
   return (
     <>
@@ -194,49 +159,6 @@ export function JournalPostBody({ html }: { html: string }) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
 
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-        >
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 text-foreground hover:text-primary"
-            aria-label="Close"
-          >
-            <X className="h-7 w-7" />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); stepLightbox(-1); }}
-            className="absolute left-4 text-foreground hover:text-primary"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="h-8 w-8" />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); stepLightbox(1); }}
-            className="absolute right-4 text-foreground hover:text-primary"
-            aria-label="Next"
-          >
-            <ChevronRight className="h-8 w-8" />
-          </button>
-
-          <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full">
-            <img
-              src={lightbox.items[lightbox.index].src}
-              alt={lightbox.items[lightbox.index].alt}
-              className="max-h-[80vh] w-auto mx-auto object-contain rounded"
-            />
-            {lightbox.items[lightbox.index].caption && (
-              <figcaption className="text-center text-sm text-muted-foreground mt-3">
-                {lightbox.items[lightbox.index].caption}
-              </figcaption>
-            )}
-          </figure>
-        </div>
-      )}
     </>
   );
 }
