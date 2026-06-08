@@ -182,6 +182,14 @@ export function JournalPostBody({ html }: { html: string }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, closeLightbox, stepLightbox]);
 
+  useEffect(() => {
+    if (!lightbox || lightbox.items.length < 2 || lightbox.index !== lightbox.items.length - 1) return;
+    const timer = window.setTimeout(() => {
+      closeLightbox();
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [lightbox, closeLightbox]);
+
   return (
     <>
       <div
