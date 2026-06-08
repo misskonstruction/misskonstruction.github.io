@@ -161,7 +161,12 @@ export function JournalPostBody({ html }: { html: string }) {
   const stepLightbox = useCallback((dir: 1 | -1) => {
     setLightbox((lb) => {
       if (!lb) return lb;
-      const next = (lb.index + dir + lb.items.length) % lb.items.length;
+      const next = lb.index + dir;
+      // Advancing past the last image closes the lightbox so the reader
+      // returns to the side-by-side gallery view automatically.
+      if (next >= lb.items.length) return null;
+      // Going back before the first image also closes (no wrap-around).
+      if (next < 0) return null;
       return { ...lb, index: next };
     });
   }, []);
