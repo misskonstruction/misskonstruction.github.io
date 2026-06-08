@@ -186,7 +186,7 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
-  }, [html]);
+  }, [html, openLightbox]);
 
   return (
     <>
