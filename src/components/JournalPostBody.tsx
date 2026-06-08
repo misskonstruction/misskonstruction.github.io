@@ -204,7 +204,12 @@ export function JournalPostBody({ html }: { html: string }) {
           aria-label="Enlarged journal photo"
           onClick={closeLightbox}
         >
-          <button className="journal-lightbox-close" type="button" aria-label="Close image" onClick={closeLightbox}>
+          <button
+            className="journal-lightbox-close"
+            type="button"
+            aria-label="Close image"
+            onClick={closeLightbox}
+          >
             ×
           </button>
           {lightbox.index > 0 ? (
@@ -234,7 +239,9 @@ export function JournalPostBody({ html }: { html: string }) {
             <button
               className="journal-lightbox-nav journal-lightbox-next"
               type="button"
-              aria-label={lightbox.index === lightbox.items.length - 1 ? "Close gallery" : "Next image"}
+              aria-label={
+                lightbox.index === lightbox.items.length - 1 ? "Close gallery" : "Next image"
+              }
               onClick={(event) => {
                 event.stopPropagation();
                 stepLightbox(1);
