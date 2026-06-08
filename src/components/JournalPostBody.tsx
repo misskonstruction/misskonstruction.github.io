@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type CarouselItem = { src: string; alt: string; caption?: string };
+type LightboxState = { items: CarouselItem[]; index: number };
 
 /**
  * Renders WordPress post HTML with the .journal-prose styling, and automatically
@@ -12,6 +13,38 @@ type CarouselItem = { src: string; alt: string; caption?: string };
  */
 export function JournalPostBody({ html }: { html: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+
+  const openLightbox = useCallback((items: CarouselItem[], index: number) => {
+    setLightbox({ items, index });
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null);
+  }, []);
+
+  const stepLightbox = useCallback((direction: -1 | 1) => {
+    setLightbox((current) => {
+      if (!current) return current;
+      const nextIndex = current.index + direction;
+      if (nextIndex < 0) return current;
+      if (nextIndex >= current.items.length) return null;
+      return { ...current, index: nextIndex };
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!lightbox) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") stepLightbox(-1);
+      if (event.key === "ArrowRight") stepLightbox(1);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [closeLightbox, lightbox, stepLightbox]);
 
   // Use a layout effect so mutations happen before paint and we never flash
   // the un-grouped images. Build the carousel DOM directly here too.
@@ -74,7 +107,6 @@ export function JournalPostBody({ html }: { html: string }) {
 
     // --- 2) Group consecutive images into carousels (existing behavior) ---
     const children = Array.from(root.children) as HTMLElement[];
-    const collectedGroups: CarouselItem[][] = [];
     let run: { node: HTMLElement; item: CarouselItem }[] = [];
 
     const buildCarousel = (items: CarouselItem[]): HTMLElement => {
@@ -86,12 +118,18 @@ export function JournalPostBody({ html }: { html: string }) {
       items.forEach((it, i) => {
         const fig = document.createElement("figure");
         fig.className = "journal-carousel-item";
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "journal-carousel-trigger";
+        button.setAttribute("aria-label", `Open image ${i + 1} of ${items.length}`);
+        button.addEventListener("click", () => openLightbox(items, i));
         const img = document.createElement("img");
         img.src = it.src;
         img.alt = it.alt;
         img.loading = "lazy";
         img.decoding = "async";
-        fig.appendChild(img);
+        button.appendChild(img);
+        fig.appendChild(button);
         if (it.caption) {
           const cap = document.createElement("figcaption");
           cap.textContent = it.caption;
@@ -107,7 +145,6 @@ export function JournalPostBody({ html }: { html: string }) {
         const items = run.map((r) => r.item);
         run[0].node.replaceWith(buildCarousel(items));
         for (let i = 1; i < run.length; i++) run[i].node.remove();
-        collectedGroups.push(items);
       }
       run = [];
     };
@@ -128,7 +165,9 @@ export function JournalPostBody({ html }: { html: string }) {
     };
 
     for (const child of children) {
-      const galleryImages = Array.from(child.querySelectorAll("img"));
+      const galleryImages = child.matches(".wp-block-gallery, .blocks-gallery-grid, .gallery")
+        ? Array.from(child.querySelectorAll("img"))
+        : [];
       if (galleryImages.length >= 2) {
         flushRun();
         const items = galleryImages.map((img) => ({
@@ -137,7 +176,6 @@ export function JournalPostBody({ html }: { html: string }) {
           caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim(),
         }));
         child.replaceWith(buildCarousel(items));
-        collectedGroups.push(items);
         continue;
       }
       const item = extract(child);
@@ -148,7 +186,7 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
-  }, [html]);
+  }, [html, openLightbox]);
 
   return (
     <>
@@ -158,7 +196,62 @@ export function JournalPostBody({ html }: { html: string }) {
         style={{ fontFamily: "var(--font-journal)" }}
         dangerouslySetInnerHTML={{ __html: html }}
       />
-
+      {lightbox ? (
+        <div
+          className="journal-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged journal photo"
+          onClick={closeLightbox}
+        >
+          <button
+            className="journal-lightbox-close"
+            type="button"
+            aria-label="Close image"
+            onClick={closeLightbox}
+          >
+            ×
+          </button>
+          {lightbox.index > 0 ? (
+            <button
+              className="journal-lightbox-nav journal-lightbox-prev"
+              type="button"
+              aria-label="Previous image"
+              onClick={(event) => {
+                event.stopPropagation();
+                stepLightbox(-1);
+              }}
+            >
+              ‹
+            </button>
+          ) : null}
+          <figure className="journal-lightbox-figure" onClick={(event) => event.stopPropagation()}>
+            <img
+              src={lightbox.items[lightbox.index].src}
+              alt={lightbox.items[lightbox.index].alt}
+              decoding="async"
+            />
+            {lightbox.items[lightbox.index].caption ? (
+              <figcaption>{lightbox.items[lightbox.index].caption}</figcaption>
+            ) : null}
+          </figure>
+          {lightbox.items.length > 1 ? (
+            <button
+              className="journal-lightbox-nav journal-lightbox-next"
+              type="button"
+              aria-label={
+                lightbox.index === lightbox.items.length - 1 ? "Close gallery" : "Next image"
+              }
+              onClick={(event) => {
+                event.stopPropagation();
+                stepLightbox(1);
+              }}
+            >
+              ›
+            </button>
+          ) : null}
+        </div>
+      ) : null}
     </>
   );
 }
