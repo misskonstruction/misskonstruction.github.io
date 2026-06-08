@@ -107,7 +107,6 @@ export function JournalPostBody({ html }: { html: string }) {
 
     // --- 2) Group consecutive images into carousels (existing behavior) ---
     const children = Array.from(root.children) as HTMLElement[];
-    const collectedGroups: CarouselItem[][] = [];
     let run: { node: HTMLElement; item: CarouselItem }[] = [];
 
     const buildCarousel = (items: CarouselItem[]): HTMLElement => {
@@ -146,7 +145,6 @@ export function JournalPostBody({ html }: { html: string }) {
         const items = run.map((r) => r.item);
         run[0].node.replaceWith(buildCarousel(items));
         for (let i = 1; i < run.length; i++) run[i].node.remove();
-        collectedGroups.push(items);
       }
       run = [];
     };
@@ -167,7 +165,9 @@ export function JournalPostBody({ html }: { html: string }) {
     };
 
     for (const child of children) {
-      const galleryImages = Array.from(child.querySelectorAll("img"));
+      const galleryImages = child.matches(".wp-block-gallery, .blocks-gallery-grid, .gallery")
+        ? Array.from(child.querySelectorAll("img"))
+        : [];
       if (galleryImages.length >= 2) {
         flushRun();
         const items = galleryImages.map((img) => ({
@@ -176,7 +176,6 @@ export function JournalPostBody({ html }: { html: string }) {
           caption: img.closest("figure")?.querySelector("figcaption")?.textContent?.trim(),
         }));
         child.replaceWith(buildCarousel(items));
-        collectedGroups.push(items);
         continue;
       }
       const item = extract(child);
