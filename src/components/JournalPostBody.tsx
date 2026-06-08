@@ -167,6 +167,9 @@ export function JournalPostBody({ html }: { html: string }) {
       if (next >= lb.items.length) return null;
       // Going back before the first image also closes (no wrap-around).
       if (next < 0) return null;
+      if (dir === 1 && next === lb.items.length - 1) {
+        window.setTimeout(() => setLightbox(null), 900);
+      }
       return { ...lb, index: next };
     });
   }, []);
@@ -181,14 +184,6 @@ export function JournalPostBody({ html }: { html: string }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, closeLightbox, stepLightbox]);
-
-  useEffect(() => {
-    if (!lightbox || lightbox.items.length < 2 || lightbox.index !== lightbox.items.length - 1) return;
-    const timer = window.setTimeout(() => {
-      closeLightbox();
-    }, 1000);
-    return () => window.clearTimeout(timer);
-  }, [lightbox, closeLightbox]);
 
   return (
     <>
