@@ -1,17 +1,24 @@
-## Replace the candle with a dripping-wax version (same holder, same scene)
+## Subtle animated shimmer on the candle wax drips
 
-The candle lives baked into the hero image at `src/assets/raw-unhinged/desk-scene.jpg`. I'll do an AI image edit on just the candle, keeping everything else (brass holder, wick, flame area, wood desk, ginger cat, journal, tea, plant, window, lighting) untouched.
+The drips are baked into `desk-scene.jpg` — they can't physically move. What I can do is overlay a very subtle moving highlight on top of them so they look slick and wet, like fresh wax catching the flame's light. No new dripping motion, no shape changes to the photo — just a slow glisten traveling down the existing drips.
 
 ### Approach
 
-1. **Edit the existing scene image** with `imagegen--edit_image` on `desk-scene.jpg`, prompting for: same cream pillar candle in the same brass dish holder, same height and position, same warm candlelit lighting from the right — but with thick, irregular wax drips running down the sides of the candle and pooling slightly on the brass dish. Preserve the rest of the photo exactly.
-2. **Save in place** to `src/assets/raw-unhinged/desk-scene.jpg` (overwrite) so the existing `<img>`, OG image, all anchor percentages (flame, steam, journal hotspot), and the wall cover all keep working without any code changes.
-3. **Verify** with a fresh preview screenshot. If the candle position shifts even slightly (and the animated flame ends up off the wick), I'll either re-run the edit asking for tighter preservation, or nudge the flame's `top`/`left` percentages — no other CSS or layout changes.
+Scope: `src/routes/blog.raw-and-unhinged.tsx` only. Mirrors the pattern used by the candle flame, tea steam, and (now-removed) shimmer — small absolutely-positioned overlay anchored by percentage to the desk image.
 
-### Risk + fallback
+1. **Anchor** — small vertical strip over the candle drip area: roughly `left: 16.5%`, `top: 17%`, `width: 5%`, `height: 18%` of the scene. Hard-clipped with `overflow: hidden` and a soft mask so the glow can't leak off the candle.
+2. **Glisten content** — a thin, soft warm-white highlight (linear gradient strip, blurred, `mix-blend-mode: screen`, low opacity ~0.35 peak). Think wet wax catching candlelight.
+3. **Motion** — the highlight slowly drifts top→bottom over ~6s, fades in mid-travel and out near the bottom, then a long pause before the next pass. Two staggered highlights at slightly different x-offsets and durations (6s / 8s) so the candle subtly "breathes" instead of pulsing on a beat.
+4. **No horizontal motion** — vertical only, since wax flows down. Stays inside the clipped strip.
+5. **Reduced motion** — frozen via the existing `prefers-reduced-motion` rule.
 
-AI edits sometimes move things a few pixels or alter neighboring objects. If anything other than the candle visibly changes, or the candle position drifts, I'll retry the edit (up to twice) with stricter "do not modify anything else" wording. If it still won't behave, I'll stop and show you both before pushing further.
+### Boundary safety
+
+Same lessons as before: `overflow: hidden` + radial-gradient mask + percentage anchoring. If the position is even a hair off the actual drips in the photo, I'll nudge `left/top` only — nothing else changes.
+
+### Preview before declaring done
+
+After the edit I'll screenshot and zoom in on the candle so you can confirm the glow lands on the wax (not the brass dish, not the wall) before we ship.
 
 ### Files touched
-- `src/assets/raw-unhinged/desk-scene.jpg` — overwritten with the dripping-wax version.
-- No code changes expected.
+- `src/routes/blog.raw-and-unhinged.tsx` — add `<WaxShimmer />` (~10 lines JSX) into the scene and a `.ru-wax-*` CSS block (~35 lines) near the existing flame/steam styles.
