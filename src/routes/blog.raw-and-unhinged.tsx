@@ -141,6 +141,9 @@ function RawAndUnhinged() {
           {/* Animated candle flame, positioned over the wick */}
           <CandleFlame />
 
+          {/* Subtle vertical glisten on the wax drips */}
+          <WaxShimmer />
+
           {/* Animated steam rising from the teacup */}
           <TeaSteam />
 
