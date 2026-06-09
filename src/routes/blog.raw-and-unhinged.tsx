@@ -1007,49 +1007,50 @@ const rawUnhingedStyles = `
   /* Candle drip area in desk-scene.jpg — aligned to the candle body below the wick */
   left: 17.4%;
   top: 26%;
-  width: 7%;
+  width: 5%;
   height: 16%;
   transform: translate(-50%, 0);
   pointer-events: none;
   overflow: hidden;
   z-index: 2;
-  -webkit-mask-image: radial-gradient(ellipse 60% 80% at center, black 30%, transparent 85%);
-          mask-image: radial-gradient(ellipse 60% 80% at center, black 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 55% 80% at center, black 25%, transparent 85%);
+          mask-image: radial-gradient(ellipse 55% 80% at center, black 25%, transparent 85%);
   mix-blend-mode: screen;
-  opacity: 0.55;
+  opacity: 0.65;
 }
 .ru-wax-glow {
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 18%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 240, 210, 0.0) 20%,
-    rgba(255, 245, 220, 0.55) 50%,
-    rgba(255, 240, 210, 0.0) 80%,
+  width: 14%;
+  height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 100% at center,
+    rgba(255, 248, 225, 0.85) 0%,
+    rgba(255, 240, 210, 0.4) 50%,
     transparent 100%
   );
-  filter: blur(2px);
+  filter: blur(1.2px);
   opacity: 0;
   will-change: transform, opacity;
 }
 .ru-wax-glow--1 {
+  left: 38%;
   animation: ruWaxDrip 7.5s ease-in-out infinite;
 }
 .ru-wax-glow--2 {
+  left: 58%;
+  width: 11%;
+  height: 11%;
   animation: ruWaxDrip 9.5s ease-in-out infinite;
-  animation-delay: 3.2s;
-  transform: translateX(20%);
+  animation-delay: 3.4s;
 }
 
 @keyframes ruWaxDrip {
-  0%   { transform: translateY(-25%);  opacity: 0; }
-  20%  { opacity: 0.7; }
+  0%   { transform: translateY(-30%);  opacity: 0; }
+  25%  { opacity: 0.85; }
   60%  { opacity: 0.7; }
-  85%  { opacity: 0.35; }
-  100% { transform: translateY(110%); opacity: 0; }
+  90%  { opacity: 0.25; }
+  100% { transform: translateY(620%); opacity: 0; }
 }
 
 
