@@ -1001,6 +1001,59 @@ const rawUnhingedStyles = `
   z-index: 3;
 }
 
+/* ----- Wax shimmer: slow vertical glisten over the candle drips ----- */
+.ru-wax {
+  position: absolute;
+  /* Candle drip area in desk-scene.jpg — aligned to the candle body below the wick */
+  left: 17.4%;
+  top: 26%;
+  width: 7%;
+  height: 16%;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+  -webkit-mask-image: radial-gradient(ellipse 60% 80% at center, black 30%, transparent 85%);
+          mask-image: radial-gradient(ellipse 60% 80% at center, black 30%, transparent 85%);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+.ru-wax-glow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 240, 210, 0.0) 20%,
+    rgba(255, 245, 220, 0.55) 50%,
+    rgba(255, 240, 210, 0.0) 80%,
+    transparent 100%
+  );
+  filter: blur(2px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.ru-wax-glow--1 {
+  animation: ruWaxDrip 7.5s ease-in-out infinite;
+}
+.ru-wax-glow--2 {
+  animation: ruWaxDrip 9.5s ease-in-out infinite;
+  animation-delay: 3.2s;
+  transform: translateX(20%);
+}
+
+@keyframes ruWaxDrip {
+  0%   { transform: translateY(-25%);  opacity: 0; }
+  20%  { opacity: 0.7; }
+  60%  { opacity: 0.7; }
+  85%  { opacity: 0.35; }
+  100% { transform: translateY(110%); opacity: 0; }
+}
+
+
+
 /* ----- Tea steam: thin curling wisps rising from the teacup ----- */
 .ru-steam {
   position: absolute;
