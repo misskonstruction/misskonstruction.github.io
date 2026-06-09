@@ -986,9 +986,9 @@ const rawUnhingedStyles = `
   transform: translate(-50%, -100%);
   pointer-events: none;
   z-index: 2;
-  filter: blur(1.4px);
+  filter: blur(2.2px);
   mix-blend-mode: screen;
-  opacity: 0.75;
+  opacity: 0.45;
 }
 .ru-steam-wisp {
   position: absolute;
