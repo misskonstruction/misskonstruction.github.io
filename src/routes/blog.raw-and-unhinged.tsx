@@ -1095,7 +1095,7 @@ const rawUnhingedStyles = `
 
 @media (prefers-reduced-motion: reduce) {
   .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo,
-  .ru-steam-wisp { animation: none; }
+  .ru-steam-wisp, .ru-wax-glow { animation: none; }
 }
 
 
