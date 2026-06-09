@@ -1,24 +1,24 @@
-## Make the teacup steam swirly (not tugboat puffy)
+## Subtle sun-on-water shimmer in the window
 
-The current steam is three big round radial-gradient puffs that drift up and right — reads more "smokestack" than "tea." I'll replace them with thin, wavy ribbons that sway side-to-side as they rise, like real hot-tea steam.
+A tiny, tightly-clipped shimmer of light just under the sun on the ocean — only inside the indicated white-marker patch, only moving left↔right (no vertical drift), no expansion beyond the marked area.
 
 ### Approach
 
-Scope: CSS + a tiny markup change inside `TeaSteam()` in `src/routes/blog.raw-and-unhinged.tsx`. No other files, no layout changes, no repositioning of the steam container (keeps the same anchor over the teacup rim you already approved).
+Scope: `src/routes/blog.raw-and-unhinged.tsx` only — one new absolutely-positioned overlay inside the existing hero scene container, plus a small CSS block. No image edits, no layout changes, nothing outside that container.
 
-1. **Markup** — replace the 3 round `<span>` puffs with 3–4 thin vertical "wisp" ribbons (SVG paths, each a soft gently-curved squiggle). SVG lets the wisp actually look like a curling ribbon instead of a circle.
-2. **Animation** — each wisp:
-   - rises straight up (no more drift to the right),
-   - sways left↔right via a `translateX` sine on a separate keyframe,
-   - slowly rotates a few degrees for the curl,
-   - fades in near the cup, fades out near the top,
-   - staggered delays + slightly different durations (3.8s / 4.6s / 5.2s) so they never sync.
-3. **Look** — keep the warm cream color, screen blend, and blur you already have, but drop opacity a touch and narrow the wisps so it whispers instead of billows.
-4. **Reduced motion** — keep the existing `prefers-reduced-motion` rule (wisps go static).
+1. **Placement** — a small horizontal ellipse anchored at roughly `left: 51%`, `top: 16%`, `width: ~7%`, `height: ~3%` of the scene container. That maps to the patch you drew on the water below the sun. Clipped with `overflow: hidden` + a radial fade mask so the edges feather into the water and nothing leaks outside the marked spot.
+2. **Shimmer content** — 2 very thin horizontal warm-white highlight bands (think sunlight glint on a tiny ripple). Each is a soft `linear-gradient` strip, blurred, `mix-blend-mode: screen`, low opacity (~0.4 peak).
+3. **Motion (left↔right only)** — each band translates a few pixels horizontally on a slow sine, fades in and out, with offset delays so it pulses like real water glint. No `translateY`, no `scale`, no rotation. Stays inside the clipped ellipse at all times.
+4. **Realism touches** — slightly different durations per band (3.8s / 5.2s) so they never sync; very soft blur; low contrast; the whole layer sits below your title text z-index.
+5. **Reduced motion** — `prefers-reduced-motion: reduce` freezes the bands (static faint highlight).
 
-### Preview before committing
+### Boundary safety
 
-Per your note: I won't leave it in place blind. After the edit I'll screenshot the Raw & Unhinged hero in the preview and show you. If the swirl isn't right (too wild / too faint / wrong direction), I'll tune it or revert — your call before anything ships.
+Because the previous shimmer attempts leaked out of the window, this one uses a hard `overflow: hidden` container plus a radial-gradient `mask-image` so even if a band animated wrong, it physically cannot render outside the small marked patch. Container is positioned by percentage of the scene image (same anchoring system the candle flame and tea steam use), so it stays glued to the water spot at every viewport size.
+
+### Preview before declaring done
+
+After the edit I'll screenshot the hero and crop in on the window so you can confirm placement and intensity before anything ships. If the position is off by a few pixels we tune `left/top` only — no other parameters change.
 
 ### Files touched
-- `src/routes/blog.raw-and-unhinged.tsx` — `TeaSteam()` JSX (~6 lines) + the `.ru-steam*` CSS block (~lines 960–999).
+- `src/routes/blog.raw-and-unhinged.tsx` — add `<WaterShimmer />` component (~15 lines JSX) inside the hero scene, and a scoped `.ru-water-glint*` CSS block (~30 lines) near the existing `.ru-steam` styles.
