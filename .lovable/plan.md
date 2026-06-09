@@ -1,24 +1,17 @@
-## Subtle sun-on-water shimmer in the window
+## Replace the candle with a dripping-wax version (same holder, same scene)
 
-A tiny, tightly-clipped shimmer of light just under the sun on the ocean — only inside the indicated white-marker patch, only moving left↔right (no vertical drift), no expansion beyond the marked area.
+The candle lives baked into the hero image at `src/assets/raw-unhinged/desk-scene.jpg`. I'll do an AI image edit on just the candle, keeping everything else (brass holder, wick, flame area, wood desk, ginger cat, journal, tea, plant, window, lighting) untouched.
 
 ### Approach
 
-Scope: `src/routes/blog.raw-and-unhinged.tsx` only — one new absolutely-positioned overlay inside the existing hero scene container, plus a small CSS block. No image edits, no layout changes, nothing outside that container.
+1. **Edit the existing scene image** with `imagegen--edit_image` on `desk-scene.jpg`, prompting for: same cream pillar candle in the same brass dish holder, same height and position, same warm candlelit lighting from the right — but with thick, irregular wax drips running down the sides of the candle and pooling slightly on the brass dish. Preserve the rest of the photo exactly.
+2. **Save in place** to `src/assets/raw-unhinged/desk-scene.jpg` (overwrite) so the existing `<img>`, OG image, all anchor percentages (flame, steam, journal hotspot), and the wall cover all keep working without any code changes.
+3. **Verify** with a fresh preview screenshot. If the candle position shifts even slightly (and the animated flame ends up off the wick), I'll either re-run the edit asking for tighter preservation, or nudge the flame's `top`/`left` percentages — no other CSS or layout changes.
 
-1. **Placement** — a small horizontal ellipse anchored at roughly `left: 51%`, `top: 16%`, `width: ~7%`, `height: ~3%` of the scene container. That maps to the patch you drew on the water below the sun. Clipped with `overflow: hidden` + a radial fade mask so the edges feather into the water and nothing leaks outside the marked spot.
-2. **Shimmer content** — 2 very thin horizontal warm-white highlight bands (think sunlight glint on a tiny ripple). Each is a soft `linear-gradient` strip, blurred, `mix-blend-mode: screen`, low opacity (~0.4 peak).
-3. **Motion (left↔right only)** — each band translates a few pixels horizontally on a slow sine, fades in and out, with offset delays so it pulses like real water glint. No `translateY`, no `scale`, no rotation. Stays inside the clipped ellipse at all times.
-4. **Realism touches** — slightly different durations per band (3.8s / 5.2s) so they never sync; very soft blur; low contrast; the whole layer sits below your title text z-index.
-5. **Reduced motion** — `prefers-reduced-motion: reduce` freezes the bands (static faint highlight).
+### Risk + fallback
 
-### Boundary safety
-
-Because the previous shimmer attempts leaked out of the window, this one uses a hard `overflow: hidden` container plus a radial-gradient `mask-image` so even if a band animated wrong, it physically cannot render outside the small marked patch. Container is positioned by percentage of the scene image (same anchoring system the candle flame and tea steam use), so it stays glued to the water spot at every viewport size.
-
-### Preview before declaring done
-
-After the edit I'll screenshot the hero and crop in on the window so you can confirm placement and intensity before anything ships. If the position is off by a few pixels we tune `left/top` only — no other parameters change.
+AI edits sometimes move things a few pixels or alter neighboring objects. If anything other than the candle visibly changes, or the candle position drifts, I'll retry the edit (up to twice) with stricter "do not modify anything else" wording. If it still won't behave, I'll stop and show you both before pushing further.
 
 ### Files touched
-- `src/routes/blog.raw-and-unhinged.tsx` — add `<WaterShimmer />` component (~15 lines JSX) inside the hero scene, and a scoped `.ru-water-glint*` CSS block (~30 lines) near the existing `.ru-steam` styles.
+- `src/assets/raw-unhinged/desk-scene.jpg` — overwritten with the dripping-wax version.
+- No code changes expected.
