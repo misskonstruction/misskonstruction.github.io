@@ -216,6 +216,19 @@ function CandleFlame() {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Wax shimmer — slow vertical glisten over the candle drips                  */
+/* -------------------------------------------------------------------------- */
+
+function WaxShimmer() {
+  return (
+    <div className="ru-wax" aria-hidden="true">
+      <span className="ru-wax-glow ru-wax-glow--1" />
+      <span className="ru-wax-glow ru-wax-glow--2" />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* Tea steam                                                                   */
 /* -------------------------------------------------------------------------- */
 
