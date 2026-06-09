@@ -216,11 +216,29 @@ function CandleFlame() {
 /* -------------------------------------------------------------------------- */
 
 function TeaSteam() {
+  // Three thin curling ribbons of steam — like actual tea steam, not chunky puffs.
   return (
     <div className="ru-steam" aria-hidden="true">
-      <span className="ru-steam-puff ru-steam-puff--1" />
-      <span className="ru-steam-puff ru-steam-puff--2" />
-      <span className="ru-steam-puff ru-steam-puff--3" />
+      <svg className="ru-steam-wisp ru-steam-wisp--1" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="ruSteamGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stopColor="rgba(255,240,220,0)" />
+            <stop offset="25%" stopColor="rgba(255,240,220,0.85)" />
+            <stop offset="75%" stopColor="rgba(255,235,210,0.55)" />
+            <stop offset="100%" stopColor="rgba(255,230,200,0)" />
+          </linearGradient>
+        </defs>
+        <path d="M10 100 C 4 82, 16 64, 10 46 C 4 28, 16 14, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="3.5" strokeLinecap="round" />
+      </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--2" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 16 82, 4 64, 10 46 C 16 28, 4 14, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--3" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 5 80, 15 60, 10 42 C 5 24, 13 12, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="2.5" strokeLinecap="round" />
+      </svg>
     </div>
   );
 }
@@ -957,46 +975,46 @@ const rawUnhingedStyles = `
   z-index: 3;
 }
 
-/* ----- Tea steam: rising puffs above the teacup ----- */
+/* ----- Tea steam: thin curling wisps rising from the teacup ----- */
 .ru-steam {
   position: absolute;
   /* Teacup rim in desk-scene.jpg (1536x1024): ~x 1230, y 380 */
   left: 80.1%;
   top: 37%;
   width: 5%;
-  height: 14%;
+  height: 18%;
   transform: translate(-50%, -100%);
   pointer-events: none;
   z-index: 2;
-  filter: blur(3px);
+  filter: blur(1.4px);
   mix-blend-mode: screen;
-  opacity: 0.85;
+  opacity: 0.75;
 }
-.ru-steam-puff {
+.ru-steam-wisp {
   position: absolute;
-  left: 50%;
   bottom: 0;
-  width: 70%;
-  height: 70%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 60%, rgba(255, 240, 220, 0.9), rgba(255, 230, 200, 0.4) 45%, transparent 70%);
-  transform: translate(-50%, 0) scale(0.6);
+  width: 90%;
+  height: 100%;
+  transform-origin: 50% 100%;
   opacity: 0;
-  animation: ruSteamRise 4.2s ease-out infinite;
+  animation: ruSteamRise 4.6s ease-in-out infinite;
 }
-.ru-steam-puff--2 { animation-delay: 1.4s; left: 38%; }
-.ru-steam-puff--3 { animation-delay: 2.8s; left: 62%; }
+.ru-steam-wisp--1 { left: 50%; animation-duration: 4.6s; animation-delay: 0s; }
+.ru-steam-wisp--2 { left: 38%; animation-duration: 5.4s; animation-delay: 1.6s; width: 75%; }
+.ru-steam-wisp--3 { left: 62%; animation-duration: 4.0s; animation-delay: 3.0s; width: 65%; }
 
 @keyframes ruSteamRise {
-  0%   { transform: translate(-50%, 10%) scale(0.5); opacity: 0; }
-  20%  { opacity: 0.85; }
-  60%  { transform: translate(-30%, -80%) scale(1.1); opacity: 0.55; }
-  100% { transform: translate(-10%, -160%) scale(1.6); opacity: 0; }
+  0%   { transform: translate(-50%, 15%) scaleY(0.55) rotate(0deg); opacity: 0; }
+  15%  { opacity: 0.85; }
+  35%  { transform: translate(-58%, -15%) scaleY(0.85) rotate(-6deg); opacity: 0.8; }
+  60%  { transform: translate(-42%, -55%) scaleY(1.05) rotate(5deg); opacity: 0.55; }
+  85%  { transform: translate(-55%, -95%) scaleY(1.2) rotate(-3deg); opacity: 0.2; }
+  100% { transform: translate(-50%, -120%) scaleY(1.3) rotate(0deg); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo,
-  .ru-steam-puff { animation: none; }
+  .ru-steam-wisp { animation: none; }
 }
 
 
