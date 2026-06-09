@@ -144,6 +144,9 @@ function RawAndUnhinged() {
           {/* Animated steam rising from the teacup */}
           <TeaSteam />
 
+          {/* Subtle sun-on-water shimmer, clipped to the patch under the sun */}
+          <WaterShimmer />
+
 
 
 
@@ -247,6 +250,19 @@ function TeaSteam() {
         <path d="M10 100 C 7 78, 13 58, 10 40 C 7 22, 12 10, 10 0"
           fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.0" strokeLinecap="round" />
       </svg>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Water shimmer — tiny sun glint on the ocean inside the window              */
+/* -------------------------------------------------------------------------- */
+
+function WaterShimmer() {
+  return (
+    <div className="ru-water-glint" aria-hidden="true">
+      <span className="ru-water-glint-band ru-water-glint-band--1" />
+      <span className="ru-water-glint-band ru-water-glint-band--2" />
     </div>
   );
 }
@@ -1024,7 +1040,61 @@ const rawUnhingedStyles = `
 
 @media (prefers-reduced-motion: reduce) {
   .ru-flame-svg, .ru-flame-outer, .ru-flame-core, .ru-flame-halo,
-  .ru-steam-wisp { animation: none; }
+  .ru-steam-wisp, .ru-water-glint-band { animation: none; }
+}
+
+/* ----- Water shimmer: tightly clipped sun glint on the ocean ----- */
+.ru-water-glint {
+  position: absolute;
+  /* Patch on the water just under the sun in the window */
+  left: 51%;
+  top: 16.5%;
+  width: 7%;
+  height: 2.4%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+  border-radius: 50%;
+  /* Feather the edges so the shimmer can never visibly leak outside the patch */
+  -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
+          mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+.ru-water-glint-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 230, 190, 0.0) 15%,
+    rgba(255, 235, 205, 0.55) 50%,
+    rgba(255, 230, 190, 0.0) 85%,
+    transparent 100%
+  );
+  filter: blur(0.6px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.ru-water-glint-band--1 {
+  top: 45%;
+  animation: ruWaterGlint 3.8s ease-in-out infinite;
+}
+.ru-water-glint-band--2 {
+  top: 60%;
+  animation: ruWaterGlint 5.2s ease-in-out infinite;
+  animation-delay: 1.9s;
+}
+
+@keyframes ruWaterGlint {
+  0%   { transform: translateX(-18%); opacity: 0; }
+  25%  { opacity: 0.55; }
+  50%  { transform: translateX(0%);   opacity: 0.7; }
+  75%  { opacity: 0.55; }
+  100% { transform: translateX(18%);  opacity: 0; }
 }
 
 
