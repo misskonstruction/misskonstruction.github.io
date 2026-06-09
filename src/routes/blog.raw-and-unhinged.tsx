@@ -239,6 +239,14 @@ function TeaSteam() {
         <path d="M10 100 C 5 80, 15 60, 10 42 C 5 24, 13 12, 10 0"
           fill="none" stroke="url(#ruSteamGrad)" strokeWidth="0.9" strokeLinecap="round" />
       </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--4" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 14 84, 6 66, 10 48 C 14 30, 6 14, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.2" strokeLinecap="round" />
+      </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--5" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 7 78, 13 58, 10 40 C 7 22, 12 10, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.0" strokeLinecap="round" />
+      </svg>
     </div>
   );
 }
