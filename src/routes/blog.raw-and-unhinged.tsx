@@ -239,6 +239,14 @@ function TeaSteam() {
         <path d="M10 100 C 5 80, 15 60, 10 42 C 5 24, 13 12, 10 0"
           fill="none" stroke="url(#ruSteamGrad)" strokeWidth="0.9" strokeLinecap="round" />
       </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--4" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 14 84, 6 66, 10 48 C 14 30, 6 14, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.2" strokeLinecap="round" />
+      </svg>
+      <svg className="ru-steam-wisp ru-steam-wisp--5" viewBox="0 0 20 100" preserveAspectRatio="none">
+        <path d="M10 100 C 7 78, 13 58, 10 40 C 7 22, 12 10, 10 0"
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.0" strokeLinecap="round" />
+      </svg>
     </div>
   );
 }
@@ -1002,6 +1010,8 @@ const rawUnhingedStyles = `
 .ru-steam-wisp--1 { left: 50%; animation-duration: 4.6s; animation-delay: 0s; }
 .ru-steam-wisp--2 { left: 38%; animation-duration: 5.4s; animation-delay: 1.6s; width: 75%; }
 .ru-steam-wisp--3 { left: 62%; animation-duration: 4.0s; animation-delay: 3.0s; width: 65%; }
+.ru-steam-wisp--4 { left: 45%; animation-duration: 5.8s; animation-delay: 0.8s; width: 70%; }
+.ru-steam-wisp--5 { left: 56%; animation-duration: 4.4s; animation-delay: 2.3s; width: 60%; }
 
 @keyframes ruSteamRise {
   0%   { transform: translate(-50%, 15%) scaleY(0.55) rotate(0deg); opacity: 0; }
