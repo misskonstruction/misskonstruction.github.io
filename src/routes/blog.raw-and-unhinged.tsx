@@ -144,6 +144,9 @@ function RawAndUnhinged() {
           {/* Animated steam rising from the teacup */}
           <TeaSteam />
 
+          {/* Subtle sun-on-water shimmer, clipped to the patch under the sun */}
+          <WaterShimmer />
+
 
 
 
