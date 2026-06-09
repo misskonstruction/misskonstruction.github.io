@@ -252,18 +252,6 @@ function TeaSteam() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Water shimmer — tiny sun glint on the ocean inside the window              */
-/* -------------------------------------------------------------------------- */
-
-function WaterShimmer() {
-  return (
-    <div className="ru-water-glint" aria-hidden="true">
-      <span className="ru-water-glint-band ru-water-glint-band--1" />
-      <span className="ru-water-glint-band ru-water-glint-band--2" />
-    </div>
-  );
-}
 
 
 
