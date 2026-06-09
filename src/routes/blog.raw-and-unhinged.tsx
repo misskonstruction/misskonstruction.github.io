@@ -1049,52 +1049,53 @@ const rawUnhingedStyles = `
   /* Patch on the water just under the sun in the window */
   left: 51%;
   top: 16.5%;
-  width: 7%;
-  height: 2.4%;
+  width: 9%;
+  height: 3.2%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   overflow: hidden;
   z-index: 2;
   border-radius: 50%;
   /* Feather the edges so the shimmer can never visibly leak outside the patch */
-  -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
-          mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
+          mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
   mix-blend-mode: screen;
-  opacity: 0.7;
+  opacity: 1;
 }
 .ru-water-glint-band {
   position: absolute;
   left: 0;
   right: 0;
-  height: 1.5px;
+  height: 3px;
   background: linear-gradient(
     to right,
     transparent 0%,
-    rgba(255, 230, 190, 0.0) 15%,
-    rgba(255, 235, 205, 0.55) 50%,
-    rgba(255, 230, 190, 0.0) 85%,
+    rgba(255, 245, 215, 0.0) 10%,
+    rgba(255, 248, 220, 0.95) 50%,
+    rgba(255, 245, 215, 0.0) 90%,
     transparent 100%
   );
-  filter: blur(0.6px);
+  filter: blur(0.8px);
   opacity: 0;
   will-change: transform, opacity;
 }
 .ru-water-glint-band--1 {
-  top: 45%;
+  top: 38%;
   animation: ruWaterGlint 3.8s ease-in-out infinite;
 }
 .ru-water-glint-band--2 {
-  top: 60%;
+  top: 62%;
+  height: 2px;
   animation: ruWaterGlint 5.2s ease-in-out infinite;
-  animation-delay: 1.9s;
+  animation-delay: 1.6s;
 }
 
 @keyframes ruWaterGlint {
-  0%   { transform: translateX(-18%); opacity: 0; }
-  25%  { opacity: 0.55; }
-  50%  { transform: translateX(0%);   opacity: 0.7; }
-  75%  { opacity: 0.55; }
-  100% { transform: translateX(18%);  opacity: 0; }
+  0%   { transform: translateX(-20%); opacity: 0; }
+  20%  { opacity: 0.9; }
+  50%  { transform: translateX(0%);   opacity: 1; }
+  80%  { opacity: 0.9; }
+  100% { transform: translateX(20%);  opacity: 0; }
 }
 
 
