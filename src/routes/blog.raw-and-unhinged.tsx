@@ -222,22 +222,22 @@ function TeaSteam() {
       <svg className="ru-steam-wisp ru-steam-wisp--1" viewBox="0 0 20 100" preserveAspectRatio="none">
         <defs>
           <linearGradient id="ruSteamGrad" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stopColor="rgba(255,240,220,0)" />
-            <stop offset="25%" stopColor="rgba(255,240,220,0.85)" />
-            <stop offset="75%" stopColor="rgba(255,235,210,0.55)" />
-            <stop offset="100%" stopColor="rgba(255,230,200,0)" />
+            <stop offset="0%" stopColor="rgba(255,245,230,0)" />
+            <stop offset="20%" stopColor="rgba(255,245,230,0.45)" />
+            <stop offset="70%" stopColor="rgba(255,240,220,0.18)" />
+            <stop offset="100%" stopColor="rgba(255,235,210,0)" />
           </linearGradient>
         </defs>
         <path d="M10 100 C 4 82, 16 64, 10 46 C 4 28, 16 14, 10 0"
-          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="3.5" strokeLinecap="round" />
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
       <svg className="ru-steam-wisp ru-steam-wisp--2" viewBox="0 0 20 100" preserveAspectRatio="none">
         <path d="M10 100 C 16 82, 4 64, 10 46 C 16 28, 4 14, 10 0"
-          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="3" strokeLinecap="round" />
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="1.1" strokeLinecap="round" />
       </svg>
       <svg className="ru-steam-wisp ru-steam-wisp--3" viewBox="0 0 20 100" preserveAspectRatio="none">
         <path d="M10 100 C 5 80, 15 60, 10 42 C 5 24, 13 12, 10 0"
-          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="2.5" strokeLinecap="round" />
+          fill="none" stroke="url(#ruSteamGrad)" strokeWidth="0.9" strokeLinecap="round" />
       </svg>
     </div>
   );
