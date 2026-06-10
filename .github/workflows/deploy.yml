@@ -1,11 +1,11 @@
 name: Deploy static site to gh-pages branch
-run-name: Deploy static site to gh-pages branch — no Pages artifacts
+run-name: Branch deploy without Pages artifacts
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
 # and publishes the result to GitHub Pages.
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -22,6 +22,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Confirm branch deployment workflow
+        run: echo "Using gh-pages branch deployment; no GitHub Pages artifact upload."
 
       - uses: oven-sh/setup-bun@v2
         with:
