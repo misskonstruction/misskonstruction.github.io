@@ -8,7 +8,7 @@ import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
 import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
-import reflectionsImg from "@/assets/blog-reflections.gif";
+import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import { getRecipesByCategory } from "@/data/recipes";
 import { getPrayersByCategory, prayerSharedHero } from "@/data/prayers";

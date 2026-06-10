@@ -1,15 +1,18 @@
-name: Deploy static site to gh-pages branch
-run-name: Branch deploy without Pages artifacts
+name: Deploy to GitHub Pages
+# Trigger redeploy: publish watermarked boats-01 + reverted window shimmer
+
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
 # and publishes the result to GitHub Pages.
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
@@ -18,13 +21,8 @@ concurrency:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Confirm branch deployment workflow
-        run: echo "Using gh-pages branch deployment; no GitHub Pages artifact upload."
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -54,10 +52,11 @@ jobs:
           cp dist-static/index.html dist-static/404.html
           touch dist-static/.nojekyll
 
-      - name: Deploy dist-static to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist-static
-          publish_branch: gh-pages
-          force_orphan: true
+          path: dist-static
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
