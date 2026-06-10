@@ -1,0 +1,3 @@
+MissKonstruction static deploy trigger.
+
+This file exists only to force a normal site-file change through GitHub sync when deployment workflow edits need a fresh push.
