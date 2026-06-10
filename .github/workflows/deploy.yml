@@ -8,10 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  actions: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -21,17 +18,9 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      actions: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/configure-pages@v5
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -61,14 +50,10 @@ jobs:
           cp dist-static/index.html dist-static/404.html
           touch dist-static/.nojekyll
 
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy dist-static to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./dist-static
-          name: github-pages-${{ github.run_id }}
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages-${{ github.run_id }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist-static
+          publish_branch: gh-pages
+          force_orphan: true
