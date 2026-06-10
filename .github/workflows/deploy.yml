@@ -1,4 +1,5 @@
-name: Deploy to GitHub Pages
+name: Deploy static site to gh-pages branch
+run-name: Deploy static site to gh-pages branch — no Pages artifacts
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
 # and publishes the result to GitHub Pages.
