@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: nudge after 404 report
+# Trigger redeploy: preserve custom domain after 404 report
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
@@ -49,10 +49,11 @@ jobs:
           WORDPRESS_COM_API_KEY: ${{ secrets.WORDPRESS_COM_API_KEY }}
         run: bun run prerender
 
-      - name: Add SPA fallback + .nojekyll
+      - name: Add SPA fallback + custom domain + .nojekyll
         run: |
           # GitHub Pages 404 fallback so deep links work
           cp dist-static/index.html dist-static/404.html
+          echo "misskonstruction.com" > dist-static/CNAME
           touch dist-static/.nojekyll
 
       - uses: actions/configure-pages@v5
