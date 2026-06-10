@@ -4,7 +4,8 @@ import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
 import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
-import reflectionsImg from "@/assets/blog-reflections.jpg";
+import reflectionsAsset from "@/assets/blog-reflections.gif.asset.json";
+const reflectionsImg = reflectionsAsset.url;
 import wanderImg from "@/assets/blog-wander.jpg";
 import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 
