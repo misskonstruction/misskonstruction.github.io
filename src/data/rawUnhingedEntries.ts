@@ -3,12 +3,12 @@ import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
 import myFaithfulBlitz from "@/assets/raw-unhinged/entry-my-faithful-blitz.jpg";
 import blitzWagonDoorway from "@/assets/raw-unhinged/blitz-wagon-doorway.jpg";
 import blitzWagonRoad from "@/assets/raw-unhinged/blitz-wagon-road.jpg";
-import entry610Page1 from "@/assets/raw-unhinged/6-10_entry_page1.jpg.asset.json";
-import entry610Page2 from "@/assets/raw-unhinged/6-10_entry_page2.jpg.asset.json";
-import entry610Page3 from "@/assets/raw-unhinged/6-10_entry_page3.jpg.asset.json";
-import collageDog1 from "@/assets/raw-unhinged/collage-dog1.jpg.asset.json";
-import collageDog2 from "@/assets/raw-unhinged/collage-dog2.jpg.asset.json";
-import collageMe3 from "@/assets/raw-unhinged/collage-me3.jpg.asset.json";
+import entry610Page1 from "@/assets/raw-unhinged/6-10_entry_page1.jpg";
+import entry610Page2 from "@/assets/raw-unhinged/6-10_entry_page2.jpg";
+import entry610Page3 from "@/assets/raw-unhinged/6-10_entry_page3.jpg";
+import collageDog1 from "@/assets/raw-unhinged/collage-dog1.jpg";
+import collageDog2 from "@/assets/raw-unhinged/collage-dog2.jpg";
+import collageMe3 from "@/assets/raw-unhinged/collage-me3.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
