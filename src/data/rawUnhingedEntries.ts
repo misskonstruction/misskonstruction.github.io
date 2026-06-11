@@ -57,29 +57,29 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
     title: "It’s 6:31 a.m. — exhausted and counting down",
     entryImages: [
       {
-        src: entry610Page1.url,
+        src: entry610Page1,
         alt: "First handwritten journal page dated 6/10/26 — Cami writing at 6:31 a.m. before her shift about exhaustion, pain, broken sleep, and waking up to care for Blitz.",
       },
       {
-        src: entry610Page2.url,
+        src: entry610Page2,
         alt: "Second handwritten journal page continuing the 6/10/26 entry — Cami writing about sleep struggles, sensory overload, waking repeatedly through the night, and feeling anxious while counting down the hours before work.",
       },
       {
-        src: entry610Page3.url,
+        src: entry610Page3,
         alt: "Third handwritten journal page continuing the 6/10/26 entry — Cami writing about setting Blitz up beside her desk, worrying about family changes and losses, and finding meaning in carrying part of her dad with her.",
       },
     ],
     finalPagePhotos: [
       {
-        src: collageDog2.url,
+        src: collageDog2,
         alt: "Kylo standing under Cami’s desk beside a glowing keyboard, looking up toward her while she works.",
       },
       {
-        src: collageMe3.url,
+        src: collageMe3,
         alt: "Cami at her desk with round glasses and multiple monitors, photographed during a quiet work-at-home moment.",
       },
       {
-        src: collageDog1.url,
+        src: collageDog1,
         alt: "Blitz, grey-muzzled and gentle-eyed, lying beside a pink bowl of kibble and looking up toward the camera.",
       },
     ],
