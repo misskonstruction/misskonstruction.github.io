@@ -555,29 +555,21 @@ function PageContent({
   if (spread.kind === "entry") {
     const img = spread.entry.entryImages[spread.pageOfEntry];
     if (side === "left") {
-      return (
-        <EntryImagePage
-          entry={spread.entry}
-          image={img}
-          pageNumber={spread.pageOfEntry + 1}
-          totalPages={spread.totalPagesInEntry}
-          showDate={spread.pageOfEntry === 0}
-        />
-      );
+      return <EntryImagePage entry={spread.entry} image={img} pageNumber={spread.pageOfEntry + 1} totalPages={spread.totalPagesInEntry} />;
     }
     // Right page: accompanying photos if first page of entry has them
     const photos = spread.pageOfEntry === 0 ? spread.entry.rightPagePhotos ?? [] : [];
-    return <RightPhotoPage entry={spread.entry} photos={photos} showDate={spread.pageOfEntry === 0} />;
+    return <RightPhotoPage entry={spread.entry} photos={photos} />;
   }
 
   if (spread.kind === "entry-pair") {
     const e = side === "left" ? spread.left : spread.right;
-    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} showDate />;
+    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} />;
   }
 
   // final-photos
   if (side === "left") {
-    return <BlankPage entry={spread.entry} note="continued —" showDate={false} />;
+    return <BlankPage entry={spread.entry} note="continued —" />;
   }
   return <ScrapbookPage photos={spread.entry.finalPagePhotos ?? []} />;
 }
@@ -639,18 +631,16 @@ function EntryImagePage({
   image,
   pageNumber,
   totalPages,
-  showDate = true,
 }: {
   entry: RawUnhingedEntry;
   image: { src: string; alt: string };
   pageNumber: number;
   totalPages: number;
-  showDate?: boolean;
 }) {
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
       <header className="flex items-baseline justify-between mb-3">
-        <p className="ru-script-sm text-amber-900/80">{showDate ? formatEntryDate(entry.date) : ""}</p>
+        <p className="ru-script-sm text-amber-900/80">{formatEntryDate(entry.date)}</p>
         {totalPages > 1 && (
           <p className="ru-body text-xs text-amber-900/60">
             page {pageNumber} of {totalPages}
@@ -675,23 +665,15 @@ function EntryImagePage({
   );
 }
 
-function RightPhotoPage({
-  entry,
-  photos,
-  showDate = true,
-}: {
-  entry: RawUnhingedEntry;
-  photos: { src: string; alt: string }[];
-  showDate?: boolean;
-}) {
+function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { src: string; alt: string }[] }) {
   if (photos.length === 0) {
-    return <BlankPage entry={entry} showDate={showDate} />;
+    return <BlankPage entry={entry} />;
   }
   if (photos.length === 1) {
     return (
       <div className="ru-page-inner ru-paper flex flex-col">
         <header className="text-right mb-3">
-          <p className="ru-script-sm text-amber-900/70">{showDate ? formatEntryDate(entry.date) : ""}</p>
+          <p className="ru-script-sm text-amber-900/70">{formatEntryDate(entry.date)}</p>
         </header>
         <div className="flex-1 flex items-center justify-center">
           <PhotoCorners>
@@ -706,22 +688,14 @@ function RightPhotoPage({
       </div>
     );
   }
-  return <ScrapbookPage photos={photos} dateLabel={showDate ? formatEntryDate(entry.date) : undefined} videoShort={entry.videoShort} />;
+  return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} videoShort={entry.videoShort} />;
 }
 
-function BlankPage({
-  entry,
-  note,
-  showDate = true,
-}: {
-  entry: RawUnhingedEntry;
-  note?: string;
-  showDate?: boolean;
-}) {
+function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
       <header className="text-right mb-3">
-        <p className="ru-script-sm text-amber-900/70">{showDate ? formatEntryDate(entry.date) : ""}</p>
+        <p className="ru-script-sm text-amber-900/70">{formatEntryDate(entry.date)}</p>
       </header>
       <div className="flex-1 flex items-center justify-center">
         {note ? (
