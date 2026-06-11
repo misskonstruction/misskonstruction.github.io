@@ -555,21 +555,29 @@ function PageContent({
   if (spread.kind === "entry") {
     const img = spread.entry.entryImages[spread.pageOfEntry];
     if (side === "left") {
-      return <EntryImagePage entry={spread.entry} image={img} pageNumber={spread.pageOfEntry + 1} totalPages={spread.totalPagesInEntry} />;
+      return (
+        <EntryImagePage
+          entry={spread.entry}
+          image={img}
+          pageNumber={spread.pageOfEntry + 1}
+          totalPages={spread.totalPagesInEntry}
+          showDate={spread.pageOfEntry === 0}
+        />
+      );
     }
     // Right page: accompanying photos if first page of entry has them
     const photos = spread.pageOfEntry === 0 ? spread.entry.rightPagePhotos ?? [] : [];
-    return <RightPhotoPage entry={spread.entry} photos={photos} />;
+    return <RightPhotoPage entry={spread.entry} photos={photos} showDate={spread.pageOfEntry === 0} />;
   }
 
   if (spread.kind === "entry-pair") {
     const e = side === "left" ? spread.left : spread.right;
-    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} />;
+    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} showDate />;
   }
 
   // final-photos
   if (side === "left") {
-    return <BlankPage entry={spread.entry} note="continued —" />;
+    return <BlankPage entry={spread.entry} note="continued —" showDate={false} />;
   }
   return <ScrapbookPage photos={spread.entry.finalPagePhotos ?? []} />;
 }
