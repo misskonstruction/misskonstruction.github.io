@@ -3,6 +3,12 @@ import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
 import myFaithfulBlitz from "@/assets/raw-unhinged/entry-my-faithful-blitz.jpg";
 import blitzWagonDoorway from "@/assets/raw-unhinged/blitz-wagon-doorway.jpg";
 import blitzWagonRoad from "@/assets/raw-unhinged/blitz-wagon-road.jpg";
+import entry610Page1 from "@/assets/raw-unhinged/6-10_entry_page1.jpg.asset.json";
+import entry610Page2 from "@/assets/raw-unhinged/6-10_entry_page2.jpg.asset.json";
+import entry610Page3 from "@/assets/raw-unhinged/6-10_entry_page3.jpg.asset.json";
+import collageDog1 from "@/assets/raw-unhinged/collage-dog1.jpg.asset.json";
+import collageDog2 from "@/assets/raw-unhinged/collage-dog2.jpg.asset.json";
+import collageMe3 from "@/assets/raw-unhinged/collage-me3.jpg.asset.json";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -45,6 +51,39 @@ export type RawUnhingedEntry = {
  * Entries are listed newest-first. Add new entries at the top of this list.
  */
 export const rawUnhingedEntries: RawUnhingedEntry[] = [
+  {
+    id: "counting-down-at-631-am",
+    date: "2026-06-10",
+    title: "It’s 6:31 a.m. — exhausted and counting down",
+    entryImages: [
+      {
+        src: entry610Page1.url,
+        alt: "First handwritten journal page dated 6/10/26 — Cami writing at 6:31 a.m. before her shift about exhaustion, pain, broken sleep, and waking up to care for Blitz.",
+      },
+      {
+        src: entry610Page2.url,
+        alt: "Second handwritten journal page continuing the 6/10/26 entry — Cami writing about sleep struggles, sensory overload, waking repeatedly through the night, and feeling anxious while counting down the hours before work.",
+      },
+      {
+        src: entry610Page3.url,
+        alt: "Third handwritten journal page continuing the 6/10/26 entry — Cami writing about setting Blitz up beside her desk, worrying about family changes and losses, and finding meaning in carrying part of her dad with her.",
+      },
+    ],
+    finalPagePhotos: [
+      {
+        src: collageDog2.url,
+        alt: "Kylo standing under Cami’s desk beside a glowing keyboard, looking up toward her while she works.",
+      },
+      {
+        src: collageMe3.url,
+        alt: "Cami at her desk with round glasses and multiple monitors, photographed during a quiet work-at-home moment.",
+      },
+      {
+        src: collageDog1.url,
+        alt: "Blitz, grey-muzzled and gentle-eyed, lying beside a pink bowl of kibble and looking up toward the camera.",
+      },
+    ],
+  },
   {
     id: "my-faithful-blitz",
     date: "2026-06-06",
