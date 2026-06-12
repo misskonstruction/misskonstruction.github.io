@@ -3,12 +3,12 @@ import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
 import myFaithfulBlitz from "@/assets/raw-unhinged/entry-my-faithful-blitz.jpg";
 import blitzWagonDoorway from "@/assets/raw-unhinged/blitz-wagon-doorway.jpg";
 import blitzWagonRoad from "@/assets/raw-unhinged/blitz-wagon-road.jpg";
-import juneTenPage1 from "@/assets/raw-unhinged/entry-2026-06-10-page-1.jpg.asset.json";
-import juneTenPage2 from "@/assets/raw-unhinged/entry-2026-06-10-page-2.jpg.asset.json";
-import juneTenPage3 from "@/assets/raw-unhinged/entry-2026-06-10-page-3.jpg.asset.json";
-import juneTenCamiDesk from "@/assets/raw-unhinged/entry-2026-06-10-cami-desk.jpg.asset.json";
-import juneTenBlitz from "@/assets/raw-unhinged/entry-2026-06-10-blitz.jpg.asset.json";
-import juneTenKylo from "@/assets/raw-unhinged/entry-2026-06-10-kylo.jpg.asset.json";
+import juneTenPage1 from "@/assets/raw-unhinged/entry-2026-06-10-page-1.jpg";
+import juneTenPage2 from "@/assets/raw-unhinged/entry-2026-06-10-page-2.jpg";
+import juneTenPage3 from "@/assets/raw-unhinged/entry-2026-06-10-page-3.jpg";
+import juneTenCamiDesk from "@/assets/raw-unhinged/entry-2026-06-10-cami-desk.jpg";
+import juneTenBlitz from "@/assets/raw-unhinged/entry-2026-06-10-blitz.jpg";
+import juneTenKylo from "@/assets/raw-unhinged/entry-2026-06-10-kylo.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -105,29 +105,29 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
     title: "6:36am at my desk",
     entryImages: [
       {
-        src: juneTenPage1.url,
+        src: juneTenPage1,
         alt: "Handwritten Raw & Unhinged journal page dated 6/10/26 — Cami writing at 6:36am about preparing to start work, poor sleep, anxiety, pain, and worrying about Blitz",
       },
       {
-        src: juneTenPage2.url,
+        src: juneTenPage2,
         alt: "Continuation page of the June 10 Raw & Unhinged journal entry — Cami writing about light, sleep, pets waking her, and counting down to 6:30",
       },
       {
-        src: juneTenPage3.url,
+        src: juneTenPage3,
         alt: "Final handwritten page of the June 10 Raw & Unhinged journal entry — Cami writing about getting up, feeding the pets, settling Blitz by her desk, a new house, road trip, and missing her dad",
       },
     ],
     finalPagePhotos: [
       {
-        src: juneTenCamiDesk.url,
+        src: juneTenCamiDesk,
         alt: "Cami at her desk surrounded by monitors, with a butterfly image on the center screen",
       },
       {
-        src: juneTenBlitz.url,
+        src: juneTenBlitz,
         alt: "Blitz, a grey-muzzled senior pitbull, looking up beside her food bowl",
       },
       {
-        src: juneTenKylo.url,
+        src: juneTenKylo,
         alt: "Kylo, a younger pitbull, peeking up from under Cami's desk near a keyboard and printer",
       },
     ],
