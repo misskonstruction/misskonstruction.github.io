@@ -704,7 +704,7 @@ function EntryImagePage({
 
 function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { src: string; alt: string }[] }) {
   if (photos.length === 0) {
-    return <BlankPage entry={entry} />;
+    return <BlankPage />;
   }
   if (photos.length === 1) {
     return (
