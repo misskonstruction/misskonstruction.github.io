@@ -34,63 +34,78 @@ export const Route = createFileRoute("/blog/raw-and-unhinged")({
 });
 
 /* -------------------------------------------------------------------------- */
-/* Spread model                                                                */
+/* Leaf + Spread model                                                         */
+/*                                                                             */
+/* A "leaf" is a single page of the book. We flatten every entry into an       */
+/* ordered list of leaves and then pair them up two-at-a-time into spreads,    */
+/* so multi-page entries naturally fill BOTH the left and right side of the    */
+/* open book — like reading a real journal written on both sides of the paper. */
 /* -------------------------------------------------------------------------- */
 
-type Spread =
+type Leaf =
   | { kind: "toc"; entries: RawUnhingedEntry[] }
-  | { kind: "entry"; entry: RawUnhingedEntry; pageOfEntry: number; totalPagesInEntry: number }
-  | { kind: "entry-pair"; left: RawUnhingedEntry; right: RawUnhingedEntry }
-  | { kind: "final-photos"; entry: RawUnhingedEntry };
+  | { kind: "title" }
+  | { kind: "entry-image"; entry: RawUnhingedEntry; pageOfEntry: number; totalPagesInEntry: number }
+  | { kind: "right-photos"; entry: RawUnhingedEntry }
+  | { kind: "scrapbook"; entry: RawUnhingedEntry }
+  | { kind: "blank"; note?: string };
 
-/** An entry is "simple" (eligible for pairing onto one spread) when it has
- *  exactly one entry image, no right-page photos, and no final-page photos. */
-function isSimpleEntry(e: RawUnhingedEntry): boolean {
-  return (
-    e.entryImages.length === 1 &&
-    !(e.rightPagePhotos && e.rightPagePhotos.length > 0) &&
-    !(e.finalPagePhotos && e.finalPagePhotos.length > 0)
-  );
+type Spread = { left: Leaf; right: Leaf };
+
+/** Returns the entry this leaf belongs to, if any. */
+function leafEntry(leaf: Leaf): RawUnhingedEntry | null {
+  if (leaf.kind === "entry-image" || leaf.kind === "right-photos" || leaf.kind === "scrapbook") {
+    return leaf.entry;
+  }
+  return null;
 }
 
 /**
- * Build the full list of spreads. The book opens to the TOC, then each entry
- * gets one spread per entry image (entry photo on the left, right-page photos
- * on the right). If an entry has finalPagePhotos, an extra spread follows.
- *
- * As a polish: two consecutive "simple" entries (single image, no extra
- * photos) are paired onto a single spread — entry image on each side —
- * so there are no awkward blank pages.
+ * Flatten every entry into a sequential list of single pages (leaves):
+ *  - TOC + Title page open the book
+ *  - Each entryImage becomes one leaf (in order)
+ *  - rightPagePhotos (if any) become a single leaf right after the entry's pages
+ *  - finalPagePhotos (if any) become a scrapbook leaf at the end of the entry
  */
-function buildSpreads(entries: RawUnhingedEntry[]): Spread[] {
-  const spreads: Spread[] = [{ kind: "toc", entries }];
-  let i = 0;
-  while (i < entries.length) {
-    const e = entries[i];
-    const next = entries[i + 1];
-    if (isSimpleEntry(e) && next && isSimpleEntry(next)) {
-      spreads.push({ kind: "entry-pair", left: e, right: next });
-      i += 2;
-      continue;
-    }
+function buildLeaves(entries: RawUnhingedEntry[]): Leaf[] {
+  const leaves: Leaf[] = [{ kind: "toc", entries }, { kind: "title" }];
+  for (const e of entries) {
     const total = e.entryImages.length;
     e.entryImages.forEach((_, idx) => {
-      spreads.push({ kind: "entry", entry: e, pageOfEntry: idx, totalPagesInEntry: total });
+      leaves.push({
+        kind: "entry-image",
+        entry: e,
+        pageOfEntry: idx,
+        totalPagesInEntry: total,
+      });
     });
-    if (e.finalPagePhotos && e.finalPagePhotos.length > 0) {
-      spreads.push({ kind: "final-photos", entry: e });
+    if (e.rightPagePhotos && e.rightPagePhotos.length > 0) {
+      leaves.push({ kind: "right-photos", entry: e });
     }
-    i += 1;
+    if (e.finalPagePhotos && e.finalPagePhotos.length > 0) {
+      leaves.push({ kind: "scrapbook", entry: e });
+    }
+  }
+  return leaves;
+}
+
+/** Pair leaves into spreads (left/right). Pad the final spread with a blank. */
+function buildSpreads(entries: RawUnhingedEntry[]): Spread[] {
+  const leaves = buildLeaves(entries);
+  const spreads: Spread[] = [];
+  for (let i = 0; i < leaves.length; i += 2) {
+    spreads.push({
+      left: leaves[i],
+      right: leaves[i + 1] ?? { kind: "blank" },
+    });
   }
   return spreads;
 }
 
-/** Index of the first spread for a given entry id. */
+/** Index of the first spread that contains any leaf for the given entry id. */
 function spreadIndexForEntry(spreads: Spread[], entryId: string): number {
   return spreads.findIndex(
-    (s) =>
-      (s.kind === "entry" && s.entry.id === entryId) ||
-      (s.kind === "entry-pair" && (s.left.id === entryId || s.right.id === entryId)),
+    (s) => leafEntry(s.left)?.id === entryId || leafEntry(s.right)?.id === entryId,
   );
 }
 
