@@ -53,8 +53,10 @@ jobs:
         run: |
           # GitHub Pages 404 fallback so deep links work
           cp dist-static/index.html dist-static/404.html
-          echo "misskonstruction.com" > dist-static/CNAME
+          printf '%s\n' "misskonstruction.com" > dist-static/CNAME
           touch dist-static/.nojekyll
+          test -s dist-static/404.html
+          test "$(cat dist-static/CNAME)" = "misskonstruction.com"
 
       - uses: actions/configure-pages@v5
 

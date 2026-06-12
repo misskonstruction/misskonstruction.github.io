@@ -640,7 +640,11 @@ function EntryImagePage({
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
       <header className="flex items-baseline justify-between mb-3">
-        <p className="ru-script-sm text-amber-900/80">{formatEntryDate(entry.date)}</p>
+        {pageNumber === 1 ? (
+          <p className="ru-script-sm text-amber-900/80">{formatEntryDate(entry.date)}</p>
+        ) : (
+          <span aria-hidden="true" />
+        )}
         {totalPages > 1 && (
           <p className="ru-body text-xs text-amber-900/60">
             page {pageNumber} of {totalPages}
@@ -694,9 +698,6 @@ function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { 
 function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
-      <header className="text-right mb-3">
-        <p className="ru-script-sm text-amber-900/70">{formatEntryDate(entry.date)}</p>
-      </header>
       <div className="flex-1 flex items-center justify-center">
         {note ? (
           <p className="ru-script-sm text-amber-900/40">{note}</p>

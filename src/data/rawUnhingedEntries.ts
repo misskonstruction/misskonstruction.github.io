@@ -3,6 +3,12 @@ import letsDoThis from "@/assets/raw-unhinged/entry-lets-do-this.jpg";
 import myFaithfulBlitz from "@/assets/raw-unhinged/entry-my-faithful-blitz.jpg";
 import blitzWagonDoorway from "@/assets/raw-unhinged/blitz-wagon-doorway.jpg";
 import blitzWagonRoad from "@/assets/raw-unhinged/blitz-wagon-road.jpg";
+import juneTenPage1 from "@/assets/raw-unhinged/entry-2026-06-10-page-1.jpg";
+import juneTenPage2 from "@/assets/raw-unhinged/entry-2026-06-10-page-2.jpg";
+import juneTenPage3 from "@/assets/raw-unhinged/entry-2026-06-10-page-3.jpg";
+import juneTenCamiDesk from "@/assets/raw-unhinged/entry-2026-06-10-cami-desk.jpg";
+import juneTenBlitz from "@/assets/raw-unhinged/entry-2026-06-10-blitz.jpg";
+import juneTenKylo from "@/assets/raw-unhinged/entry-2026-06-10-kylo.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -42,9 +48,32 @@ export type RawUnhingedEntry = {
 };
 
 /**
- * Entries are listed newest-first. Add new entries at the top of this list.
+ * Entries are listed oldest-first, like turning through a real journal.
+ * Add new entries at the end unless the entry date says otherwise.
  */
 export const rawUnhingedEntries: RawUnhingedEntry[] = [
+  {
+    id: "winston",
+    date: "2026-06-05",
+    title: "Winston — an unfinished sketch of an old friend",
+    entryImages: [
+      {
+        src: winstonSketch,
+        alt: "Pencil sketch of Winston, a ginger tabby cat with a paw-print collar tag, in a sketchbook with the reference photo paper-clipped at the top corner",
+      },
+    ],
+  },
+  {
+    id: "lets-do-this",
+    date: "2026-06-05",
+    title: "lets do this!",
+    entryImages: [
+      {
+        src: letsDoThis,
+        alt: "Handwritten journal page dated 6/5/26 — Cami's intro to the Raw & Unhinged category, explaining the new journal and her plan to write often",
+      },
+    ],
+  },
   {
     id: "my-faithful-blitz",
     date: "2026-06-06",
@@ -71,24 +100,35 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
     },
   },
   {
-    id: "lets-do-this",
-    date: "2026-06-05",
-    title: "lets do this!",
+    id: "six-thirty-six-at-my-desk",
+    date: "2026-06-10",
+    title: "6:36am at my desk",
     entryImages: [
       {
-        src: letsDoThis,
-        alt: "Handwritten journal page dated 6/5/26 — Cami's intro to the Raw & Unhinged category, explaining the new journal and her plan to write often",
+        src: juneTenPage1,
+        alt: "Handwritten Raw & Unhinged journal page dated 6/10/26 — Cami writing at 6:36am about preparing to start work, poor sleep, anxiety, pain, and worrying about Blitz",
+      },
+      {
+        src: juneTenPage2,
+        alt: "Continuation page of the June 10 Raw & Unhinged journal entry — Cami writing about light, sleep, pets waking her, and counting down to 6:30",
+      },
+      {
+        src: juneTenPage3,
+        alt: "Final handwritten page of the June 10 Raw & Unhinged journal entry — Cami writing about getting up, feeding the pets, settling Blitz by her desk, a new house, road trip, and missing her dad",
       },
     ],
-  },
-  {
-    id: "winston",
-    date: "2026-06-05",
-    title: "Winston — an unfinished sketch of an old friend",
-    entryImages: [
+    finalPagePhotos: [
       {
-        src: winstonSketch,
-        alt: "Pencil sketch of Winston, a ginger tabby cat with a paw-print collar tag, in a sketchbook with the reference photo paper-clipped at the top corner",
+        src: juneTenCamiDesk,
+        alt: "Cami at her desk surrounded by monitors, with a butterfly image on the center screen",
+      },
+      {
+        src: juneTenBlitz,
+        alt: "Blitz, a grey-muzzled senior pitbull, looking up beside her food bowl",
+      },
+      {
+        src: juneTenKylo,
+        alt: "Kylo, a younger pitbull, peeking up from under Cami's desk near a keyboard and printer",
       },
     ],
   },
