@@ -728,7 +728,7 @@ function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { 
   return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} videoShort={entry.videoShort} />;
 }
 
-function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
+function BlankPage({ note }: { note?: string } = {}) {
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
       <div className="flex-1 flex items-center justify-center">
