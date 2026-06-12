@@ -403,21 +403,21 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
         <div className="ru-book-inner">
           {/* Left page (current) */}
           <div className="ru-page ru-page-left">
-            <PageContent spread={visibleLeftSpread} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent leaf={visibleLeftSpread.left} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
           {/* Right page (current) */}
           <div className="ru-page ru-page-right">
-            <PageContent spread={visibleRightSpread} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent leaf={visibleRightSpread.right} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
 
           {/* Flipping page (forward = right page flips left) */}
           {flip?.direction === "next" && nextSpread && (
             <div className="ru-flip ru-flip-next">
               <div className="ru-flip-face ru-flip-front">
-                <PageContent spread={current} side="right" onJumpToEntry={() => {}} />
+                <PageContent leaf={current.right} side="right" onJumpToEntry={() => {}} />
               </div>
               <div className="ru-flip-face ru-flip-back">
-                <PageContent spread={nextSpread} side="left" onJumpToEntry={() => {}} />
+                <PageContent leaf={nextSpread.left} side="left" onJumpToEntry={() => {}} />
               </div>
             </div>
           )}
@@ -426,10 +426,10 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
           {flip?.direction === "prev" && prevSpread && (
             <div className="ru-flip ru-flip-prev">
               <div className="ru-flip-face ru-flip-front">
-                <PageContent spread={current} side="left" onJumpToEntry={() => {}} />
+                <PageContent leaf={current.left} side="left" onJumpToEntry={() => {}} />
               </div>
               <div className="ru-flip-face ru-flip-back">
-                <PageContent spread={prevSpread} side="right" onJumpToEntry={() => {}} />
+                <PageContent leaf={prevSpread.right} side="right" onJumpToEntry={() => {}} />
               </div>
             </div>
           )}
