@@ -34,63 +34,78 @@ export const Route = createFileRoute("/blog/raw-and-unhinged")({
 });
 
 /* -------------------------------------------------------------------------- */
-/* Spread model                                                                */
+/* Leaf + Spread model                                                         */
+/*                                                                             */
+/* A "leaf" is a single page of the book. We flatten every entry into an       */
+/* ordered list of leaves and then pair them up two-at-a-time into spreads,    */
+/* so multi-page entries naturally fill BOTH the left and right side of the    */
+/* open book — like reading a real journal written on both sides of the paper. */
 /* -------------------------------------------------------------------------- */
 
-type Spread =
+type Leaf =
   | { kind: "toc"; entries: RawUnhingedEntry[] }
-  | { kind: "entry"; entry: RawUnhingedEntry; pageOfEntry: number; totalPagesInEntry: number }
-  | { kind: "entry-pair"; left: RawUnhingedEntry; right: RawUnhingedEntry }
-  | { kind: "final-photos"; entry: RawUnhingedEntry };
+  | { kind: "title" }
+  | { kind: "entry-image"; entry: RawUnhingedEntry; pageOfEntry: number; totalPagesInEntry: number }
+  | { kind: "right-photos"; entry: RawUnhingedEntry }
+  | { kind: "scrapbook"; entry: RawUnhingedEntry }
+  | { kind: "blank"; note?: string };
 
-/** An entry is "simple" (eligible for pairing onto one spread) when it has
- *  exactly one entry image, no right-page photos, and no final-page photos. */
-function isSimpleEntry(e: RawUnhingedEntry): boolean {
-  return (
-    e.entryImages.length === 1 &&
-    !(e.rightPagePhotos && e.rightPagePhotos.length > 0) &&
-    !(e.finalPagePhotos && e.finalPagePhotos.length > 0)
-  );
+type Spread = { left: Leaf; right: Leaf };
+
+/** Returns the entry this leaf belongs to, if any. */
+function leafEntry(leaf: Leaf): RawUnhingedEntry | null {
+  if (leaf.kind === "entry-image" || leaf.kind === "right-photos" || leaf.kind === "scrapbook") {
+    return leaf.entry;
+  }
+  return null;
 }
 
 /**
- * Build the full list of spreads. The book opens to the TOC, then each entry
- * gets one spread per entry image (entry photo on the left, right-page photos
- * on the right). If an entry has finalPagePhotos, an extra spread follows.
- *
- * As a polish: two consecutive "simple" entries (single image, no extra
- * photos) are paired onto a single spread — entry image on each side —
- * so there are no awkward blank pages.
+ * Flatten every entry into a sequential list of single pages (leaves):
+ *  - TOC + Title page open the book
+ *  - Each entryImage becomes one leaf (in order)
+ *  - rightPagePhotos (if any) become a single leaf right after the entry's pages
+ *  - finalPagePhotos (if any) become a scrapbook leaf at the end of the entry
  */
-function buildSpreads(entries: RawUnhingedEntry[]): Spread[] {
-  const spreads: Spread[] = [{ kind: "toc", entries }];
-  let i = 0;
-  while (i < entries.length) {
-    const e = entries[i];
-    const next = entries[i + 1];
-    if (isSimpleEntry(e) && next && isSimpleEntry(next)) {
-      spreads.push({ kind: "entry-pair", left: e, right: next });
-      i += 2;
-      continue;
-    }
+function buildLeaves(entries: RawUnhingedEntry[]): Leaf[] {
+  const leaves: Leaf[] = [{ kind: "toc", entries }, { kind: "title" }];
+  for (const e of entries) {
     const total = e.entryImages.length;
     e.entryImages.forEach((_, idx) => {
-      spreads.push({ kind: "entry", entry: e, pageOfEntry: idx, totalPagesInEntry: total });
+      leaves.push({
+        kind: "entry-image",
+        entry: e,
+        pageOfEntry: idx,
+        totalPagesInEntry: total,
+      });
     });
-    if (e.finalPagePhotos && e.finalPagePhotos.length > 0) {
-      spreads.push({ kind: "final-photos", entry: e });
+    if (e.rightPagePhotos && e.rightPagePhotos.length > 0) {
+      leaves.push({ kind: "right-photos", entry: e });
     }
-    i += 1;
+    if (e.finalPagePhotos && e.finalPagePhotos.length > 0) {
+      leaves.push({ kind: "scrapbook", entry: e });
+    }
+  }
+  return leaves;
+}
+
+/** Pair leaves into spreads (left/right). Pad the final spread with a blank. */
+function buildSpreads(entries: RawUnhingedEntry[]): Spread[] {
+  const leaves = buildLeaves(entries);
+  const spreads: Spread[] = [];
+  for (let i = 0; i < leaves.length; i += 2) {
+    spreads.push({
+      left: leaves[i],
+      right: leaves[i + 1] ?? { kind: "blank" },
+    });
   }
   return spreads;
 }
 
-/** Index of the first spread for a given entry id. */
+/** Index of the first spread that contains any leaf for the given entry id. */
 function spreadIndexForEntry(spreads: Spread[], entryId: string): number {
   return spreads.findIndex(
-    (s) =>
-      (s.kind === "entry" && s.entry.id === entryId) ||
-      (s.kind === "entry-pair" && (s.left.id === entryId || s.right.id === entryId)),
+    (s) => leafEntry(s.left)?.id === entryId || leafEntry(s.right)?.id === entryId,
   );
 }
 
@@ -388,21 +403,21 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
         <div className="ru-book-inner">
           {/* Left page (current) */}
           <div className="ru-page ru-page-left">
-            <PageContent spread={visibleLeftSpread} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent leaf={visibleLeftSpread.left} side="left" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
           {/* Right page (current) */}
           <div className="ru-page ru-page-right">
-            <PageContent spread={visibleRightSpread} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
+            <PageContent leaf={visibleRightSpread.right} side="right" onJumpToEntry={(id) => jumpTo(spreadIndexForEntry(spreads, id))} />
           </div>
 
           {/* Flipping page (forward = right page flips left) */}
           {flip?.direction === "next" && nextSpread && (
             <div className="ru-flip ru-flip-next">
               <div className="ru-flip-face ru-flip-front">
-                <PageContent spread={current} side="right" onJumpToEntry={() => {}} />
+                <PageContent leaf={current.right} side="right" onJumpToEntry={() => {}} />
               </div>
               <div className="ru-flip-face ru-flip-back">
-                <PageContent spread={nextSpread} side="left" onJumpToEntry={() => {}} />
+                <PageContent leaf={nextSpread.left} side="left" onJumpToEntry={() => {}} />
               </div>
             </div>
           )}
@@ -411,10 +426,10 @@ function BookOverlay({ onClose }: { onClose: () => void }) {
           {flip?.direction === "prev" && prevSpread && (
             <div className="ru-flip ru-flip-prev">
               <div className="ru-flip-face ru-flip-front">
-                <PageContent spread={current} side="left" onJumpToEntry={() => {}} />
+                <PageContent leaf={current.left} side="left" onJumpToEntry={() => {}} />
               </div>
               <div className="ru-flip-face ru-flip-back">
-                <PageContent spread={prevSpread} side="right" onJumpToEntry={() => {}} />
+                <PageContent leaf={prevSpread.right} side="right" onJumpToEntry={() => {}} />
               </div>
             </div>
           )}
@@ -468,10 +483,21 @@ function RibbonMenu({
   // Build entry index for jump menu
   // Build entry index for jump menu — include both single-entry spreads and
   // both entries in a paired spread.
-  const entryJumps = spreads.flatMap((s, i) => {
-    if (s.kind === "entry" && s.pageOfEntry === 0) return [{ entry: s.entry, i }];
-    if (s.kind === "entry-pair") return [{ entry: s.left, i }, { entry: s.right, i }];
-    return [];
+  // Build entry index for jump menu — list each entry once, pointing at the
+  // first spread where it appears (on either page).
+  const seen = new Set<string>();
+  const entryJumps: { entry: RawUnhingedEntry; i: number }[] = [];
+  spreads.forEach((s, i) => {
+    for (const leaf of [s.left, s.right]) {
+      const e = leafEntry(leaf);
+      if (!e || seen.has(e.id)) continue;
+      // Only count entry-image leaves as the "start" of an entry, so we don't
+      // anchor a jump to a trailing scrapbook spread.
+      if (leaf.kind === "entry-image" && leaf.pageOfEntry === 0) {
+        seen.add(e.id);
+        entryJumps.push({ entry: e, i });
+      }
+    }
   });
 
   return (
@@ -536,42 +562,49 @@ function RibbonMenu({
 /* -------------------------------------------------------------------------- */
 
 function PageContent({
-  spread,
+  leaf,
   side,
   onJumpToEntry,
 }: {
-  spread: Spread;
+  leaf: Leaf;
   side: "left" | "right";
   onJumpToEntry: (entryId: string) => void;
 }) {
-  if (spread.kind === "toc") {
-    return side === "left" ? (
-      <TocPage entries={spread.entries} onJump={onJumpToEntry} />
-    ) : (
-      <TitlePage />
-    );
+  switch (leaf.kind) {
+    case "toc":
+      return <TocPage entries={leaf.entries} onJump={onJumpToEntry} />;
+    case "title":
+      return <TitlePage />;
+    case "entry-image":
+      return (
+        <EntryImagePage
+          entry={leaf.entry}
+          image={leaf.entry.entryImages[leaf.pageOfEntry]}
+          pageNumber={leaf.pageOfEntry + 1}
+          totalPages={leaf.totalPagesInEntry}
+        />
+      );
+    case "right-photos":
+      return (
+        <RightPhotoPage
+          entry={leaf.entry}
+          photos={leaf.entry.rightPagePhotos ?? []}
+        />
+      );
+    case "scrapbook":
+      return (
+        <ScrapbookPage
+          photos={leaf.entry.finalPagePhotos ?? []}
+          videoShort={leaf.entry.videoShort}
+        />
+      );
+    case "blank":
+    default:
+      // `side` is intentionally unused here — a blank leaf looks identical
+      // on either side of the spread.
+      void side;
+      return <BlankPage note={leaf.kind === "blank" ? leaf.note : undefined} />;
   }
-
-  if (spread.kind === "entry") {
-    const img = spread.entry.entryImages[spread.pageOfEntry];
-    if (side === "left") {
-      return <EntryImagePage entry={spread.entry} image={img} pageNumber={spread.pageOfEntry + 1} totalPages={spread.totalPagesInEntry} />;
-    }
-    // Right page: accompanying photos if first page of entry has them
-    const photos = spread.pageOfEntry === 0 ? spread.entry.rightPagePhotos ?? [] : [];
-    return <RightPhotoPage entry={spread.entry} photos={photos} />;
-  }
-
-  if (spread.kind === "entry-pair") {
-    const e = side === "left" ? spread.left : spread.right;
-    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} />;
-  }
-
-  // final-photos
-  if (side === "left") {
-    return <BlankPage entry={spread.entry} note="continued —" />;
-  }
-  return <ScrapbookPage photos={spread.entry.finalPagePhotos ?? []} />;
 }
 
 function TocPage({ entries, onJump }: { entries: RawUnhingedEntry[]; onJump: (id: string) => void }) {
@@ -671,7 +704,7 @@ function EntryImagePage({
 
 function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { src: string; alt: string }[] }) {
   if (photos.length === 0) {
-    return <BlankPage entry={entry} />;
+    return <BlankPage />;
   }
   if (photos.length === 1) {
     return (
@@ -695,7 +728,7 @@ function RightPhotoPage({ entry, photos }: { entry: RawUnhingedEntry; photos: { 
   return <ScrapbookPage photos={photos} dateLabel={formatEntryDate(entry.date)} videoShort={entry.videoShort} />;
 }
 
-function BlankPage({ entry, note }: { entry: RawUnhingedEntry; note?: string }) {
+function BlankPage({ note }: { note?: string } = {}) {
   return (
     <div className="ru-page-inner ru-paper flex flex-col">
       <div className="flex-1 flex items-center justify-center">
