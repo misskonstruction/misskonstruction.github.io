@@ -562,42 +562,49 @@ function RibbonMenu({
 /* -------------------------------------------------------------------------- */
 
 function PageContent({
-  spread,
+  leaf,
   side,
   onJumpToEntry,
 }: {
-  spread: Spread;
+  leaf: Leaf;
   side: "left" | "right";
   onJumpToEntry: (entryId: string) => void;
 }) {
-  if (spread.kind === "toc") {
-    return side === "left" ? (
-      <TocPage entries={spread.entries} onJump={onJumpToEntry} />
-    ) : (
-      <TitlePage />
-    );
+  switch (leaf.kind) {
+    case "toc":
+      return <TocPage entries={leaf.entries} onJump={onJumpToEntry} />;
+    case "title":
+      return <TitlePage />;
+    case "entry-image":
+      return (
+        <EntryImagePage
+          entry={leaf.entry}
+          image={leaf.entry.entryImages[leaf.pageOfEntry]}
+          pageNumber={leaf.pageOfEntry + 1}
+          totalPages={leaf.totalPagesInEntry}
+        />
+      );
+    case "right-photos":
+      return (
+        <RightPhotoPage
+          entry={leaf.entry}
+          photos={leaf.entry.rightPagePhotos ?? []}
+        />
+      );
+    case "scrapbook":
+      return (
+        <ScrapbookPage
+          photos={leaf.entry.finalPagePhotos ?? []}
+          videoShort={leaf.entry.videoShort}
+        />
+      );
+    case "blank":
+    default:
+      // `side` is intentionally unused here — a blank leaf looks identical
+      // on either side of the spread.
+      void side;
+      return <BlankPage note={leaf.kind === "blank" ? leaf.note : undefined} />;
   }
-
-  if (spread.kind === "entry") {
-    const img = spread.entry.entryImages[spread.pageOfEntry];
-    if (side === "left") {
-      return <EntryImagePage entry={spread.entry} image={img} pageNumber={spread.pageOfEntry + 1} totalPages={spread.totalPagesInEntry} />;
-    }
-    // Right page: accompanying photos if first page of entry has them
-    const photos = spread.pageOfEntry === 0 ? spread.entry.rightPagePhotos ?? [] : [];
-    return <RightPhotoPage entry={spread.entry} photos={photos} />;
-  }
-
-  if (spread.kind === "entry-pair") {
-    const e = side === "left" ? spread.left : spread.right;
-    return <EntryImagePage entry={e} image={e.entryImages[0]} pageNumber={1} totalPages={1} />;
-  }
-
-  // final-photos
-  if (side === "left") {
-    return <BlankPage entry={spread.entry} note="continued —" />;
-  }
-  return <ScrapbookPage photos={spread.entry.finalPagePhotos ?? []} />;
 }
 
 function TocPage({ entries, onJump }: { entries: RawUnhingedEntry[]; onJump: (id: string) => void }) {
