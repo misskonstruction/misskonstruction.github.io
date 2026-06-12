@@ -483,10 +483,21 @@ function RibbonMenu({
   // Build entry index for jump menu
   // Build entry index for jump menu — include both single-entry spreads and
   // both entries in a paired spread.
-  const entryJumps = spreads.flatMap((s, i) => {
-    if (s.kind === "entry" && s.pageOfEntry === 0) return [{ entry: s.entry, i }];
-    if (s.kind === "entry-pair") return [{ entry: s.left, i }, { entry: s.right, i }];
-    return [];
+  // Build entry index for jump menu — list each entry once, pointing at the
+  // first spread where it appears (on either page).
+  const seen = new Set<string>();
+  const entryJumps: { entry: RawUnhingedEntry; i: number }[] = [];
+  spreads.forEach((s, i) => {
+    for (const leaf of [s.left, s.right]) {
+      const e = leafEntry(leaf);
+      if (!e || seen.has(e.id)) continue;
+      // Only count entry-image leaves as the "start" of an entry, so we don't
+      // anchor a jump to a trailing scrapbook spread.
+      if (leaf.kind === "entry-image" && leaf.pageOfEntry === 0) {
+        seen.add(e.id);
+        entryJumps.push({ entry: e, i });
+      }
+    }
   });
 
   return (
