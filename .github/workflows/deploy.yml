@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: node-server nitro preset for prerender
+# Trigger redeploy: ship newborn gallery image protection (background-image + disclaimer)
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
