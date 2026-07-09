@@ -1,1 +1,0 @@
-import{j as o}from"./index-D9JOIC6z.js";import{G as t}from"./GalleryPage-BxKbiIoU.js";import"./SiteLayout-BhWO_yed.js";const r=[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];function i(){return o.jsx(t,{title:"Maternity",intro:"Soft, story-driven maternity sessions. New work coming soon — placeholder slots are ready for your photos.",items:r})}export{i as component};

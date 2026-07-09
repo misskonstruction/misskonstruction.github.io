@@ -1,1 +1,0 @@
-import{j as t}from"./index-D9JOIC6z.js";import{G as e}from"./GalleryPage-BxKbiIoU.js";import"./SiteLayout-BhWO_yed.js";const r=Array.from({length:16},()=>({}));function l(){return t.jsx(e,{title:"Nature and Wildlife",intro:"Birds, beaches, and quiet wild moments — placeholder slots ready to fill.",items:r})}export{l as component};

@@ -1,1 +1,0 @@
-import{j as t}from"./index-D9JOIC6z.js";import{G as o}from"./GalleryPage-BxKbiIoU.js";import"./SiteLayout-BhWO_yed.js";const r=Array.from({length:16},()=>({}));function s(){return t.jsx(o,{title:"Boats and Saltlife",intro:"Florida docks, working boats, and the salty in-between.",items:r})}export{s as component};

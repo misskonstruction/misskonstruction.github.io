@@ -1,1 +1,0 @@
-import{j as o}from"./index-D9JOIC6z.js";import{G as r}from"./GalleryPage-BxKbiIoU.js";import"./SiteLayout-BhWO_yed.js";const t=Array.from({length:16},()=>({}));function s(){return o.jsx(r,{title:"Flower Project",intro:"An ongoing study of color, light, and petals.",items:t})}export{s as component};
