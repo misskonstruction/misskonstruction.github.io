@@ -6,4 +6,10 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+// The site is deployed as fully prerendered static HTML to GitHub Pages, so
+// the server build only exists to serve routes to the prerender crawler.
+// Force a Node preset so `wrangler` / `workerd` are not required — the
+// resulting server can be started with plain Node and has full network access.
+export default defineConfig({
+  nitro: { preset: "node-server" },
+});
