@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
-# Emergency stable deploy: publish the checked-in static site only.
-# No server build, no prerender, no CNAME.
+# Stable deploy: publish the checked-in static site only.
+# No server build, no prerender, no CNAME, no repo-settings API calls.
 on:
   push:
     branches: [main]
@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -18,9 +16,6 @@ concurrency:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -51,30 +46,3 @@ jobs:
           publish_branch: gh-pages
           force_orphan: true
           cname: ""
-
-      - name: Point GitHub Pages at gh-pages branch
-        run: |
-          set -e
-          body='{"source":{"branch":"gh-pages","path":"/"}}'
-          curl -fsS \
-            -X PATCH \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository }}/pages \
-            -d "$body" \
-          || curl -fsS \
-            -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository }}/pages \
-            -d "$body"
-
-      - name: Confirm published source
-        run: |
-          curl -fsS \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository }}/pages
