@@ -43,6 +43,7 @@ jobs:
           find dist-static -type f -name '.DS_Store' -delete
           echo "root files ready: $(test -s index.html && echo yes)"
           echo "dist-static files ready: $(find dist-static -type f | wc -l)"
+          echo "deployment source: committed static files"
           echo "✅ 404.html and .nojekyll are in place"
 
       - name: Publish static files to gh-pages branch
