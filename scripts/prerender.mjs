@@ -9,7 +9,7 @@
  * Routes are listed explicitly — add new ones here when you create a route.
  */
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync } from "node:fs";
+import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 
 const ROUTES = [
@@ -153,6 +153,10 @@ async function main() {
   const clientDir = findClientDir();
   ensurePreviewServerEntry();
   console.log(`📦 Using client assets from: ${clientDir}`);
+
+  // Start from a clean output folder so old checked-in/static route files
+  // cannot be republished if a route fails to prerender.
+  rmSync(OUT, { recursive: true, force: true });
 
   // Copy static assets first
   mkdirSync(OUT, { recursive: true });

@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: ship newborn gallery image protection (background-image + disclaimer)
+# Trigger redeploy: clean stale static output before publishing protected newborn gallery
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
@@ -35,7 +35,9 @@ jobs:
         run: bun install --frozen-lockfile || bun install
 
       - name: Build app
-        run: bun run build
+        run: |
+          rm -rf dist-static
+          bun run build
 
       - name: Add TanStack preview server compatibility shim
         run: |
