@@ -48,9 +48,6 @@ function NewbornsGallery() {
             A growing collection — more images will be added at different stages as
             little ones grow. Check back for new faces and milestones.
           </p>
-          <p className="text-xs text-muted-foreground/70 mt-3">
-            Images are watermarked and protected. Please do not download or reproduce without permission.
-          </p>
         </header>
         <GalleryGrid items={items} protect />
       </section>

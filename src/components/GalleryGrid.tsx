@@ -51,23 +51,14 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
 
   const current = active !== null ? slots[active] : null;
 
-  const protectImgProps = protect
-    ? {
-        draggable: false,
-        onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
-        onDragStart: (e: React.DragEvent) => e.preventDefault(),
-        style: {
-          WebkitUserSelect: "none",
-          userSelect: "none",
-          WebkitTouchCallout: "none",
-          WebkitUserDrag: "none",
-          pointerEvents: "none",
-        } as React.CSSProperties,
-      }
-    : {};
-
   return (
     <>
+      {protect && (
+        <p className="mb-4 text-center text-xs text-muted-foreground/80">
+          Images are watermarked and protected. Please do not download or reproduce without permission.
+        </p>
+      )}
+
       <div
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4"
         onContextMenu={protect ? (e) => e.preventDefault() : undefined}
@@ -192,7 +183,7 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
             )}
             {protect && (
               <figcaption className="text-center text-xs text-muted-foreground/70 mt-2">
-                © MissKonstruction — please do not download or reproduce.
+                Images are watermarked and protected. Please do not download or reproduce without permission.
               </figcaption>
             )}
           </figure>
