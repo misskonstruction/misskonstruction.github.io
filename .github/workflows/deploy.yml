@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: preserve custom domain after 404 report
+# Trigger redeploy: node-server nitro preset for prerender
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
