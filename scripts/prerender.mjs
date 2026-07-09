@@ -117,10 +117,17 @@ function findClientDir() {
 
 function ensurePreviewServerEntry() {
   const serverEntry = join("dist", "server", "server.js");
-  const fallbackEntry = join("dist", "server", "index.js");
-
-  if (!existsSync(serverEntry) && existsSync(fallbackEntry)) {
-    cpSync(fallbackEntry, serverEntry);
+  if (existsSync(serverEntry)) return;
+  const candidates = [
+    join("dist", "server", "index.js"),
+    join("dist", "server", "index.mjs"),
+    join("dist", "server", "server.mjs"),
+  ];
+  for (const c of candidates) {
+    if (existsSync(c)) {
+      cpSync(c, serverEntry);
+      return;
+    }
   }
 }
 
@@ -146,19 +153,50 @@ async function main() {
   cpSync(clientDir, OUT, { recursive: true });
   if (existsSync("public")) cpSync("public", OUT, { recursive: true });
 
-  // Start preview server
-  console.log(`🚀 Starting preview server on :${PORT}`);
-  const server = spawn("bunx", ["vite", "preview", "--port", String(PORT), "--strictPort"], {
-    stdio: "inherit",
-    env: { ...process.env, PORT: String(PORT) },
-  });
+  // Pass through env vars to wrangler via a .dev.vars file next to the wrangler config
+  const passthroughEnv = [
+    "LOVABLE_API_KEY",
+    "WORDPRESS_COM_API_KEY",
+    "SUPABASE_URL",
+    "SUPABASE_PUBLISHABLE_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+  ];
+  const devVarsLines = passthroughEnv
+    .filter((k) => process.env[k])
+    .map((k) => `${k}=${JSON.stringify(process.env[k])}`)
+    .join("\n");
+  if (devVarsLines) {
+    writeFileSync(join("dist", "server", ".dev.vars"), devVarsLines + "\n");
+  }
+
+  // Start preview server via wrangler (Cloudflare Worker output)
+  console.log(`🚀 Starting wrangler dev on :${PORT}`);
+  const server = spawn(
+    "bunx",
+    [
+      "wrangler",
+      "dev",
+      "--config",
+      join("dist", "server", "wrangler.json"),
+      "--port",
+      String(PORT),
+      "--ip",
+      "127.0.0.1",
+      "--log-level",
+      "warn",
+    ],
+    {
+      stdio: "inherit",
+      env: { ...process.env, PORT: String(PORT) },
+    },
+  );
 
   const cleanup = () => { try { server.kill("SIGTERM"); } catch {} };
   process.on("exit", cleanup);
   process.on("SIGINT", () => { cleanup(); process.exit(1); });
 
   try {
-    await waitForServer(`http://localhost:${PORT}/`);
+    await waitForServer(`http://localhost:${PORT}/`, 90000);
 
     // Discover dynamic blog post routes from WordPress
     const postRoutes = await fetchWordPressPostRoutes();
