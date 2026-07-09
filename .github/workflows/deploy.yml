@@ -1,8 +1,6 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: default GitHub Pages URL, no CNAME, static SPA fallback
-
-# Builds the app, publishes only the static client files to GitHub Pages,
-# and uses 404.html as the deep-link fallback.
+# Emergency stable deploy: publish the checked-in static site only.
+# No server build, no prerender, no CNAME.
 on:
   push:
     branches: [main]
@@ -26,40 +24,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile || bun install
-
-      - name: Build app
-        run: |
-          rm -rf dist dist-static .output
-          rm -rf dist-static
-          bun run build
-
       - name: Prepare GitHub Pages artifact
         run: |
           set -e
-          rm -rf dist-static
-          mkdir -p dist-static
-          for d in dist/client .output/public dist .vinxi/build/client; do
-            if [ -f "$d/index.html" ]; then
-              echo "Using static client files from $d"
-              cp -r "$d"/. dist-static/
-              break
-            fi
-          done
-          if [ -d public ]; then cp -r public/. dist-static/; fi
+          test -s dist-static/index.html
+
+          # Keep the default GitHub Pages URL working: misskonstruction.github.io
+          rm -f dist-static/CNAME
+
           # GitHub Pages SPA fallback so direct visits to nested routes work.
           if [ -f dist-static/index.html ]; then
             cp dist-static/index.html dist-static/404.html
           fi
-          # No CNAME — site is served at misskonstruction.github.io (default Pages URL)
-          rm -f dist-static/CNAME
+
           touch dist-static/.nojekyll
-          test -s dist-static/index.html
           test -s dist-static/404.html
           find dist-static -type f -name '.DS_Store' -delete
           echo "dist-static files ready: $(find dist-static -type f | wc -l)"
