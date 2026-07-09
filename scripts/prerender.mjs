@@ -117,6 +117,8 @@ function findClientDir() {
 }
 
 function ensurePreviewServerEntry() {
+  const serverDir = join("dist", "server");
+  mkdirSync(serverDir, { recursive: true });
   const serverEntry = join("dist", "server", "server.js");
   if (existsSync(serverEntry)) return;
   const candidates = [
@@ -130,6 +132,11 @@ function ensurePreviewServerEntry() {
       return;
     }
   }
+  console.warn("⚠️  No server bundle found; writing a minimal preview fallback for static deploy.");
+  writeFileSync(
+    serverEntry,
+    `// Minimal ESM fallback so TanStack preview can import dist/server/server.js.\nexport default {\n  async fetch() {\n    return new Response("Not Found", { status: 404 });\n  },\n};\n`,
+  );
 }
 
 function warnOrThrow(message) {
