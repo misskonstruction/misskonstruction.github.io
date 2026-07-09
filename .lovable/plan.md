@@ -1,24 +1,30 @@
-## Subtle animated shimmer on the candle wax drips
+## Protecting the Newborns gallery photos
 
-The drips are baked into `desk-scene.jpg` — they can't physically move. What I can do is overlay a very subtle moving highlight on top of them so they look slick and wet, like fresh wax catching the flame's light. No new dripping motion, no shape changes to the photo — just a slow glisten traveling down the existing drips.
+Short answer: there is no way to make an image *impossible* to save once a browser has rendered it — anyone can screenshot. But we can put up enough friction that casual right-click / drag-save / "Save image as…" won't work, which is what most photographers mean by "protected."
 
-### Approach
+Here's what I'd add, scoped **only to `/gallery/newborns`** so your other galleries stay unchanged:
 
-Scope: `src/routes/blog.raw-and-unhinged.tsx` only. Mirrors the pattern used by the candle flame, tea steam, and (now-removed) shimmer — small absolutely-positioned overlay anchored by percentage to the desk image.
+### Deterrents I'll add
+1. **Disable right-click** on gallery images (context menu suppressed).
+2. **Block drag-to-save** with `draggable={false}` and CSS `user-select: none` + `-webkit-user-drag: none`.
+3. **Transparent overlay** on top of each thumbnail and the lightbox image, so "Save image as…" on the overlay saves a 1×1 transparent PNG instead of the photo.
+4. **Disable long-press save on mobile** via `-webkit-touch-callout: none`.
+5. **Suppress the lightbox's direct image URL** from being trivially copyable (no "open image in new tab" affordance).
+6. **Add a subtle "© MissKonstruction — do not download" caption** under the lightbox on this gallery only.
 
-1. **Anchor** — small vertical strip over the candle drip area: roughly `left: 16.5%`, `top: 17%`, `width: 5%`, `height: 18%` of the scene. Hard-clipped with `overflow: hidden` and a soft mask so the glow can't leak off the candle.
-2. **Glisten content** — a thin, soft warm-white highlight (linear gradient strip, blurred, `mix-blend-mode: screen`, low opacity ~0.35 peak). Think wet wax catching candlelight.
-3. **Motion** — the highlight slowly drifts top→bottom over ~6s, fades in mid-travel and out near the bottom, then a long pause before the next pass. Two staggered highlights at slightly different x-offsets and durations (6s / 8s) so the candle subtly "breathes" instead of pulsing on a beat.
-4. **No horizontal motion** — vertical only, since wax flows down. Stays inside the clipped strip.
-5. **Reduced motion** — frozen via the existing `prefers-reduced-motion` rule.
+### What this does NOT stop (being honest)
+- Screenshots (phone or desktop).
+- DevTools users who inspect the network tab.
+- Anyone determined enough to grab the file from the page source.
 
-### Boundary safety
+The only way to fully block those is signed short-lived URLs + DRM-style streaming, which isn't worth the complexity for a photo gallery and still can't beat a screenshot. Your existing bottom-right watermark is the real long-term protection.
 
-Same lessons as before: `overflow: hidden` + radial-gradient mask + percentage anchoring. If the position is even a hair off the actual drips in the photo, I'll nudge `left/top` only — nothing else changes.
+### Scope
+- Extend `GalleryGrid` with an optional `protect` prop (default `false`) so I don't change behavior on Boats, Flowers, etc.
+- Pass `protect` from `src/routes/gallery.newborns.tsx` only.
+- Add the small caption text under the newborn header noting images are protected/watermarked.
 
-### Preview before declaring done
+### Optional (say yes/no)
+- Add a **larger, semi-transparent diagonal watermark** across the lightbox view (in addition to your existing bottom-right one) on newborn photos only, for extra deterrence. Thumbnails stay clean.
 
-After the edit I'll screenshot and zoom in on the candle so you can confirm the glow lands on the wax (not the brass dish, not the wall) before we ship.
-
-### Files touched
-- `src/routes/blog.raw-and-unhinged.tsx` — add `<WaxShimmer />` (~10 lines JSX) into the scene and a `.ru-wax-*` CSS block (~35 lines) near the existing flame/steam styles.
+Want me to include the diagonal lightbox watermark, or just the anti-download deterrents?
