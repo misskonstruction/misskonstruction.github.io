@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: reassert CNAME + SPA 404 fallback
+# Trigger redeploy: default GitHub Pages URL, no CNAME, fresh SPA fallback
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
@@ -53,7 +53,7 @@ jobs:
           WORDPRESS_COM_API_KEY: ${{ secrets.WORDPRESS_COM_API_KEY }}
         run: bun run prerender
 
-      - name: Add SPA fallback + custom domain + .nojekyll
+      - name: Add SPA fallback + .nojekyll
         if: always()
         run: |
           set -e
