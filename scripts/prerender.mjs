@@ -107,6 +107,7 @@ async function fetchWordPressPostRoutes() {
 
 const OUT = "dist-static";
 const PORT = 4321;
+const STRICT_PRERENDER = process.env.STRICT_PRERENDER === "true";
 
 // Find Vite client build output (usually .output/public or dist/client)
 function findClientDir() {
@@ -129,6 +130,11 @@ function ensurePreviewServerEntry() {
       return;
     }
   }
+}
+
+function warnOrThrow(message) {
+  if (STRICT_PRERENDER) throw new Error(message);
+  console.warn(`⚠️  ${message}`);
 }
 
 async function waitForServer(url, timeoutMs = 30000) {
@@ -215,7 +221,14 @@ async function main() {
   process.on("SIGINT", () => { cleanup(); process.exit(1); });
 
   try {
-    await waitForServer(`http://localhost:${PORT}/`, 90000);
+    try {
+      await waitForServer(`http://localhost:${PORT}/`, 90000);
+    } catch (error) {
+      warnOrThrow(
+        `Prerender preview server did not become ready. Deploying the static client fallback instead. ${error.message}`,
+      );
+      return;
+    }
 
     // Discover dynamic blog post routes from WordPress
     const postRoutes = await fetchWordPressPostRoutes();
@@ -242,7 +255,9 @@ async function main() {
       console.log(`✅ ${route}  (${html.length} bytes)`);
     }
     if (failures.length) {
-      throw new Error(`Prerender failed for ${failures.length} route(s): ${failures.join(", ")}`);
+      warnOrThrow(
+        `Prerender skipped ${failures.length} route(s): ${failures.join(", ")}. The SPA fallback will serve them on GitHub Pages.`,
+      );
     }
     console.log(`\n✨ Prerendered ${allRoutes.length} routes → ${OUT}/`);
   } finally {
@@ -250,4 +265,10 @@ async function main() {
   }
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  if (STRICT_PRERENDER) {
+    console.error(e);
+    process.exit(1);
+  }
+  console.warn(`⚠️  Prerender could not complete. Deploying the static client fallback instead. ${e.message}`);
+});
