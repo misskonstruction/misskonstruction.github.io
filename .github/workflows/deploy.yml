@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Stable deploy: keep the static site published for misskonstruction.github.io.
+# Stable deploy: keep the committed static site published for misskonstruction.github.io.
 # No server build, no prerender, no CNAME, no repo-settings API calls.
 on:
   push:
