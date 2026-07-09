@@ -51,14 +51,14 @@ jobs:
           if [ ! -f dist/server/server.js ]; then
             echo "No server bundle found; writing minimal ESM fallback so prerender can import it."
             cat > dist/server/server.js <<'EOF'
-// Minimal ESM fallback so @tanstack/start-plugin-core can import dist/server/server.js.
-// The static prerender does not need a real server handler; it just needs the module to load.
-export default {
-  async fetch() {
-    return new Response("Not Found", { status: 404 });
-  },
-};
-EOF
+          // Minimal ESM fallback so @tanstack/start-plugin-core can import dist/server/server.js.
+          // The static prerender does not need a real server handler; it just needs the module to load.
+          export default {
+            async fetch() {
+              return new Response("Not Found", { status: 404 });
+            },
+          };
+          EOF
           fi
           test -s dist/server/server.js
           ls -la dist/server
