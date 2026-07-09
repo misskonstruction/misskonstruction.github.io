@@ -33,9 +33,34 @@ jobs:
           rm -f CNAME
           rm -f dist-static/CNAME
 
-          # GitHub Pages SPA fallback so direct visits to nested routes work.
-          if [ -f dist-static/index.html ]; then
-            cp dist-static/index.html dist-static/404.html
+          # GitHub Pages SPA fallback: encode requested path into a query
+          # string and bounce to '/'. index.html's restore script (injected
+          # below) puts the real URL back before the SPA boots, so shared
+          # deep links (e.g. individual blog posts) render the right page
+          # instead of falling back to the home page.
+          cat > dist-static/404.html <<'HTML'
+          <!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title>
+          <script>
+            var l = window.location;
+            l.replace(
+              l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+              '/?/' + l.pathname.slice(1).replace(/&/g, '~and~') +
+              (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+              l.hash
+            );
+          </script></head><body></body></html>
+          HTML
+
+          # Inject URL-restore script into index.html once (idempotent).
+          if ! grep -q 'spa-github-pages-restore' dist-static/index.html; then
+            python3 - <<'PY'
+          import pathlib, re
+          p = pathlib.Path('dist-static/index.html')
+          html = p.read_text()
+          snippet = '<script id="spa-github-pages-restore">(function(l){if(l.search[1]==="/"){var d=l.search.slice(1).split("&").map(function(s){return s.replace(/~and~/g,"&")}).join("?");window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);}}(window.location))</script>'
+          html = re.sub(r'<head([^>]*)>', r'<head\1>' + snippet, html, count=1)
+          p.write_text(html)
+          PY
           fi
 
           touch dist-static/.nojekyll
