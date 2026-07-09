@@ -1,30 +1,66 @@
-## Protecting the Newborns gallery photos
+## Why deep links break today
 
-Short answer: there is no way to make an image *impossible* to save once a browser has rendered it — anyone can screenshot. But we can put up enough friction that casual right-click / drag-save / "Save image as…" won't work, which is what most photographers mean by "protected."
+Your site is a Single Page App on GitHub Pages. Only some URLs have their own prerendered folder in `dist-static/`:
 
-Here's what I'd add, scoped **only to `/gallery/newborns`** so your other galleries stay unchanged:
+- Prerendered (shared links work): `/`, `/about`, `/contact`, `/blog`, `/blog/reflections`, all `/gallery/*`, all `/recipes/*`, all `/prayers/*`.
+- **NOT prerendered (shared links break)**: individual blog posts under `/blog/{category}/{post-slug}` — no folder exists for each post.
 
-### Deterrents I'll add
-1. **Disable right-click** on gallery images (context menu suppressed).
-2. **Block drag-to-save** with `draggable={false}` and CSS `user-select: none` + `-webkit-user-drag: none`.
-3. **Transparent overlay** on top of each thumbnail and the lightbox image, so "Save image as…" on the overlay saves a 1×1 transparent PNG instead of the photo.
-4. **Disable long-press save on mobile** via `-webkit-touch-callout: none`.
-5. **Suppress the lightbox's direct image URL** from being trivially copyable (no "open image in new tab" affordance).
-6. **Add a subtle "© MissKonstruction — do not download" caption** under the lightbox on this gallery only.
+When someone opens a link with no matching folder, GitHub Pages serves `404.html`. Today `404.html` just runs `window.location.replace("/")`, which is exactly why every shared post link lands on the home page.
 
-### What this does NOT stop (being honest)
-- Screenshots (phone or desktop).
-- DevTools users who inspect the network tab.
-- Anyone determined enough to grab the file from the page source.
+## The fix (industry-standard, minimal, safe)
 
-The only way to fully block those is signed short-lived URLs + DRM-style streaming, which isn't worth the complexity for a photo gallery and still can't beat a screenshot. Your existing bottom-right watermark is the real long-term protection.
+Use the well-known "spa-github-pages" redirect. It only edits the deploy workflow — no source changes, no build changes, no prerender, no CNAME.
 
-### Scope
-- Extend `GalleryGrid` with an optional `protect` prop (default `false`) so I don't change behavior on Boats, Flowers, etc.
-- Pass `protect` from `src/routes/gallery.newborns.tsx` only.
-- Add the small caption text under the newborn header noting images are protected/watermarked.
+1. Replace `dist-static/404.html` with one whose only job is to encode the requested path into a query string and redirect to `/`. Example: `/blog/reflections/my-post` becomes `/?/blog/reflections/my-post`.
+2. Inject a tiny script at the top of `<head>` in `dist-static/index.html` that, before the SPA boots, reads the encoded path and calls `history.replaceState` to restore the real URL. The SPA then routes normally and renders the correct post.
 
-### Optional (say yes/no)
-- Add a **larger, semi-transparent diagonal watermark** across the lightbox view (in addition to your existing bottom-right one) on newborn photos only, for extra deterrence. Thumbnails stay clean.
+Both edits happen inside the existing "Prepare GitHub Pages artifact" step in `.github/workflows/deploy.yml`. Nothing else changes.
 
-Want me to include the diagonal lightbox watermark, or just the anti-download deterrents?
+## Why this can't break the site
+
+- Pages with their own prerendered folder still resolve normally — the 404 fallback is only used when GitHub Pages can't find a folder.
+- The restore script is a no-op when there's no encoded path, so normal home visits are unaffected.
+- Committed static files in the repo are not modified — the workflow only rewrites files inside `dist-static/` at deploy time. Reverting is one line in the workflow.
+- No prerender, no wrangler, no server build, no CNAME, no repo-settings API calls — all the things that have broken deploys before are untouched.
+
+## Technical details
+
+Inside `.github/workflows/deploy.yml`, in the existing prepare step, replace the `cp dist-static/index.html dist-static/404.html` line with:
+
+```bash
+# SPA-fallback 404: encode the requested path and bounce to '/'.
+cat > dist-static/404.html <<'HTML'
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title>
+<script>
+  var l = window.location;
+  l.replace(
+    l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+    '/?/' + l.pathname.slice(1).replace(/&/g, '~and~') +
+    (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+    l.hash
+  );
+</script></head><body></body></html>
+HTML
+
+# Inject the URL-restore script into index.html once (idempotent).
+if ! grep -q 'spa-github-pages-restore' dist-static/index.html; then
+  python3 - <<'PY'
+import pathlib, re
+p = pathlib.Path('dist-static/index.html')
+html = p.read_text()
+snippet = '<script id="spa-github-pages-restore">(function(l){if(l.search[1]==="/"){var d=l.search.slice(1).split("&").map(function(s){return s.replace(/~and~/g,"&")}).join("?");window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);}}(window.location))</script>'
+html = re.sub(r'<head([^>]*)>', r'<head\1>' + snippet, html, count=1)
+p.write_text(html)
+PY
+fi
+```
+
+Everything else in the workflow (checkout, `.nojekyll`, gh-pages publish, no-CNAME) stays exactly as it is.
+
+## If a 404 still shows up after this runs
+
+The only remaining cause would be GitHub's own Pages settings — **Repo → Settings → Pages** must have the source set to the `gh-pages` branch (root). No code change can fix that toggle; check it once and it stays set.
+
+## Out of scope
+
+Prerendering individual blog posts. That path has broken deploys before, so I'm not touching it. The SPA redirect above already covers every deep link, including any new posts you add later.
