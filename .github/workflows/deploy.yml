@@ -1,9 +1,8 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: default GitHub Pages URL, no CNAME, fresh SPA fallback
+# Trigger redeploy: default GitHub Pages URL, no CNAME, static SPA fallback
 
-
-# Builds the TanStack Start app, prerenders every route to static HTML,
-# and publishes the result to GitHub Pages.
+# Builds the app, publishes only the static client files to GitHub Pages,
+# and uses 404.html as the deep-link fallback.
 on:
   push:
     branches: [main]
@@ -36,56 +35,24 @@ jobs:
 
       - name: Build app
         run: |
+          rm -rf dist dist-static .output
           rm -rf dist-static
           bun run build
 
-      - name: Add TanStack preview server compatibility shim
+      - name: Prepare GitHub Pages artifact
         run: |
           set -e
-          mkdir -p dist/server
-          if [ ! -f dist/server/server.js ]; then
-            for f in dist/server/index.js dist/server/index.mjs dist/server/server.mjs; do
-              if [ -f "$f" ]; then cp "$f" dist/server/server.js; break; fi
-            done
-          fi
-          if [ ! -f dist/server/server.js ]; then
-            echo "No server bundle found; writing minimal ESM fallback so prerender can import it."
-            cat > dist/server/server.js <<'EOF'
-          // Minimal ESM fallback so @tanstack/start-plugin-core can import dist/server/server.js.
-          // The static prerender does not need a real server handler; it just needs the module to load.
-          export default {
-            async fetch() {
-              return new Response("Not Found", { status: 404 });
-            },
-          };
-          EOF
-          fi
-          test -s dist/server/server.js
-          ls -la dist/server
-
-      - name: Prerender static HTML
-        env:
-          LOVABLE_API_KEY: ${{ secrets.LOVABLE_API_KEY }}
-          WORDPRESS_COM_API_KEY: ${{ secrets.WORDPRESS_COM_API_KEY }}
-        run: |
-          bun run prerender || echo "Prerender failed; continuing with the static client fallback."
-
-      - name: Add SPA fallback + .nojekyll
-        if: always()
-        run: |
-          set -e
+          rm -rf dist-static
           mkdir -p dist-static
-          # If prerender bailed before copying the client build, recover it now
-          if [ ! -f dist-static/index.html ]; then
-            for d in .output/public dist/client dist .vinxi/build/client; do
-              if [ -d "$d" ] && [ -n "$(ls -A "$d" 2>/dev/null)" ]; then
-                cp -r "$d"/. dist-static/
-                break
-              fi
-            done
-          fi
+          for d in dist/client .output/public dist .vinxi/build/client; do
+            if [ -f "$d/index.html" ]; then
+              echo "Using static client files from $d"
+              cp -r "$d"/. dist-static/
+              break
+            fi
+          done
           if [ -d public ]; then cp -r public/. dist-static/; fi
-          # GitHub Pages 404 fallback so deep links work
+          # GitHub Pages SPA fallback so direct visits to nested routes work.
           if [ -f dist-static/index.html ]; then
             cp dist-static/index.html dist-static/404.html
           fi
