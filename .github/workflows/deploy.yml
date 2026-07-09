@@ -52,13 +52,30 @@ jobs:
         run: bun run prerender
 
       - name: Add SPA fallback + custom domain + .nojekyll
+        if: always()
         run: |
+          set -e
+          mkdir -p dist-static
+          # If prerender bailed before copying the client build, recover it now
+          if [ ! -f dist-static/index.html ]; then
+            for d in .output/public dist/client dist .vinxi/build/client; do
+              if [ -d "$d" ] && [ -n "$(ls -A "$d" 2>/dev/null)" ]; then
+                cp -r "$d"/. dist-static/
+                break
+              fi
+            done
+          fi
+          if [ -d public ]; then cp -r public/. dist-static/; fi
           # GitHub Pages 404 fallback so deep links work
-          cp dist-static/index.html dist-static/404.html
+          if [ -f dist-static/index.html ]; then
+            cp dist-static/index.html dist-static/404.html
+          fi
           printf '%s\n' "misskonstruction.com" > dist-static/CNAME
           touch dist-static/.nojekyll
+          test -s dist-static/index.html
           test -s dist-static/404.html
           test "$(cat dist-static/CNAME)" = "misskonstruction.com"
+          echo "✅ CNAME, 404.html, and .nojekyll are in place"
 
       - uses: actions/configure-pages@v5
 
