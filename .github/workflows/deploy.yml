@@ -41,6 +41,7 @@ jobs:
           touch dist-static/.nojekyll
           test -s dist-static/404.html
           find dist-static -type f -name '.DS_Store' -delete
+          echo "root files ready: $(test -s index.html && echo yes)"
           echo "dist-static files ready: $(find dist-static -type f | wc -l)"
           echo "✅ 404.html and .nojekyll are in place"
 
