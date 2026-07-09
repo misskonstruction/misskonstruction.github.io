@@ -72,14 +72,14 @@ jobs:
           if [ -f dist-static/index.html ]; then
             cp dist-static/index.html dist-static/404.html
           fi
-          printf '%s\n' "misskonstruction.github.io" > dist-static/CNAME
+          # No CNAME — site is served at misskonstruction.github.io (default Pages URL)
+          rm -f dist-static/CNAME
           touch dist-static/.nojekyll
           test -s dist-static/index.html
           test -s dist-static/404.html
-          test "$(cat dist-static/CNAME)" = "misskonstruction.github.io"
           find dist-static -type f -name '.DS_Store' -delete
           echo "dist-static files ready: $(find dist-static -type f | wc -l)"
-          echo "✅ CNAME, 404.html, and .nojekyll are in place"
+          echo "✅ 404.html and .nojekyll are in place"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
