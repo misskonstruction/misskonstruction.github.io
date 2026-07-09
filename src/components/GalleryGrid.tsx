@@ -93,21 +93,31 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
               className="group aspect-square overflow-hidden rounded-md bg-card relative focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label={`View ${item.title ?? "photo"}`}
             >
-              <img
-                src={item.src}
-                alt={item.title ?? ""}
-                width={600}
-                height={600}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                {...protectImgProps}
-              />
-              {protect && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0 z-10"
-                  style={{ background: "transparent" }}
+              {protect ? (
+                <div
+                  role="img"
+                  aria-label={item.title ?? ""}
+                  className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url(${item.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    WebkitUserSelect: "none",
+                    userSelect: "none",
+                    WebkitTouchCallout: "none",
+                  } as React.CSSProperties}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              ) : (
+                <img
+                  src={item.src}
+                  alt={item.title ?? ""}
+                  width={600}
+                  height={600}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
               <div className="absolute inset-0 bg-background/0 group-hover:bg-background/40 transition-colors flex items-end p-3 pointer-events-none">
