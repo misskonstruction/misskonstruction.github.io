@@ -117,10 +117,17 @@ function findClientDir() {
 
 function ensurePreviewServerEntry() {
   const serverEntry = join("dist", "server", "server.js");
-  const fallbackEntry = join("dist", "server", "index.js");
-
-  if (!existsSync(serverEntry) && existsSync(fallbackEntry)) {
-    cpSync(fallbackEntry, serverEntry);
+  if (existsSync(serverEntry)) return;
+  const candidates = [
+    join("dist", "server", "index.js"),
+    join("dist", "server", "index.mjs"),
+    join("dist", "server", "server.mjs"),
+  ];
+  for (const c of candidates) {
+    if (existsSync(c)) {
+      cpSync(c, serverEntry);
+      return;
+    }
   }
 }
 
@@ -146,19 +153,69 @@ async function main() {
   cpSync(clientDir, OUT, { recursive: true });
   if (existsSync("public")) cpSync("public", OUT, { recursive: true });
 
-  // Start preview server
-  console.log(`🚀 Starting preview server on :${PORT}`);
-  const server = spawn("bunx", ["vite", "preview", "--port", String(PORT), "--strictPort"], {
-    stdio: "inherit",
-    env: { ...process.env, PORT: String(PORT) },
-  });
+  // Detect the nitro preset used for the server build. In CI the vite config
+  // requests `node-server`, so `vite preview` can host the built app directly.
+  // In the sandbox preview environment the plugin forces `cloudflare-module`
+  // regardless of user config; fall back to `wrangler dev` for that case
+  // (works for local prerender testing; note that workerd inside the sandbox
+  // does not have outbound network access, so dynamic-loader routes may 500).
+  let preset = "node-server";
+  try {
+    const nitroInfo = JSON.parse(
+      (await import("node:fs")).readFileSync(join("dist", "nitro.json"), "utf8"),
+    );
+    if (typeof nitroInfo?.preset === "string") preset = nitroInfo.preset;
+  } catch {}
+
+  let server;
+  if (preset.startsWith("cloudflare")) {
+    // Wrangler needs env vars via .dev.vars beside the config
+    const passthroughEnv = [
+      "LOVABLE_API_KEY",
+      "WORDPRESS_COM_API_KEY",
+      "SUPABASE_URL",
+      "SUPABASE_PUBLISHABLE_KEY",
+      "SUPABASE_SERVICE_ROLE_KEY",
+    ];
+    const devVarsLines = passthroughEnv
+      .filter((k) => process.env[k])
+      .map((k) => `${k}=${JSON.stringify(process.env[k])}`)
+      .join("\n");
+    if (devVarsLines) {
+      writeFileSync(join("dist", "server", ".dev.vars"), devVarsLines + "\n");
+    }
+    console.log(`🚀 Starting wrangler dev on :${PORT} (preset=${preset})`);
+    server = spawn(
+      "bunx",
+      [
+        "wrangler",
+        "dev",
+        "--config",
+        join("dist", "server", "wrangler.json"),
+        "--port",
+        String(PORT),
+        "--ip",
+        "127.0.0.1",
+        "--log-level",
+        "warn",
+      ],
+      { stdio: "inherit", env: { ...process.env, PORT: String(PORT) } },
+    );
+  } else {
+    console.log(`🚀 Starting vite preview on :${PORT} (preset=${preset})`);
+    server = spawn(
+      "bunx",
+      ["vite", "preview", "--port", String(PORT), "--strictPort"],
+      { stdio: "inherit", env: { ...process.env, PORT: String(PORT) } },
+    );
+  }
 
   const cleanup = () => { try { server.kill("SIGTERM"); } catch {} };
   process.on("exit", cleanup);
   process.on("SIGINT", () => { cleanup(); process.exit(1); });
 
   try {
-    await waitForServer(`http://localhost:${PORT}/`);
+    await waitForServer(`http://localhost:${PORT}/`, 90000);
 
     // Discover dynamic blog post routes from WordPress
     const postRoutes = await fetchWordPressPostRoutes();

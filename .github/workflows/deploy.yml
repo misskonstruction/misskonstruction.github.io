@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: preserve custom domain after 404 report
+# Trigger redeploy: node-server nitro preset for prerender
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
@@ -39,8 +39,10 @@ jobs:
 
       - name: Add TanStack preview server compatibility shim
         run: |
-          if [ ! -f dist/server/server.js ] && [ -f dist/server/index.js ]; then
-            cp dist/server/index.js dist/server/server.js
+          if [ ! -f dist/server/server.js ]; then
+            for f in dist/server/index.js dist/server/index.mjs dist/server/server.mjs; do
+              if [ -f "$f" ]; then cp "$f" dist/server/server.js; break; fi
+            done
           fi
 
       - name: Prerender static HTML
