@@ -14,8 +14,11 @@ export type GalleryItem = {
  * Renders a fixed 4×4 grid of 16 photo slots with a built-in lightbox.
  * To add a new photo: drop an entry into the `items` array of the gallery
  * route file. Empty slots show a "+ add photo" placeholder you can fill later.
+ *
+ * `protect` adds casual anti-download deterrents (no right-click, no drag,
+ * no long-press save, transparent overlay). It does NOT prevent screenshots.
  */
-export function GalleryGrid({ items }: { items: GalleryItem[] }) {
+export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; protect?: boolean }) {
   const slotCount = Math.max(16, Math.ceil(items.length / 4) * 4);
   const slots: (GalleryItem | null)[] = Array.from({ length: slotCount }, (_, i) => items[i] ?? null);
   const filledIndexes = slots
@@ -48,9 +51,27 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
 
   const current = active !== null ? slots[active] : null;
 
+  const protectImgProps = protect
+    ? {
+        draggable: false,
+        onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+        onDragStart: (e: React.DragEvent) => e.preventDefault(),
+        style: {
+          WebkitUserSelect: "none",
+          userSelect: "none",
+          WebkitTouchCallout: "none",
+          WebkitUserDrag: "none",
+          pointerEvents: "none",
+        } as React.CSSProperties,
+      }
+    : {};
+
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+      <div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4"
+        onContextMenu={protect ? (e) => e.preventDefault() : undefined}
+      >
         {slots.map((item, i) => {
           if (!item || !item.src) {
             return (
@@ -68,6 +89,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               key={i}
               type="button"
               onClick={() => setActive(i)}
+              onContextMenu={protect ? (e) => e.preventDefault() : undefined}
               className="group aspect-square overflow-hidden rounded-md bg-card relative focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label={`View ${item.title ?? "photo"}`}
             >
@@ -79,8 +101,16 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                {...protectImgProps}
               />
-              <div className="absolute inset-0 bg-background/0 group-hover:bg-background/40 transition-colors flex items-end p-3">
+              {protect && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 z-10"
+                  style={{ background: "transparent" }}
+                />
+              )}
+              <div className="absolute inset-0 bg-background/0 group-hover:bg-background/40 transition-colors flex items-end p-3 pointer-events-none">
                 <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity text-foreground">
                   {item.title}
                 </span>
@@ -94,6 +124,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
         <div
           className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={close}
+          onContextMenu={protect ? (e) => e.preventDefault() : undefined}
           role="dialog"
           aria-modal="true"
         >
@@ -115,15 +146,31 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
             <ChevronRight className="h-8 w-8" />
           </button>
 
-          <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full">
-            <img
-              src={current.large ?? current.src}
-              alt={current.title ?? ""}
-              className="max-h-[80vh] w-auto mx-auto object-contain rounded"
-            />
+          <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full relative">
+            <div className="relative">
+              <img
+                src={current.large ?? current.src}
+                alt={current.title ?? ""}
+                className="max-h-[80vh] w-auto mx-auto object-contain rounded"
+                {...protectImgProps}
+              />
+              {protect && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0"
+                  style={{ background: "transparent" }}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              )}
+            </div>
             {current.title && (
               <figcaption className="text-center text-sm text-muted-foreground mt-3">
                 {current.title}
+              </figcaption>
+            )}
+            {protect && (
+              <figcaption className="text-center text-xs text-muted-foreground/70 mt-2">
+                © MissKonstruction — please do not download or reproduce.
               </figcaption>
             )}
           </figure>
