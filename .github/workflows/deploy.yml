@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: publish deterministic GitHub Pages artifact
+# Trigger redeploy: reassert CNAME + SPA 404 fallback
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
