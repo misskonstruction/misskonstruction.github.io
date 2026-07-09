@@ -158,18 +158,30 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
 
           <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full relative">
             <div className="relative">
-              <img
-                src={current.large ?? current.src}
-                alt={current.title ?? ""}
-                className="max-h-[80vh] w-auto mx-auto object-contain rounded"
-                {...protectImgProps}
-              />
-              {protect && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0"
-                  style={{ background: "transparent" }}
+              {protect ? (
+                <div
+                  role="img"
+                  aria-label={current.title ?? ""}
+                  className="mx-auto rounded"
+                  style={{
+                    backgroundImage: `url(${current.large ?? current.src})`,
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    width: "min(100%, 1200px)",
+                    height: "80vh",
+                    WebkitUserSelect: "none",
+                    userSelect: "none",
+                    WebkitTouchCallout: "none",
+                  } as React.CSSProperties}
                   onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              ) : (
+                <img
+                  src={current.large ?? current.src}
+                  alt={current.title ?? ""}
+                  className="max-h-[80vh] w-auto mx-auto object-contain rounded"
                 />
               )}
             </div>
