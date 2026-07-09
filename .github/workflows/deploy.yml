@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Trigger redeploy: clean stale static output before publishing protected newborn gallery
+# Trigger redeploy: publish deterministic GitHub Pages artifact
 
 
 # Builds the TanStack Start app, prerenders every route to static HTML,
@@ -77,13 +77,18 @@ jobs:
           test -s dist-static/index.html
           test -s dist-static/404.html
           test "$(cat dist-static/CNAME)" = "misskonstruction.com"
+          find dist-static -type f -name '.DS_Store' -delete
+          echo "dist-static files ready: $(find dist-static -type f | wc -l)"
           echo "✅ CNAME, 404.html, and .nojekyll are in place"
 
-      - uses: actions/configure-pages@v5
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist-static
 
-      - id: deployment
+      - name: Deploy GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
