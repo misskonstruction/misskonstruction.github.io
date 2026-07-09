@@ -93,21 +93,31 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
               className="group aspect-square overflow-hidden rounded-md bg-card relative focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label={`View ${item.title ?? "photo"}`}
             >
-              <img
-                src={item.src}
-                alt={item.title ?? ""}
-                width={600}
-                height={600}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                {...protectImgProps}
-              />
-              {protect && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0 z-10"
-                  style={{ background: "transparent" }}
+              {protect ? (
+                <div
+                  role="img"
+                  aria-label={item.title ?? ""}
+                  className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url(${item.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    WebkitUserSelect: "none",
+                    userSelect: "none",
+                    WebkitTouchCallout: "none",
+                  } as React.CSSProperties}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              ) : (
+                <img
+                  src={item.src}
+                  alt={item.title ?? ""}
+                  width={600}
+                  height={600}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
               <div className="absolute inset-0 bg-background/0 group-hover:bg-background/40 transition-colors flex items-end p-3 pointer-events-none">
@@ -148,18 +158,30 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
 
           <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full relative">
             <div className="relative">
-              <img
-                src={current.large ?? current.src}
-                alt={current.title ?? ""}
-                className="max-h-[80vh] w-auto mx-auto object-contain rounded"
-                {...protectImgProps}
-              />
-              {protect && (
-                <span
-                  aria-hidden
-                  className="absolute inset-0"
-                  style={{ background: "transparent" }}
+              {protect ? (
+                <div
+                  role="img"
+                  aria-label={current.title ?? ""}
+                  className="mx-auto rounded"
+                  style={{
+                    backgroundImage: `url(${current.large ?? current.src})`,
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    width: "min(100%, 1200px)",
+                    height: "80vh",
+                    WebkitUserSelect: "none",
+                    userSelect: "none",
+                    WebkitTouchCallout: "none",
+                  } as React.CSSProperties}
                   onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              ) : (
+                <img
+                  src={current.large ?? current.src}
+                  alt={current.title ?? ""}
+                  className="max-h-[80vh] w-auto mx-auto object-contain rounded"
                 />
               )}
             </div>
