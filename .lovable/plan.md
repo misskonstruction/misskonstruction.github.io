@@ -1,66 +1,52 @@
-## Why deep links break today
+## What I found (read-only verification)
 
-Your site is a Single Page App on GitHub Pages. Only some URLs have their own prerendered folder in `dist-static/`:
+I checked the live site and both branches without making any changes.
 
-- Prerendered (shared links work): `/`, `/about`, `/contact`, `/blog`, `/blog/reflections`, all `/gallery/*`, all `/recipes/*`, all `/prayers/*`.
-- **NOT prerendered (shared links break)**: individual blog posts under `/blog/{category}/{post-slug}` — no folder exists for each post.
+**Live site (`misskonstruction.github.io`)**
+- `/404.html` → still the OLD version (just `window.location.replace("/")`).
+- `/index.html` → does NOT contain the `spa-github-pages-restore` script.
+- `/blog/reflections/some-post` (a non-existent post) → 404 with the old fallback.
 
-When someone opens a link with no matching folder, GitHub Pages serves `404.html`. Today `404.html` just runs `window.location.replace("/")`, which is exactly why every shared post link lands on the home page.
+**`gh-pages` branch (what the last workflow published)**
+- `404.html` → NEW SPA-redirect version ✅
+- `index.html` → contains `spa-github-pages-restore` ✅
 
-## The fix (industry-standard, minimal, safe)
+**`main` branch root (committed static files)**
+- `404.html` → OLD version.
+- `index.html` → no restore script.
 
-Use the well-known "spa-github-pages" redirect. It only edits the deploy workflow — no source changes, no build changes, no prerender, no CNAME.
+## Diagnosis
 
-1. Replace `dist-static/404.html` with one whose only job is to encode the requested path into a query string and redirect to `/`. Example: `/blog/reflections/my-post` becomes `/?/blog/reflections/my-post`.
-2. Inject a tiny script at the top of `<head>` in `dist-static/index.html` that, before the SPA boots, reads the encoded path and calls `history.replaceState` to restore the real URL. The SPA then routes normally and renders the correct post.
+The workflow ran correctly and pushed the right files to `gh-pages`. **GitHub Pages is not serving from `gh-pages` — it's serving from `main` branch root.** That's why none of the SPA redirect changes are visible on the live site. This is a **Pages source setting**, not a code problem, and only you can flip it in the GitHub UI.
 
-Both edits happen inside the existing "Prepare GitHub Pages artifact" step in `.github/workflows/deploy.yml`. Nothing else changes.
+## Two ways to fix — pick one
 
-## Why this can't break the site
+### Option A (recommended, zero risk): sync the SPA files into `main` root
 
-- Pages with their own prerendered folder still resolve normally — the 404 fallback is only used when GitHub Pages can't find a folder.
-- The restore script is a no-op when there's no encoded path, so normal home visits are unaffected.
-- Committed static files in the repo are not modified — the workflow only rewrites files inside `dist-static/` at deploy time. Reverting is one line in the workflow.
-- No prerender, no wrangler, no server build, no CNAME, no repo-settings API calls — all the things that have broken deploys before are untouched.
+I copy the two already-working files from `gh-pages` into `main` branch root:
+- Overwrite `/404.html` with the SPA-redirect version.
+- Insert the one-line restore `<script>` into `/index.html` `<head>`.
 
-## Technical details
+That's it. No workflow changes, no CNAME touch, no build steps, no source changes. Since the live site is already served from `main` root, the fix goes live on the next push.
 
-Inside `.github/workflows/deploy.yml`, in the existing prepare step, replace the `cp dist-static/index.html dist-static/404.html` line with:
+**Why this can't break the site:** the restore script is a no-op when there's no encoded path (normal home visits unaffected), and prerendered routes with their own folder still resolve normally — the 404 fallback only fires when GitHub Pages can't find a folder.
 
-```bash
-# SPA-fallback 404: encode the requested path and bounce to '/'.
-cat > dist-static/404.html <<'HTML'
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title>
-<script>
-  var l = window.location;
-  l.replace(
-    l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-    '/?/' + l.pathname.slice(1).replace(/&/g, '~and~') +
-    (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-    l.hash
-  );
-</script></head><body></body></html>
-HTML
+**If something did go wrong**, the revert is one-line: put back the old `404.html` and remove the one script tag. I would do the revert immediately, at no additional cost to you.
 
-# Inject the URL-restore script into index.html once (idempotent).
-if ! grep -q 'spa-github-pages-restore' dist-static/index.html; then
-  python3 - <<'PY'
-import pathlib, re
-p = pathlib.Path('dist-static/index.html')
-html = p.read_text()
-snippet = '<script id="spa-github-pages-restore">(function(l){if(l.search[1]==="/"){var d=l.search.slice(1).split("&").map(function(s){return s.replace(/~and~/g,"&")}).join("?");window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);}}(window.location))</script>'
-html = re.sub(r'<head([^>]*)>', r'<head\1>' + snippet, html, count=1)
-p.write_text(html)
-PY
-fi
-```
+### Option B (settings toggle you do yourself): point Pages at `gh-pages`
 
-Everything else in the workflow (checkout, `.nojekyll`, gh-pages publish, no-CNAME) stays exactly as it is.
+**Repo → Settings → Pages → Source = "Deploy from a branch" → Branch: `gh-pages` / `(root)` → Save.**
 
-## If a 404 still shows up after this runs
+The fix goes live in ~1 minute using the files already on `gh-pages`. I make no code changes. Downside: any future manual pushes to `main` root won't be served, which may confuse things later.
 
-The only remaining cause would be GitHub's own Pages settings — **Repo → Settings → Pages** must have the source set to the `gh-pages` branch (root). No code change can fix that toggle; check it once and it stays set.
+## Recommendation
 
-## Out of scope
+Option A. It's smaller in scope (two file edits, no workflow, no settings) and matches how your site is actually being served today.
 
-Prerendering individual blog posts. That path has broken deploys before, so I'm not touching it. The SPA redirect above already covers every deep link, including any new posts you add later.
+## If you approve Option A
+
+I'll change exactly two files at repo root:
+1. `404.html` — replace with the SPA-redirect version.
+2. `index.html` — insert `<script id="spa-github-pages-restore">…</script>` right after `<head>`.
+
+Nothing else — no workflow edits, no CNAME, no `.nojekyll` changes, no source files, no builds.
