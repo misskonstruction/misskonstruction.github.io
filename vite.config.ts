@@ -12,4 +12,24 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // resulting server can be started with plain Node and has full network access.
 export default defineConfig({
   nitro: { preset: "node-server" },
+  vite: {
+    plugins: [
+      {
+        // Nitro wraps built CSS as `virtual:nitro:raw:…file.css` when inlining
+        // it for the SSR bundle. The trailing `.css` in the module id makes
+        // Vite's css plugin re-run Lightning CSS on the JS wrapper text, which
+        // fails with "Unexpected end of input" past the file boundary.
+        // Rewriting the resolved id to strip the .css suffix keeps the module
+        // out of the CSS pipeline while Nitro still handles it as raw text.
+        name: "skip-lightningcss-on-nitro-raw",
+        enforce: "pre",
+        resolveId(id) {
+          if (id.startsWith("virtual:nitro:raw:") && id.endsWith(".css")) {
+            return { id: id + "?nitro-raw", moduleSideEffects: false };
+          }
+          return null;
+        },
+      },
+    ],
+  },
 });
