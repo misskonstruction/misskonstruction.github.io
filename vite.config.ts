@@ -12,4 +12,13 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // resulting server can be started with plain Node and has full network access.
 export default defineConfig({
   nitro: { preset: "node-server" },
+  vite: {
+    // Nitro's SSR pass loads the emitted CSS through a `virtual:nitro:raw:…file.css`
+    // module. Vite's built-in CSS plugin sees the trailing `.css` in the id and
+    // re-parses the JS wrapper text with Lightning CSS, which fails with
+    // "Unexpected end of input" past the file boundary. Switching Vite's CSS
+    // transformer to PostCSS avoids that re-parse; Tailwind still handles the
+    // client CSS pipeline normally.
+    css: { transformer: "postcss" },
+  },
 });
