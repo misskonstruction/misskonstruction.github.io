@@ -9,6 +9,11 @@ import juneTenPage3 from "@/assets/raw-unhinged/entry-2026-06-10-page-3.jpg";
 import juneTenCamiDesk from "@/assets/raw-unhinged/entry-2026-06-10-cami-desk.jpg";
 import juneTenBlitz from "@/assets/raw-unhinged/entry-2026-06-10-blitz.jpg";
 import juneTenKylo from "@/assets/raw-unhinged/entry-2026-06-10-kylo.jpg";
+import julyThirteenPage1 from "@/assets/raw-unhinged/entry-2026-07-13-page-1.jpg";
+import julyThirteenPage2 from "@/assets/raw-unhinged/entry-2026-07-13-page-2.jpg";
+import julyThirteenPage3 from "@/assets/raw-unhinged/entry-2026-07-13-page-3.jpg";
+import julyThirteenWinnie from "@/assets/raw-unhinged/entry-2026-07-13-winnie.jpg";
+import julyThirteenNoWinnie from "@/assets/raw-unhinged/entry-2026-07-13-no-winnie.jpg";
 
 export type RawUnhingedEntry = {
   /** Stable id used in URLs / TOC keys. */
@@ -129,6 +134,35 @@ export const rawUnhingedEntries: RawUnhingedEntry[] = [
       {
         src: juneTenKylo,
         alt: "Kylo, a younger pitbull, peeking up from under Cami's desk near a keyboard and printer",
+      },
+    ],
+  },
+  {
+    id: "every-single-bloody-morning",
+    date: "2026-07-13",
+    title: "Every. Single. Bloody. Morning. — losing Winston",
+    entryImages: [
+      {
+        src: julyThirteenPage1,
+        alt: "Handwritten Raw & Unhinged journal page dated 7/13/26 — Cami writing about waking up on the verge of panic in the new home, being sick during the last of the move, and losing Winston the ginger cat after bad storms",
+      },
+      {
+        src: julyThirteenPage2,
+        alt: "Continuation page of the July 13 Raw & Unhinged journal entry — Cami writing about coyotes in the neighborhood, stepping back from Facebook, over 100 likes on the new-house post, and realizing most weren't real friends",
+      },
+      {
+        src: julyThirteenPage3,
+        alt: "Final handwritten page of the July 13 Raw & Unhinged journal entry — Cami writing about YouTube and platy support in her Fish Trade Group, and how all she can think about this morning is Winston and her empty desk drawer",
+      },
+    ],
+    finalPagePhotos: [
+      {
+        src: julyThirteenWinnie,
+        alt: "Winston, a ginger tabby cat, curled up in the black fabric drawer under Cami's desk with a pink heart doodle in the corner",
+      },
+      {
+        src: julyThirteenNoWinnie,
+        alt: "The same fabric drawer under Cami's desk, now empty — a few strands of orange fur left behind where Winston used to nap",
       },
     ],
   },
