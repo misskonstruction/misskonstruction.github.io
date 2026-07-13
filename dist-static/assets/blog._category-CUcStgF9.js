@@ -1,1 +1,0 @@
-var s=Object.defineProperty;var t=(o,r)=>s(o,"name",{value:r,configurable:!0});import{j as e,O as a}from"./index-DOXR3Om4.js";function c(){return e.jsx(a,{"data-tsd-source":"/src/routes/blog.$category.tsx:3:10"})}t(c,"CategoryLayout");export{c as component};
