@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Mail, Facebook, Instagram, Cloud, Youtube } from "lucide-react";
+import { Mail, Facebook, Instagram, Cloud, Youtube, Discord } from "lucide-react";
 import profilePlaceholder from "@/assets/profile-misskonstruction.jpg";
 
 export const Route = createFileRoute("/contact")({
@@ -72,6 +72,14 @@ function Contact() {
             className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
           >
             <Cloud className="h-4 w-4" /> Bluesky
+          </a>
+          <a
+            href="https://discord.gg/Ja2ddu8r2C"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-border px-5 py-3 rounded-md hover:border-primary hover:text-primary transition-colors"
+          >
+            <Discord className="h-4 w-4" /> Discord
           </a>
         </div>
       </section>
