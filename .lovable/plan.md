@@ -1,52 +1,37 @@
-## What I found (read-only verification)
+## Plan: add "Every. Single. Bloody. Morning!" entry
 
-I checked the live site and both branches without making any changes.
+Follow the exact same pattern already used for the June 10 three-page entry — no new components, no layout changes.
 
-**Live site (`misskonstruction.github.io`)**
-- `/404.html` → still the OLD version (just `window.location.replace("/")`).
-- `/index.html` → does NOT contain the `spa-github-pages-restore` script.
-- `/blog/reflections/some-post` (a non-existent post) → 404 with the old fallback.
+### Files touched
+1. **New assets** in `src/assets/raw-unhinged/`:
+   - `entry-2026-07-13-page-1.jpg` (from `user-uploads://pg_1.jpg`)
+   - `entry-2026-07-13-page-2.jpg` (from `user-uploads://pg_2.jpg`)
+   - `entry-2026-07-13-page-3.jpg` (from `user-uploads://pg_3.jpg`)
+   - `entry-2026-07-13-winnie.jpg` (from `user-uploads://winnie.jpg`)
+   - `entry-2026-07-13-no-winnie.jpg` (from `user-uploads://no_winnie.jpg`)
 
-**`gh-pages` branch (what the last workflow published)**
-- `404.html` → NEW SPA-redirect version ✅
-- `index.html` → contains `spa-github-pages-restore` ✅
+2. **`src/data/rawUnhingedEntries.ts`** — append one new entry at the END of the array (oldest-first ordering, per project memory):
+   ```
+   {
+     id: "every-single-bloody-morning",
+     date: "2026-07-13",
+     title: "Every. Single. Bloody. Morning. — losing Winston",
+     entryImages: [ page1, page2, page3 ],   // three left-hand pages
+     finalPagePhotos: [ winnie, noWinnie ],  // scrapbook on final spread's right page
+   }
+   ```
+   Uses the existing `finalPagePhotos` field, same as the June 10 entry — the journal template already renders 2 photos as an overlapping scrapbook collage on the opposite page (Winnie on top, no-Winnie underneath, per your order).
 
-**`main` branch root (committed static files)**
-- `404.html` → OLD version.
-- `index.html` → no restore script.
+### What I am NOT touching
+- No changes to `src/routes/blog.raw-and-unhinged.tsx` (the renderer already handles multi-page entries + final-spread photos).
+- No changes to deployment, workflow, `404.html`, or `index.html`.
+- No changes to any other route, style, or component.
+- Watermark rule doesn't apply — these are journal-entry photos, not gallery photos (matches how prior R&U photos like Blitz were handled).
 
-## Diagnosis
+### Title
+I've drafted **"Every. Single. Bloody. Morning. — losing Winston"** to match the tone of your existing R&U titles (e.g. "My Faithful Blitz — celebrating the little things"). If you want a different title, tell me and I'll swap it before building.
 
-The workflow ran correctly and pushed the right files to `gh-pages`. **GitHub Pages is not serving from `gh-pages` — it's serving from `main` branch root.** That's why none of the SPA redirect changes are visible on the live site. This is a **Pages source setting**, not a code problem, and only you can flip it in the GitHub UI.
+### Alt text
+Descriptive alt text for each of the 5 images, matching the style already used in the file.
 
-## Two ways to fix — pick one
-
-### Option A (recommended, zero risk): sync the SPA files into `main` root
-
-I copy the two already-working files from `gh-pages` into `main` branch root:
-- Overwrite `/404.html` with the SPA-redirect version.
-- Insert the one-line restore `<script>` into `/index.html` `<head>`.
-
-That's it. No workflow changes, no CNAME touch, no build steps, no source changes. Since the live site is already served from `main` root, the fix goes live on the next push.
-
-**Why this can't break the site:** the restore script is a no-op when there's no encoded path (normal home visits unaffected), and prerendered routes with their own folder still resolve normally — the 404 fallback only fires when GitHub Pages can't find a folder.
-
-**If something did go wrong**, the revert is one-line: put back the old `404.html` and remove the one script tag. I would do the revert immediately, at no additional cost to you.
-
-### Option B (settings toggle you do yourself): point Pages at `gh-pages`
-
-**Repo → Settings → Pages → Source = "Deploy from a branch" → Branch: `gh-pages` / `(root)` → Save.**
-
-The fix goes live in ~1 minute using the files already on `gh-pages`. I make no code changes. Downside: any future manual pushes to `main` root won't be served, which may confuse things later.
-
-## Recommendation
-
-Option A. It's smaller in scope (two file edits, no workflow, no settings) and matches how your site is actually being served today.
-
-## If you approve Option A
-
-I'll change exactly two files at repo root:
-1. `404.html` — replace with the SPA-redirect version.
-2. `index.html` — insert `<script id="spa-github-pages-restore">…</script>` right after `<head>`.
-
-Nothing else — no workflow edits, no CNAME, no `.nojekyll` changes, no source files, no builds.
+Approve and I'll build it exactly as scoped.
