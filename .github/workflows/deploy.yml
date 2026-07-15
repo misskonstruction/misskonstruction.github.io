@@ -39,9 +39,9 @@ jobs:
           PRERENDER_EXIT=$?
           echo "prerender exit: $PRERENDER_EXIT"
           # Only fall back if prerender itself failed. Do NOT gate on
-          # dist-static/index.html — the file exists but sync/stat timing
-          # in the runner can make `-s` briefly false right after write.
-          if [ "$PRERENDER_EXIT" -ne 0 ] || [ ! -e dist-static/index.html ]; then
+          # dist-static/index.html here — a successful prerender is the source
+          # of truth and must not be wiped out by the fallback branch.
+          if [ "$PRERENDER_EXIT" -ne 0 ]; then
             echo "⚠️  prerender failed — falling back to client build"
             rm -rf dist-static
             mkdir -p dist-static
@@ -49,7 +49,7 @@ jobs:
             elif [ -d dist/client ]; then cp -r dist/client/. dist-static/;
             else echo "❌ no client build output found"; exit 1; fi
           fi
-          ls dist-static/index.html
+          test -s dist-static/index.html
           # SPA fallback: copy index.html to 404.html as last resort
           cp dist-static/index.html dist-static/404.html
 
