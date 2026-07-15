@@ -1,6 +1,8 @@
 name: Deploy to GitHub Pages
-# Stable deploy: keep the committed static site published for misskonstruction.github.io.
-# No server build, no prerender, no CNAME, no repo-settings API calls.
+# Build from source on every push, then publish the static output to gh-pages.
+# The committed dist-static/ and root static files stay as a safety net:
+# if the build fails, the last-known-good static site can still be published
+# by re-running the workflow manually against the previous commit.
 on:
   push:
     branches: [main]
@@ -19,25 +21,47 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Build client + server bundle
+        run: bun run build
+
+      - name: Prerender static routes (non-fatal on failure)
+        run: |
+          set +e
+          bun run prerender
+          echo "prerender exit: $?"
+          # Prerender writes to dist-static/. If it failed to produce
+          # an index.html, fall back to the raw client build so the site
+          # still deploys.
+          if [ ! -s dist-static/index.html ]; then
+            echo "⚠️  prerender did not produce dist-static/index.html — falling back to client build"
+            rm -rf dist-static
+            mkdir -p dist-static
+            if [ -d .output/public ]; then cp -r .output/public/. dist-static/;
+            elif [ -d dist/client ]; then cp -r dist/client/. dist-static/;
+            else echo "❌ no client build output found"; exit 1; fi
+          fi
+          # SPA fallback: copy index.html to 404.html as last resort
+          cp dist-static/index.html dist-static/404.html
+
       - name: Prepare GitHub Pages artifact
         run: |
           set -e
           test -s dist-static/index.html
 
-          # The root of this user-site repo also contains the same static files,
-          # so GitHub Pages works even when the repository is configured as main/root.
-          test -s index.html
-          test -d assets
+          # Never publish a CNAME (project lives at the default github.io URL).
+          rm -f CNAME dist-static/CNAME
 
-          # Keep the default GitHub Pages URL working: misskonstruction.github.io
-          rm -f CNAME
-          rm -f dist-static/CNAME
-
-          # GitHub Pages SPA fallback: encode requested path into a query
-          # string and bounce to '/'. index.html's restore script (injected
-          # below) puts the real URL back before the SPA boots, so shared
-          # deep links (e.g. individual blog posts) render the right page
-          # instead of falling back to the home page.
+          # SPA redirect: encode requested path into query string and bounce
+          # to '/'. index.html's restore script (injected below) puts the real
+          # URL back before the SPA hydrates, so deep links resolve.
           cat > dist-static/404.html <<'HTML'
           <!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title>
           <script>
@@ -51,27 +75,26 @@ jobs:
           </script></head><body></body></html>
           HTML
 
-          # Inject URL-restore script into index.html once (idempotent).
-          if ! grep -q 'spa-github-pages-restore' dist-static/index.html; then
-            python3 - <<'PY'
+          # Inject restore script into every index.html (idempotent).
+          python3 - <<'PY'
           import pathlib, re
-          p = pathlib.Path('dist-static/index.html')
-          html = p.read_text()
           snippet = '<script id="spa-github-pages-restore">(function(l){if(l.search[1]==="/"){var d=l.search.slice(1).split("&").map(function(s){return s.replace(/~and~/g,"&")}).join("?");window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);}}(window.location))</script>'
-          html = re.sub(r'<head([^>]*)>', r'<head\1>' + snippet, html, count=1)
-          p.write_text(html)
+          count = 0
+          for p in pathlib.Path("dist-static").rglob("index.html"):
+              html = p.read_text()
+              if "spa-github-pages-restore" in html:
+                  continue
+              html = re.sub(r'<head([^>]*)>', r'<head\1>' + snippet, html, count=1)
+              p.write_text(html)
+              count += 1
+          print(f"injected into {count} files")
           PY
-          fi
 
           touch dist-static/.nojekyll
-          test -s dist-static/404.html
           find dist-static -type f -name '.DS_Store' -delete
-          echo "root files ready: $(test -s index.html && echo yes)"
-          echo "dist-static files ready: $(find dist-static -type f | wc -l)"
-          echo "deployment source: committed static files"
-          echo "✅ 404.html and .nojekyll are in place"
+          echo "✅ dist-static ready: $(find dist-static -type f | wc -l) files"
 
-      - name: Publish static files to gh-pages branch
+      - name: Publish to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
