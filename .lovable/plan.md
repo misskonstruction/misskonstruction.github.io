@@ -1,73 +1,55 @@
 ## What's actually happening
 
-Two separate things:
+Your `src/routes/contact.tsx` already has the Discord button — that's why the Lovable preview shows it. But your live site at misskonstruction.github.io is **not built by GitHub Actions**. Look at `.github/workflows/deploy.yml`:
 
-1. **The site isn't showing the new "Every. Single. Bloody. Morning." entry** — because the last deploy build failed. The GitHub Pages site still shows the previous successful deploy. Nothing about the entry itself is wrong; the artifact never made it out.
+> "Stable deploy: keep the committed static site published… No server build, no prerender."
 
-2. **The build fails with a CSS error** unrelated to any file I edited for the entry:
+The workflow only takes the already-built files sitting in `dist-static/` (and the duplicated copies at the repo root) and publishes them to the `gh-pages` branch. It never runs `bun run build`. So when I edit a file under `src/`, nothing in `dist-static/` changes, and the live site keeps serving the old bundle.
 
-   ```
-   [vite:css] [lightningcss] Unexpected end of input
-   file: virtual:nitro:raw:/dev-server/assets/styles-B5rl2yxR.css:1:113343
-   ```
+That's why:
+- Early on it felt "instant and one-step" — the workflow used to build from source on every push.
+- Now every change takes "two commits" — one to edit `src/`, and a second manual rebuild to refresh `dist-static/` + root. When we skip the rebuild, the live site simply doesn't update.
+- Trying to flip Pages to `gh-pages/root` broke styling because the two sources (repo root vs `gh-pages`) were out of sync.
 
-   Diagnosis (verified locally):
-   - The final CSS the client build emits (`dist/client/assets/styles-B5rl2yxR.css`, 111 KB) is valid — I parsed it directly with `lightningcss` and it succeeded.
-   - The error only happens during the Nitro SSR pass, on a virtual module id that starts with `virtual:nitro:raw:…styles-….css`. Nitro wraps the CSS file into a JS module for embedding, and because the virtual id still ends in `.css`, Vite's CSS plugin re-runs Lightning CSS on the JS-wrapped text and chokes at the wrapper boundary (col 113343, past the file's real length of 111233).
-   - Nothing in `src/styles.css` or the journal route CSS is malformed. This is a Lightning CSS × Nitro-raw plugin interaction.
+This was locked down deliberately after the earlier prerender/`dist/server/server.js` failures kept breaking the site. The tradeoff was: stop building in CI to stop the crashes, at the cost of needing a rebuild step for every content change.
 
-3. **Deep-link 404s** — the root `index.html` and `404.html` SPA-restore pair from a previous turn is still in place on `main`, so once a good build deploys, `/blog/raw-and-unhinged` and every other route will resolve on refresh/share. No change needed there; verifying only.
+## The fix (two parts)
 
-## Fix plan
+### Part 1 — Ship the Discord button now
 
-Phase 1 — Unblock the build (one line, scoped)
-- Edit `vite.config.ts` only. Add a Vite override that tells Vite to skip Lightning CSS for Nitro's raw virtual modules, while keeping Lightning CSS everywhere else so the built output stays identical to today's:
+1. Run `bun run build` + `bun run prerender` locally in the sandbox to regenerate `dist-static/`.
+2. Re-apply the SPA redirect injection to the fresh `dist-static/index.html` files (same Python snippet the workflow already uses, so deep links keep working).
+3. Sync the fresh `dist-static/` contents to the repo root so both publish sources match.
+4. Verify the built HTML/JS contains the Discord link string before finishing.
 
-  ```ts
-  export default defineConfig({
-    nitro: { preset: "node-server" },
-    vite: {
-      plugins: [
-        {
-          name: "skip-lightningcss-on-nitro-raw",
-          enforce: "pre",
-          resolveId(id) {
-            // Nitro wraps built CSS as `virtual:nitro:raw:…file.css`.
-            // The trailing .css makes Vite's css plugin re-parse the JS wrapper.
-            // Returning a resolved id without the .css suffix keeps it out of the
-            // CSS pipeline; Nitro still handles the raw content the same way.
-            if (id.startsWith("virtual:nitro:raw:") && id.endsWith(".css")) {
-              return { id: id + "?nitro-raw", moduleSideEffects: false };
-            }
-            return null;
-          },
-        },
-      ],
-    },
-  });
-  ```
+That's the same rebuild sequence that fixed the Winston entry and the blank-page incident — proven to work, no schema/config changes.
 
-- Nothing else in the project changes. No source CSS, no route files, no build script, no deploy workflow.
+### Part 2 — Stop the "two commits every time" problem
 
-Phase 2 — Verify locally before pushing
-- Run `bun run build:dev` in the sandbox.
-- Confirm it exits 0 and `dist-static/blog/raw-and-unhinged/index.html` is produced.
-- Grep the produced HTML for the entry's title (`Every. Single. Bloody. Morning.`) to confirm the new entry is baked into the prerender.
+Make the workflow build from source again, but safely this time (this was the piece that used to keep things "seamless"):
 
-Phase 3 — Sanity-check deep-link protection is still in place
-- Read-only check `index.html` and `404.html` at repo root and on `gh-pages`. Confirm the SPA restore script is still injected and `404.html` is the redirect version. No edits unless something regressed — this stays untouched.
+- In `.github/workflows/deploy.yml`, add a build step **before** the publish step:
+  - `bun install`
+  - `bun run build`
+  - `bun run prerender` — but wrapped so a prerender failure falls back to the plain client build instead of failing the whole job (the old crash mode).
+  - Re-apply the SPA 404 + restore-script injection to the freshly built `dist-static/`.
+- Keep the existing `peaceiris/actions-gh-pages@v4` publish step pointing at `dist-static/`.
+- Leave the committed `dist-static/` + root copies in place as a safety net — if a build ever fails, the workflow can still publish the last known-good static output.
 
-Phase 4 — Deploy
-- Nothing manual. Once the build passes, the existing GitHub Actions workflow publishes `dist-static` to `gh-pages` as before.
+Net effect: one edit → one push → live site updates on its own, like it used to.
 
-## What I will NOT touch
+## What could go wrong and how I'll handle it
 
-- `src/styles.css`, `src/routes/blog.raw-and-unhinged.tsx`, `src/data/rawUnhingedEntries.ts`, and the new image assets — all correct.
-- `.github/workflows/deploy.yml` — the current workflow works; the failure is upstream in the build.
-- `CNAME` (still absent) and `.nojekyll` — untouched.
-- Root `index.html` / `404.html` SPA redirect files — untouched unless the read-only check finds a regression.
+- **Prerender fails in CI** (the original reason we disabled it): the build step is wrapped so prerender failure doesn't fail the deploy — it just publishes the SPA client build with the 404 redirect. Site stays up.
+- **Styling mismatch between `main/root` and `gh-pages`**: Part 1 syncs both from the same fresh build, so hashes match regardless of which source Pages is set to.
+- **404 on deep links**: the SPA 404.html + restore-script injection is preserved in both parts.
 
-## If something goes wrong
+## What I will not touch
 
-- If `bun run build:dev` still fails after the plugin change: I stop, do not push, and revert `vite.config.ts` to the current one-line version. The site keeps serving today's deploy — no new 404s, no regression.
-- If the build passes locally but a page 404s after deploy: the SPA restore in `index.html` already handles that; if a specific route is broken I would investigate the route file only, not the build config.
+- `vite.config.ts`, `src/router.tsx`, route files, or any component code beyond what's already in `contact.tsx`.
+- GitHub Pages settings (branch/source). You control that in the repo UI.
+- No API calls to the GitHub REST API from CI (that's what caused the 403 loop earlier).
+
+## Approval
+
+Say "go" and I'll do Part 1 first (Discord button live), verify it in the built output, then do Part 2 (workflow) as a separate change so you can see each step land cleanly.
