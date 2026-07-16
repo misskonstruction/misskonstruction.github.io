@@ -138,8 +138,22 @@ function ensurePreviewServerEntry() {
     );
   }
   mkdirSync(serverDir, { recursive: true });
-  cpSync(found, serverEntry);
+  // The server entry has relative imports to sibling files like ./_libs/*.mjs.
+  // If the build landed in .output/server/, we must bring the whole tree
+  // along — copying only the entry file leaves its dependencies behind and
+  // Node fails with ERR_MODULE_NOT_FOUND at preview time.
+  const sourceDir = dirname(found);
+  if (sourceDir !== serverDir) {
+    cpSync(sourceDir, serverDir, { recursive: true });
+  }
+  // Ensure the canonical dist/server/server.js entry exists regardless of the
+  // original filename (index.mjs, server.mjs, etc.).
+  const relocated = join(serverDir, found.split(/[\\/]/).pop());
+  if (existsSync(relocated) && !existsSync(serverEntry)) {
+    cpSync(relocated, serverEntry);
+  }
 }
+
 
 function warnOrThrow(message) {
   if (STRICT_PRERENDER) throw new Error(message);
