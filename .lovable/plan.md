@@ -1,55 +1,58 @@
-## What's actually happening
+# Fix: prerender silently ships without blog posts → iOS deep links break
 
-Your `src/routes/contact.tsx` already has the Discord button — that's why the Lovable preview shows it. But your live site at misskonstruction.github.io is **not built by GitHub Actions**. Look at `.github/workflows/deploy.yml`:
+## Root cause (confirmed against your files)
 
-> "Stable deploy: keep the committed static site published… No server build, no prerender."
+`scripts/prerender.mjs` has three defects that combine into the iOS symptom:
 
-The workflow only takes the already-built files sitting in `dist-static/` (and the duplicated copies at the repo root) and publishes them to the `gh-pages` branch. It never runs `bun run build`. So when I edit a file under `src/`, nothing in `dist-static/` changes, and the live site keeps serving the old bundle.
+1. `ensurePreviewServerEntry()` only looks under `dist/server/*` and, when nothing matches, **writes a stub worker that returns 404 for every request**. It never checks `.output/server/` where TanStack Start's Nitro build actually lands.
+2. `waitForServer()` treats **`status === 404` as ready**, so the 404-stub passes the readiness gate instantly.
+3. `main().catch(...)` and `warnOrThrow()` downgrade every failure to a warning unless `STRICT_PRERENDER=true`, and CI never sets it. Result: every route logs `❌ … → 404`, the script exits 0, and `dist-static/` ships with only the base client — no post HTML, so iOS falls into the fragile `404.html` redirect on every blog URL.
 
-That's why:
-- Early on it felt "instant and one-step" — the workflow used to build from source on every push.
-- Now every change takes "two commits" — one to edit `src/`, and a second manual rebuild to refresh `dist-static/` + root. When we skip the rebuild, the live site simply doesn't update.
-- Trying to flip Pages to `gh-pages/root` broke styling because the two sources (repo root vs `gh-pages`) were out of sync.
+## Changes
 
-This was locked down deliberately after the earlier prerender/`dist/server/server.js` failures kept breaking the site. The tradeoff was: stop building in CI to stop the crashes, at the cost of needing a rebuild step for every content change.
+### 1. `scripts/prerender.mjs` — fail loudly, look in the right place
 
-## The fix (two parts)
+- `ensurePreviewServerEntry()`:
+  - Add `.output/server/index.mjs` and `.output/server/server.mjs` to the candidate list (Nitro/Vinxi default for TanStack Start).
+  - When no candidate exists, **throw** with the checked paths in the message. Delete the stub-writing branch entirely.
+- `waitForServer()`:
+  - Only return on `r.status === 200`. 404 no longer counts as ready.
+  - Keep the timeout; increase the message to include the URL.
+- No other logic changes (route list, WP fetch, output paths untouched).
 
-### Part 1 — Ship the Discord button now
+### 2. `scripts/prerender.mjs` — make failures fatal by default
 
-1. Run `bun run build` + `bun run prerender` locally in the sandbox to regenerate `dist-static/`.
-2. Re-apply the SPA redirect injection to the fresh `dist-static/index.html` files (same Python snippet the workflow already uses, so deep links keep working).
-3. Sync the fresh `dist-static/` contents to the repo root so both publish sources match.
-4. Verify the built HTML/JS contains the Discord link string before finishing.
+- Change `STRICT_PRERENDER` default: treat missing/false as **strict** (fatal). Only `STRICT_PRERENDER=false` opts out. This ensures any 4xx/5xx from a route fails the build so we can't silently republish without posts.
+- Keep the existing per-route error logging so the failing route is visible in CI logs.
 
-That's the same rebuild sequence that fixed the Winston entry and the blank-page incident — proven to work, no schema/config changes.
+### 3. `.github/workflows/deploy.yml` — remove the silent-fallback safety net for prerender
 
-### Part 2 — Stop the "two commits every time" problem
+- Drop the `set +e` / exit-code branch that swallows a failed prerender and copies the raw client build over `dist-static/`. If prerender fails, the workflow must fail — that's the whole point.
+- Keep everything after prerender (SPA redirect script injection, `404.html` generation, `.nojekyll`, `peaceiris/actions-gh-pages` publish) exactly as-is. This preserves the working parts of the current deploy.
+- The committed `dist-static/` in the repo still acts as the last-known-good safety net because a failed workflow doesn't overwrite `gh-pages`.
 
-Make the workflow build from source again, but safely this time (this was the piece that used to keep things "seamless"):
+## What this fixes for you
 
-- In `.github/workflows/deploy.yml`, add a build step **before** the publish step:
-  - `bun install`
-  - `bun run build`
-  - `bun run prerender` — but wrapped so a prerender failure falls back to the plain client build instead of failing the whole job (the old crash mode).
-  - Re-apply the SPA 404 + restore-script injection to the freshly built `dist-static/`.
-- Keep the existing `peaceiris/actions-gh-pages@v4` publish step pointing at `dist-static/`.
-- Leave the committed `dist-static/` + root copies in place as a safety net — if a build ever fails, the workflow can still publish the last known-good static output.
+- Blog posts (WordPress + local routes) are prerendered to real static files like `dist-static/blog/coastal-photography/<slug>/index.html`. GitHub Pages serves them directly with a 200 — no client-side redirect trick needed.
+- iOS Safari / Facebook in-app browser gets a real HTML file on first hit, so deep links work the same as Android.
+- The `404.html` redirect stays as a fallback for URLs that legitimately don't exist, but it's no longer the primary path for shared blog links.
+- A future broken build fails visibly in CI instead of silently shipping a site with missing pages.
 
-Net effect: one edit → one push → live site updates on its own, like it used to.
+## Files touched
 
-## What could go wrong and how I'll handle it
+- `scripts/prerender.mjs` (edits to two functions + default-strict flag)
+- `.github/workflows/deploy.yml` (remove the fallback branch in the prerender step)
 
-- **Prerender fails in CI** (the original reason we disabled it): the build step is wrapped so prerender failure doesn't fail the deploy — it just publishes the SPA client build with the 404 redirect. Site stays up.
-- **Styling mismatch between `main/root` and `gh-pages`**: Part 1 syncs both from the same fresh build, so hashes match regardless of which source Pages is set to.
-- **404 on deep links**: the SPA 404.html + restore-script injection is preserved in both parts.
+## Out of scope (not touching)
 
-## What I will not touch
+- Route definitions in `src/routes/**` — they already exist for every category and the WordPress crawler already builds the per-post URLs; the bug is purely in the prerender harness.
+- The SPA redirect script and `dist-static/` publish step — those work.
+- Vite config, TanStack config, GitHub Pages settings.
 
-- `vite.config.ts`, `src/router.tsx`, route files, or any component code beyond what's already in `contact.tsx`.
-- GitHub Pages settings (branch/source). You control that in the repo UI.
-- No API calls to the GitHub REST API from CI (that's what caused the 403 loop earlier).
+## Verification before saying done
 
-## Approval
-
-Say "go" and I'll do Part 1 first (Discord button live), verify it in the built output, then do Part 2 (workflow) as a separate change so you can see each step land cleanly.
+- Run `bun run build && bun run prerender` in the sandbox and confirm:
+  - No "No server bundle found" warning; the real `.output/server/…` gets picked up.
+  - `dist-static/blog/coastal-photography/<some-real-slug>/index.html` exists and is non-empty.
+  - Script exits 0 with the WordPress post count logged.
+- If prerender fails, it now fails loudly with the actual failing route(s) named — no guessing next round.
