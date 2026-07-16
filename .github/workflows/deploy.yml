@@ -32,26 +32,14 @@ jobs:
       - name: Build client + server bundle
         run: bun run build
 
-      - name: Prerender static routes (non-fatal on failure)
+      - name: Prerender static routes (strict — must succeed)
+        env:
+          STRICT_PRERENDER: "true"
         run: |
-          set +e
+          set -e
           bun run prerender
-          PRERENDER_EXIT=$?
-          echo "prerender exit: $PRERENDER_EXIT"
-          # Only fall back if prerender itself failed. Do NOT gate on
-          # dist-static/index.html here — a successful prerender is the source
-          # of truth and must not be wiped out by the fallback branch.
-          if [ "$PRERENDER_EXIT" -ne 0 ]; then
-            echo "⚠️  prerender failed — falling back to client build"
-            rm -rf dist-static
-            mkdir -p dist-static
-            if [ -d .output/public ]; then cp -r .output/public/. dist-static/;
-            elif [ -d dist/client ]; then cp -r dist/client/. dist-static/;
-            else echo "❌ no client build output found"; exit 1; fi
-          fi
           test -s dist-static/index.html
-          # SPA fallback: copy index.html to 404.html as last resort
-          cp dist-static/index.html dist-static/404.html
+
 
       - name: Prepare GitHub Pages artifact
         run: |

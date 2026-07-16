@@ -107,7 +107,9 @@ async function fetchWordPressPostRoutes() {
 
 const OUT = "dist-static";
 const PORT = 4321;
-const STRICT_PRERENDER = process.env.STRICT_PRERENDER === "true";
+// Strict by default — a broken prerender must fail the build so we don't
+// silently ship without blog post HTML. Opt out only with STRICT_PRERENDER=false.
+const STRICT_PRERENDER = process.env.STRICT_PRERENDER !== "false";
 
 // Find Vite client build output (usually .output/public or dist/client)
 function findClientDir() {
@@ -118,25 +120,25 @@ function findClientDir() {
 
 function ensurePreviewServerEntry() {
   const serverDir = join("dist", "server");
-  mkdirSync(serverDir, { recursive: true });
   const serverEntry = join("dist", "server", "server.js");
   if (existsSync(serverEntry)) return;
   const candidates = [
     join("dist", "server", "index.js"),
     join("dist", "server", "index.mjs"),
     join("dist", "server", "server.mjs"),
+    // Nitro/Vinxi default output path used by TanStack Start
+    join(".output", "server", "index.mjs"),
+    join(".output", "server", "server.mjs"),
   ];
-  for (const c of candidates) {
-    if (existsSync(c)) {
-      cpSync(c, serverEntry);
-      return;
-    }
+  const found = candidates.find(existsSync);
+  if (!found) {
+    throw new Error(
+      `No server bundle found. Checked: ${candidates.join(", ")}. ` +
+        `Run \`ls -R dist .output\` in CI to see the actual build output path and add it here.`,
+    );
   }
-  console.warn("⚠️  No server bundle found; writing a minimal preview fallback for static deploy.");
-  writeFileSync(
-    serverEntry,
-    `// Minimal ESM fallback so TanStack preview can import dist/server/server.js.\nexport default {\n  async fetch() {\n    return new Response("Not Found", { status: 404 });\n  },\n};\n`,
-  );
+  mkdirSync(serverDir, { recursive: true });
+  cpSync(found, serverEntry);
 }
 
 function warnOrThrow(message) {
@@ -149,11 +151,13 @@ async function waitForServer(url, timeoutMs = 30000) {
   while (Date.now() - start < timeoutMs) {
     try {
       const r = await fetch(url);
-      if (r.ok || r.status === 404) return;
+      // A stub/broken server can trivially return 404 immediately; require
+      // a real 200 so readiness reflects an actually functional app.
+      if (r.status === 200) return;
     } catch {}
     await new Promise((r) => setTimeout(r, 500));
   }
-  throw new Error(`Server at ${url} did not become ready`);
+  throw new Error(`Server at ${url} did not return 200 within ${timeoutMs}ms`);
 }
 
 async function main() {
