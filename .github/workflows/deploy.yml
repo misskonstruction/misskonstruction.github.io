@@ -32,6 +32,15 @@ jobs:
       - name: Build client + server bundle
         run: bun run build
 
+      - name: Diagnose server bundle layout (read-only)
+        run: |
+          echo "=== .output tree ==="
+          ls -laR .output 2>&1 || echo "(no .output dir)"
+          echo "=== dist tree ==="
+          ls -laR dist 2>&1 || echo "(no dist dir)"
+          echo "=== dist-static tree (top only) ==="
+          ls -la dist-static 2>&1 || echo "(no dist-static dir)"
+
       - name: Prerender static routes (strict — must succeed)
         env:
           STRICT_PRERENDER: "true"
@@ -39,6 +48,7 @@ jobs:
           set -e
           bun run prerender
           test -s dist-static/index.html
+
 
 
       - name: Prepare GitHub Pages artifact
