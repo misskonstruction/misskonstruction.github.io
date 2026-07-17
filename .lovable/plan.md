@@ -1,58 +1,42 @@
-# Fix: prerender silently ships without blog posts → iOS deep links break
+## Diagnostic-only workflow change
 
-## Root cause (confirmed against your files)
+Goal: capture ground truth about the `.output/server/` and `dist/server/` filesystem state during the failing prerender step so the next fix is targeted, not guessed.
 
-`scripts/prerender.mjs` has three defects that combine into the iOS symptom:
+### What changes
 
-1. `ensurePreviewServerEntry()` only looks under `dist/server/*` and, when nothing matches, **writes a stub worker that returns 404 for every request**. It never checks `.output/server/` where TanStack Start's Nitro build actually lands.
-2. `waitForServer()` treats **`status === 404` as ready**, so the 404-stub passes the readiness gate instantly.
-3. `main().catch(...)` and `warnOrThrow()` downgrade every failure to a warning unless `STRICT_PRERENDER=true`, and CI never sets it. Result: every route logs `❌ … → 404`, the script exits 0, and `dist-static/` ships with only the base client — no post HTML, so iOS falls into the fragile `404.html` redirect on every blog URL.
+Only `.github/workflows/deploy.yml`. No source code, no scripts, no site content.
 
-## Changes
+Add a diagnostic step immediately before the `node scripts/prerender.mjs` invocation:
 
-### 1. `scripts/prerender.mjs` — fail loudly, look in the right place
+```yaml
+- name: Diagnose server bundle layout (read-only)
+  run: |
+    echo "=== .output tree ==="
+    ls -laR .output 2>&1 || echo "(no .output dir)"
+    echo "=== dist tree ==="
+    ls -laR dist 2>&1 || echo "(no dist dir)"
+    echo "=== dist-static tree (top only) ==="
+    ls -la dist-static 2>&1 || echo "(no dist-static dir)"
+```
 
-- `ensurePreviewServerEntry()`:
-  - Add `.output/server/index.mjs` and `.output/server/server.mjs` to the candidate list (Nitro/Vinxi default for TanStack Start).
-  - When no candidate exists, **throw** with the checked paths in the message. Delete the stub-writing branch entirely.
-- `waitForServer()`:
-  - Only return on `r.status === 200`. 404 no longer counts as ready.
-  - Keep the timeout; increase the message to include the URL.
-- No other logic changes (route list, WP fetch, output paths untouched).
+### What we learn
 
-### 2. `scripts/prerender.mjs` — make failures fatal by default
+- Whether `.output/server/index.mjs` (or the current entry name) exists after the Vite build.
+- Whether `.output/server/_libs/srvx.mjs` exists at the source before `prerender.mjs` tries to copy.
+- Whether `dist/server/` is being pre-populated by anything before the copy step.
+- The exact filename of the server entry (in case the name shifted between framework versions).
 
-- Change `STRICT_PRERENDER` default: treat missing/false as **strict** (fatal). Only `STRICT_PRERENDER=false` opts out. This ensures any 4xx/5xx from a route fails the build so we can't silently republish without posts.
-- Keep the existing per-route error logging so the failing route is visible in CI logs.
+### What does NOT change
 
-### 3. `.github/workflows/deploy.yml` — remove the silent-fallback safety net for prerender
+- No changes to `scripts/prerender.mjs`.
+- No changes to `STRICT_PRERENDER`, timeouts, or fallbacks.
+- No changes to any site files, routes, or content.
+- The build still fails on the same error — this run just prints the filesystem before it fails.
 
-- Drop the `set +e` / exit-code branch that swallows a failed prerender and copies the raw client build over `dist-static/`. If prerender fails, the workflow must fail — that's the whole point.
-- Keep everything after prerender (SPA redirect script injection, `404.html` generation, `.nojekyll`, `peaceiris/actions-gh-pages` publish) exactly as-is. This preserves the working parts of the current deploy.
-- The committed `dist-static/` in the repo still acts as the last-known-good safety net because a failed workflow doesn't overwrite `gh-pages`.
+### Next step after the run
 
-## What this fixes for you
+You paste the diagnostic output. I read it, identify exactly why `_libs/srvx.mjs` isn't reachable when the prerender server starts, and propose a single targeted fix.
 
-- Blog posts (WordPress + local routes) are prerendered to real static files like `dist-static/blog/coastal-photography/<slug>/index.html`. GitHub Pages serves them directly with a 200 — no client-side redirect trick needed.
-- iOS Safari / Facebook in-app browser gets a real HTML file on first hit, so deep links work the same as Android.
-- The `404.html` redirect stays as a fallback for URLs that legitimately don't exist, but it's no longer the primary path for shared blog links.
-- A future broken build fails visibly in CI instead of silently shipping a site with missing pages.
+### Risk
 
-## Files touched
-
-- `scripts/prerender.mjs` (edits to two functions + default-strict flag)
-- `.github/workflows/deploy.yml` (remove the fallback branch in the prerender step)
-
-## Out of scope (not touching)
-
-- Route definitions in `src/routes/**` — they already exist for every category and the WordPress crawler already builds the per-post URLs; the bug is purely in the prerender harness.
-- The SPA redirect script and `dist-static/` publish step — those work.
-- Vite config, TanStack config, GitHub Pages settings.
-
-## Verification before saying done
-
-- Run `bun run build && bun run prerender` in the sandbox and confirm:
-  - No "No server bundle found" warning; the real `.output/server/…` gets picked up.
-  - `dist-static/blog/coastal-photography/<some-real-slug>/index.html` exists and is non-empty.
-  - Script exits 0 with the WordPress post count logged.
-- If prerender fails, it now fails loudly with the actual failing route(s) named — no guessing next round.
+Zero — read-only shell commands appended to a step that already fails. The failure mode is unchanged; we just get visibility.
