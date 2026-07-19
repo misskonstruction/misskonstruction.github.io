@@ -1,51 +1,31 @@
-## Plan
+## Problem
 
-1. **Fix the actual failing path in `scripts/prerender.mjs`**
-   - The script currently starts non-Cloudflare builds with:
+Your new Reflections post "You Have to Earn the Prosecco 🍾🛁" has emojis in its WordPress slug, which WordPress stores percent‑encoded: `you-have-to-earn-the-prosecco-%f0%9f%8d%be%f0%9f%9b%81`.
 
-   ```text
-   bunx vite preview --port 4321 --strictPort
-   ```
+The list page (the "New!" preview) displays fine because it just renders titles. But the entry page fails because the slug gets **double‑encoded** in the request:
 
-   - That is the source of the `serverBuild.fetch is not a function` error, because Vite/TanStack preview middleware expects a different server export shape.
-   - I will change only the non-Cloudflare prerender branch to start the built server directly with Node instead of `vite preview`.
+1. `post.slug` from WordPress already contains `%f0%9f...`
+2. The `<Link>` passes that as a route param → TanStack encodes it again → URL becomes `%25f0%259f...`
+3. Loader decodes once (`%f0%9f...`) then calls `encodeURIComponent()` again → `%25f0...`
+4. WordPress API returns 404 for the double‑encoded slug → "Entry not found"
 
-2. **Keep the existing strict behavior**
-   - Leave `STRICT_PRERENDER=true` in the workflow.
-   - Do not restore any “client fallback” publishing path.
-   - If prerender fails, the deploy should fail before publishing broken deep links.
+I confirmed this by hitting the WP.com API directly: the correctly single‑encoded URL returns 200; the double‑encoded one returns 404.
 
-3. **Make startup failure obvious**
-   - Keep inherited server logs so GitHub Actions shows the real server crash if it exits early.
-   - Update the misleading error text that currently says “Deploying the static client fallback” even when strict mode exits instead.
+You didn't do anything wrong in WordPress — this is a bug in how our code handles emoji/non‑ASCII slugs.
 
-4. **Do not touch the live-site content or root static files**
-   - No gallery changes.
-   - No blog/journal changes.
-   - No CNAME changes.
-   - No manual syncing to the repository root.
-   - No publish-source setting changes.
+## Fix
 
-5. **Workflow file stays mostly unchanged**
-   - Keep the diagnostic layout step for one more run if you want proof.
-   - Keep the deploy step publishing only `dist-static` after `dist-static/index.html` exists.
+One tiny change in `src/lib/wordpress-public.ts`:
 
-6. **Expected outcome**
-   - The prerender script should no longer enter TanStack’s Vite preview plugin, so this error should disappear:
+- In `normalize()`, decode `post.slug` before returning it, so downstream code always sees the human/emoji form (`you-have-to-earn-the-prosecco-🍾🛁`).
+- In `getPublicWordPressPostBySlug()`, keep the single `encodeURIComponent(slug)` call — it will now produce exactly one level of encoding for the API request.
 
-   ```text
-   TypeError: serverBuild.fetch is not a function
-   ```
+That's it. No route changes, no link changes, no other files touched. All your existing ASCII‑slug posts are unaffected (decoding an already‑plain slug is a no‑op).
 
-   - The next run should either prerender the routes successfully or expose a new, direct server startup error instead of hiding it behind Vite preview.
+## Verification
 
-## Files I would change
+After the edit I'll:
+1. Confirm the preview loads `/blog/reflections/you-have-to-earn-the-prosecco-🍾🛁` and renders the post.
+2. Spot‑check one older Reflections post still works.
 
-- `scripts/prerender.mjs`
-  - Replace the `vite preview` spawn in the Node-server branch with a direct Node launch of the built server entry.
-  - Clean up misleading fallback wording.
-
-Optional, only if you want the diagnostic step removed after a successful run:
-
-- `.github/workflows/deploy.yml`
-  - Remove the temporary “Diagnose server bundle layout” step once the deploy is stable.
+No deployment workflow changes.
