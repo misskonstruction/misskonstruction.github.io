@@ -1,7 +1,7 @@
 /**
  * Static prerender for GitHub Pages.
  *
- * Approach: spin up the built app on a local port using `vite preview`,
+ * Approach: spin up the built app on a local port using the generated server,
  * crawl every known route with fetch, and write each response as
  * dist-static/<route>/index.html. Copies static assets (css/js/images)
  * from the Vite client build folder into dist-static so Pages can serve them.
@@ -160,9 +160,12 @@ function warnOrThrow(message) {
   console.warn(`⚠️  ${message}`);
 }
 
-async function waitForServer(url, timeoutMs = 30000) {
+async function waitForServer(url, server, timeoutMs = 30000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
+    if (server.exitCode !== null) {
+      throw new Error(`Server process exited before becoming ready (exit code ${server.exitCode})`);
+    }
     try {
       const r = await fetch(url);
       // A stub/broken server can trivially return 404 immediately; require
@@ -189,7 +192,7 @@ async function main() {
   if (existsSync("public")) cpSync("public", OUT, { recursive: true });
 
   // Detect the nitro preset used for the server build. In CI the vite config
-  // requests `node-server`, so `vite preview` can host the built app directly.
+    // requests `node-server`, so the generated server can be launched directly.
   // In the sandbox preview environment the plugin forces `cloudflare-module`
   // regardless of user config; fall back to `wrangler dev` for that case
   // (works for local prerender testing; note that workerd inside the sandbox
@@ -237,10 +240,11 @@ async function main() {
       { stdio: "inherit", env: { ...process.env, PORT: String(PORT) } },
     );
   } else {
-    console.log(`🚀 Starting vite preview on :${PORT} (preset=${preset})`);
+    const nodeEntry = join("dist", "server", "server.js");
+    console.log(`🚀 Starting built Node server on :${PORT} (preset=${preset})`);
     server = spawn(
-      "bunx",
-      ["vite", "preview", "--port", String(PORT), "--strictPort"],
+      "node",
+      [nodeEntry],
       { stdio: "inherit", env: { ...process.env, PORT: String(PORT) } },
     );
   }
@@ -251,10 +255,10 @@ async function main() {
 
   try {
     try {
-      await waitForServer(`http://localhost:${PORT}/`, 90000);
+      await waitForServer(`http://localhost:${PORT}/`, server, 90000);
     } catch (error) {
       warnOrThrow(
-        `Prerender preview server did not become ready. Deploying the static client fallback instead. ${error.message}`,
+        `Prerender server did not become ready. ${error.message}`,
       );
       return;
     }
@@ -299,5 +303,5 @@ main().catch((e) => {
     console.error(e);
     process.exit(1);
   }
-  console.warn(`⚠️  Prerender could not complete. Deploying the static client fallback instead. ${e.message}`);
+  console.warn(`⚠️  Prerender could not complete. ${e.message}`);
 });
