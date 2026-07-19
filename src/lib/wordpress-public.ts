@@ -68,6 +68,14 @@ function sanitizePostHtml(html: string): string {
     .replace(/\son\w+='[^']*'/gi, "");
 }
 
+function safeDecodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 function normalize(post: RawPost): WordPressPost {
   return {
     id: post.ID,
@@ -75,7 +83,7 @@ function normalize(post: RawPost): WordPressPost {
     title: stripHtml(post.title),
     excerpt: stripHtml(post.excerpt),
     url: post.URL,
-    slug: post.slug,
+    slug: safeDecodeSlug(post.slug),
     featuredImage: post.featured_image && post.featured_image.length > 0 ? post.featured_image : null,
     categories: post.categories ? Object.values(post.categories).map((category) => decodeHtmlEntities(category.name).trim()) : [],
   };
