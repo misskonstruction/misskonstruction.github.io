@@ -1,42 +1,51 @@
-## Diagnostic-only workflow change
+## Plan
 
-Goal: capture ground truth about the `.output/server/` and `dist/server/` filesystem state during the failing prerender step so the next fix is targeted, not guessed.
+1. **Fix the actual failing path in `scripts/prerender.mjs`**
+   - The script currently starts non-Cloudflare builds with:
 
-### What changes
+   ```text
+   bunx vite preview --port 4321 --strictPort
+   ```
 
-Only `.github/workflows/deploy.yml`. No source code, no scripts, no site content.
+   - That is the source of the `serverBuild.fetch is not a function` error, because Vite/TanStack preview middleware expects a different server export shape.
+   - I will change only the non-Cloudflare prerender branch to start the built server directly with Node instead of `vite preview`.
 
-Add a diagnostic step immediately before the `node scripts/prerender.mjs` invocation:
+2. **Keep the existing strict behavior**
+   - Leave `STRICT_PRERENDER=true` in the workflow.
+   - Do not restore any “client fallback” publishing path.
+   - If prerender fails, the deploy should fail before publishing broken deep links.
 
-```yaml
-- name: Diagnose server bundle layout (read-only)
-  run: |
-    echo "=== .output tree ==="
-    ls -laR .output 2>&1 || echo "(no .output dir)"
-    echo "=== dist tree ==="
-    ls -laR dist 2>&1 || echo "(no dist dir)"
-    echo "=== dist-static tree (top only) ==="
-    ls -la dist-static 2>&1 || echo "(no dist-static dir)"
-```
+3. **Make startup failure obvious**
+   - Keep inherited server logs so GitHub Actions shows the real server crash if it exits early.
+   - Update the misleading error text that currently says “Deploying the static client fallback” even when strict mode exits instead.
 
-### What we learn
+4. **Do not touch the live-site content or root static files**
+   - No gallery changes.
+   - No blog/journal changes.
+   - No CNAME changes.
+   - No manual syncing to the repository root.
+   - No publish-source setting changes.
 
-- Whether `.output/server/index.mjs` (or the current entry name) exists after the Vite build.
-- Whether `.output/server/_libs/srvx.mjs` exists at the source before `prerender.mjs` tries to copy.
-- Whether `dist/server/` is being pre-populated by anything before the copy step.
-- The exact filename of the server entry (in case the name shifted between framework versions).
+5. **Workflow file stays mostly unchanged**
+   - Keep the diagnostic layout step for one more run if you want proof.
+   - Keep the deploy step publishing only `dist-static` after `dist-static/index.html` exists.
 
-### What does NOT change
+6. **Expected outcome**
+   - The prerender script should no longer enter TanStack’s Vite preview plugin, so this error should disappear:
 
-- No changes to `scripts/prerender.mjs`.
-- No changes to `STRICT_PRERENDER`, timeouts, or fallbacks.
-- No changes to any site files, routes, or content.
-- The build still fails on the same error — this run just prints the filesystem before it fails.
+   ```text
+   TypeError: serverBuild.fetch is not a function
+   ```
 
-### Next step after the run
+   - The next run should either prerender the routes successfully or expose a new, direct server startup error instead of hiding it behind Vite preview.
 
-You paste the diagnostic output. I read it, identify exactly why `_libs/srvx.mjs` isn't reachable when the prerender server starts, and propose a single targeted fix.
+## Files I would change
 
-### Risk
+- `scripts/prerender.mjs`
+  - Replace the `vite preview` spawn in the Node-server branch with a direct Node launch of the built server entry.
+  - Clean up misleading fallback wording.
 
-Zero — read-only shell commands appended to a step that already fails. The failure mode is unchanged; we just get visibility.
+Optional, only if you want the diagnostic step removed after a successful run:
+
+- `.github/workflows/deploy.yml`
+  - Remove the temporary “Diagnose server bundle layout” step once the deploy is stable.
