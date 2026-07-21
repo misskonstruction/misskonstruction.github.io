@@ -4,7 +4,10 @@ export type WordPressPost = {
   title: string;
   excerpt: string;
   url: string;
+  /** Local, website-safe route slug used by TanStack Router links. */
   slug: string;
+  /** Original WordPress slug, decoded when possible, used only for lookup fallbacks. */
+  wordpressSlug: string;
   featuredImage: string | null;
   categories: string[];
 };
@@ -76,17 +79,61 @@ function safeDecodeSlug(slug: string): string {
   }
 }
 
+function decodeSlugRepeatedly(slug: string): string {
+  let current = slug;
+  for (let i = 0; i < 2; i += 1) {
+    const decoded = safeDecodeSlug(current);
+    if (decoded === current) return decoded;
+    current = decoded;
+  }
+  return current;
+}
+
+function routeSlugForWordPressSlug(slug: string): string {
+  const decoded = decodeSlugRepeatedly(slug);
+  const normalized = decoded
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return normalized || decoded;
+}
+
+function encodeWordPressSlugForApi(slug: string): string {
+  return encodeURIComponent(decodeSlugRepeatedly(slug));
+}
+
 function normalize(post: RawPost): WordPressPost {
+  const decodedSlug = decodeSlugRepeatedly(post.slug);
   return {
     id: post.ID,
     date: post.date,
     title: stripHtml(post.title),
     excerpt: stripHtml(post.excerpt),
     url: post.URL,
-    slug: safeDecodeSlug(post.slug),
+    slug: routeSlugForWordPressSlug(decodedSlug),
+    wordpressSlug: decodedSlug,
     featuredImage: post.featured_image && post.featured_image.length > 0 ? post.featured_image : null,
     categories: post.categories ? Object.values(post.categories).map((category) => decodeHtmlEntities(category.name).trim()) : [],
   };
+}
+
+async function findWordPressSlugForRouteSlug(routeSlug: string): Promise<string | null> {
+  const data = await fetchPublicWordPressApi<{ posts?: Pick<RawPost, "slug">[] }>(
+    "/posts?number=100&fields=slug",
+  );
+  const targetRouteSlug = routeSlugForWordPressSlug(routeSlug);
+  const targetDecoded = decodeSlugRepeatedly(routeSlug);
+
+  const match = (data?.posts ?? []).find((post) => {
+    const decoded = decodeSlugRepeatedly(post.slug);
+    return decoded === targetDecoded || routeSlugForWordPressSlug(decoded) === targetRouteSlug;
+  });
+
+  return match?.slug ?? null;
 }
 
 async function fetchPublicWordPressApi<T>(endpoint: string, options?: { allowNotFound?: boolean }): Promise<T | null> {
@@ -125,14 +172,22 @@ export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
 }
 
 export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
-  const raw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeURIComponent(slug)}`, {
+  const raw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(slug)}`, {
     allowNotFound: true,
   });
 
-  if (!raw) return null;
+  const resolvedRaw = raw ?? await (async () => {
+    const wordpressSlug = await findWordPressSlugForRouteSlug(slug);
+    if (!wordpressSlug) return null;
+    return fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(wordpressSlug)}`, {
+      allowNotFound: true,
+    });
+  })();
+
+  if (!resolvedRaw) return null;
 
   return {
-    ...normalize(raw),
-    content: sanitizePostHtml(raw.content ?? ""),
+    ...normalize(resolvedRaw),
+    content: sanitizePostHtml(resolvedRaw.content ?? ""),
   };
 }
