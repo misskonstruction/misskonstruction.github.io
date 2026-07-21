@@ -172,17 +172,18 @@ export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
 }
 
 export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
-  const raw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(slug)}`, {
+  let resolvedRaw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(slug)}`, {
     allowNotFound: true,
   });
 
-  const resolvedRaw = raw ?? await (async () => {
+  if (!resolvedRaw) {
     const wordpressSlug = await findWordPressSlugForRouteSlug(slug);
-    if (!wordpressSlug) return null;
-    return fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(wordpressSlug)}`, {
-      allowNotFound: true,
-    });
-  })();
+    if (wordpressSlug) {
+      resolvedRaw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(wordpressSlug)}`, {
+        allowNotFound: true,
+      });
+    }
+  }
 
   if (!resolvedRaw) return null;
 
