@@ -19,7 +19,7 @@ const ROUTES = [
   "/blog",
   "/blog/coastal-photography",
   "/blog/from-the-kitchen",
-  "/blog/creative-life",
+  "/blog/platy-pals",
   "/blog/faith-scripture",
   "/blog/reflections",
   "/blog/wander-roam",
@@ -91,6 +91,29 @@ function safeDecodeSlug(slug) {
   }
 }
 
+function decodeSlugRepeatedly(slug) {
+  let current = slug;
+  for (let i = 0; i < 2; i += 1) {
+    const decoded = safeDecodeSlug(current);
+    if (decoded === current) return decoded;
+    current = decoded;
+  }
+  return current;
+}
+
+function routeSlugForWordPressSlug(slug) {
+  const decoded = decodeSlugRepeatedly(slug);
+  const normalized = decoded
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return normalized || encodeURIComponent(decoded);
+}
+
 // Fetch all WordPress posts directly from the public API so we can build
 // a route for each one. This runs at build time only.
 async function fetchWordPressPostRoutes() {
@@ -107,7 +130,7 @@ async function fetchWordPressPostRoutes() {
     return posts.map((p) => {
       const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
       const slug = mapCategoryToSlug(catNames);
-      return `/blog/${slug}/${safeDecodeSlug(p.slug)}`;
+      return `/blog/${slug}/${routeSlugForWordPressSlug(p.slug)}`;
     });
   } catch (e) {
     console.warn(`⚠️  WordPress fetch failed: ${e.message}. Skipping post prerender.`);
