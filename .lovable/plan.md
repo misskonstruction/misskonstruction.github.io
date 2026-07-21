@@ -1,31 +1,42 @@
-## Problem
+## What I verified read-only
 
-Your new Reflections post "You Have to Earn the Prosecco 🍾🛁" has emojis in its WordPress slug, which WordPress stores percent‑encoded: `you-have-to-earn-the-prosecco-%f0%9f%8d%be%f0%9f%9b%81`.
+- The live Reflections category page shows your newest WordPress posts, so WordPress data is reachable.
+- The links being generated for those posts lead to `404 Not Found` on the live site.
+- The local checked-in static folders are missing the newest post detail folders, including:
+  - `blog/reflections/you-have-to-earn-the-prosecco.../index.html`
+  - `blog/reflections/my-new-house-came-with-an-unexpected-assistant/index.html`
+  - `blog/reflections/hope-sneaks-in-quietly/index.html`
+- The live site is therefore relying on the SPA `404.html` redirect for real post pages. That is exactly the fragile path that breaks for iOS users and produces “Entry not found.”
 
-The list page (the "New!" preview) displays fine because it just renders titles. But the entry page fails because the slug gets **double‑encoded** in the request:
+## Plan
 
-1. `post.slug` from WordPress already contains `%f0%9f...`
-2. The `<Link>` passes that as a route param → TanStack encodes it again → URL becomes `%25f0%259f...`
-3. Loader decodes once (`%f0%9f...`) then calls `encodeURIComponent()` again → `%25f0...`
-4. WordPress API returns 404 for the double‑encoded slug → "Entry not found"
+1. **Stop relying on the SPA redirect for journal posts**
+   - Keep `404.html` only as a fallback safety net.
+   - Make `/blog/<category>/<post-slug>/index.html` exist for every current WordPress journal post.
 
-I confirmed this by hitting the WP.com API directly: the correctly single‑encoded URL returns 200; the double‑encoded one returns 404.
+2. **Fix the WordPress slug handling in one place**
+   - Use decoded slugs inside the React app so TanStack Router encodes them once.
+   - Use filesystem-safe encoded route names during static prerender so GitHub Pages can serve them directly.
+   - Avoid double-encoded links like `%25f0...`, which are currently visible on the live Reflections page.
 
-You didn't do anything wrong in WordPress — this is a bug in how our code handles emoji/non‑ASCII slugs.
+3. **Fix the category route mapping for WordPress posts**
+   - Confirm every WordPress post category maps to the correct local journal category route.
+   - Ensure Reflections posts prerender under `/blog/reflections/...`, not only in the category listing.
 
-## Fix
+4. **Repair the deploy/prerender flow without fallback guessing**
+   - Keep strict prerendering enabled.
+   - If the server cannot start or a journal post returns 404 during prerender, the deploy should fail instead of publishing a broken partial site.
+   - Remove only the diagnostic workflow noise after the real fix is verified.
 
-One tiny change in `src/lib/wordpress-public.ts`:
+5. **Verify before calling it fixed**
+   - Run a read-only local check against the built static output for several affected posts.
+   - Confirm each generated detail route returns `200`, not `404`.
+   - Confirm the Reflections page links point to the same static route folders that were generated.
 
-- In `normalize()`, decode `post.slug` before returning it, so downstream code always sees the human/emoji form (`you-have-to-earn-the-prosecco-🍾🛁`).
-- In `getPublicWordPressPostBySlug()`, keep the single `encodeURIComponent(slug)` call — it will now produce exactly one level of encoding for the API request.
+## If the next deploy creates 404s
 
-That's it. No route changes, no link changes, no other files touched. All your existing ASCII‑slug posts are unaffected (decoding an already‑plain slug is a no‑op).
-
-## Verification
-
-After the edit I'll:
-1. Confirm the preview loads `/blog/reflections/you-have-to-earn-the-prosecco-🍾🛁` and renders the post.
-2. Spot‑check one older Reflections post still works.
-
-No deployment workflow changes.
+- I will not keep changing random files.
+- First action will be read-only: compare the generated `dist-static/blog/reflections/` folders against the live URL paths.
+- If the generated files exist but live URLs 404, the issue is GitHub Pages source/settings.
+- If the generated files do not exist, the issue is prerender route discovery or WordPress slug mapping.
+- The fallback will be to publish the last known good static output while keeping the source fix isolated, so the whole site does not go blank again.
