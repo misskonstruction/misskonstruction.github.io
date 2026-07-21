@@ -1,8 +1,5 @@
 name: Deploy to GitHub Pages
 # Build from source on every push, then publish the static output to gh-pages.
-# The committed dist-static/ and root static files stay as a safety net:
-# if the build fails, the last-known-good static site can still be published
-# by re-running the workflow manually against the previous commit.
 on:
   push:
     branches: [main]
@@ -32,15 +29,6 @@ jobs:
       - name: Build client + server bundle
         run: bun run build
 
-      - name: Diagnose server bundle layout (read-only)
-        run: |
-          echo "=== .output tree ==="
-          ls -laR .output 2>&1 || echo "(no .output dir)"
-          echo "=== dist tree ==="
-          ls -laR dist 2>&1 || echo "(no dist dir)"
-          echo "=== dist-static tree (top only) ==="
-          ls -la dist-static 2>&1 || echo "(no dist-static dir)"
-
       - name: Prerender static routes (strict — must succeed)
         env:
           STRICT_PRERENDER: "true"
@@ -59,9 +47,8 @@ jobs:
           # Never publish a CNAME (project lives at the default github.io URL).
           rm -f CNAME dist-static/CNAME
 
-          # SPA redirect: encode requested path into query string and bounce
-          # to '/'. index.html's restore script (injected below) puts the real
-          # URL back before the SPA hydrates, so deep links resolve.
+          # Fallback only. Journal posts are prerendered as real static pages,
+          # so shared post links should not need this redirect to load.
           cat > dist-static/404.html <<'HTML'
           <!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title>
           <script>
@@ -75,7 +62,8 @@ jobs:
           </script></head><body></body></html>
           HTML
 
-          # Inject restore script into every index.html (idempotent).
+          # Inject restore script into every index.html (idempotent) for the
+          # fallback route only.
           python3 - <<'PY'
           import pathlib, re
           snippet = '<script id="spa-github-pages-restore">(function(l){if(l.search[1]==="/"){var d=l.search.slice(1).split("&").map(function(s){return s.replace(/~and~/g,"&")}).join("?");window.history.replaceState(null,null,l.pathname.slice(0,-1)+d+l.hash);}}(window.location))</script>'
