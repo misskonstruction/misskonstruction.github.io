@@ -162,13 +162,23 @@ async function fetchPublicWordPressApi<T>(endpoint: string, options?: { allowNot
 }
 
 export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
-  const params = new URLSearchParams({
-    number: "30",
-    fields: "ID,date,title,excerpt,URL,slug,featured_image,categories",
-  });
+  const fields = "ID,date,title,excerpt,URL,slug,featured_image,categories";
+  const posts: RawPost[] = [];
 
-  const data = await fetchPublicWordPressApi<{ posts?: RawPost[] }>(`/posts?${params.toString()}`);
-  return (data?.posts ?? []).map(normalize);
+  for (let page = 1; page <= 10; page += 1) {
+    const params = new URLSearchParams({
+      number: "100",
+      page: String(page),
+      fields,
+    });
+
+    const data = await fetchPublicWordPressApi<{ posts?: RawPost[] }>(`/posts?${params.toString()}`);
+    const batch = data?.posts ?? [];
+    posts.push(...batch);
+    if (batch.length < 100) break;
+  }
+
+  return posts.map(normalize);
 }
 
 export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
