@@ -114,24 +114,53 @@ function routeSlugForWordPressSlug(slug) {
   return normalized || encodeURIComponent(decoded);
 }
 
+function routeSlugVariantsForWordPressSlug(slug) {
+  const decoded = decodeSlugRepeatedly(slug);
+  const clean = routeSlugForWordPressSlug(decoded);
+  const variants = new Set([clean]);
+
+  // Compatibility for older deployed links that used WordPress' encoded slug
+  // directly, or encoded it twice through TanStack Link params. The clean slug
+  // is canonical, but these keep already-shared journal links from 404ing.
+  if (decoded !== clean) {
+    variants.add(decoded);
+    variants.add(encodeURIComponent(decoded));
+    variants.add(encodeURIComponent(decoded).toLowerCase());
+  }
+  if (slug !== clean) {
+    variants.add(slug);
+    variants.add(encodeURIComponent(slug));
+  }
+
+  return [...variants].filter(Boolean);
+}
+
 // Fetch all WordPress posts directly from the public API so we can build
 // a route for each one. This runs at build time only.
 async function fetchWordPressPostRoutes() {
   const SITE_ID = "195471483";
-  const url = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_ID}/posts?number=100&fields=ID,slug,categories`;
+  const routes = [];
   try {
-    const res = await fetch(url);
-    if (!res.ok) {
-      console.warn(`⚠️  Could not fetch WordPress post list (${res.status}). Skipping post prerender.`);
-      return [];
+    for (let page = 1; page <= 10; page += 1) {
+      const url = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_ID}/posts?number=100&page=${page}&fields=ID,slug,categories`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        console.warn(`⚠️  Could not fetch WordPress post list (${res.status}). Skipping post prerender.`);
+        return [];
+      }
+      const data = await res.json();
+      const posts = data.posts ?? [];
+      for (const p of posts) {
+        const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
+        const slug = mapCategoryToSlug(catNames);
+        for (const postSlug of routeSlugVariantsForWordPressSlug(p.slug)) {
+          routes.push(`/blog/${slug}/${postSlug}`);
+        }
+      }
+      if (posts.length < 100) break;
     }
-    const data = await res.json();
-    const posts = data.posts ?? [];
-    return posts.map((p) => {
-      const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
-      const slug = mapCategoryToSlug(catNames);
-      return `/blog/${slug}/${routeSlugForWordPressSlug(p.slug)}`;
-    });
+
+    return [...new Set(routes)];
   } catch (e) {
     console.warn(`⚠️  WordPress fetch failed: ${e.message}. Skipping post prerender.`);
     return [];
