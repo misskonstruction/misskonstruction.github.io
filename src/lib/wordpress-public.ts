@@ -122,18 +122,24 @@ function normalize(post: RawPost): WordPressPost {
 }
 
 async function findWordPressSlugForRouteSlug(routeSlug: string): Promise<string | null> {
-  const data = await fetchPublicWordPressApi<{ posts?: Pick<RawPost, "slug">[] }>(
-    "/posts?number=100&fields=slug",
-  );
   const targetRouteSlug = routeSlugForWordPressSlug(routeSlug);
   const targetDecoded = decodeSlugRepeatedly(routeSlug);
 
-  const match = (data?.posts ?? []).find((post) => {
-    const decoded = decodeSlugRepeatedly(post.slug);
-    return decoded === targetDecoded || routeSlugForWordPressSlug(decoded) === targetRouteSlug;
-  });
+  for (let page = 1; page <= 10; page += 1) {
+    const data = await fetchPublicWordPressApi<{ posts?: Pick<RawPost, "slug">[] }>(
+      `/posts?number=100&page=${page}&fields=slug`,
+    );
+    const posts = data?.posts ?? [];
+    const match = posts.find((post) => {
+      const decoded = decodeSlugRepeatedly(post.slug);
+      return decoded === targetDecoded || routeSlugForWordPressSlug(decoded) === targetRouteSlug;
+    });
 
-  return match?.slug ?? null;
+    if (match) return match.slug;
+    if (posts.length < 100) break;
+  }
+
+  return null;
 }
 
 async function fetchPublicWordPressApi<T>(endpoint: string, options?: { allowNotFound?: boolean }): Promise<T | null> {
