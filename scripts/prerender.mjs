@@ -9,7 +9,7 @@
  * Routes are listed explicitly — add new ones here when you create a route.
  */
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync, rmSync } from "node:fs";
+import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync, rmSync, readFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 
 const ROUTES = [
@@ -173,12 +173,123 @@ const PORT = 4321;
 // silently ship without blog post HTML. Opt out only with STRICT_PRERENDER=false.
 const STRICT_PRERENDER = process.env.STRICT_PRERENDER !== "false";
 
-// Find Vite client build output (usually .output/public or dist/client)
+// Find Vite client build output. The two empirically-observed layouts are
+// `.output/public` (Nitro node-server preset, used in CI) and `dist/client`
+// (Nitro cloudflare-module preset, used in the sandbox). A candidate only
+// qualifies if it contains an `assets/` subdirectory with at least one JS
+// chunk — a generic `dist/` root that happens to exist as a parent of
+// `client/` + `server/` must never be picked up as a client dir.
 function findClientDir() {
-  const candidates = [".output/public", "dist/client", "dist", ".vinxi/build/client"];
-  for (const c of candidates) if (existsSync(c) && readdirSync(c).length) return c;
-  throw new Error("Could not locate built client assets. Did `vite build` run?");
+  const candidates = [".output/public", "dist/client"];
+  const rejected = [];
+  for (const c of candidates) {
+    if (!existsSync(c)) {
+      rejected.push(`${c} (does not exist)`);
+      continue;
+    }
+    const assetsDir = join(c, "assets");
+    if (!existsSync(assetsDir)) {
+      rejected.push(`${c} (no assets/ subdirectory)`);
+      continue;
+    }
+    const hasJs = readdirSync(assetsDir).some((f) => f.endsWith(".js"));
+    if (!hasJs) {
+      rejected.push(`${c} (assets/ contains no .js chunks)`);
+      continue;
+    }
+    return c;
+  }
+  throw new Error(
+    `Could not locate a valid client build. Checked:\n  - ${rejected.join("\n  - ")}\n` +
+      `Did \`vite build\` run and emit an assets/ folder with hashed JS chunks?`,
+  );
 }
+
+// Walk every prerendered HTML file and verify that every /assets/* reference
+// it makes actually exists on disk under dist-static/. This is the last line
+// of defense against the asset-hash-drift bug — if HTML asks for
+// SiteLayout-mhJp_l7G.js and only SiteLayout-DcbVI9ki.js was copied over,
+// this fails the build before it can be published.
+function walkHtmlFiles(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    const st = statSync(full);
+    if (st.isDirectory()) walkHtmlFiles(full, out);
+    else if (name.endsWith(".html")) out.push(full);
+  }
+  return out;
+}
+
+const ASSET_REF_RE = /(?:src|href)\s*=\s*["']([^"']*\/assets\/[^"']+)["']/gi;
+
+function extractAssetRefs(html) {
+  const refs = new Set();
+  let m;
+  ASSET_REF_RE.lastIndex = 0;
+  while ((m = ASSET_REF_RE.exec(html)) !== null) {
+    let p = m[1];
+    // Strip query strings and fragments
+    p = p.replace(/[?#].*$/, "");
+    // Normalize protocol-relative or absolute URLs to same-origin path only
+    if (/^https?:\/\//i.test(p)) continue; // external, ignore
+    // Only keep the /assets/... portion
+    const idx = p.indexOf("/assets/");
+    if (idx === -1) continue;
+    refs.add(p.slice(idx)); // starts with /assets/
+  }
+  return [...refs];
+}
+
+function closestExisting(rootDir, missingRef) {
+  const assetsDir = join(rootDir, "assets");
+  if (!existsSync(assetsDir)) return null;
+  const base = missingRef.split("/").pop() || "";
+  // e.g. SiteLayout-mhJp_l7G.js -> match on "SiteLayout-" prefix + ".js" suffix
+  const dot = base.lastIndexOf(".");
+  const ext = dot >= 0 ? base.slice(dot) : "";
+  const dash = base.indexOf("-");
+  const prefix = dash > 0 ? base.slice(0, dash + 1) : base;
+  const candidates = readdirSync(assetsDir).filter(
+    (f) => f.startsWith(prefix) && f.endsWith(ext),
+  );
+  return candidates.length ? candidates : null;
+}
+
+function verifyAssetReferences(rootDir) {
+  if (!existsSync(rootDir)) {
+    throw new Error(`Asset verifier: ${rootDir} does not exist`);
+  }
+  const htmlFiles = walkHtmlFiles(rootDir);
+  let totalRefs = 0;
+  const missing = []; // { file, ref, closest }
+  for (const file of htmlFiles) {
+    const html = readFileSync(file, "utf8");
+    const refs = extractAssetRefs(html);
+    totalRefs += refs.length;
+    for (const ref of refs) {
+      const onDisk = join(rootDir, ref.replace(/^\//, ""));
+      if (!existsSync(onDisk)) {
+        missing.push({ file, ref, closest: closestExisting(rootDir, ref) });
+      }
+    }
+  }
+  if (missing.length) {
+    console.error(`❌ Asset verifier: ${missing.length} missing reference(s) across ${htmlFiles.length} HTML file(s):`);
+    for (const { file, ref, closest } of missing) {
+      console.error(`   ${file}`);
+      console.error(`     wants:   ${ref}`);
+      console.error(`     closest: ${closest && closest.length ? closest.join(", ") : "(no similar filename)"}`);
+    }
+    throw new Error(
+      `Asset verifier failed: ${missing.length} missing /assets/* reference(s). Refusing to publish.`,
+    );
+  }
+  console.log(
+    `🔎 Asset verifier: ${totalRefs} reference(s) across ${htmlFiles.length} HTML file(s) all resolve on disk.`,
+  );
+}
+
+
 
 function ensurePreviewServerEntry() {
   const serverDir = join("dist", "server");
@@ -358,12 +469,37 @@ async function main() {
   } finally {
     cleanup();
   }
+
+  // Final gate: refuse to hand off dist-static/ if any HTML references an
+  // asset that isn't on disk. Runs after cleanup so the server is stopped
+  // regardless of the verifier's outcome.
+  verifyAssetReferences(OUT);
 }
 
-main().catch((e) => {
-  if (STRICT_PRERENDER) {
-    console.error(e);
+
+// Standalone verifier mode: `node scripts/prerender.mjs --verify-assets [dir]`
+// Re-runs the asset-reference check without spinning up the server. Used by
+// the CI workflow after the HTML-injection step to guarantee the exact bytes
+// about to be published still pass.
+if (process.argv.includes("--verify-assets")) {
+  const idx = process.argv.indexOf("--verify-assets");
+  const dir = process.argv[idx + 1] && !process.argv[idx + 1].startsWith("-")
+    ? process.argv[idx + 1]
+    : OUT;
+  try {
+    verifyAssetReferences(dir);
+    process.exit(0);
+  } catch (e) {
+    console.error(e.message);
     process.exit(1);
   }
-  console.warn(`⚠️  Prerender could not complete. ${e.message}`);
-});
+} else {
+  main().catch((e) => {
+    if (STRICT_PRERENDER) {
+      console.error(e);
+      process.exit(1);
+    }
+    console.warn(`⚠️  Prerender could not complete. ${e.message}`);
+  });
+}
+
