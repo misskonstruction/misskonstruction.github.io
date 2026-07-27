@@ -477,10 +477,29 @@ async function main() {
 }
 
 
-main().catch((e) => {
-  if (STRICT_PRERENDER) {
-    console.error(e);
+// Standalone verifier mode: `node scripts/prerender.mjs --verify-assets [dir]`
+// Re-runs the asset-reference check without spinning up the server. Used by
+// the CI workflow after the HTML-injection step to guarantee the exact bytes
+// about to be published still pass.
+if (process.argv.includes("--verify-assets")) {
+  const idx = process.argv.indexOf("--verify-assets");
+  const dir = process.argv[idx + 1] && !process.argv[idx + 1].startsWith("-")
+    ? process.argv[idx + 1]
+    : OUT;
+  try {
+    verifyAssetReferences(dir);
+    process.exit(0);
+  } catch (e) {
+    console.error(e.message);
     process.exit(1);
   }
-  console.warn(`⚠️  Prerender could not complete. ${e.message}`);
-});
+} else {
+  main().catch((e) => {
+    if (STRICT_PRERENDER) {
+      console.error(e);
+      process.exit(1);
+    }
+    console.warn(`⚠️  Prerender could not complete. ${e.message}`);
+  });
+}
+
