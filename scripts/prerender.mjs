@@ -9,7 +9,7 @@
  * Routes are listed explicitly — add new ones here when you create a route.
  */
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync, rmSync } from "node:fs";
+import { mkdirSync, writeFileSync, cpSync, existsSync, readdirSync, rmSync, readFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 
 const ROUTES = [
