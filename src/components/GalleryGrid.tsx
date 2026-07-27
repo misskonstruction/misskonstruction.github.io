@@ -126,26 +126,41 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
           className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={close}
           onContextMenu={protect ? (e) => e.preventDefault() : undefined}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0].clientX;
+            touchStartY.current = e.touches[0].clientY;
+          }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null || touchStartY.current === null) return;
+            const dx = e.changedTouches[0].clientX - touchStartX.current;
+            const dy = e.changedTouches[0].clientY - touchStartY.current;
+            touchStartX.current = null;
+            touchStartY.current = null;
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+              step(dx < 0 ? 1 : -1);
+            }
+          }}
           role="dialog"
           aria-modal="true"
         >
-          <button onClick={close} className="absolute top-4 right-4 text-foreground hover:text-primary" aria-label="Close">
-            <X className="h-7 w-7" />
+          <button onClick={close} className="absolute top-4 right-4 z-20 text-foreground hover:text-primary rounded-full bg-background/60 p-2" aria-label="Close">
+            <X className="h-6 w-6 md:h-7 md:w-7" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); step(-1); }}
-            className="absolute left-4 text-foreground hover:text-primary"
+            className="absolute left-2 md:left-4 z-20 text-foreground hover:text-primary rounded-full bg-background/60 p-2"
             aria-label="Previous"
           >
-            <ChevronLeft className="h-8 w-8" />
+            <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); step(1); }}
-            className="absolute right-4 text-foreground hover:text-primary"
+            className="absolute right-2 md:right-4 z-20 text-foreground hover:text-primary rounded-full bg-background/60 p-2"
             aria-label="Next"
           >
-            <ChevronRight className="h-8 w-8" />
+            <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
           </button>
+
 
           <figure onClick={(e) => e.stopPropagation()} className="max-w-6xl w-full relative">
             <div className="relative">
