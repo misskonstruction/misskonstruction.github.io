@@ -1,77 +1,45 @@
-# Trace the asset-hash mismatch to its real source
+# Fix the SSR-vs-client manifest mismatch, then clean up
 
-## Confirmation of the "same as committed root assets/" claim
+## What's ruled in and out
 
-Directly checked, not inferred:
+**Ruled out (with evidence just gathered):** root `index.html` is NOT the build's HTML entry.
+- `@tanstack/start-plugin-core/.../vite/planning.js:31` sets the client Rollup input to `ENTRY_POINTS.client` (a virtual module); line 48 does the same for the server. No `index.html` is in either input list.
+- The HTML shell is synthesized in `dev-server-plugin/plugin.js` as a literal string, and at SSR time comes from `src/routes/__root.tsx`.
+- `vite.config.ts` sets no `rollupOptions.input`.
 
-```text
-== mhJp_l7G ==   assets/SiteLayout-mhJp_l7G.js
-== Db_OZXrz ==   assets/arrow-right-Db_OZXrz.js
-== CZxY4Lzs ==   assets/index-CZxY4Lzs.js
-== Dad_uxzM ==   assets/index-Dad_uxzM.js
-```
+**Ruled in (from the CI diagnostic step):** the four stale hashes appear in `.output/server/_chunks/renderer-template.mjs` while `.output/public/assets/` for the same run contains different, correct hashes. Two Rollup graphs, two manifests, SSR reading its own instead of the client's.
 
-All four of the "HTML wants this but the file isn't there" hashes exist verbatim in the checked-in repo-root `assets/` folder from the earlier manual syncs. That's a real signal, but on its own it doesn't prove the build is reading them from there — Rollup hashes are content-based, so it is also possible those four chunks simply haven't changed since the sync and the same content keeps producing the same hash. The diagnostic below is written to distinguish those two cases, not assume either.
+## Fix
 
-## Two candidate mechanisms, and how the diagnostic tells them apart
+### Step 1 — Read the CI diagnostic's manifest dump and identify the read path
 
-1. **Two independent graphs, one output.** The client build and the SSR build each emit their own copy of chunks like `SiteLayout` and `index`, hashed from *their* graph's content. If SSR's `<Scripts />` links to the SSR-graph hash while `.output/public/assets/` only carries the client-graph hash, you'd see exactly this: HTML references files that never appear next to it. The stability across runs would come from the SSR graph's content being stable, not from anything stale.
-2. **A stale artifact being pulled in.** Either the SSR build reads a cached/leftover manifest (unlikely — fresh checkout, no cache action), or something in the request path actually serves files from the repo-root `assets/` at build time. This is the mechanism to explicitly rule in or out; even though I can't see a plausible code path for it (Vite doesn't treat a top-level `assets/` folder as `publicDir`, the prerender crawler fetches HTML only, `.gitignore` covers `.output`/`dist`), the coincidence is strong enough to check rather than dismiss.
+The previous "Diagnose SSR/client hash disagreement" step already dumped every `manifest.json` under `.output/`. First build-mode action: pull that log and identify which manifest file `.output/server/_chunks/renderer-template.mjs` is sourcing hashes from (SSR-side manifest, or a captured-at-bundle-time constant).
 
-## What to add to `.github/workflows/deploy.yml`
+### Step 2 — Point the SSR renderer at the client manifest
 
-One new step, inserted between `Build client + server bundle` and `Prerender static routes`. Read-only, no side effects:
+Two possible shapes depending on step 1's finding:
+- **If SSR reads a separate SSR manifest:** override the manifest path so both graphs consult `.output/public/_build/manifest.json` (the client one). Likely a `tanstackStart` plugin option or a small `vite.config.ts` addition.
+- **If SSR hardcodes chunk names captured at bundle time:** align the two graphs' `output.chunkFileNames` so shared chunks produce identical hashes, or force the SSR bundle to import the client manifest at runtime.
 
-```yaml
-- name: Diagnose SSR/client hash disagreement
-  run: |
-    set +e
-    echo "── .output tree (depth 3) ──"
-    find .output -maxdepth 3 -type d | sort
-    echo "── .output/public/assets listing ──"
-    ls .output/public/assets 2>/dev/null | sort
-    echo "── every manifest.json under .output ──"
-    find .output -name "manifest.json" | sort
-    for f in $(find .output -name "manifest.json"); do
-      echo "── $f ──"
-      head -c 6000 "$f"; echo
-    done
+I won't commit to which until step 1's log names the file — that's what the diagnostic step was for.
 
-    echo "── search WHOLE checkout for the 4 stale hashes ──"
-    for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
-      echo "  hash $h:"
-      grep -rl --exclude-dir=node_modules --exclude-dir=.git "$h" . 2>/dev/null \
-        | sed 's/^/    /'
-    done
+### Step 3 — Strengthen the guard
 
-    echo "── same 4 hashes, scoped to .output/server only ──"
-    for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
-      echo "  hash $h in .output/server:"
-      grep -rl "$h" .output/server 2>/dev/null | sed 's/^/    /' \
-        || echo "    (not present)"
-    done
+`scripts/prerender.mjs`'s `verifyAssetReferences()` already catches drift in HTML. Extend it to also scan `.output/server/_chunks/renderer-template.mjs` (or whatever step 1 names) for hashes not present in `.output/public/assets/`. This makes the next regression point at SSR directly.
 
-    echo "── does .output/public/assets have the OWN copy of these chunk names? ──"
-    ls .output/public/assets | grep -E 'SiteLayout|arrow-right|^index-' | sort
-```
+### Step 4 — Purge stale root artifacts from `main`
 
-Reading the output tells us definitively:
+After steps 1–3 produce a green CI run, delete from `main`: root `index.html`, `assets/`, `about/`, `contact/`, `blog/`, `gallery/`, `prayers/`, `recipes/`, `404.html`, `_headers`, `.nojekyll`, `dist-static/`. These are all leftovers from the manual-sync workaround.
 
-- If the four hashes appear in `.output/server/*` **and** in `.output/public/assets/*`: content hasn't changed → not a bug; mismatch is elsewhere. Look at what else HTML references.
-- If they appear in `.output/server/*` but NOT in `.output/public/assets/*`: the SSR bundle references chunks the client build never emitted → cause #1 (two graphs). Fix by making the SSR renderer read the client manifest, not the SSR one.
-- If they appear ONLY in the checked-out repo root `assets/` (not in `.output/*`): cause #2 (build actually reads repo root). Purge the committed root `assets/`, `dist-static/`, `blog/`, etc. from `main` before the build step.
-- If the SSR manifest file's listed chunk names disagree with the actual filenames in `.output/public/assets/`: same as cause #1, and the manifest is the smoking gun.
+### Step 5 — Flip Pages source back to `gh-pages` (manual, in GitHub UI)
 
-## Then fix, based on evidence
+## Not touching this pass
 
-I'll make no build/config changes in this pass. Once the diagnostic output is in, one of the three fix paths above applies — I'll pick it based on what the log actually shows, not a guess.
+- No dependency version changes.
+- No `src/` route/component changes.
+- No WordPress-fetch fix (out of scope, agreed earlier).
+- No deletions until step 3 produces a green CI run — leaving `main` as-is keeps the site loading (broken nav, but loading) mid-fix.
 
-## What I will not change in this pass
+## Deliverable
 
-- No changes to `src/`, `vite.config.ts`, `scripts/prerender.mjs`.
-- No touching GitHub Pages settings.
-- No deleting the checked-in root `assets/` / `dist-static/` / `blog/` / etc. yet (leaving `main` serving as it is so the site stays stable).
-
-## Deliverable of this pass
-
-The next CI run's log — specifically the "Diagnose SSR/client hash disagreement" step — pasted back to me. From that I make a one-shot fix.
+A CI run whose "Verify every HTML asset reference resolves on disk" step passes, followed by the root cleanup and Pages-source flip. Publishes then become one-step again.
