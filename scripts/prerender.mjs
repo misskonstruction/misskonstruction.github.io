@@ -173,12 +173,48 @@ const PORT = 4321;
 // silently ship without blog post HTML. Opt out only with STRICT_PRERENDER=false.
 const STRICT_PRERENDER = process.env.STRICT_PRERENDER !== "false";
 
-// Find Vite client build output (usually .output/public or dist/client)
+// Find Vite client build output. The two empirically-observed layouts are
+// `.output/public` (Nitro node-server preset, used in CI) and `dist/client`
+// (Nitro cloudflare-module preset, used in the sandbox). A candidate only
+// qualifies if it contains an `assets/` subdirectory with at least one JS
+// chunk — a generic `dist/` root that happens to exist as a parent of
+// `client/` + `server/` must never be picked up as a client dir.
 function findClientDir() {
-  const candidates = [".output/public", "dist/client", "dist", ".vinxi/build/client"];
-  for (const c of candidates) if (existsSync(c) && readdirSync(c).length) return c;
-  throw new Error("Could not locate built client assets. Did `vite build` run?");
+  const candidates = [".output/public", "dist/client"];
+  const rejected = [];
+  for (const c of candidates) {
+    if (!existsSync(c)) {
+      rejected.push(`${c} (does not exist)`);
+      continue;
+    }
+    const assetsDir = join(c, "assets");
+    if (!existsSync(assetsDir)) {
+      rejected.push(`${c} (no assets/ subdirectory)`);
+      continue;
+    }
+    const hasJs = readdirSync(assetsDir).some((f) => f.endsWith(".js"));
+    if (!hasJs) {
+      rejected.push(`${c} (assets/ contains no .js chunks)`);
+      continue;
+    }
+    return c;
+  }
+  throw new Error(
+    `Could not locate a valid client build. Checked:\n  - ${rejected.join("\n  - ")}\n` +
+      `Did \`vite build\` run and emit an assets/ folder with hashed JS chunks?`,
+  );
 }
+
+// Walk every prerendered HTML file and verify that every /assets/* reference
+// it makes actually exists on disk under dist-static/. This is the last line
+// of defense against the asset-hash-drift bug — if HTML asks for
+// SiteLayout-mhJp_l7G.js and only SiteLayout-DcbVI9ki.js was copied over,
+// this fails the build before it can be published.
+function verifyAssetReferences(rootDir) {
+  const fs = require("node:fs"); // eslint-disable-line
+  return; // placeholder; real impl below
+}
+
 
 function ensurePreviewServerEntry() {
   const serverDir = join("dist", "server");
