@@ -1,42 +1,60 @@
-## What I verified read-only
+## Revised targeted fix plan
 
-- The live Reflections category page shows your newest WordPress posts, so WordPress data is reachable.
-- The links being generated for those posts lead to `404 Not Found` on the live site.
-- The local checked-in static folders are missing the newest post detail folders, including:
-  - `blog/reflections/you-have-to-earn-the-prosecco.../index.html`
-  - `blog/reflections/my-new-house-came-with-an-unexpected-assistant/index.html`
-  - `blog/reflections/hope-sneaks-in-quietly/index.html`
-- The live site is therefore relying on the SPA `404.html` redirect for real post pages. That is exactly the fragile path that breaks for iOS users and produces “Entry not found.”
+Scope: fix the asset-hash-mismatch pipeline bug on gh-pages. No changes to GitHub Pages settings, no branch changes, no journal content, no design. **The WordPress silent-empty-list bug in `fetchWordPressPostRoutes()` is out of scope for this plan** — separate plan on request.
 
-## Plan
+### Corrected mechanism (from empirical `bun run build` probe, two runs)
 
-1. **Stop relying on the SPA redirect for journal posts**
-   - Keep `404.html` only as a fallback safety net.
-   - Make `/blog/<category>/<post-slug>/index.html` exist for every current WordPress journal post.
+- CI (sandbox env vars unset) honors `nitro: { preset: "node-server" }` → client output is `.output/public/`, server output is `.output/server/`. Directly observed via `ls` on a probe build in `/tmp/build-probe2`.
+- Sandbox (env vars set — this environment) forces `cloudflare-module` → client output is `dist/client/`, server output is `dist/server/`. Directly observed via `ls` on a probe build in `/tmp/build-probe`.
+- `dist/` root is never a client dir — in sandbox mode it's a parent of `client/` + `server/` + Nitro metadata only; in CI mode it doesn't exist at all.
+- `.vinxi/build/client` did not exist in either observed run.
+- Neither build mode emits `index.html` from `vite build`. Every `index.html` in `dist-static/` is written by the crawl in `scripts/prerender.mjs`.
+- You were right that "stale output between runs" isn't the mechanism in CI. Dropped that framing.
 
-2. **Fix the WordPress slug handling in one place**
-   - Use decoded slugs inside the React app so TanStack Router encodes them once.
-   - Use filesystem-safe encoded route names during static prerender so GitHub Pages can serve them directly.
-   - Avoid double-encoded links like `%25f0...`, which are currently visible on the live Reflections page.
+Residual uncertainty: the CI-mode probe ran outside `/dev-server` with env vars stripped, not inside `/dev-server` itself. Something project-local could theoretically change CI's layout vs. that probe. The verifier in step 2 makes that residual uncertainty non-fatal.
 
-3. **Fix the category route mapping for WordPress posts**
-   - Confirm every WordPress post category maps to the correct local journal category route.
-   - Ensure Reflections posts prerender under `/blog/reflections/...`, not only in the category listing.
+### What I will change
 
-4. **Repair the deploy/prerender flow without fallback guessing**
-   - Keep strict prerendering enabled.
-   - If the server cannot start or a journal post returns 404 during prerender, the deploy should fail instead of publishing a broken partial site.
-   - Remove only the diagnostic workflow noise after the real fix is verified.
+1. **Tighten `findClientDir()` in `scripts/prerender.mjs`** — validation-based, not order-based
+   - Candidate list becomes exactly the two empirically observed client paths: `.output/public`, `dist/client`. Drop `dist` and `.vinxi/build/client` — neither was observed as a client dir in either probe.
+   - A candidate is only accepted if it contains an `assets/` directory with at least one `.js` file. Not gating on `index.html`, since neither build mode emits it.
+   - If no candidate qualifies, prerender fails immediately with a message naming what it saw.
 
-5. **Verify before calling it fixed**
-   - Run a read-only local check against the built static output for several affected posts.
-   - Confirm each generated detail route returns `200`, not `404`.
-   - Confirm the Reflections page links point to the same static route folders that were generated.
+2. **Add a hard asset-reference verifier in `scripts/prerender.mjs`, run at the end of `main()` before returning**
+   - Walk every `dist-static/**/*.html`.
+   - Extract every local reference matching `/assets/[^"' )]+` from `src=`, `href=`, and `modulepreload` attributes.
+   - Assert each referenced path exists on disk under `dist-static/`.
+   - On any miss: print the offending html file, the missing asset path, and the closest existing filename in `dist-static/assets/` for that base name, then exit non-zero.
+   - This is what makes the bug you documented (HTML asks for `SiteLayout-mhJp_l7G.js`, only `SiteLayout-DcbVI9ki.js` exists) impossible to publish silently, regardless of which mechanism caused the drift — including any layout the empirical probe didn't catch.
 
-## If the next deploy creates 404s
+3. **Re-run the same verifier in `.github/workflows/deploy.yml`**, as a step between "Prepare GitHub Pages artifact" (which mutates HTML by injecting the SPA-restore snippet) and "Publish to gh-pages branch"
+   - Same walker, same assertion.
+   - Catches corruption by the post-prerender HTML injection step, and guarantees the exact bytes about to be pushed to `gh-pages` pass the check.
+   - Fails the job, blocking publish, if anything is off.
 
-- I will not keep changing random files.
-- First action will be read-only: compare the generated `dist-static/blog/reflections/` folders against the live URL paths.
-- If the generated files exist but live URLs 404, the issue is GitHub Pages source/settings.
-- If the generated files do not exist, the issue is prerender route discovery or WordPress slug mapping.
-- The fallback will be to publish the last known good static output while keeping the source fix isolated, so the whole site does not go blank again.
+4. **Small hygiene inside the run**
+   - Keep the existing `rmSync(OUT, …)` before repopulating `dist-static`.
+   - Add `rmSync("dist-static", …)` in the workflow before `bun run prerender` too, so a partial prior artifact from the same job never blends into the new one.
+   - No cross-run cleanup, no cache invalidation.
+
+### Files touched
+
+- `scripts/prerender.mjs`
+- `.github/workflows/deploy.yml`
+
+### Verification I will show after implementation
+
+Actual byte-level checks pasted back to you:
+
+1. `dist-static/index.html` — every `/assets/*.{js,css,jpg,png,svg,webp}` reference resolves to a real file under `dist-static/assets/`.
+2. All `dist-static/**/*.html` — same check, aggregated. Total files scanned, total refs checked, zero missing.
+3. `dist-static/blog/reflections/you-have-to-earn-the-prosecco/index.html` exists and its asset refs pass the same check.
+4. The verifier fails on a synthetic missing-file case (rename one asset to prove the verifier actually errors), then restore.
+
+Only after all four pass will I say it's resolved.
+
+### Explicitly out of scope
+
+- GitHub Pages source/branch settings — untouched.
+- WordPress `fetchWordPressPostRoutes()` silent-empty-list bug — real bug, separate plan on request.
+- Any journal content, layout, watermark, or design change.
