@@ -34,6 +34,9 @@ jobs:
           STRICT_PRERENDER: "true"
         run: |
           set -e
+          # Wipe any partial artifact from an earlier step in the same job so
+          # a prior run's HTML/assets can never blend into this run's output.
+          rm -rf dist-static
           bun run prerender
           test -s dist-static/index.html
 
@@ -81,6 +84,13 @@ jobs:
           touch dist-static/.nojekyll
           find dist-static -type f -name '.DS_Store' -delete
           echo "✅ dist-static ready: $(find dist-static -type f | wc -l) files"
+
+      - name: Verify every HTML asset reference resolves on disk
+        # Runs on the exact bytes about to be published. Fails the job (blocks
+        # publish) if any /assets/* reference in any HTML file is missing —
+        # this is what prevents asset-hash-drift from ever going live.
+        run: node scripts/prerender.mjs --verify-assets dist-static
+
 
       - name: Publish to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
