@@ -210,10 +210,85 @@ function findClientDir() {
 // of defense against the asset-hash-drift bug — if HTML asks for
 // SiteLayout-mhJp_l7G.js and only SiteLayout-DcbVI9ki.js was copied over,
 // this fails the build before it can be published.
-function verifyAssetReferences(rootDir) {
-  const fs = require("node:fs"); // eslint-disable-line
-  return; // placeholder; real impl below
+function walkHtmlFiles(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    const st = statSync(full);
+    if (st.isDirectory()) walkHtmlFiles(full, out);
+    else if (name.endsWith(".html")) out.push(full);
+  }
+  return out;
 }
+
+const ASSET_REF_RE = /(?:src|href)\s*=\s*["']([^"']*\/assets\/[^"']+)["']/gi;
+
+function extractAssetRefs(html) {
+  const refs = new Set();
+  let m;
+  ASSET_REF_RE.lastIndex = 0;
+  while ((m = ASSET_REF_RE.exec(html)) !== null) {
+    let p = m[1];
+    // Strip query strings and fragments
+    p = p.replace(/[?#].*$/, "");
+    // Normalize protocol-relative or absolute URLs to same-origin path only
+    if (/^https?:\/\//i.test(p)) continue; // external, ignore
+    // Only keep the /assets/... portion
+    const idx = p.indexOf("/assets/");
+    if (idx === -1) continue;
+    refs.add(p.slice(idx)); // starts with /assets/
+  }
+  return [...refs];
+}
+
+function closestExisting(rootDir, missingRef) {
+  const assetsDir = join(rootDir, "assets");
+  if (!existsSync(assetsDir)) return null;
+  const base = missingRef.split("/").pop() || "";
+  // e.g. SiteLayout-mhJp_l7G.js -> match on "SiteLayout-" prefix + ".js" suffix
+  const dot = base.lastIndexOf(".");
+  const ext = dot >= 0 ? base.slice(dot) : "";
+  const dash = base.indexOf("-");
+  const prefix = dash > 0 ? base.slice(0, dash + 1) : base;
+  const candidates = readdirSync(assetsDir).filter(
+    (f) => f.startsWith(prefix) && f.endsWith(ext),
+  );
+  return candidates.length ? candidates : null;
+}
+
+function verifyAssetReferences(rootDir) {
+  if (!existsSync(rootDir)) {
+    throw new Error(`Asset verifier: ${rootDir} does not exist`);
+  }
+  const htmlFiles = walkHtmlFiles(rootDir);
+  let totalRefs = 0;
+  const missing = []; // { file, ref, closest }
+  for (const file of htmlFiles) {
+    const html = readFileSync(file, "utf8");
+    const refs = extractAssetRefs(html);
+    totalRefs += refs.length;
+    for (const ref of refs) {
+      const onDisk = join(rootDir, ref.replace(/^\//, ""));
+      if (!existsSync(onDisk)) {
+        missing.push({ file, ref, closest: closestExisting(rootDir, ref) });
+      }
+    }
+  }
+  if (missing.length) {
+    console.error(`❌ Asset verifier: ${missing.length} missing reference(s) across ${htmlFiles.length} HTML file(s):`);
+    for (const { file, ref, closest } of missing) {
+      console.error(`   ${file}`);
+      console.error(`     wants:   ${ref}`);
+      console.error(`     closest: ${closest && closest.length ? closest.join(", ") : "(no similar filename)"}`);
+    }
+    throw new Error(
+      `Asset verifier failed: ${missing.length} missing /assets/* reference(s). Refusing to publish.`,
+    );
+  }
+  console.log(
+    `🔎 Asset verifier: ${totalRefs} reference(s) across ${htmlFiles.length} HTML file(s) all resolve on disk.`,
+  );
+}
+
 
 
 function ensurePreviewServerEntry() {
