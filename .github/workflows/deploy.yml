@@ -29,6 +29,38 @@ jobs:
       - name: Build client + server bundle
         run: bun run build
 
+      - name: Diagnose SSR/client hash disagreement
+        run: |
+          set +e
+          echo "── .output tree (depth 3) ──"
+          find .output -maxdepth 3 -type d | sort
+          echo "── .output/public/assets listing ──"
+          ls .output/public/assets 2>/dev/null | sort
+          echo "── every manifest.json under .output ──"
+          find .output -name "manifest.json" | sort
+          for f in $(find .output -name "manifest.json"); do
+            echo "── $f ──"
+            head -c 6000 "$f"; echo
+          done
+
+          echo "── search WHOLE checkout for the 4 stale hashes ──"
+          for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
+            echo "  hash $h:"
+            grep -rl --exclude-dir=node_modules --exclude-dir=.git "$h" . 2>/dev/null \
+              | sed 's/^/    /'
+          done
+
+          echo "── same 4 hashes, scoped to .output/server only ──"
+          for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
+            echo "  hash $h in .output/server:"
+            grep -rl "$h" .output/server 2>/dev/null | sed 's/^/    /' \
+              || echo "    (not present)"
+          done
+
+          echo "── does .output/public/assets have the OWN copy of these chunk names? ──"
+          ls .output/public/assets | grep -E 'SiteLayout|arrow-right|^index-' | sort
+          exit 0
+
       - name: Prerender static routes (strict — must succeed)
         env:
           STRICT_PRERENDER: "true"
