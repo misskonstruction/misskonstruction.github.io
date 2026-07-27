@@ -469,7 +469,13 @@ async function main() {
   } finally {
     cleanup();
   }
+
+  // Final gate: refuse to hand off dist-static/ if any HTML references an
+  // asset that isn't on disk. Runs after cleanup so the server is stopped
+  // regardless of the verifier's outcome.
+  verifyAssetReferences(OUT);
 }
+
 
 main().catch((e) => {
   if (STRICT_PRERENDER) {
