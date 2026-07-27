@@ -26,6 +26,8 @@ export function GalleryGrid({ items, protect = false }: { items: GalleryItem[]; 
     .filter((i) => i !== -1);
 
   const [active, setActive] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const close = useCallback(() => setActive(null), []);
   const step = useCallback(
