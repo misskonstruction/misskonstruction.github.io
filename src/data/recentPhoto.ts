@@ -2,7 +2,7 @@
 // To update: change the fields below to point at the newest photo.
 // `addedAt` controls the "New!" badge (shown for 14 days).
 
-import recentImage from "@/assets/florida-birding/birding-17.jpg";
+import recentImage from "@/assets/travel/travel-01.jpg";
 
 export type RecentPhoto = {
   image: string;
@@ -15,12 +15,12 @@ export type RecentPhoto = {
 
 export const recentPhoto: RecentPhoto = {
   image: recentImage,
-  alt: "A Florida gopher tortoise sunbathing on sandy ground with a curious look",
-  galleryName: "Birding & Wildlife",
-  galleryPath: "/gallery/birding-wildlife",
+  alt: "View from an airplane window — a wing cutting across a soft blanket of clouds under deep blue sky",
+  galleryName: "Travel",
+  galleryPath: "/gallery/travel",
   reflection:
-    "Caught these two gopher tortoises in what can only be described as a very intimate moment — let's call it 'tortoise porn.' Nature's private life, now slightly less private.",
-  addedAt: "2026-05-27",
+    "Somewhere over the middle of the country, wing tipped into a quiet blue. Kicking off a brand-new Travel gallery with a few frames from the road.",
+  addedAt: "2026-07-27",
 };
 
 export function isRecent(addedAt: string, days = 14): boolean {
