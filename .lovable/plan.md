@@ -1,60 +1,77 @@
-## Revised targeted fix plan
+# Trace the asset-hash mismatch to its real source
 
-Scope: fix the asset-hash-mismatch pipeline bug on gh-pages. No changes to GitHub Pages settings, no branch changes, no journal content, no design. **The WordPress silent-empty-list bug in `fetchWordPressPostRoutes()` is out of scope for this plan** — separate plan on request.
+## Confirmation of the "same as committed root assets/" claim
 
-### Corrected mechanism (from empirical `bun run build` probe, two runs)
+Directly checked, not inferred:
 
-- CI (sandbox env vars unset) honors `nitro: { preset: "node-server" }` → client output is `.output/public/`, server output is `.output/server/`. Directly observed via `ls` on a probe build in `/tmp/build-probe2`.
-- Sandbox (env vars set — this environment) forces `cloudflare-module` → client output is `dist/client/`, server output is `dist/server/`. Directly observed via `ls` on a probe build in `/tmp/build-probe`.
-- `dist/` root is never a client dir — in sandbox mode it's a parent of `client/` + `server/` + Nitro metadata only; in CI mode it doesn't exist at all.
-- `.vinxi/build/client` did not exist in either observed run.
-- Neither build mode emits `index.html` from `vite build`. Every `index.html` in `dist-static/` is written by the crawl in `scripts/prerender.mjs`.
-- You were right that "stale output between runs" isn't the mechanism in CI. Dropped that framing.
+```text
+== mhJp_l7G ==   assets/SiteLayout-mhJp_l7G.js
+== Db_OZXrz ==   assets/arrow-right-Db_OZXrz.js
+== CZxY4Lzs ==   assets/index-CZxY4Lzs.js
+== Dad_uxzM ==   assets/index-Dad_uxzM.js
+```
 
-Residual uncertainty: the CI-mode probe ran outside `/dev-server` with env vars stripped, not inside `/dev-server` itself. Something project-local could theoretically change CI's layout vs. that probe. The verifier in step 2 makes that residual uncertainty non-fatal.
+All four of the "HTML wants this but the file isn't there" hashes exist verbatim in the checked-in repo-root `assets/` folder from the earlier manual syncs. That's a real signal, but on its own it doesn't prove the build is reading them from there — Rollup hashes are content-based, so it is also possible those four chunks simply haven't changed since the sync and the same content keeps producing the same hash. The diagnostic below is written to distinguish those two cases, not assume either.
 
-### What I will change
+## Two candidate mechanisms, and how the diagnostic tells them apart
 
-1. **Tighten `findClientDir()` in `scripts/prerender.mjs`** — validation-based, not order-based
-   - Candidate list becomes exactly the two empirically observed client paths: `.output/public`, `dist/client`. Drop `dist` and `.vinxi/build/client` — neither was observed as a client dir in either probe.
-   - A candidate is only accepted if it contains an `assets/` directory with at least one `.js` file. Not gating on `index.html`, since neither build mode emits it.
-   - If no candidate qualifies, prerender fails immediately with a message naming what it saw.
+1. **Two independent graphs, one output.** The client build and the SSR build each emit their own copy of chunks like `SiteLayout` and `index`, hashed from *their* graph's content. If SSR's `<Scripts />` links to the SSR-graph hash while `.output/public/assets/` only carries the client-graph hash, you'd see exactly this: HTML references files that never appear next to it. The stability across runs would come from the SSR graph's content being stable, not from anything stale.
+2. **A stale artifact being pulled in.** Either the SSR build reads a cached/leftover manifest (unlikely — fresh checkout, no cache action), or something in the request path actually serves files from the repo-root `assets/` at build time. This is the mechanism to explicitly rule in or out; even though I can't see a plausible code path for it (Vite doesn't treat a top-level `assets/` folder as `publicDir`, the prerender crawler fetches HTML only, `.gitignore` covers `.output`/`dist`), the coincidence is strong enough to check rather than dismiss.
 
-2. **Add a hard asset-reference verifier in `scripts/prerender.mjs`, run at the end of `main()` before returning**
-   - Walk every `dist-static/**/*.html`.
-   - Extract every local reference matching `/assets/[^"' )]+` from `src=`, `href=`, and `modulepreload` attributes.
-   - Assert each referenced path exists on disk under `dist-static/`.
-   - On any miss: print the offending html file, the missing asset path, and the closest existing filename in `dist-static/assets/` for that base name, then exit non-zero.
-   - This is what makes the bug you documented (HTML asks for `SiteLayout-mhJp_l7G.js`, only `SiteLayout-DcbVI9ki.js` exists) impossible to publish silently, regardless of which mechanism caused the drift — including any layout the empirical probe didn't catch.
+## What to add to `.github/workflows/deploy.yml`
 
-3. **Re-run the same verifier in `.github/workflows/deploy.yml`**, as a step between "Prepare GitHub Pages artifact" (which mutates HTML by injecting the SPA-restore snippet) and "Publish to gh-pages branch"
-   - Same walker, same assertion.
-   - Catches corruption by the post-prerender HTML injection step, and guarantees the exact bytes about to be pushed to `gh-pages` pass the check.
-   - Fails the job, blocking publish, if anything is off.
+One new step, inserted between `Build client + server bundle` and `Prerender static routes`. Read-only, no side effects:
 
-4. **Small hygiene inside the run**
-   - Keep the existing `rmSync(OUT, …)` before repopulating `dist-static`.
-   - Add `rmSync("dist-static", …)` in the workflow before `bun run prerender` too, so a partial prior artifact from the same job never blends into the new one.
-   - No cross-run cleanup, no cache invalidation.
+```yaml
+- name: Diagnose SSR/client hash disagreement
+  run: |
+    set +e
+    echo "── .output tree (depth 3) ──"
+    find .output -maxdepth 3 -type d | sort
+    echo "── .output/public/assets listing ──"
+    ls .output/public/assets 2>/dev/null | sort
+    echo "── every manifest.json under .output ──"
+    find .output -name "manifest.json" | sort
+    for f in $(find .output -name "manifest.json"); do
+      echo "── $f ──"
+      head -c 6000 "$f"; echo
+    done
 
-### Files touched
+    echo "── search WHOLE checkout for the 4 stale hashes ──"
+    for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
+      echo "  hash $h:"
+      grep -rl --exclude-dir=node_modules --exclude-dir=.git "$h" . 2>/dev/null \
+        | sed 's/^/    /'
+    done
 
-- `scripts/prerender.mjs`
-- `.github/workflows/deploy.yml`
+    echo "── same 4 hashes, scoped to .output/server only ──"
+    for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
+      echo "  hash $h in .output/server:"
+      grep -rl "$h" .output/server 2>/dev/null | sed 's/^/    /' \
+        || echo "    (not present)"
+    done
 
-### Verification I will show after implementation
+    echo "── does .output/public/assets have the OWN copy of these chunk names? ──"
+    ls .output/public/assets | grep -E 'SiteLayout|arrow-right|^index-' | sort
+```
 
-Actual byte-level checks pasted back to you:
+Reading the output tells us definitively:
 
-1. `dist-static/index.html` — every `/assets/*.{js,css,jpg,png,svg,webp}` reference resolves to a real file under `dist-static/assets/`.
-2. All `dist-static/**/*.html` — same check, aggregated. Total files scanned, total refs checked, zero missing.
-3. `dist-static/blog/reflections/you-have-to-earn-the-prosecco/index.html` exists and its asset refs pass the same check.
-4. The verifier fails on a synthetic missing-file case (rename one asset to prove the verifier actually errors), then restore.
+- If the four hashes appear in `.output/server/*` **and** in `.output/public/assets/*`: content hasn't changed → not a bug; mismatch is elsewhere. Look at what else HTML references.
+- If they appear in `.output/server/*` but NOT in `.output/public/assets/*`: the SSR bundle references chunks the client build never emitted → cause #1 (two graphs). Fix by making the SSR renderer read the client manifest, not the SSR one.
+- If they appear ONLY in the checked-out repo root `assets/` (not in `.output/*`): cause #2 (build actually reads repo root). Purge the committed root `assets/`, `dist-static/`, `blog/`, etc. from `main` before the build step.
+- If the SSR manifest file's listed chunk names disagree with the actual filenames in `.output/public/assets/`: same as cause #1, and the manifest is the smoking gun.
 
-Only after all four pass will I say it's resolved.
+## Then fix, based on evidence
 
-### Explicitly out of scope
+I'll make no build/config changes in this pass. Once the diagnostic output is in, one of the three fix paths above applies — I'll pick it based on what the log actually shows, not a guess.
 
-- GitHub Pages source/branch settings — untouched.
-- WordPress `fetchWordPressPostRoutes()` silent-empty-list bug — real bug, separate plan on request.
-- Any journal content, layout, watermark, or design change.
+## What I will not change in this pass
+
+- No changes to `src/`, `vite.config.ts`, `scripts/prerender.mjs`.
+- No touching GitHub Pages settings.
+- No deleting the checked-in root `assets/` / `dist-static/` / `blog/` / etc. yet (leaving `main` serving as it is so the site stays stable).
+
+## Deliverable of this pass
+
+The next CI run's log — specifically the "Diagnose SSR/client hash disagreement" step — pasted back to me. From that I make a one-shot fix.
