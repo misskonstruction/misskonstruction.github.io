@@ -26,8 +26,33 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile || bun install
 
+      - name: Neutralize stale root artifacts before build
+        # Nitro auto-detects a root ./index.html and bakes it into the SSR
+        # renderer template, embedding stale asset hashes from previous
+        # manual syncs. Rename these out of the way so this run's build
+        # generates a fresh renderer template from its own manifest.
+        # ./assets/ rename is precautionary — root ./assets/ could be
+        # picked up by public-dir auto-copy logic and cause similar drift.
+        run: |
+          set -e
+          [ -f index.html ] && mv index.html index.html.ci-hidden || true
+          [ -d assets ] && mv assets assets.ci-hidden || true
+          if [ -f index.html ] || [ -d assets ]; then
+            echo "❌ Failed to neutralize root artifacts"; exit 1
+          fi
+          echo "✅ Root artifacts neutralized for build"
+
       - name: Build client + server bundle
         run: bun run build
+
+      - name: Restore root artifacts
+        if: always()
+        run: |
+          [ -f index.html.ci-hidden ] && mv index.html.ci-hidden index.html || true
+          [ -d assets.ci-hidden ] && mv assets.ci-hidden assets || true
+          echo "✅ Root artifacts restored"
+
+
 
       - name: Diagnose SSR/client hash disagreement
         run: |
