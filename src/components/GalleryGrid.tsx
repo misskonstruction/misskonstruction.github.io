@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Plus, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export type GalleryItem = {
