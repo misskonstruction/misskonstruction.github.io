@@ -16,6 +16,7 @@ export const Route = createFileRoute("/gallery/texture-form")({
 });
 
 const items: GalleryItem[] = [
+  { src: golfBalls, title: "A bucket of dimples" },
   { src: aquariumRocks, title: "Aquarium Stones — River Pebbles & Sea Glass" },
 ];
 
