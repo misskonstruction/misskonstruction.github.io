@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
 import sphinxUnderKonstruction from "@/assets/sphinx-under-konstruction.png";
 import aquariumRocks from "@/assets/texture-form/aquarium-rocks.jpg";
+import golfBalls from "@/assets/texture-form/golf-balls.jpg";
 
 export const Route = createFileRoute("/gallery/texture-form")({
   component: TextureFormGallery,
