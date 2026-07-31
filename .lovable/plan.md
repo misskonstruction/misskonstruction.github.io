@@ -1,12 +1,20 @@
-## Fix mobile lightbox navigation in GalleryGrid
+## Goal
 
-**Problem:** In the lightbox (`src/components/GalleryGrid.tsx`), the prev/next arrow buttons and the `<figure>` holding the image are siblings inside a flex container. On mobile the figure is full-width (`w-full`), so it visually and interactively covers the `left-4`/`right-4` arrow buttons — they're effectively unreachable. On desktop there's enough horizontal room that the arrows peek out beyond the image.
+Host your ScratchPad tool at a clean, shareable URL on your existing GitHub Pages site, with one quiet footer link.
 
-**Fix (presentation-only, single file):**
+## Steps
 
-1. Give the prev/next buttons `z-10` (and keep the close button on top) so they layer above the figure.
-2. Enlarge the mobile tap target and add a subtle translucent background circle so the arrows are visible against any photo (e.g. `rounded-full bg-background/60 p-2` with `h-6 w-6` icon on mobile, scaling up on `md:`).
-3. Add touch-swipe support: track `touchstart`/`touchend` on the lightbox overlay; a horizontal swipe > ~50px calls `step(1)` or `step(-1)`. This is the native gesture iOS/Android users expect and also serves as a fallback.
-4. No changes to gallery data, routes, or desktop behavior.
+1. **Copy the file to `public/scratchpad/index.html`** — it's one self-contained 5 KB HTML file (inline CSS + JS, no external assets).
+   - Result URL: `https://misskonstruction.github.io/scratchpad`
+   - Living in `public/` means it's copied verbatim into the build output and served as a plain static page. It never touches React, routing, or the prerender/deploy pipeline, so it can't break the photography site.
+2. **Add `<meta name="robots" content="noindex, nofollow">`** to its `<head>` so it stays out of search results and doesn't muddy your photography SEO.
+3. **Add the footer link (option A)** in `src/components/SiteFooter.tsx` — a small line under the GitHub link:
+   > Tools: **ScratchPad** — a simple browser notepad
+   
+   Styled like the existing footer text links (muted, hover-to-primary, underline on hover), opening in a new tab. Discoverable if someone looks, invisible if they don't.
+4. **Verify** `/scratchpad` doesn't collide with any route in `src/routes/` and isn't swallowed by the SPA 404 redirect script (a real `index.html` resolves before the 404 handler, so this should be a no-op — I'll confirm).
 
-**Verification:** Use Playwright at mobile viewport (390×844) to open a gallery, tap a photo, confirm the arrows are visible and tappable, and simulate a swipe to advance the image. Screenshot before/after.
+## Technical notes
+
+- No changes needed to `.github/workflows/deploy.yml` or `scripts/prerender.mjs`.
+- No bundling or asset-hashing concerns since the file has zero external dependencies.
