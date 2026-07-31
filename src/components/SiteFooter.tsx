@@ -55,6 +55,18 @@ export function SiteFooter() {
             github.com/misskonstruction
           </a>
         </p>
+        <p className="mt-3 text-xs">
+          Tools:{" "}
+          <a
+            href="/scratchpad.html"
+            target="_blank"
+            rel="noreferrer"
+            className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            ScratchPad
+          </a>{" "}
+          — a simple browser notepad
+        </p>
         <img
           src={octopus}
           alt="MissKonstruction octopus mascot"
