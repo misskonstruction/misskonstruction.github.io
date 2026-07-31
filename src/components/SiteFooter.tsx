@@ -58,7 +58,7 @@ export function SiteFooter() {
         <p className="mt-3 text-xs">
           Tools:{" "}
           <a
-            href="/scratchpad/"
+            href="/scratchpad.html"
             target="_blank"
             rel="noreferrer"
             className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
