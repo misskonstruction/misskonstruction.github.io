@@ -55,17 +55,15 @@ export function SiteFooter() {
             github.com/misskonstruction
           </a>
         </p>
-        <p className="mt-3 text-xs">
-          Tools:{" "}
+        <p className="mt-3">
           <a
-            href="/scratchpad.html"
+            href="https://www.lapoflove.com/pet-memorial/43801"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
           >
-            ScratchPad
-          </a>{" "}
-          — a simple browser notepad
+            Light A Candle for Blitz 🐾
+          </a>
         </p>
         <img
           src={octopus}
