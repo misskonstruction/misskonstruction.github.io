@@ -45,71 +45,9 @@ export const Route = createFileRoute("/blog/")({
   }),
 });
 
-const categoryDefs = [
-  {
-    icon: Camera,
-    emoji: "📷",
-    title: "Coastal Photography",
-    slug: "coastal-photography",
-    blurb:
-      "Salt air, soft light, and the slow stories the shoreline keeps telling if you're patient enough to listen.",
-    image: coastalImg,
-  },
-  {
-    icon: UtensilsCrossed,
-    emoji: "🍳",
-    title: "From the Kitchen",
-    slug: "from-the-kitchen",
-    blurb:
-      "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays, and the smell of rosemary on warm bread.",
-    image: kitchenImg,
-  },
-  {
-    icon: Fish,
-    emoji: "🐠",
-    title: "Platy Pals",
-    slug: "platy-pals",
-    blurb:
-      "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
-    image: platysImg,
-  },
-  {
-    icon: BookOpen,
-    emoji: "✝️",
-    title: "Faith & Scripture",
-    slug: "faith-scripture",
-    blurb:
-      "Verses I keep returning to, prayers half-whispered, and the quiet places where grace meets the ordinary.",
-    image: faithImg,
-  },
-  {
-    icon: Leaf,
-    emoji: "🌿",
-    title: "Reflections",
-    slug: "reflections",
-    blurb:
-      "Field notes from everyday life — gratitude, growth, and the small thoughts worth slowing down for.",
-    image: reflectionsImg,
-  },
-  {
-    icon: Plane,
-    emoji: "✈️",
-    title: "Wander & Roam",
-    slug: "wander-roam",
-    blurb:
-      "Travel notes from the road and the in-between places — little towns, long drives, and the quiet wonder of somewhere new.",
-    image: wanderImg,
-  },
-  {
-    icon: Feather,
-    emoji: "🕯️",
-    title: "Raw & Unhinged",
-    slug: "raw-and-unhinged",
-    blurb:
-      "Unfiltered, handwritten pages from my desk — the thoughts that don't fit anywhere else. Photos of actual ink on actual paper.",
-    image: rawUnhingedImg,
-  },
-];
+// Category cards read from the shared journal category registry so a category
+// added there shows up here, on its own page, and in the post routes at once.
+
 
 function formatDate(iso: string): string {
   try {
