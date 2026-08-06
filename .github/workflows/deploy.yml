@@ -177,9 +177,34 @@ jobs:
 
 
       - name: Publish to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist-static
-          publish_branch: gh-pages
-          force_orphan: true
+        # Plain git instead of a marketplace action so a GitHub Actions CDN
+        # outage ("Failed to resolve action download info") can't block a
+        # deploy. Creates a single fresh orphan commit, same as force_orphan.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          test -s dist-static/index.html
+
+          PUBLISH_DIR="$(mktemp -d)"
+          cp -a dist-static/. "$PUBLISH_DIR"/
+          cd "$PUBLISH_DIR"
+
+          git init -q
+          git checkout -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA} to gh-pages"
+
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          for attempt in 1 2 3; do
+            if git push --force --quiet "$REMOTE" gh-pages; then
+              echo "✅ published to gh-pages (attempt $attempt)"
+              exit 0
+            fi
+            echo "⚠️  push attempt $attempt failed; retrying in $((attempt * 10))s"
+            sleep $((attempt * 10))
+          done
+          echo "❌ failed to push gh-pages after 3 attempts"; exit 1
+
