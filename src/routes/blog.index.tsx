@@ -84,28 +84,23 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
 function Blog() {
   const { posts } = Route.useLoaderData();
 
-  const counts = new Map<string, number>();
-  for (const p of posts) {
-    for (const c of p.categories) {
-      const key = c.toLowerCase();
-      counts.set(key, (counts.get(key) ?? 0) + 1);
-    }
-  }
-  const categories = categoryDefs.map((c) => ({
-    ...c,
-    posts:
-      (counts.get(c.title.toLowerCase()) ?? 0) +
-      (inHouseEntriesByCategorySlug[c.slug] ?? 0),
-  }));
-
+  // Count WordPress posts per category using the shared alias-aware matcher,
+  // so WordPress name variants land on the right card.
+  const categories = journalCategories.map((c) => {
+    const wpCount = posts.filter((p) =>
+      p.categories.some((name) => journalCategoryMatches(name, c)),
+    ).length;
+    return {
+      ...c,
+      posts: wpCount + (inHouseEntriesByCategorySlug[c.slug] ?? 0),
+    };
+  });
 
   const imageForPost = (post: WordPressPost): string => {
     if (post.featuredImage) return post.featuredImage;
-    const match = categoryDefs.find((c) =>
-      post.categories.some((cat) => cat.toLowerCase() === c.title.toLowerCase()),
-    );
-    return match?.image ?? coastalImg;
+    return effectiveJournalCategoryFor(post)?.image ?? coastalImg;
   };
+
 
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
