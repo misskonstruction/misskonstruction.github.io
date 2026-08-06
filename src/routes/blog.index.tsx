@@ -206,10 +206,9 @@ function Blog() {
                 <span>{readTime(latest.excerpt)}</span>
               </div>
               {(() => {
-                const latestCat = categoryDefs.find((c) =>
-                  latest.categories.some((cat: string) => cat.toLowerCase() === c.title.toLowerCase()),
-                );
+                const latestCat = effectiveJournalCategoryFor(latest);
                 const categorySlug = latestCat?.slug ?? "reflections";
+
                 return (
                   <Link
                     to="/blog/$category/$postSlug"
