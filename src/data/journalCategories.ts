@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -7,6 +7,7 @@ import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
+import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
 
 export type JournalCategory = {
   slug: string;
@@ -82,6 +83,22 @@ export const journalCategories: JournalCategory[] = [
     image: rawUnhingedImg,
     icon: Feather,
     aliases: ["raw", "unhinged", "raw and unhinged", "the longhand"],
+  },
+  {
+    slug: "in-loving-memory-of-blitz",
+    title: "In Loving Memory of Blitz",
+    emoji: "🕊️",
+    blurb:
+      "For my faithful girl — the service dog who carried me through everything. Her stories, her stubborn joy, and the space she left behind.",
+    image: blitzMemorialImg,
+    icon: Heart,
+    aliases: [
+      "blitz",
+      "in loving memory",
+      "in loving memory of blitz",
+      "loving memory of blitz",
+      "memory of blitz",
+    ],
   },
 ];
 
