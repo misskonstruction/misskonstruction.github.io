@@ -1,18 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
-import kitchenImg from "@/assets/blog-kitchen.jpg";
-import platysImg from "@/assets/blog-platys.jpg";
-import faithImg from "@/assets/blog-faith.jpg";
-import reflectionsImg from "@/assets/blog-reflections.jpg";
-import wanderImg from "@/assets/blog-wander.jpg";
-import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import {
+  journalCategories,
+  journalCategoryMatches,
+  effectiveJournalCategoryFor,
+} from "@/data/journalCategories";
 import { recipes } from "@/data/recipes";
 import { prayers } from "@/data/prayers";
 import { rawUnhingedEntries } from "@/data/rawUnhingedEntries";
+
 
 export const Route = createFileRoute("/blog/")({
   component: Blog,
