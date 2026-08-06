@@ -23,6 +23,7 @@ const ROUTES = [
   "/blog/faith-scripture",
   "/blog/reflections",
   "/blog/wander-roam",
+  "/blog/in-loving-memory-of-blitz",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -65,6 +66,7 @@ const KNOWN_CATEGORIES = new Set([
   "reflections",
   "wander-roam",
   "raw-and-unhinged",
+  "in-loving-memory-of-blitz",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
@@ -73,6 +75,7 @@ function mapCategoryToSlug(names) {
   for (const n of names) {
     const s = norm(n);
     if (KNOWN_CATEGORIES.has(s)) return s;
+    if (s.includes("blitz") || s.includes("loving-memory")) return "in-loving-memory-of-blitz";
     if (s.includes("kitchen") || s.includes("recipe") || s.includes("food")) return "from-the-kitchen";
     if (s.includes("coastal") || s.includes("photo")) return "coastal-photography";
     if (s.includes("platy") || s.includes("fish")) return "platy-pals";
