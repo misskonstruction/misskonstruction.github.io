@@ -23,6 +23,7 @@ const ROUTES = [
   "/blog/faith-scripture",
   "/blog/reflections",
   "/blog/wander-roam",
+  "/blog/in-loving-memory-of-blitz",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
