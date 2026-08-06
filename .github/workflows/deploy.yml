@@ -208,3 +208,46 @@ jobs:
           done
           echo "❌ failed to push gh-pages after 3 attempts"; exit 1
 
+      - name: Sync build into main branch root
+        # GitHub Pages on this repo may be served from main/root, where an old
+        # committed snapshot of the site lives. Publish the same fresh build
+        # there so it can never serve stale HTML. Source folders are untouched.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          test -s dist-static/index.html
+
+          BUILD_DIR="$(mktemp -d)"
+          cp -a dist-static/. "$BUILD_DIR"/
+
+          # Remove the previously generated site copy at the repo root.
+          rm -rf assets blog gallery recipes prayers about contact
+          rm -f index.html 404.html _headers .nojekyll
+
+          # Copy the fresh build in (dist-static/ itself is gitignored-ish
+          # build output and is intentionally not part of this copy target).
+          cp -a "$BUILD_DIR"/. ./
+          rm -rf dist-static
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "ℹ️  main root already matches the build; nothing to commit"
+            exit 0
+          fi
+          git commit -q -m "Sync built site to main root [skip ci]"
+
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          for attempt in 1 2 3; do
+            if git push --quiet "$REMOTE" HEAD:main; then
+              echo "✅ synced build to main root (attempt $attempt)"
+              exit 0
+            fi
+            echo "⚠️  push attempt $attempt failed; retrying in $((attempt * 10))s"
+            sleep $((attempt * 10))
+          done
+          echo "❌ failed to push main after 3 attempts"; exit 1
+
+
