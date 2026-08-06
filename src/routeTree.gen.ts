@@ -9,56 +9,51 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as RecipesVelvetButterChickenRouteImport } from './routes/recipes.velvet-butter-chicken'
-import { Route as RecipesThanksgivingTableRouteImport } from './routes/recipes.thanksgiving-table'
-import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
-import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
-import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
-import { Route as RecipesShrimpScampiRouteImport } from './routes/recipes.shrimp-scampi'
-import { Route as RecipesSaagAlooMatarRouteImport } from './routes/recipes.saag-aloo-matar'
-import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
-import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
-import { Route as RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport } from './routes/recipes.lemon-turmeric-cabbage-white-bean-soup'
-import { Route as RecipesHoneyGlazedChickenRouteImport } from './routes/recipes.honey-glazed-chicken'
-import { Route as RecipesHighProteinDillChickenOrzoRouteImport } from './routes/recipes.high-protein-dill-chicken-orzo'
-import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
-import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
-import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
-import { Route as PrayersWalkingOnTheWavesChambersRouteImport } from './routes/prayers.walking-on-the-waves-chambers'
-import { Route as PrayersTheWillOfGodChittisterRouteImport } from './routes/prayers.the-will-of-god-chittister'
-import { Route as PrayersOneStepIsEnoughGrouRouteImport } from './routes/prayers.one-step-is-enough-grou'
-import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
-import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
-import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './routes/prayers.fold-the-arms-of-thy-faith-macdonald'
-import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
-import { Route as GalleryTravelRouteImport } from './routes/gallery.travel'
-import { Route as GalleryTextureFormRouteImport } from './routes/gallery.texture-form'
-import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
-import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
-import { Route as GalleryLooseFramesRouteImport } from './routes/gallery.loose-frames'
-import { Route as GalleryKonstructionCharacterRouteImport } from './routes/gallery.konstruction-character'
-import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
-import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
-import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
-import { Route as GalleryBirdingWildlifeRouteImport } from './routes/gallery.birding-wildlife'
-import { Route as BlogRawAndUnhingedRouteImport } from './routes/blog.raw-and-unhinged'
 import { Route as BlogCategoryRouteImport } from './routes/blog.$category'
+import { Route as BlogRawAndUnhingedRouteImport } from './routes/blog.raw-and-unhinged'
+import { Route as GalleryBirdingWildlifeRouteImport } from './routes/gallery.birding-wildlife'
+import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
+import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
+import { Route as GalleryFlowersRouteImport } from './routes/gallery.flowers'
+import { Route as GalleryKonstructionCharacterRouteImport } from './routes/gallery.konstruction-character'
+import { Route as GalleryLooseFramesRouteImport } from './routes/gallery.loose-frames'
+import { Route as GalleryMaternityRouteImport } from './routes/gallery.maternity'
+import { Route as GalleryNewbornsRouteImport } from './routes/gallery.newborns'
+import { Route as GalleryTextureFormRouteImport } from './routes/gallery.texture-form'
+import { Route as GalleryTravelRouteImport } from './routes/gallery.travel'
+import { Route as PrayersPrayerSlugRouteImport } from './routes/prayers.$prayerSlug'
+import { Route as PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport } from './routes/prayers.fold-the-arms-of-thy-faith-macdonald'
+import { Route as PrayersHouseholdTroublesDeSalesRouteImport } from './routes/prayers.household-troubles-de-sales'
+import { Route as PrayersInCelebrationMaisieReneeRouteImport } from './routes/prayers.in-celebration-maisie-renee'
+import { Route as PrayersOneStepIsEnoughGrouRouteImport } from './routes/prayers.one-step-is-enough-grou'
+import { Route as PrayersTheWillOfGodChittisterRouteImport } from './routes/prayers.the-will-of-god-chittister'
+import { Route as PrayersWalkingOnTheWavesChambersRouteImport } from './routes/prayers.walking-on-the-waves-chambers'
+import { Route as RecipesRecipeSlugRouteImport } from './routes/recipes.$recipeSlug'
+import { Route as RecipesBitchinSlowCookerPorkchopsRouteImport } from './routes/recipes.bitchin-slow-cooker-porkchops'
+import { Route as RecipesDeepFriedTilapiaRouteImport } from './routes/recipes.deep-fried-tilapia'
+import { Route as RecipesHighProteinDillChickenOrzoRouteImport } from './routes/recipes.high-protein-dill-chicken-orzo'
+import { Route as RecipesHoneyGlazedChickenRouteImport } from './routes/recipes.honey-glazed-chicken'
+import { Route as RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport } from './routes/recipes.lemon-turmeric-cabbage-white-bean-soup'
+import { Route as RecipesMyLovelyLasagneRouteImport } from './routes/recipes.my-lovely-lasagne'
+import { Route as RecipesPulledPorkTacosRouteImport } from './routes/recipes.pulled-pork-tacos'
+import { Route as RecipesSaagAlooMatarRouteImport } from './routes/recipes.saag-aloo-matar'
+import { Route as RecipesShrimpScampiRouteImport } from './routes/recipes.shrimp-scampi'
+import { Route as RecipesSlowCookerCodDogFoodRouteImport } from './routes/recipes.slow-cooker-cod-dog-food'
+import { Route as RecipesSlowCookerHomemadeDogFoodRouteImport } from './routes/recipes.slow-cooker-homemade-dog-food'
+import { Route as RecipesSuperbSpaghettiAndMeatballsRouteImport } from './routes/recipes.superb-spaghetti-and-meatballs'
+import { Route as RecipesThanksgivingTableRouteImport } from './routes/recipes.thanksgiving-table'
+import { Route as RecipesVelvetButterChickenRouteImport } from './routes/recipes.velvet-butter-chicken'
 import { Route as BlogCategoryIndexRouteImport } from './routes/blog.$category.index'
 import { Route as BlogCategoryPostSlugRouteImport } from './routes/blog.$category.$postSlug'
 
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -66,9 +61,14 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -76,154 +76,34 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
-const RecipesVelvetButterChickenRoute =
-  RecipesVelvetButterChickenRouteImport.update({
-    id: '/recipes/velvet-butter-chicken',
-    path: '/recipes/velvet-butter-chicken',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesThanksgivingTableRoute =
-  RecipesThanksgivingTableRouteImport.update({
-    id: '/recipes/thanksgiving-table',
-    path: '/recipes/thanksgiving-table',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesSuperbSpaghettiAndMeatballsRoute =
-  RecipesSuperbSpaghettiAndMeatballsRouteImport.update({
-    id: '/recipes/superb-spaghetti-and-meatballs',
-    path: '/recipes/superb-spaghetti-and-meatballs',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesSlowCookerHomemadeDogFoodRoute =
-  RecipesSlowCookerHomemadeDogFoodRouteImport.update({
-    id: '/recipes/slow-cooker-homemade-dog-food',
-    path: '/recipes/slow-cooker-homemade-dog-food',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesSlowCookerCodDogFoodRoute =
-  RecipesSlowCookerCodDogFoodRouteImport.update({
-    id: '/recipes/slow-cooker-cod-dog-food',
-    path: '/recipes/slow-cooker-cod-dog-food',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesShrimpScampiRoute = RecipesShrimpScampiRouteImport.update({
-  id: '/recipes/shrimp-scampi',
-  path: '/recipes/shrimp-scampi',
+const BlogCategoryRoute = BlogCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogRawAndUnhingedRoute = BlogRawAndUnhingedRouteImport.update({
+  id: '/raw-and-unhinged',
+  path: '/raw-and-unhinged',
+  getParentRoute: () => BlogRoute,
+} as any)
+const GalleryBirdingWildlifeRoute = GalleryBirdingWildlifeRouteImport.update({
+  id: '/gallery/birding-wildlife',
+  path: '/gallery/birding-wildlife',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecipesSaagAlooMatarRoute = RecipesSaagAlooMatarRouteImport.update({
-  id: '/recipes/saag-aloo-matar',
-  path: '/recipes/saag-aloo-matar',
+const GalleryBoatsRoute = GalleryBoatsRouteImport.update({
+  id: '/gallery/boats',
+  path: '/gallery/boats',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecipesPulledPorkTacosRoute = RecipesPulledPorkTacosRouteImport.update({
-  id: '/recipes/pulled-pork-tacos',
-  path: '/recipes/pulled-pork-tacos',
+const GalleryFloridaBirdingRoute = GalleryFloridaBirdingRouteImport.update({
+  id: '/gallery/florida-birding',
+  path: '/gallery/florida-birding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecipesMyLovelyLasagneRoute = RecipesMyLovelyLasagneRouteImport.update({
-  id: '/recipes/my-lovely-lasagne',
-  path: '/recipes/my-lovely-lasagne',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RecipesLemonTurmericCabbageWhiteBeanSoupRoute =
-  RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport.update({
-    id: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
-    path: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesHoneyGlazedChickenRoute =
-  RecipesHoneyGlazedChickenRouteImport.update({
-    id: '/recipes/honey-glazed-chicken',
-    path: '/recipes/honey-glazed-chicken',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesHighProteinDillChickenOrzoRoute =
-  RecipesHighProteinDillChickenOrzoRouteImport.update({
-    id: '/recipes/high-protein-dill-chicken-orzo',
-    path: '/recipes/high-protein-dill-chicken-orzo',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesDeepFriedTilapiaRoute = RecipesDeepFriedTilapiaRouteImport.update({
-  id: '/recipes/deep-fried-tilapia',
-  path: '/recipes/deep-fried-tilapia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RecipesBitchinSlowCookerPorkchopsRoute =
-  RecipesBitchinSlowCookerPorkchopsRouteImport.update({
-    id: '/recipes/bitchin-slow-cooker-porkchops',
-    path: '/recipes/bitchin-slow-cooker-porkchops',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
-  id: '/recipes/$recipeSlug',
-  path: '/recipes/$recipeSlug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrayersWalkingOnTheWavesChambersRoute =
-  PrayersWalkingOnTheWavesChambersRouteImport.update({
-    id: '/prayers/walking-on-the-waves-chambers',
-    path: '/prayers/walking-on-the-waves-chambers',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersTheWillOfGodChittisterRoute =
-  PrayersTheWillOfGodChittisterRouteImport.update({
-    id: '/prayers/the-will-of-god-chittister',
-    path: '/prayers/the-will-of-god-chittister',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersOneStepIsEnoughGrouRoute =
-  PrayersOneStepIsEnoughGrouRouteImport.update({
-    id: '/prayers/one-step-is-enough-grou',
-    path: '/prayers/one-step-is-enough-grou',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersInCelebrationMaisieReneeRoute =
-  PrayersInCelebrationMaisieReneeRouteImport.update({
-    id: '/prayers/in-celebration-maisie-renee',
-    path: '/prayers/in-celebration-maisie-renee',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersHouseholdTroublesDeSalesRoute =
-  PrayersHouseholdTroublesDeSalesRouteImport.update({
-    id: '/prayers/household-troubles-de-sales',
-    path: '/prayers/household-troubles-de-sales',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersFoldTheArmsOfThyFaithMacdonaldRoute =
-  PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport.update({
-    id: '/prayers/fold-the-arms-of-thy-faith-macdonald',
-    path: '/prayers/fold-the-arms-of-thy-faith-macdonald',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PrayersPrayerSlugRoute = PrayersPrayerSlugRouteImport.update({
-  id: '/prayers/$prayerSlug',
-  path: '/prayers/$prayerSlug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryTravelRoute = GalleryTravelRouteImport.update({
-  id: '/gallery/travel',
-  path: '/gallery/travel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryTextureFormRoute = GalleryTextureFormRouteImport.update({
-  id: '/gallery/texture-form',
-  path: '/gallery/texture-form',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
-  id: '/gallery/newborns',
-  path: '/gallery/newborns',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryMaternityRoute = GalleryMaternityRouteImport.update({
-  id: '/gallery/maternity',
-  path: '/gallery/maternity',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryLooseFramesRoute = GalleryLooseFramesRouteImport.update({
-  id: '/gallery/loose-frames',
-  path: '/gallery/loose-frames',
+const GalleryFlowersRoute = GalleryFlowersRouteImport.update({
+  id: '/gallery/flowers',
+  path: '/gallery/flowers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryKonstructionCharacterRoute =
@@ -232,36 +112,156 @@ const GalleryKonstructionCharacterRoute =
     path: '/gallery/konstruction-character',
     getParentRoute: () => rootRouteImport,
   } as any)
-const GalleryFlowersRoute = GalleryFlowersRouteImport.update({
-  id: '/gallery/flowers',
-  path: '/gallery/flowers',
+const GalleryLooseFramesRoute = GalleryLooseFramesRouteImport.update({
+  id: '/gallery/loose-frames',
+  path: '/gallery/loose-frames',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GalleryFloridaBirdingRoute = GalleryFloridaBirdingRouteImport.update({
-  id: '/gallery/florida-birding',
-  path: '/gallery/florida-birding',
+const GalleryMaternityRoute = GalleryMaternityRouteImport.update({
+  id: '/gallery/maternity',
+  path: '/gallery/maternity',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GalleryBoatsRoute = GalleryBoatsRouteImport.update({
-  id: '/gallery/boats',
-  path: '/gallery/boats',
+const GalleryNewbornsRoute = GalleryNewbornsRouteImport.update({
+  id: '/gallery/newborns',
+  path: '/gallery/newborns',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GalleryBirdingWildlifeRoute = GalleryBirdingWildlifeRouteImport.update({
-  id: '/gallery/birding-wildlife',
-  path: '/gallery/birding-wildlife',
+const GalleryTextureFormRoute = GalleryTextureFormRouteImport.update({
+  id: '/gallery/texture-form',
+  path: '/gallery/texture-form',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRawAndUnhingedRoute = BlogRawAndUnhingedRouteImport.update({
-  id: '/raw-and-unhinged',
-  path: '/raw-and-unhinged',
-  getParentRoute: () => BlogRoute,
+const GalleryTravelRoute = GalleryTravelRouteImport.update({
+  id: '/gallery/travel',
+  path: '/gallery/travel',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BlogCategoryRoute = BlogCategoryRouteImport.update({
-  id: '/$category',
-  path: '/$category',
-  getParentRoute: () => BlogRoute,
+const PrayersPrayerSlugRoute = PrayersPrayerSlugRouteImport.update({
+  id: '/prayers/$prayerSlug',
+  path: '/prayers/$prayerSlug',
+  getParentRoute: () => rootRouteImport,
 } as any)
+const PrayersFoldTheArmsOfThyFaithMacdonaldRoute =
+  PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport.update({
+    id: '/prayers/fold-the-arms-of-thy-faith-macdonald',
+    path: '/prayers/fold-the-arms-of-thy-faith-macdonald',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersHouseholdTroublesDeSalesRoute =
+  PrayersHouseholdTroublesDeSalesRouteImport.update({
+    id: '/prayers/household-troubles-de-sales',
+    path: '/prayers/household-troubles-de-sales',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersInCelebrationMaisieReneeRoute =
+  PrayersInCelebrationMaisieReneeRouteImport.update({
+    id: '/prayers/in-celebration-maisie-renee',
+    path: '/prayers/in-celebration-maisie-renee',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersOneStepIsEnoughGrouRoute =
+  PrayersOneStepIsEnoughGrouRouteImport.update({
+    id: '/prayers/one-step-is-enough-grou',
+    path: '/prayers/one-step-is-enough-grou',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersTheWillOfGodChittisterRoute =
+  PrayersTheWillOfGodChittisterRouteImport.update({
+    id: '/prayers/the-will-of-god-chittister',
+    path: '/prayers/the-will-of-god-chittister',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PrayersWalkingOnTheWavesChambersRoute =
+  PrayersWalkingOnTheWavesChambersRouteImport.update({
+    id: '/prayers/walking-on-the-waves-chambers',
+    path: '/prayers/walking-on-the-waves-chambers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesRecipeSlugRoute = RecipesRecipeSlugRouteImport.update({
+  id: '/recipes/$recipeSlug',
+  path: '/recipes/$recipeSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesBitchinSlowCookerPorkchopsRoute =
+  RecipesBitchinSlowCookerPorkchopsRouteImport.update({
+    id: '/recipes/bitchin-slow-cooker-porkchops',
+    path: '/recipes/bitchin-slow-cooker-porkchops',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesDeepFriedTilapiaRoute = RecipesDeepFriedTilapiaRouteImport.update({
+  id: '/recipes/deep-fried-tilapia',
+  path: '/recipes/deep-fried-tilapia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesHighProteinDillChickenOrzoRoute =
+  RecipesHighProteinDillChickenOrzoRouteImport.update({
+    id: '/recipes/high-protein-dill-chicken-orzo',
+    path: '/recipes/high-protein-dill-chicken-orzo',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesHoneyGlazedChickenRoute =
+  RecipesHoneyGlazedChickenRouteImport.update({
+    id: '/recipes/honey-glazed-chicken',
+    path: '/recipes/honey-glazed-chicken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesLemonTurmericCabbageWhiteBeanSoupRoute =
+  RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport.update({
+    id: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
+    path: '/recipes/lemon-turmeric-cabbage-white-bean-soup',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesMyLovelyLasagneRoute = RecipesMyLovelyLasagneRouteImport.update({
+  id: '/recipes/my-lovely-lasagne',
+  path: '/recipes/my-lovely-lasagne',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesPulledPorkTacosRoute = RecipesPulledPorkTacosRouteImport.update({
+  id: '/recipes/pulled-pork-tacos',
+  path: '/recipes/pulled-pork-tacos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesSaagAlooMatarRoute = RecipesSaagAlooMatarRouteImport.update({
+  id: '/recipes/saag-aloo-matar',
+  path: '/recipes/saag-aloo-matar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesShrimpScampiRoute = RecipesShrimpScampiRouteImport.update({
+  id: '/recipes/shrimp-scampi',
+  path: '/recipes/shrimp-scampi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesSlowCookerCodDogFoodRoute =
+  RecipesSlowCookerCodDogFoodRouteImport.update({
+    id: '/recipes/slow-cooker-cod-dog-food',
+    path: '/recipes/slow-cooker-cod-dog-food',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesSlowCookerHomemadeDogFoodRoute =
+  RecipesSlowCookerHomemadeDogFoodRouteImport.update({
+    id: '/recipes/slow-cooker-homemade-dog-food',
+    path: '/recipes/slow-cooker-homemade-dog-food',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesSuperbSpaghettiAndMeatballsRoute =
+  RecipesSuperbSpaghettiAndMeatballsRouteImport.update({
+    id: '/recipes/superb-spaghetti-and-meatballs',
+    path: '/recipes/superb-spaghetti-and-meatballs',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesThanksgivingTableRoute =
+  RecipesThanksgivingTableRouteImport.update({
+    id: '/recipes/thanksgiving-table',
+    path: '/recipes/thanksgiving-table',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RecipesVelvetButterChickenRoute =
+  RecipesVelvetButterChickenRouteImport.update({
+    id: '/recipes/velvet-butter-chicken',
+    path: '/recipes/velvet-butter-chicken',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -572,18 +572,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -593,11 +586,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -607,214 +607,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/recipes/velvet-butter-chicken': {
-      id: '/recipes/velvet-butter-chicken'
-      path: '/recipes/velvet-butter-chicken'
-      fullPath: '/recipes/velvet-butter-chicken'
-      preLoaderRoute: typeof RecipesVelvetButterChickenRouteImport
-      parentRoute: typeof rootRouteImport
+    '/blog/$category': {
+      id: '/blog/$category'
+      path: '/$category'
+      fullPath: '/blog/$category'
+      preLoaderRoute: typeof BlogCategoryRouteImport
+      parentRoute: typeof BlogRoute
     }
-    '/recipes/thanksgiving-table': {
-      id: '/recipes/thanksgiving-table'
-      path: '/recipes/thanksgiving-table'
-      fullPath: '/recipes/thanksgiving-table'
-      preLoaderRoute: typeof RecipesThanksgivingTableRouteImport
-      parentRoute: typeof rootRouteImport
+    '/blog/raw-and-unhinged': {
+      id: '/blog/raw-and-unhinged'
+      path: '/raw-and-unhinged'
+      fullPath: '/blog/raw-and-unhinged'
+      preLoaderRoute: typeof BlogRawAndUnhingedRouteImport
+      parentRoute: typeof BlogRoute
     }
-    '/recipes/superb-spaghetti-and-meatballs': {
-      id: '/recipes/superb-spaghetti-and-meatballs'
-      path: '/recipes/superb-spaghetti-and-meatballs'
-      fullPath: '/recipes/superb-spaghetti-and-meatballs'
-      preLoaderRoute: typeof RecipesSuperbSpaghettiAndMeatballsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/slow-cooker-homemade-dog-food': {
-      id: '/recipes/slow-cooker-homemade-dog-food'
-      path: '/recipes/slow-cooker-homemade-dog-food'
-      fullPath: '/recipes/slow-cooker-homemade-dog-food'
-      preLoaderRoute: typeof RecipesSlowCookerHomemadeDogFoodRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/slow-cooker-cod-dog-food': {
-      id: '/recipes/slow-cooker-cod-dog-food'
-      path: '/recipes/slow-cooker-cod-dog-food'
-      fullPath: '/recipes/slow-cooker-cod-dog-food'
-      preLoaderRoute: typeof RecipesSlowCookerCodDogFoodRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/shrimp-scampi': {
-      id: '/recipes/shrimp-scampi'
-      path: '/recipes/shrimp-scampi'
-      fullPath: '/recipes/shrimp-scampi'
-      preLoaderRoute: typeof RecipesShrimpScampiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/saag-aloo-matar': {
-      id: '/recipes/saag-aloo-matar'
-      path: '/recipes/saag-aloo-matar'
-      fullPath: '/recipes/saag-aloo-matar'
-      preLoaderRoute: typeof RecipesSaagAlooMatarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/pulled-pork-tacos': {
-      id: '/recipes/pulled-pork-tacos'
-      path: '/recipes/pulled-pork-tacos'
-      fullPath: '/recipes/pulled-pork-tacos'
-      preLoaderRoute: typeof RecipesPulledPorkTacosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/my-lovely-lasagne': {
-      id: '/recipes/my-lovely-lasagne'
-      path: '/recipes/my-lovely-lasagne'
-      fullPath: '/recipes/my-lovely-lasagne'
-      preLoaderRoute: typeof RecipesMyLovelyLasagneRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/lemon-turmeric-cabbage-white-bean-soup': {
-      id: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
-      path: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
-      fullPath: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
-      preLoaderRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/honey-glazed-chicken': {
-      id: '/recipes/honey-glazed-chicken'
-      path: '/recipes/honey-glazed-chicken'
-      fullPath: '/recipes/honey-glazed-chicken'
-      preLoaderRoute: typeof RecipesHoneyGlazedChickenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/high-protein-dill-chicken-orzo': {
-      id: '/recipes/high-protein-dill-chicken-orzo'
-      path: '/recipes/high-protein-dill-chicken-orzo'
-      fullPath: '/recipes/high-protein-dill-chicken-orzo'
-      preLoaderRoute: typeof RecipesHighProteinDillChickenOrzoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/deep-fried-tilapia': {
-      id: '/recipes/deep-fried-tilapia'
-      path: '/recipes/deep-fried-tilapia'
-      fullPath: '/recipes/deep-fried-tilapia'
-      preLoaderRoute: typeof RecipesDeepFriedTilapiaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/bitchin-slow-cooker-porkchops': {
-      id: '/recipes/bitchin-slow-cooker-porkchops'
-      path: '/recipes/bitchin-slow-cooker-porkchops'
-      fullPath: '/recipes/bitchin-slow-cooker-porkchops'
-      preLoaderRoute: typeof RecipesBitchinSlowCookerPorkchopsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recipes/$recipeSlug': {
-      id: '/recipes/$recipeSlug'
-      path: '/recipes/$recipeSlug'
-      fullPath: '/recipes/$recipeSlug'
-      preLoaderRoute: typeof RecipesRecipeSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/walking-on-the-waves-chambers': {
-      id: '/prayers/walking-on-the-waves-chambers'
-      path: '/prayers/walking-on-the-waves-chambers'
-      fullPath: '/prayers/walking-on-the-waves-chambers'
-      preLoaderRoute: typeof PrayersWalkingOnTheWavesChambersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/the-will-of-god-chittister': {
-      id: '/prayers/the-will-of-god-chittister'
-      path: '/prayers/the-will-of-god-chittister'
-      fullPath: '/prayers/the-will-of-god-chittister'
-      preLoaderRoute: typeof PrayersTheWillOfGodChittisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/one-step-is-enough-grou': {
-      id: '/prayers/one-step-is-enough-grou'
-      path: '/prayers/one-step-is-enough-grou'
-      fullPath: '/prayers/one-step-is-enough-grou'
-      preLoaderRoute: typeof PrayersOneStepIsEnoughGrouRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/in-celebration-maisie-renee': {
-      id: '/prayers/in-celebration-maisie-renee'
-      path: '/prayers/in-celebration-maisie-renee'
-      fullPath: '/prayers/in-celebration-maisie-renee'
-      preLoaderRoute: typeof PrayersInCelebrationMaisieReneeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/household-troubles-de-sales': {
-      id: '/prayers/household-troubles-de-sales'
-      path: '/prayers/household-troubles-de-sales'
-      fullPath: '/prayers/household-troubles-de-sales'
-      preLoaderRoute: typeof PrayersHouseholdTroublesDeSalesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/fold-the-arms-of-thy-faith-macdonald': {
-      id: '/prayers/fold-the-arms-of-thy-faith-macdonald'
-      path: '/prayers/fold-the-arms-of-thy-faith-macdonald'
-      fullPath: '/prayers/fold-the-arms-of-thy-faith-macdonald'
-      preLoaderRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prayers/$prayerSlug': {
-      id: '/prayers/$prayerSlug'
-      path: '/prayers/$prayerSlug'
-      fullPath: '/prayers/$prayerSlug'
-      preLoaderRoute: typeof PrayersPrayerSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/travel': {
-      id: '/gallery/travel'
-      path: '/gallery/travel'
-      fullPath: '/gallery/travel'
-      preLoaderRoute: typeof GalleryTravelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/texture-form': {
-      id: '/gallery/texture-form'
-      path: '/gallery/texture-form'
-      fullPath: '/gallery/texture-form'
-      preLoaderRoute: typeof GalleryTextureFormRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/newborns': {
-      id: '/gallery/newborns'
-      path: '/gallery/newborns'
-      fullPath: '/gallery/newborns'
-      preLoaderRoute: typeof GalleryNewbornsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/maternity': {
-      id: '/gallery/maternity'
-      path: '/gallery/maternity'
-      fullPath: '/gallery/maternity'
-      preLoaderRoute: typeof GalleryMaternityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/loose-frames': {
-      id: '/gallery/loose-frames'
-      path: '/gallery/loose-frames'
-      fullPath: '/gallery/loose-frames'
-      preLoaderRoute: typeof GalleryLooseFramesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/konstruction-character': {
-      id: '/gallery/konstruction-character'
-      path: '/gallery/konstruction-character'
-      fullPath: '/gallery/konstruction-character'
-      preLoaderRoute: typeof GalleryKonstructionCharacterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/flowers': {
-      id: '/gallery/flowers'
-      path: '/gallery/flowers'
-      fullPath: '/gallery/flowers'
-      preLoaderRoute: typeof GalleryFlowersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery/florida-birding': {
-      id: '/gallery/florida-birding'
-      path: '/gallery/florida-birding'
-      fullPath: '/gallery/florida-birding'
-      preLoaderRoute: typeof GalleryFloridaBirdingRouteImport
+    '/gallery/birding-wildlife': {
+      id: '/gallery/birding-wildlife'
+      path: '/gallery/birding-wildlife'
+      fullPath: '/gallery/birding-wildlife'
+      preLoaderRoute: typeof GalleryBirdingWildlifeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery/boats': {
@@ -824,26 +635,215 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryBoatsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gallery/birding-wildlife': {
-      id: '/gallery/birding-wildlife'
-      path: '/gallery/birding-wildlife'
-      fullPath: '/gallery/birding-wildlife'
-      preLoaderRoute: typeof GalleryBirdingWildlifeRouteImport
+    '/gallery/florida-birding': {
+      id: '/gallery/florida-birding'
+      path: '/gallery/florida-birding'
+      fullPath: '/gallery/florida-birding'
+      preLoaderRoute: typeof GalleryFloridaBirdingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/raw-and-unhinged': {
-      id: '/blog/raw-and-unhinged'
-      path: '/raw-and-unhinged'
-      fullPath: '/blog/raw-and-unhinged'
-      preLoaderRoute: typeof BlogRawAndUnhingedRouteImport
-      parentRoute: typeof BlogRoute
+    '/gallery/flowers': {
+      id: '/gallery/flowers'
+      path: '/gallery/flowers'
+      fullPath: '/gallery/flowers'
+      preLoaderRoute: typeof GalleryFlowersRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/blog/$category': {
-      id: '/blog/$category'
-      path: '/$category'
-      fullPath: '/blog/$category'
-      preLoaderRoute: typeof BlogCategoryRouteImport
-      parentRoute: typeof BlogRoute
+    '/gallery/konstruction-character': {
+      id: '/gallery/konstruction-character'
+      path: '/gallery/konstruction-character'
+      fullPath: '/gallery/konstruction-character'
+      preLoaderRoute: typeof GalleryKonstructionCharacterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/loose-frames': {
+      id: '/gallery/loose-frames'
+      path: '/gallery/loose-frames'
+      fullPath: '/gallery/loose-frames'
+      preLoaderRoute: typeof GalleryLooseFramesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/maternity': {
+      id: '/gallery/maternity'
+      path: '/gallery/maternity'
+      fullPath: '/gallery/maternity'
+      preLoaderRoute: typeof GalleryMaternityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/newborns': {
+      id: '/gallery/newborns'
+      path: '/gallery/newborns'
+      fullPath: '/gallery/newborns'
+      preLoaderRoute: typeof GalleryNewbornsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/texture-form': {
+      id: '/gallery/texture-form'
+      path: '/gallery/texture-form'
+      fullPath: '/gallery/texture-form'
+      preLoaderRoute: typeof GalleryTextureFormRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery/travel': {
+      id: '/gallery/travel'
+      path: '/gallery/travel'
+      fullPath: '/gallery/travel'
+      preLoaderRoute: typeof GalleryTravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/$prayerSlug': {
+      id: '/prayers/$prayerSlug'
+      path: '/prayers/$prayerSlug'
+      fullPath: '/prayers/$prayerSlug'
+      preLoaderRoute: typeof PrayersPrayerSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/fold-the-arms-of-thy-faith-macdonald': {
+      id: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      path: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      fullPath: '/prayers/fold-the-arms-of-thy-faith-macdonald'
+      preLoaderRoute: typeof PrayersFoldTheArmsOfThyFaithMacdonaldRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/household-troubles-de-sales': {
+      id: '/prayers/household-troubles-de-sales'
+      path: '/prayers/household-troubles-de-sales'
+      fullPath: '/prayers/household-troubles-de-sales'
+      preLoaderRoute: typeof PrayersHouseholdTroublesDeSalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/in-celebration-maisie-renee': {
+      id: '/prayers/in-celebration-maisie-renee'
+      path: '/prayers/in-celebration-maisie-renee'
+      fullPath: '/prayers/in-celebration-maisie-renee'
+      preLoaderRoute: typeof PrayersInCelebrationMaisieReneeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/one-step-is-enough-grou': {
+      id: '/prayers/one-step-is-enough-grou'
+      path: '/prayers/one-step-is-enough-grou'
+      fullPath: '/prayers/one-step-is-enough-grou'
+      preLoaderRoute: typeof PrayersOneStepIsEnoughGrouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/the-will-of-god-chittister': {
+      id: '/prayers/the-will-of-god-chittister'
+      path: '/prayers/the-will-of-god-chittister'
+      fullPath: '/prayers/the-will-of-god-chittister'
+      preLoaderRoute: typeof PrayersTheWillOfGodChittisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prayers/walking-on-the-waves-chambers': {
+      id: '/prayers/walking-on-the-waves-chambers'
+      path: '/prayers/walking-on-the-waves-chambers'
+      fullPath: '/prayers/walking-on-the-waves-chambers'
+      preLoaderRoute: typeof PrayersWalkingOnTheWavesChambersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/$recipeSlug': {
+      id: '/recipes/$recipeSlug'
+      path: '/recipes/$recipeSlug'
+      fullPath: '/recipes/$recipeSlug'
+      preLoaderRoute: typeof RecipesRecipeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/bitchin-slow-cooker-porkchops': {
+      id: '/recipes/bitchin-slow-cooker-porkchops'
+      path: '/recipes/bitchin-slow-cooker-porkchops'
+      fullPath: '/recipes/bitchin-slow-cooker-porkchops'
+      preLoaderRoute: typeof RecipesBitchinSlowCookerPorkchopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/deep-fried-tilapia': {
+      id: '/recipes/deep-fried-tilapia'
+      path: '/recipes/deep-fried-tilapia'
+      fullPath: '/recipes/deep-fried-tilapia'
+      preLoaderRoute: typeof RecipesDeepFriedTilapiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/high-protein-dill-chicken-orzo': {
+      id: '/recipes/high-protein-dill-chicken-orzo'
+      path: '/recipes/high-protein-dill-chicken-orzo'
+      fullPath: '/recipes/high-protein-dill-chicken-orzo'
+      preLoaderRoute: typeof RecipesHighProteinDillChickenOrzoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/honey-glazed-chicken': {
+      id: '/recipes/honey-glazed-chicken'
+      path: '/recipes/honey-glazed-chicken'
+      fullPath: '/recipes/honey-glazed-chicken'
+      preLoaderRoute: typeof RecipesHoneyGlazedChickenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/lemon-turmeric-cabbage-white-bean-soup': {
+      id: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      path: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      fullPath: '/recipes/lemon-turmeric-cabbage-white-bean-soup'
+      preLoaderRoute: typeof RecipesLemonTurmericCabbageWhiteBeanSoupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/my-lovely-lasagne': {
+      id: '/recipes/my-lovely-lasagne'
+      path: '/recipes/my-lovely-lasagne'
+      fullPath: '/recipes/my-lovely-lasagne'
+      preLoaderRoute: typeof RecipesMyLovelyLasagneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/pulled-pork-tacos': {
+      id: '/recipes/pulled-pork-tacos'
+      path: '/recipes/pulled-pork-tacos'
+      fullPath: '/recipes/pulled-pork-tacos'
+      preLoaderRoute: typeof RecipesPulledPorkTacosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/saag-aloo-matar': {
+      id: '/recipes/saag-aloo-matar'
+      path: '/recipes/saag-aloo-matar'
+      fullPath: '/recipes/saag-aloo-matar'
+      preLoaderRoute: typeof RecipesSaagAlooMatarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/shrimp-scampi': {
+      id: '/recipes/shrimp-scampi'
+      path: '/recipes/shrimp-scampi'
+      fullPath: '/recipes/shrimp-scampi'
+      preLoaderRoute: typeof RecipesShrimpScampiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/slow-cooker-cod-dog-food': {
+      id: '/recipes/slow-cooker-cod-dog-food'
+      path: '/recipes/slow-cooker-cod-dog-food'
+      fullPath: '/recipes/slow-cooker-cod-dog-food'
+      preLoaderRoute: typeof RecipesSlowCookerCodDogFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/slow-cooker-homemade-dog-food': {
+      id: '/recipes/slow-cooker-homemade-dog-food'
+      path: '/recipes/slow-cooker-homemade-dog-food'
+      fullPath: '/recipes/slow-cooker-homemade-dog-food'
+      preLoaderRoute: typeof RecipesSlowCookerHomemadeDogFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/superb-spaghetti-and-meatballs': {
+      id: '/recipes/superb-spaghetti-and-meatballs'
+      path: '/recipes/superb-spaghetti-and-meatballs'
+      fullPath: '/recipes/superb-spaghetti-and-meatballs'
+      preLoaderRoute: typeof RecipesSuperbSpaghettiAndMeatballsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/thanksgiving-table': {
+      id: '/recipes/thanksgiving-table'
+      path: '/recipes/thanksgiving-table'
+      fullPath: '/recipes/thanksgiving-table'
+      preLoaderRoute: typeof RecipesThanksgivingTableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/velvet-butter-chicken': {
+      id: '/recipes/velvet-butter-chicken'
+      path: '/recipes/velvet-butter-chicken'
+      fullPath: '/recipes/velvet-butter-chicken'
+      preLoaderRoute: typeof RecipesVelvetButterChickenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blog/$category/': {
       id: '/blog/$category/'
