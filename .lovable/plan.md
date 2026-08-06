@@ -26,12 +26,24 @@ Two sources of truth, only one updated. That is the whole bug.
 Result: any category added to `journalCategories.ts` from now on shows up everywhere at once —
 grid card, category page, post routes, newest-posts feed. No third place to forget.
 
+## How this stays safe
+
+- **One file changes.** Only `src/routes/blog.index.tsx`. No posts, no WordPress sync, no routes,
+  no deploy workflow, no gallery, no other page.
+- **Nothing goes live on its own.** You see it in the Lovable preview first. Your GitHub Pages site
+  only changes when a deploy runs, and I will not touch the deploy workflow in this change.
+- **One-click undo.** If the Journal looks wrong, the revert button on this message — or the History
+  tab — restores the exact current state immediately. No troubleshooting session required.
+- **If it breaks, I revert first and diagnose second.** I will not stack fix-on-top-of-fix while
+  your Journal is broken.
+
 ## Verify before I hand it back
 
 - Load `/blog` in the preview and confirm the "In Loving Memory of Blitz 🕊️" card renders with
   the shadow-box photo and a correct entry count.
 - Click through to `/blog/in-loving-memory-of-blitz` and confirm the listing loads.
 - Confirm the other seven cards are unchanged (same images, blurbs, order).
+
 
 ## Separate: the stalled workflow
 
