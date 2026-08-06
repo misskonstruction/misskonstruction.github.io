@@ -66,6 +66,7 @@ const KNOWN_CATEGORIES = new Set([
   "reflections",
   "wander-roam",
   "raw-and-unhinged",
+  "in-loving-memory-of-blitz",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
