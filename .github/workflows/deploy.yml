@@ -16,23 +16,39 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Bun (marketplace action)
-        id: setup_bun
-        # Pinned instead of `latest` so a marketplace/CDN hiccup on the
-        # floating tag can't change what we run. continue-on-error lets the
-        # fallback below take over when GitHub can't resolve the action.
-        continue-on-error: true
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: "1.2.19"
-
-      - name: Setup Bun (fallback install script)
-        if: steps.setup_bun.outcome != 'success'
+      - name: Check out source without a marketplace action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          curl -fsSL --retry 5 --retry-all-errors https://bun.sh/install | bash
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git init -q .
+          git remote add origin "$REMOTE"
+          for attempt in 1 2 3; do
+            if git fetch --quiet --depth=1 origin "$GITHUB_SHA"; then
+              git checkout -q --detach FETCH_HEAD
+              git remote set-url origin "https://github.com/${GITHUB_REPOSITORY}.git"
+              echo "✅ source checked out (attempt $attempt)"
+              exit 0
+            fi
+            echo "⚠️ checkout attempt $attempt failed; retrying in $((attempt * 10))s"
+            sleep $((attempt * 10))
+          done
+          echo "❌ source checkout failed after 3 attempts"; exit 1
+
+      - name: Install pinned Bun without a marketplace action
+        run: |
+          set -e
+          for attempt in 1 2 3; do
+            if curl -fsSL --retry 5 --retry-all-errors https://bun.sh/install | bash -s "bun-v1.2.19"; then
+              echo "$HOME/.bun/bin" >> "$GITHUB_PATH"
+              echo "✅ Bun installed (attempt $attempt)"
+              exit 0
+            fi
+            echo "⚠️ Bun install attempt $attempt failed; retrying in $((attempt * 10))s"
+            sleep $((attempt * 10))
+          done
+          echo "❌ Bun installation failed after 3 attempts"; exit 1
           echo "$HOME/.bun/bin" >> "$GITHUB_PATH"
 
       - name: Verify Bun is available
@@ -80,38 +96,6 @@ jobs:
           echo "✅ Root artifacts restored"
 
 
-
-      - name: Diagnose SSR/client hash disagreement
-        run: |
-          set +e
-          echo "── .output tree (depth 3) ──"
-          find .output -maxdepth 3 -type d | sort
-          echo "── .output/public/assets listing ──"
-          ls .output/public/assets 2>/dev/null | sort
-          echo "── every manifest.json under .output ──"
-          find .output -name "manifest.json" | sort
-          for f in $(find .output -name "manifest.json"); do
-            echo "── $f ──"
-            head -c 6000 "$f"; echo
-          done
-
-          echo "── search WHOLE checkout for the 4 stale hashes ──"
-          for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
-            echo "  hash $h:"
-            grep -rl --exclude-dir=node_modules --exclude-dir=.git "$h" . 2>/dev/null \
-              | sed 's/^/    /'
-          done
-
-          echo "── same 4 hashes, scoped to .output/server only ──"
-          for h in mhJp_l7G Db_OZXrz CZxY4Lzs Dad_uxzM; do
-            echo "  hash $h in .output/server:"
-            grep -rl "$h" .output/server 2>/dev/null | sed 's/^/    /' \
-              || echo "    (not present)"
-          done
-
-          echo "── does .output/public/assets have the OWN copy of these chunk names? ──"
-          ls .output/public/assets | grep -E 'SiteLayout|arrow-right|^index-' | sort
-          exit 0
 
       - name: Prerender static routes (strict — must succeed)
         env:
