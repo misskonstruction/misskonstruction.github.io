@@ -87,9 +87,10 @@ function Blog() {
   // Count WordPress posts per category using the shared alias-aware matcher,
   // so WordPress name variants land on the right card.
   const categories = journalCategories.map((c) => {
-    const wpCount = posts.filter((p) =>
-      p.categories.some((name) => journalCategoryMatches(name, c)),
+    const wpCount = (posts as WordPressPost[]).filter((p) =>
+      p.categories.some((name: string) => journalCategoryMatches(name, c)),
     ).length;
+
     return {
       ...c,
       posts: wpCount + (inHouseEntriesByCategorySlug[c.slug] ?? 0),
