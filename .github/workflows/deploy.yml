@@ -18,13 +18,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Bun
+      - name: Setup Bun (marketplace action)
+        id: setup_bun
+        # Pinned instead of `latest` so a marketplace/CDN hiccup on the
+        # floating tag can't change what we run. continue-on-error lets the
+        # fallback below take over when GitHub can't resolve the action.
+        continue-on-error: true
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: "1.2.19"
+
+      - name: Setup Bun (fallback install script)
+        if: steps.setup_bun.outcome != 'success'
+        run: |
+          set -e
+          curl -fsSL --retry 5 --retry-all-errors https://bun.sh/install | bash
+          echo "$HOME/.bun/bin" >> "$GITHUB_PATH"
+
+      - name: Verify Bun is available
+        run: bun --version
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile || bun install
+        # Retry transient network failures before giving up on the run.
+        run: |
+          set -e
+          for attempt in 1 2 3; do
+            if bun install --frozen-lockfile || bun install; then
+              echo "✅ dependencies installed (attempt $attempt)"
+              exit 0
+            fi
+            echo "⚠️  install attempt $attempt failed; retrying in $((attempt * 10))s"
+            sleep $((attempt * 10))
+          done
+          echo "❌ dependency install failed after 3 attempts"; exit 1
+
 
       - name: Neutralize stale root artifacts before build
         # Nitro auto-detects a root ./index.html and bakes it into the SSR
