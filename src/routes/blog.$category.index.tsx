@@ -1,83 +1,21 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { ArrowLeft, ArrowRight, Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
-import { effectiveJournalCategoryFor } from "@/data/journalCategories";
-
-import coastalImg from "@/assets/blog-coastal.jpg";
-import kitchenImg from "@/assets/blog-kitchen.jpg";
-import platysImg from "@/assets/blog-platys.jpg";
-import faithImg from "@/assets/blog-faith.jpg";
-import reflectionsImg from "@/assets/blog-reflections.jpg";
-import wanderImg from "@/assets/blog-wander.jpg";
+import {
+  effectiveJournalCategoryFor,
+  findJournalCategory,
+  type JournalCategory,
+} from "@/data/journalCategories";
 import { getRecipesByCategory } from "@/data/recipes";
 import { getPrayersByCategory, prayerSharedHero } from "@/data/prayers";
-import { Flame } from "lucide-react";
 
-type CategoryDef = {
-  slug: string;
-  title: string;
-  emoji: string;
-  blurb: string;
-  image: string;
-  icon: typeof Camera;
-};
+type CategoryDef = JournalCategory;
 
-type SerializableCategory = Omit<CategoryDef, "icon">;
-
-const categories: CategoryDef[] = [
-  {
-    slug: "coastal-photography",
-    title: "Coastal Photography",
-    emoji: "📷",
-    blurb: "Salt air, soft light, and the slow stories the shoreline keeps telling.",
-    image: coastalImg,
-    icon: Camera,
-  },
-  {
-    slug: "from-the-kitchen",
-    title: "From the Kitchen",
-    emoji: "🍳",
-    blurb: "Recipes scribbled on the backs of envelopes — comfort food, slow Sundays.",
-    image: kitchenImg,
-    icon: UtensilsCrossed,
-  },
-  {
-    slug: "platy-pals",
-    title: "Platy Pals",
-    emoji: "🐠",
-    blurb: "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
-    image: platysImg,
-    icon: Fish,
-  },
-  {
-    slug: "faith-scripture",
-    title: "Faith & Scripture",
-    emoji: "✝️",
-    blurb: "Verses I keep returning to, and the quiet places where grace meets the ordinary.",
-    image: faithImg,
-    icon: BookOpen,
-  },
-  {
-    slug: "reflections",
-    title: "Reflections",
-    emoji: "🌿",
-    blurb: "Field notes from everyday life — gratitude, growth, and small thoughts worth slowing down for.",
-    image: reflectionsImg,
-    icon: Leaf,
-  },
-  {
-    slug: "wander-roam",
-    title: "Wander & Roam",
-    emoji: "✈️",
-    blurb: "Travel notes from the road and the in-between places — little towns, long drives, the quiet wonder of somewhere new.",
-    image: wanderImg,
-    icon: Plane,
-  },
-];
+type SerializableCategory = Omit<CategoryDef, "icon" | "aliases">;
 
 function findCategory(slug: string): CategoryDef | undefined {
-  return categories.find((c) => c.slug === slug);
+  return findJournalCategory(slug);
 }
 
 function serializeCategory(category: CategoryDef | undefined): SerializableCategory | null {
@@ -90,6 +28,7 @@ function serializeCategory(category: CategoryDef | undefined): SerializableCateg
     image: category.image,
   };
 }
+
 
 function formatDate(iso: string): string {
   try {
