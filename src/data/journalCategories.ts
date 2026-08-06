@@ -84,6 +84,22 @@ export const journalCategories: JournalCategory[] = [
     icon: Feather,
     aliases: ["raw", "unhinged", "raw and unhinged", "the longhand"],
   },
+  {
+    slug: "in-loving-memory-of-blitz",
+    title: "In Loving Memory of Blitz",
+    emoji: "🕊️",
+    blurb:
+      "For my faithful girl — the service dog who carried me through everything. Her stories, her stubborn joy, and the space she left behind.",
+    image: blitzMemorialImg,
+    icon: Heart,
+    aliases: [
+      "blitz",
+      "in loving memory",
+      "in loving memory of blitz",
+      "loving memory of blitz",
+      "memory of blitz",
+    ],
+  },
 ];
 
 /**
