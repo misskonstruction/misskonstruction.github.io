@@ -1,0 +1,1 @@
+import{j as o,H as p}from"./index-C30l5B_l.js";import{R as t}from"./RecipePage-DjPSwiGO.js";import"./SiteLayout-D-mLLxcP.js";import"./SharePostBar-DY1CJY9R.js";import"./arrow-left-D_VSVfrj.js";import"./users-BRdHclXf.js";import"./flame-BspcG-W9.js";const c=()=>o.jsx(t,{recipe:p});export{c as component};
