@@ -1,1 +1,0 @@
-import{j as o,m as r}from"./index-CgZMVEqu.js";import{P as t}from"./PrayerPage-BSaBF9V6.js";import"./SiteLayout-M943VN_h.js";import"./SharePostBar-aXY70qeZ.js";import"./arrow-left-D9L1u35q.js";import"./flame-D1fwuaTf.js";const n=()=>o.jsx(t,{prayer:r});export{n as component};
