@@ -2,6 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import { useLiveCategoryPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   effectiveJournalCategoryFor,
   findJournalCategory,
