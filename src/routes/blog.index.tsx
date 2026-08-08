@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import { useLiveWordPressPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   journalCategories,
   journalCategoryMatches,
@@ -82,7 +83,8 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
 })();
 
 function Blog() {
-  const { posts } = Route.useLoaderData();
+  const { posts: prerenderedPosts } = Route.useLoaderData();
+  const posts = useLiveWordPressPosts(prerenderedPosts);
 
   // Count WordPress posts per category using the shared alias-aware matcher,
   // so WordPress name variants land on the right card.

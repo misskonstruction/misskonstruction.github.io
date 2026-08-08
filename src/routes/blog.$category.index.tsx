@@ -2,6 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import { useLiveCategoryPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   effectiveJournalCategoryFor,
   findJournalCategory,
@@ -115,7 +116,8 @@ export const Route = createFileRoute("/blog/$category/")({
 });
 
 function CategoryPage() {
-  const { posts, category } = Route.useLoaderData();
+  const { posts: prerenderedPosts, category } = Route.useLoaderData();
+  const posts = useLiveCategoryPosts(prerenderedPosts, category?.slug);
   const fullCategory = category ? findCategory(category.slug) : undefined;
 
   if (!category || !fullCategory) {
