@@ -115,7 +115,8 @@ export const Route = createFileRoute("/blog/$category/")({
 });
 
 function CategoryPage() {
-  const { posts, category } = Route.useLoaderData();
+  const { posts: prerenderedPosts, category } = Route.useLoaderData();
+  const posts = useLiveCategoryPosts(prerenderedPosts, category?.slug);
   const fullCategory = category ? findCategory(category.slug) : undefined;
 
   if (!category || !fullCategory) {
