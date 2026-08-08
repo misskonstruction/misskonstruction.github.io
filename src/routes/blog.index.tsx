@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import { useLiveWordPressPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   journalCategories,
   journalCategoryMatches,
