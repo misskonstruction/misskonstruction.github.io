@@ -4,11 +4,11 @@ A new Journal category for your health journey — movement, eating well, famili
 
 ## The name
 
-Recommended: **Strong & Steady** — warm, non-clinical, fits alongside Raw & Unhinged and Wander & Roam, and covers both exercise and the chronic-condition side.
+Confirmed name: **Body & Bones** — slug `body-and-bones`, with aliases for "Body and Bones", "body bones", "health", "wellness".
 
-Alternates if you'd rather: **Well & Willing**, **The Long Haul**, **Body & Bones**.
 
-Whichever you pick, use that exact name in WordPress and I'll wire the slug + aliases to match (e.g. `strong-and-steady`, matching "Strong & Steady", "Strong and Steady", "strong steady").
+
+Use that exact name in WordPress; the site matches it via slug + aliases.
 
 ## What you'll get
 
