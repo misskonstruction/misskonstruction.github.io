@@ -101,6 +101,23 @@ export const journalCategories: JournalCategory[] = [
       "memory of blitz",
     ],
   },
+  {
+    slug: "body-and-bones",
+    title: "Body & Bones",
+    emoji: "🥾",
+    blurb:
+      "My health journey in real time — movement that actually fits my life, food that loves me back, and living well with familial high cholesterol and autoimmune curveballs.",
+    image: bodyBonesImg,
+    icon: Activity,
+    aliases: [
+      "body bones",
+      "body and bones",
+      "health",
+      "health and wellness",
+      "wellness",
+      "fitness",
+    ],
+  },
 ];
 
 /**
