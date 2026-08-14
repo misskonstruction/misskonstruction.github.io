@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -8,6 +8,7 @@ import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
+import bodyBonesImg from "@/assets/blog-body-and-bones.jpg";
 
 export type JournalCategory = {
   slug: string;
@@ -98,6 +99,23 @@ export const journalCategories: JournalCategory[] = [
       "in loving memory of blitz",
       "loving memory of blitz",
       "memory of blitz",
+    ],
+  },
+  {
+    slug: "body-and-bones",
+    title: "Body & Bones",
+    emoji: "🥾",
+    blurb:
+      "My health journey in real time — movement that actually fits my life, food that loves me back, and living well with familial high cholesterol and autoimmune curveballs.",
+    image: bodyBonesImg,
+    icon: Activity,
+    aliases: [
+      "body bones",
+      "body and bones",
+      "health",
+      "health and wellness",
+      "wellness",
+      "fitness",
     ],
   },
 ];
