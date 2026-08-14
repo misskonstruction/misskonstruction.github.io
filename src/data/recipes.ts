@@ -71,6 +71,8 @@ export type Recipe = {
   slug: string;
   /** Which blog category this recipe lives under (e.g. "from-the-kitchen"). */
   categorySlug: string;
+  /** Extra journal categories this recipe should also be listed under. */
+  alsoInCategories?: string[];
   /** Short kicker above the title in handwriting font. */
   kicker: string;
   /**
