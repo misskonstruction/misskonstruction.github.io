@@ -24,6 +24,7 @@ const ROUTES = [
   "/blog/reflections",
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
+  "/blog/body-and-bones",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -67,6 +68,7 @@ const KNOWN_CATEGORIES = new Set([
   "wander-roam",
   "raw-and-unhinged",
   "in-loving-memory-of-blitz",
+  "body-and-bones",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
@@ -82,6 +84,14 @@ function mapCategoryToSlug(names) {
     if (s.includes("faith") || s.includes("scripture") || s.includes("bible")) return "faith-scripture";
     if (s.includes("wander") || s.includes("travel") || s.includes("roam")) return "wander-roam";
     if (s.includes("raw") || s.includes("unhinged")) return "raw-and-unhinged";
+    if (
+      s.includes("body") ||
+      s.includes("bones") ||
+      s.includes("health") ||
+      s.includes("wellness") ||
+      s.includes("fitness")
+    )
+      return "body-and-bones";
   }
   return "reflections";
 }
