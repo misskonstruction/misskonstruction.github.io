@@ -73,10 +73,14 @@ function readTime(text: string): string {
 const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
   const acc: Record<string, number> = {};
   for (const r of recipes) {
-    acc[r.categorySlug] = (acc[r.categorySlug] ?? 0) + 1;
+    for (const slug of [r.categorySlug, ...(r.alsoInCategories ?? [])]) {
+      acc[slug] = (acc[slug] ?? 0) + 1;
+    }
   }
   for (const p of prayers) {
-    acc[p.categorySlug] = (acc[p.categorySlug] ?? 0) + 1;
+    for (const slug of [p.categorySlug, ...((p as { alsoInCategories?: string[] }).alsoInCategories ?? [])]) {
+      acc[slug] = (acc[slug] ?? 0) + 1;
+    }
   }
   acc["raw-and-unhinged"] = (acc["raw-and-unhinged"] ?? 0) + rawUnhingedEntries.length;
   return acc;
