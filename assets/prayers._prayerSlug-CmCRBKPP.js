@@ -1,0 +1,1 @@
+import{i as o,j as t}from"./index-R6Piydid.js";import{P as e}from"./PrayerPage-CG0d2okM.js";import"./SiteLayout-CaDJIrub.js";import"./SharePostBar-B4cyu78G.js";import"./arrow-left-DMPOxOh8.js";import"./flame-nG8BPf3T.js";function u(){const{prayer:r}=o.useLoaderData();return t.jsx(e,{prayer:r})}export{u as component};
