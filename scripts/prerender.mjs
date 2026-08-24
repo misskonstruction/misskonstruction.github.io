@@ -96,6 +96,10 @@ function mapCategoryToSlug(names) {
       s.includes("fitness")
     )
       return "body-and-bones";
+    if (s.includes("game") || s.includes("gaming") || s.includes("walk-through") || s.includes("walkthrough"))
+      return "game-reviews-walk-throughs";
+    if (s.includes("home") || s.includes("improvement") || s.includes("diy") || s.includes("renovat"))
+      return "home-improvement";
   }
   return "reflections";
 }
