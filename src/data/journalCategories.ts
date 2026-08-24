@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, Hammer, Gamepad2, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -9,6 +9,8 @@ import wanderImg from "@/assets/blog-wander.jpg";
 import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
 import bodyBonesImg from "@/assets/blog-body-and-bones.jpg";
+import homeImprovementImg from "@/assets/blog-home-improvement.jpg";
+import gameReviewsImg from "@/assets/blog-game-reviews.jpg";
 
 export type JournalCategory = {
   slug: string;
@@ -118,7 +120,44 @@ export const journalCategories: JournalCategory[] = [
       "fitness",
     ],
   },
+  {
+    slug: "home-improvement",
+    title: "Home Improvement",
+    emoji: "🔨",
+    blurb:
+      "Sawdust, half-finished walls, and the slow work of making a house feel like mine — projects, mistakes, and the small wins in between.",
+    image: homeImprovementImg,
+    icon: Hammer,
+    aliases: [
+      "home improvement",
+      "home",
+      "diy",
+      "renovation",
+      "home projects",
+      "under konstruction",
+    ],
+  },
+  {
+    slug: "game-reviews-walk-throughs",
+    title: "Game Reviews & Walk-Throughs",
+    emoji: "🎮",
+    blurb:
+      "Late-night controller sessions and honest takes — what's worth your hours, plus step-by-step help when a level won't let you go.",
+    image: gameReviewsImg,
+    icon: Gamepad2,
+    aliases: [
+      "game reviews & walk throughs",
+      "game reviews and walk throughs",
+      "game reviews walkthroughs",
+      "game reviews",
+      "walkthroughs",
+      "walk throughs",
+      "gaming",
+      "games",
+    ],
+  },
 ];
+
 
 /**
  * Per-post category overrides — used when a WordPress post is mis-categorized

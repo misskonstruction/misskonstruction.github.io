@@ -25,6 +25,8 @@ const ROUTES = [
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
   "/blog/body-and-bones",
+  "/blog/home-improvement",
+  "/blog/game-reviews-walk-throughs",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -69,6 +71,8 @@ const KNOWN_CATEGORIES = new Set([
   "raw-and-unhinged",
   "in-loving-memory-of-blitz",
   "body-and-bones",
+  "home-improvement",
+  "game-reviews-walk-throughs",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
@@ -92,6 +96,10 @@ function mapCategoryToSlug(names) {
       s.includes("fitness")
     )
       return "body-and-bones";
+    if (s.includes("game") || s.includes("gaming") || s.includes("walk-through") || s.includes("walkthrough"))
+      return "game-reviews-walk-throughs";
+    if (s.includes("home") || s.includes("improvement") || s.includes("diy") || s.includes("renovat"))
+      return "home-improvement";
   }
   return "reflections";
 }
