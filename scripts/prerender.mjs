@@ -25,6 +25,8 @@ const ROUTES = [
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
   "/blog/body-and-bones",
+  "/blog/home-improvement",
+  "/blog/game-reviews-walk-throughs",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",

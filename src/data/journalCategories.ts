@@ -154,7 +154,7 @@ export const journalCategories: JournalCategory[] = [
       "walk throughs",
       "gaming",
       "games",
-　  ],
+    ],
   },
 ];
 
