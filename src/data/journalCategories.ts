@@ -120,7 +120,44 @@ export const journalCategories: JournalCategory[] = [
       "fitness",
     ],
   },
+  {
+    slug: "home-improvement",
+    title: "Home Improvement",
+    emoji: "🔨",
+    blurb:
+      "Sawdust, half-finished walls, and the slow work of making a house feel like mine — projects, mistakes, and the small wins in between.",
+    image: homeImprovementImg,
+    icon: Hammer,
+    aliases: [
+      "home improvement",
+      "home",
+      "diy",
+      "renovation",
+      "home projects",
+      "under konstruction",
+    ],
+  },
+  {
+    slug: "game-reviews-walk-throughs",
+    title: "Game Reviews & Walk-Throughs",
+    emoji: "🎮",
+    blurb:
+      "Late-night controller sessions and honest takes — what's worth your hours, plus step-by-step help when a level won't let you go.",
+    image: gameReviewsImg,
+    icon: Gamepad2,
+    aliases: [
+      "game reviews & walk throughs",
+      "game reviews and walk throughs",
+      "game reviews walkthroughs",
+      "game reviews",
+      "walkthroughs",
+      "walk throughs",
+      "gaming",
+      "games",
+　  ],
+  },
 ];
+
 
 /**
  * Per-post category overrides — used when a WordPress post is mis-categorized
