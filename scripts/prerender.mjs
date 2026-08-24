@@ -71,6 +71,8 @@ const KNOWN_CATEGORIES = new Set([
   "raw-and-unhinged",
   "in-loving-memory-of-blitz",
   "body-and-bones",
+  "home-improvement",
+  "game-reviews-walk-throughs",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
