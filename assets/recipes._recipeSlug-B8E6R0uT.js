@@ -1,1 +1,0 @@
-import{t,j as e}from"./index-Be9K8-gn.js";import{R as r}from"./RecipePage-C7WD8I91.js";import"./SiteLayout-D5BYKZ4J.js";import"./SharePostBar-CZ9lCkjF.js";import"./arrow-left-D6ssH5v5.js";import"./users-DFi4o5YM.js";import"./flame-B9fSoBj0.js";function u(){const{recipe:o}=t.useLoaderData();return e.jsx(r,{recipe:o})}export{u as component};
