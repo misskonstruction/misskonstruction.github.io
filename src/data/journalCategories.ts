@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, Hammer, Gamepad2, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, Hammer, Gamepad2, TrendingUp, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -11,6 +11,7 @@ import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
 import bodyBonesImg from "@/assets/blog-body-and-bones.jpg";
 import homeImprovementImg from "@/assets/blog-home-improvement.jpg";
 import gameReviewsImg from "@/assets/blog-game-reviews.jpg";
+import accountingImg from "@/assets/blog-accounting.jpg";
 
 export type JournalCategory = {
   slug: string;
@@ -154,6 +155,25 @@ export const journalCategories: JournalCategory[] = [
       "walk throughs",
       "gaming",
       "games",
+    ],
+  },
+  {
+    slug: "accounting-against-the-machine",
+    title: "Accounting Against The Machine",
+    emoji: "📊",
+    blurb:
+      "Training humans to be harder to replace. QBO tips, certification notes, and the occasional scavenger hunt for The Resistance Accountants.",
+    image: accountingImg,
+    icon: TrendingUp,
+    aliases: [
+      "accounting",
+      "qbo",
+      "proadvisor",
+      "pro advisor",
+      "quickbooks",
+      "resistance accountants",
+      "the resistance accountants",
+      "accounting against the machine",
     ],
   },
 ];

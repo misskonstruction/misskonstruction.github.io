@@ -27,6 +27,7 @@ const ROUTES = [
   "/blog/body-and-bones",
   "/blog/home-improvement",
   "/blog/game-reviews-walk-throughs",
+  "/blog/accounting-against-the-machine",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -73,6 +74,7 @@ const KNOWN_CATEGORIES = new Set([
   "body-and-bones",
   "home-improvement",
   "game-reviews-walk-throughs",
+  "accounting-against-the-machine",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
@@ -100,6 +102,15 @@ function mapCategoryToSlug(names) {
       return "game-reviews-walk-throughs";
     if (s.includes("home") || s.includes("improvement") || s.includes("diy") || s.includes("renovat"))
       return "home-improvement";
+    if (
+      s.includes("accounting") ||
+      s.includes("qbo") ||
+      s.includes("proadvisor") ||
+      s.includes("pro-advisor") ||
+      s.includes("quickbooks") ||
+      s.includes("resistance")
+    )
+      return "accounting-against-the-machine";
   }
   return "reflections";
 }
