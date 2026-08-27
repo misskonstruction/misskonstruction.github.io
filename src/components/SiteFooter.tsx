@@ -44,18 +44,6 @@ export function SiteFooter() {
           </a>
         </p>
         <p className="mt-3">
-          To view my work on GitHub, visit{" "}
-          <a
-            href="https://github.com/misskonstruction"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
-          >
-            <Github className="h-3.5 w-3.5" />
-            github.com/misskonstruction
-          </a>
-        </p>
-        <p className="mt-3">
           <a
             href="https://treatva.onelink.me/zvYN/6ecal2bm"
             target="_blank"
@@ -73,6 +61,18 @@ export function SiteFooter() {
             className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
           >
             Light A Candle for Blitz 🐾
+          </a>
+        </p>
+        <p className="mt-3">
+          To view my work on GitHub, visit{" "}
+          <a
+            href="https://github.com/misskonstruction"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            <Github className="h-3.5 w-3.5" />
+            github.com/misskonstruction
           </a>
         </p>
         <img
