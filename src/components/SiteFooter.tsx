@@ -57,6 +57,16 @@ export function SiteFooter() {
         </p>
         <p className="mt-3">
           <a
+            href="https://treatva.onelink.me/zvYN/6ecal2bm"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            Play Treat 🐾 — help shelter dogs
+          </a>
+        </p>
+        <p className="mt-3">
+          <a
             href="https://www.lapoflove.com/pet-memorial/43801"
             target="_blank"
             rel="noopener noreferrer"
