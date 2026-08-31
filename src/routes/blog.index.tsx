@@ -25,10 +25,14 @@ export const Route = createFileRoute("/blog/")({
   loader: async () => {
     try {
       const posts = await getPublicWordPressPosts();
-      return { posts };
+      // WordPress.com doesn't expose a read-time field, and the excerpt is far
+      // too short to estimate from — fetch the featured post's full body and
+      // compute minutes from that instead.
+      const featuredReadMinutes = await readMinutesForPost(posts[0]);
+      return { posts, featuredReadMinutes };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WordPressPost[] };
+      return { posts: [] as WordPressPost[], featuredReadMinutes: null as number | null };
     }
   },
   head: () => ({
