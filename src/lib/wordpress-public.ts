@@ -1,6 +1,8 @@
 export type WordPressPost = {
   id: number;
   date: string;
+  /** Last-edited timestamp; later than `date` when a post has been updated. */
+  modified?: string;
   title: string;
   excerpt: string;
   url: string;
@@ -19,6 +21,7 @@ export type WordPressPostFull = WordPressPost & {
 type RawPost = {
   ID: number;
   date: string;
+  modified?: string;
   title: string;
   excerpt: string;
   content?: string;
