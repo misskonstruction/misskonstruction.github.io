@@ -162,6 +162,7 @@ function Blog() {
 
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
+  const latestReadMinutes = useFeaturedReadMinutes(latest, featuredReadMinutes);
 
   return (
     <SiteLayout>
