@@ -71,10 +71,52 @@ function formatDate(iso: string): string {
   }
 }
 
-function readTime(text: string): string {
-  const words = text.split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes} min read`;
+/** Word count from (sanitized) post HTML. */
+function wordCountFromHtml(html: string): number {
+  return html.replace(/<[^>]*>/g, " ").split(/\s+/).filter(Boolean).length;
+}
+
+/**
+ * Estimated read minutes for a post, computed from its full body.
+ * Returns null when the full post can't be fetched (callers hide the line).
+ */
+async function readMinutesForPost(post: WordPressPost | undefined): Promise<number | null> {
+  if (!post) return null;
+  try {
+    const full = await getPublicWordPressPostBySlug(post.slug);
+    if (!full?.content) return null;
+    return Math.max(1, Math.round(wordCountFromHtml(full.content) / 200));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Keeps the featured post's read time accurate after the live WordPress
+ * refresh swaps in a different newest post.
+ */
+function useFeaturedReadMinutes(
+  latest: WordPressPost | undefined,
+  initialMinutes: number | null,
+): number | null {
+  const [minutes, setMinutes] = useState<number | null>(initialMinutes);
+
+  useEffect(() => {
+    setMinutes(initialMinutes);
+  }, [initialMinutes]);
+
+  useEffect(() => {
+    if (!latest) return;
+    let cancelled = false;
+    readMinutesForPost(latest).then((fresh) => {
+      if (!cancelled && fresh !== null) setMinutes(fresh);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [latest?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return minutes;
 }
 
 // In-house entry counts derived from the recipe registry — counted
