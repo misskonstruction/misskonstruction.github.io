@@ -337,6 +337,7 @@ function Blog() {
                   key={post.id}
                   to="/blog/$category/$postSlug"
                   params={{ category: categorySlug, postSlug: post.slug }}
+                  hash="latest-update"
                   className="group flex items-center gap-4 bg-card/60 border border-border/60 rounded-sm px-4 py-3 hover:border-primary/40 hover:bg-card transition-colors"
                 >
                   <img
