@@ -71,6 +71,34 @@ function formatDate(iso: string): string {
   }
 }
 
+function formatShortDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
+
+/**
+ * Posts edited meaningfully after publication (more than 48h later), most
+ * recently updated first. Quick typo fixes right after publishing don't count.
+ */
+function recentlyUpdatedPosts(posts: WordPressPost[], excludeId?: number): WordPressPost[] {
+  const THRESHOLD_MS = 48 * 60 * 60 * 1000;
+  return posts
+    .filter((p) => {
+      if (!p.modified || p.id === excludeId) return false;
+      const published = new Date(p.date).getTime();
+      const modified = new Date(p.modified).getTime();
+      return Number.isFinite(published) && Number.isFinite(modified) && modified - published > THRESHOLD_MS;
+    })
+    .sort((a, b) => new Date(b.modified!).getTime() - new Date(a.modified!).getTime())
+    .slice(0, 3);
+}
+
 /** Word count from (sanitized) post HTML. */
 function wordCountFromHtml(html: string): number {
   return html.replace(/<[^>]*>/g, " ").split(/\s+/).filter(Boolean).length;
@@ -163,6 +191,7 @@ function Blog() {
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
   const latestReadMinutes = useFeaturedReadMinutes(latest, featuredReadMinutes);
+  const updatedPosts = recentlyUpdatedPosts(posts as WordPressPost[], latest?.id);
 
   return (
     <SiteLayout>
@@ -287,6 +316,59 @@ function Blog() {
               })()}
             </div>
           </article>
+        </section>
+      )}
+
+      {updatedPosts.length > 0 && (
+        <section className="container mx-auto px-4 pb-16 md:pb-20">
+          <p
+            className="text-primary text-xl md:text-2xl mb-6 text-center"
+            style={{ fontFamily: "var(--font-hand)" }}
+          >
+            ~ margin notes ~
+          </p>
+          <div className="mx-auto max-w-2xl space-y-5">
+            {updatedPosts.map((post) => {
+              const categorySlug = effectiveJournalCategoryFor(post)?.slug ?? "reflections";
+              return (
+                <Link
+                  key={post.id}
+                  to="/blog/$category/$postSlug"
+                  params={{ category: categorySlug, postSlug: post.slug }}
+                  className="group flex items-center gap-4 bg-card/60 border border-border/60 rounded-sm px-4 py-3 hover:border-primary/40 hover:bg-card transition-colors"
+                >
+                  <img
+                    src={imageForPost(post)}
+                    alt=""
+                    width={96}
+                    height={96}
+                    loading="lazy"
+                    className="h-16 w-16 rounded-sm object-cover flex-shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className="text-foreground truncate"
+                      style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
+                    >
+                      Update to "{post.title}"
+                    </p>
+                    <p
+                      className="text-sm text-muted-foreground line-clamp-2"
+                      style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
+                    >
+                      {post.excerpt}
+                    </p>
+                  </div>
+                  <span
+                    className="text-primary text-lg flex-shrink-0"
+                    style={{ fontFamily: "var(--font-hand)" }}
+                  >
+                    updated {formatShortDate(post.modified!)}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </section>
       )}
 
