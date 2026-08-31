@@ -1,9 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
-import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import {
+  getPublicWordPressPosts,
+  getPublicWordPressPostBySlug,
+  type WordPressPost,
+} from "@/lib/wordpress-public";
 import { useLiveWordPressPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   journalCategories,
@@ -20,10 +25,14 @@ export const Route = createFileRoute("/blog/")({
   loader: async () => {
     try {
       const posts = await getPublicWordPressPosts();
-      return { posts };
+      // WordPress.com doesn't expose a read-time field, and the excerpt is far
+      // too short to estimate from — fetch the featured post's full body and
+      // compute minutes from that instead.
+      const featuredReadMinutes = await readMinutesForPost(posts[0]);
+      return { posts, featuredReadMinutes };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WordPressPost[] };
+      return { posts: [] as WordPressPost[], featuredReadMinutes: null as number | null };
     }
   },
   head: () => ({
@@ -62,10 +71,52 @@ function formatDate(iso: string): string {
   }
 }
 
-function readTime(text: string): string {
-  const words = text.split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes} min read`;
+/** Word count from (sanitized) post HTML. */
+function wordCountFromHtml(html: string): number {
+  return html.replace(/<[^>]*>/g, " ").split(/\s+/).filter(Boolean).length;
+}
+
+/**
+ * Estimated read minutes for a post, computed from its full body.
+ * Returns null when the full post can't be fetched (callers hide the line).
+ */
+async function readMinutesForPost(post: WordPressPost | undefined): Promise<number | null> {
+  if (!post) return null;
+  try {
+    const full = await getPublicWordPressPostBySlug(post.slug);
+    if (!full?.content) return null;
+    return Math.max(1, Math.round(wordCountFromHtml(full.content) / 200));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Keeps the featured post's read time accurate after the live WordPress
+ * refresh swaps in a different newest post.
+ */
+function useFeaturedReadMinutes(
+  latest: WordPressPost | undefined,
+  initialMinutes: number | null,
+): number | null {
+  const [minutes, setMinutes] = useState<number | null>(initialMinutes);
+
+  useEffect(() => {
+    setMinutes(initialMinutes);
+  }, [initialMinutes]);
+
+  useEffect(() => {
+    if (!latest) return;
+    let cancelled = false;
+    readMinutesForPost(latest).then((fresh) => {
+      if (!cancelled && fresh !== null) setMinutes(fresh);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [latest?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return minutes;
 }
 
 // In-house entry counts derived from the recipe registry — counted
@@ -87,7 +138,7 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
 })();
 
 function Blog() {
-  const { posts: prerenderedPosts } = Route.useLoaderData();
+  const { posts: prerenderedPosts, featuredReadMinutes } = Route.useLoaderData();
   const posts = useLiveWordPressPosts(prerenderedPosts);
 
   // Count WordPress posts per category using the shared alias-aware matcher,
@@ -111,6 +162,7 @@ function Blog() {
 
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
+  const latestReadMinutes = useFeaturedReadMinutes(latest, featuredReadMinutes);
 
   return (
     <SiteLayout>
@@ -209,8 +261,12 @@ function Blog() {
               </p>
               <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
                 <span>{formatDate(latest.date)}</span>
-                <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-                <span>{readTime(latest.excerpt)}</span>
+                {latestReadMinutes !== null && (
+                  <>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                    <span>{latestReadMinutes} min read</span>
+                  </>
+                )}
               </div>
               {(() => {
                 const latestCat = effectiveJournalCategoryFor(latest);
