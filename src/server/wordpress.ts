@@ -24,6 +24,7 @@ export type WPPostFull = WPPost & {
 type RawPost = {
   ID: number;
   date: string;
+  modified?: string;
   title: string;
   excerpt: string;
   content?: string;
@@ -51,6 +52,7 @@ function normalize(p: RawPost): WPPost {
   return {
     id: p.ID,
     date: p.date,
+    modified: p.modified,
     title: stripHtml(p.title),
     excerpt: stripHtml(p.excerpt),
     url: p.URL,
@@ -114,7 +116,7 @@ async function fetchWordPressApi<T>(endpoint: string, options?: { allowNotFound?
 export const getWordPressPosts = createServerFn({ method: "GET" }).handler(async () => {
   const params = new URLSearchParams({
     number: "30",
-    fields: "ID,date,title,excerpt,URL,slug,featured_image,categories",
+    fields: "ID,date,modified,title,excerpt,URL,slug,featured_image,categories",
   });
 
   const data = await fetchWordPressApi<{ posts?: RawPost[] }>(`/posts?${params.toString()}`);
