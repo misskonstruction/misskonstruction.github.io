@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { JournalPostBody } from "@/components/JournalPostBody";
