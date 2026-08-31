@@ -114,6 +114,7 @@ function normalize(post: RawPost): WordPressPost {
   return {
     id: post.ID,
     date: post.date,
+    modified: post.modified,
     title: stripHtml(post.title),
     excerpt: stripHtml(post.excerpt),
     url: post.URL,
@@ -171,7 +172,7 @@ async function fetchPublicWordPressApi<T>(endpoint: string, options?: { allowNot
 }
 
 export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
-  const fields = "ID,date,title,excerpt,URL,slug,featured_image,categories";
+  const fields = "ID,date,modified,title,excerpt,URL,slug,featured_image,categories";
   const posts: RawPost[] = [];
 
   for (let page = 1; page <= 10; page += 1) {

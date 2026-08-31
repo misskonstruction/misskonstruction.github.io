@@ -7,6 +7,7 @@ const PUBLIC_API_URL = `https://public-api.wordpress.com/rest/v1.1/sites/${SITE_
 export type WPPost = {
   id: number;
   date: string;
+  modified?: string;
   title: string;
   excerpt: string;
   url: string;
