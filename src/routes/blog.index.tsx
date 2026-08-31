@@ -1,9 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/blog-hero.jpg";
 import coastalImg from "@/assets/blog-coastal.jpg";
-import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
+import {
+  getPublicWordPressPosts,
+  getPublicWordPressPostBySlug,
+  type WordPressPost,
+} from "@/lib/wordpress-public";
 import { useLiveWordPressPosts } from "@/hooks/useLiveWordPressPosts";
 import {
   journalCategories,
