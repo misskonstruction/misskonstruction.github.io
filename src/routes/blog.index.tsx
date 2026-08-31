@@ -261,8 +261,12 @@ function Blog() {
               </p>
               <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
                 <span>{formatDate(latest.date)}</span>
-                <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-                <span>{readTime(latest.excerpt)}</span>
+                {latestReadMinutes !== null && (
+                  <>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                    <span>{latestReadMinutes} min read</span>
+                  </>
+                )}
               </div>
               {(() => {
                 const latestCat = effectiveJournalCategoryFor(latest);
