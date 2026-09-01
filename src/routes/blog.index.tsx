@@ -123,15 +123,9 @@ async function readMinutesForPost(post: WordPressPost | undefined): Promise<numb
  * Keeps the featured post's read time accurate after the live WordPress
  * refresh swaps in a different newest post.
  */
-function useFeaturedReadMinutes(
-  latest: WordPressPost | undefined,
-  initialMinutes: number | null,
-): number | null {
-  const [minutes, setMinutes] = useState<number | null>(initialMinutes);
+function useFeaturedReadMinutes(latest: WordPressPost | undefined): number | null {
+  const [minutes, setMinutes] = useState<number | null>(null);
 
-  useEffect(() => {
-    setMinutes(initialMinutes);
-  }, [initialMinutes]);
 
   useEffect(() => {
     if (!latest) return;
