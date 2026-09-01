@@ -171,7 +171,17 @@ async function fetchPublicWordPressApi<T>(endpoint: string, options?: { allowNot
   return null;
 }
 
-export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
+/**
+ * Short-lived in-memory caches so the route loader and the after-mount live
+ * refresh share one network round trip instead of each firing their own.
+ * The cache lives only for the current page load / prerender process, so every
+ * visitor still gets fresh WordPress data.
+ */
+const POSTS_TTL_MS = 60_000;
+let postsCache: { at: number; promise: Promise<WordPressPost[]> } | null = null;
+const postBySlugCache = new Map<string, { at: number; promise: Promise<WordPressPostFull | null> }>();
+
+async function fetchAllPublicWordPressPosts(): Promise<WordPressPost[]> {
   const fields = "ID,date,modified,title,excerpt,URL,slug,featured_image,categories";
   const posts: RawPost[] = [];
 
@@ -191,7 +201,20 @@ export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
   return posts.map(normalize);
 }
 
-export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
+export async function getPublicWordPressPosts(): Promise<WordPressPost[]> {
+  const now = Date.now();
+  if (postsCache && now - postsCache.at < POSTS_TTL_MS) return postsCache.promise;
+
+  const promise = fetchAllPublicWordPressPosts().catch((error) => {
+    // Don't cache failures — the next caller should retry.
+    if (postsCache?.promise === promise) postsCache = null;
+    throw error;
+  });
+  postsCache = { at: now, promise };
+  return promise;
+}
+
+async function fetchPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
   let resolvedRaw = await fetchPublicWordPressApi<RawPost>(`/posts/slug:${encodeWordPressSlugForApi(slug)}`, {
     allowNotFound: true,
   });
@@ -212,3 +235,17 @@ export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPr
     content: sanitizePostHtml(resolvedRaw.content ?? ""),
   };
 }
+
+export async function getPublicWordPressPostBySlug(slug: string): Promise<WordPressPostFull | null> {
+  const now = Date.now();
+  const cached = postBySlugCache.get(slug);
+  if (cached && now - cached.at < POSTS_TTL_MS) return cached.promise;
+
+  const promise = fetchPublicWordPressPostBySlug(slug).catch((error) => {
+    if (postBySlugCache.get(slug)?.promise === promise) postBySlugCache.delete(slug);
+    throw error;
+  });
+  postBySlugCache.set(slug, { at: now, promise });
+  return promise;
+}
+

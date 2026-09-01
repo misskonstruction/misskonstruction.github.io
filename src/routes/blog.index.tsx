@@ -24,15 +24,13 @@ export const Route = createFileRoute("/blog/")({
   component: Blog,
   loader: async () => {
     try {
+      // Only the post list blocks rendering. The featured post's accurate read
+      // time is computed after mount by useFeaturedReadMinutes.
       const posts = await getPublicWordPressPosts();
-      // WordPress.com doesn't expose a read-time field, and the excerpt is far
-      // too short to estimate from — fetch the featured post's full body and
-      // compute minutes from that instead.
-      const featuredReadMinutes = await readMinutesForPost(posts[0]);
-      return { posts, featuredReadMinutes };
+      return { posts };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WordPressPost[], featuredReadMinutes: null as number | null };
+      return { posts: [] as WordPressPost[] };
     }
   },
   head: () => ({
@@ -125,15 +123,9 @@ async function readMinutesForPost(post: WordPressPost | undefined): Promise<numb
  * Keeps the featured post's read time accurate after the live WordPress
  * refresh swaps in a different newest post.
  */
-function useFeaturedReadMinutes(
-  latest: WordPressPost | undefined,
-  initialMinutes: number | null,
-): number | null {
-  const [minutes, setMinutes] = useState<number | null>(initialMinutes);
+function useFeaturedReadMinutes(latest: WordPressPost | undefined): number | null {
+  const [minutes, setMinutes] = useState<number | null>(null);
 
-  useEffect(() => {
-    setMinutes(initialMinutes);
-  }, [initialMinutes]);
 
   useEffect(() => {
     if (!latest) return;
@@ -168,7 +160,7 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
 })();
 
 function Blog() {
-  const { posts: prerenderedPosts, featuredReadMinutes } = Route.useLoaderData();
+  const { posts: prerenderedPosts } = Route.useLoaderData();
   const posts = useLiveWordPressPosts(prerenderedPosts);
 
   // Count WordPress posts per category using the shared alias-aware matcher,
@@ -192,7 +184,7 @@ function Blog() {
 
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
-  const latestReadMinutes = useFeaturedReadMinutes(latest, featuredReadMinutes);
+  const latestReadMinutes = useFeaturedReadMinutes(latest);
   const updatedPosts = recentlyUpdatedPosts(posts as WordPressPost[], latest?.id);
 
   return (
