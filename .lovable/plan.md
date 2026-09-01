@@ -1,4 +1,6 @@
-# Speed up the site (Journal pages especially)
+# Speed up the Journal (nothing else touched)
+
+Scope: only the Journal's data fetching. No galleries, no images, no other pages.
 
 ## What I found
 
