@@ -166,7 +166,7 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
 })();
 
 function Blog() {
-  const { posts: prerenderedPosts, featuredReadMinutes } = Route.useLoaderData();
+  const { posts: prerenderedPosts } = Route.useLoaderData();
   const posts = useLiveWordPressPosts(prerenderedPosts);
 
   // Count WordPress posts per category using the shared alias-aware matcher,
