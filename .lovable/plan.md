@@ -15,7 +15,7 @@ Measured on the live site:
   4. the featured post's full body again, from the read-time hook
 - A cold WordPress request took **2.1 seconds**; warm ones ~0.4s. So a first visit can stall for several seconds before The Journal draws.
 - Category pages (e.g. Blitz, Game Reviews) do the same double fetch: all posts in the loader, then all posts again after mount.
-- Unrelated but worth noting: the home page ships about 4 MB of photos, two of them over 1.2 MB (`teaser-maternity.jpg`, `loose-frames-fury.jpg`). They're lazy-loaded, so they don't block first paint, but they make scrolling feel heavy on phones. Not new — it's been that way for months.
+- The home page ships some large photos, but they're lazy-loaded and unrelated to the Journal slowdown — leaving them alone.
 
 ## The fix
 
