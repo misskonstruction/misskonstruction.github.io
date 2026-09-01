@@ -24,10 +24,6 @@ Measured on the live site:
 
 Net effect: The Journal goes from up to four WordPress round trips (two of them blocking) to one non-blocking one; category pages go from two to one.
 
-## Optional, say the word
-
-Shrink the two oversized home-page teaser photos (1.2 MB each down to ~200 KB at the same on-screen size). That's the biggest remaining win for phones, but it touches your gallery imagery so I'll only do it if you want.
-
 ## Technical notes
 
 - `src/lib/wordpress-public.ts`: add a module-level TTL cache around `getPublicWordPressPosts` and `getPublicWordPressPostBySlug`; the cache is per page-load, so prerender and each visitor still get fresh data.
