@@ -24,15 +24,13 @@ export const Route = createFileRoute("/blog/")({
   component: Blog,
   loader: async () => {
     try {
+      // Only the post list blocks rendering. The featured post's accurate read
+      // time is computed after mount by useFeaturedReadMinutes.
       const posts = await getPublicWordPressPosts();
-      // WordPress.com doesn't expose a read-time field, and the excerpt is far
-      // too short to estimate from — fetch the featured post's full body and
-      // compute minutes from that instead.
-      const featuredReadMinutes = await readMinutesForPost(posts[0]);
-      return { posts, featuredReadMinutes };
+      return { posts };
     } catch (e) {
       console.error("Failed to load WordPress posts", e);
-      return { posts: [] as WordPressPost[], featuredReadMinutes: null as number | null };
+      return { posts: [] as WordPressPost[] };
     }
   },
   head: () => ({
