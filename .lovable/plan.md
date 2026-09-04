@@ -16,7 +16,7 @@ Your current cards are 4:3. The new images are 3:2 with lettering near the edges
    - `src/assets/blog-game-reviews.jpg`
    - `src/assets/blog-accounting.jpg`
 3. Update the category card frame in `src/routes/blog.index.tsx` from `aspect-[4/3]` to `aspect-[3/2]` so nothing gets cropped.
-4. Check the category page header banner (`blog.$category.index.tsx` uses the same image as a faint backdrop — fine as-is).
-5. Verify the Journal grid renders all 12 cards evenly and the 5 new images look right.
+4. Confirm the matching category page header updates too. It already uses the exact same image as its card, so each new photo automatically appears there as the faint background banner—no separate image or wiring is needed.
+5. Verify the Journal grid renders all 12 cards evenly, all 5 new images look right, and each matching category page shows its new header image.
 
 Nothing else changes — titles, blurbs, slugs, and WordPress wiring all stay the same.
