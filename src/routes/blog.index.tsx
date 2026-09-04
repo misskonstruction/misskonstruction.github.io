@@ -406,7 +406,7 @@ function Blog() {
                 params={{ category: cat.slug }}
                 className={`group bg-card border border-border ${tilt} hover:rotate-0 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden rounded-sm block`}
               >
-                <div className="relative overflow-hidden aspect-[4/3]">
+                <div className="relative overflow-hidden aspect-[3/2]">
                   <img
                     src={cat.image}
                     alt={cat.title}
