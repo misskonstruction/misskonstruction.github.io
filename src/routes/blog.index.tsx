@@ -80,23 +80,30 @@ function formatShortDate(iso: string): string {
   }
 }
 
+/** Posts whose ongoing updates should be announced in Margin Notes. */
+const MARGIN_NOTE_POST_IDS = new Set([
+  909, // I Finally Planted My Herb Garden!🌿
+  685, // Home Improvement: The Previous Owner Left Me Cat Furniture...
+  459, // I Was Supposed to Be Working... (TREAT)
+]);
+
 /**
- * Game Reviews & Walk-Throughs posts edited meaningfully after publication
- * (more than 24h later), most recently updated first — capped at the single
- * latest one. Quick typo fixes right after publishing don't count.
+ * Tracked posts edited meaningfully after publication (more than 24h later),
+ * most recently updated first — capped at the three intentional Margin Notes.
+ * Quick typo fixes right after publishing don't count.
  */
 function recentlyUpdatedPosts(posts: WordPressPost[], excludeId?: number): WordPressPost[] {
   const THRESHOLD_MS = 24 * 60 * 60 * 1000;
   return posts
     .filter((p) => {
       if (!p.modified || p.id === excludeId) return false;
-      if (effectiveJournalCategoryFor(p)?.slug !== "game-reviews-walk-throughs") return false;
+      if (!MARGIN_NOTE_POST_IDS.has(p.id)) return false;
       const published = new Date(p.date).getTime();
       const modified = new Date(p.modified).getTime();
       return Number.isFinite(published) && Number.isFinite(modified) && modified - published > THRESHOLD_MS;
     })
     .sort((a, b) => new Date(b.modified!).getTime() - new Date(a.modified!).getTime())
-    .slice(0, 1);
+    .slice(0, 3);
 }
 
 /** Word count from (sanitized) post HTML. */
