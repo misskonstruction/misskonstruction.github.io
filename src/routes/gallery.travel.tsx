@@ -7,6 +7,13 @@ import t02 from "@/assets/travel/travel-02.jpg";
 import t03 from "@/assets/travel/travel-03.jpg";
 import t04 from "@/assets/travel/travel-04.jpg";
 import t05 from "@/assets/travel/travel-05.jpg";
+import t06 from "@/assets/travel/travel-06.jpg";
+import t07 from "@/assets/travel/travel-07.jpg";
+import t08 from "@/assets/travel/travel-08.jpg";
+import t09 from "@/assets/travel/travel-09.jpg";
+import t10 from "@/assets/travel/travel-10.jpg";
+import t11 from "@/assets/travel/travel-11.jpg";
+import t12 from "@/assets/travel/travel-12.jpg";
 
 export const Route = createFileRoute("/gallery/travel")({
   component: TravelGallery,
@@ -24,6 +31,13 @@ const items: GalleryItem[] = [
   { src: t03, title: "Cannas over the skyline" },
   { src: t04, title: "Sam's Town, looking up" },
   { src: t05, title: "Raymond James, downtown Shreveport" },
+  { src: t06, title: "Steinhatchee Falls, FL" },
+  { src: t07, title: "Rushing over the limestone shelf, Steinhatchee Falls" },
+  { src: t08, title: "Riverside steps, Steinhatchee Falls" },
+  { src: t09, title: "Under the rock overhang, Steinhatchee Falls" },
+  { src: t10, title: "Limestone pothole, Steinhatchee Falls" },
+  { src: t11, title: "Dollarweed in the shadows, Steinhatchee Falls" },
+  { src: t12, title: "Moss and river foam, Steinhatchee Falls" },
 ];
 
 function TravelGallery() {
