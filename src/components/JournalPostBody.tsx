@@ -155,7 +155,6 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
-
   }, [html, openLightbox]);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
