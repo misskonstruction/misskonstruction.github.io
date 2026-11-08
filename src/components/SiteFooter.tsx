@@ -1,6 +1,5 @@
 import { Github, Mail, Facebook, Youtube, Instagram, Cloud } from "lucide-react";
 import octopus from "@/assets/octopus-icon.png";
-import { GLADYS_INSTAGRAM_URL } from "@/data/journalCategories";
 
 const socialLinks = [
   { href: "mailto:hello@misskonstruction.com", label: "Email", Icon: Mail },
@@ -66,7 +65,7 @@ export function SiteFooter() {
         </p>
         <p className="mt-3">
           <a
-            href={GLADYS_INSTAGRAM_URL}
+            href="https://www.instagram.com/gladysunsupervised?srtk=am01cXp1djRqeHB5"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
