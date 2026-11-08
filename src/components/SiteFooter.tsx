@@ -1,5 +1,6 @@
 import { Github, Mail, Facebook, Youtube, Instagram, Cloud } from "lucide-react";
 import octopus from "@/assets/octopus-icon.png";
+import { GLADYS_INSTAGRAM_URL } from "@/data/journalCategories";
 
 const socialLinks = [
   { href: "mailto:hello@misskonstruction.com", label: "Email", Icon: Mail },
@@ -61,6 +62,17 @@ export function SiteFooter() {
             className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
           >
             Light A Candle for Blitz 🐾
+          </a>
+        </p>
+        <p className="mt-3">
+          <a
+            href={GLADYS_INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            <Instagram className="h-3.5 w-3.5" />
+            @gladysunsupervised
           </a>
         </p>
         <p className="mt-3">

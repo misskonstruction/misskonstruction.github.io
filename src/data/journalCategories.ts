@@ -8,6 +8,9 @@ import wanderImg from "@/assets/blog-wander.jpg";
 import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
 import accountingImg from "@/assets/blog-accounting.jpg";
 import gladysImg from "@/assets/blog-the-lovely-gladys.jpg";
+import gladysQr from "@/assets/gladys-instagram-qr.png";
+
+export const GLADYS_INSTAGRAM_URL = "https://www.instagram.com/gladysunsupervised?srtk=am01cXp1djRqeHB5";
 
 export type JournalCategory = {
   slug: string;
@@ -18,6 +21,8 @@ export type JournalCategory = {
   icon: LucideIcon;
   /** Alternate WordPress category names that should resolve to this category. */
   aliases?: string[];
+  /** Optional Instagram account featured on the category page (with a scannable QR). */
+  instagram?: { handle: string; url: string; qr: string };
 };
 
 export const journalCategories: JournalCategory[] = [
@@ -48,6 +53,7 @@ export const journalCategories: JournalCategory[] = [
     image: gladysImg,
     icon: PawPrint,
     aliases: ["gladys", "lovely gladys", "the lovely gladys", "gladys unsupervised"],
+    instagram: { handle: "@gladysunsupervised", url: GLADYS_INSTAGRAM_URL, qr: gladysQr },
   },
   {
     slug: "faith-scripture",
