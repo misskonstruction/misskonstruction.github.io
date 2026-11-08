@@ -91,7 +91,10 @@ function mapCategoryToSlug(names) {
     )
       return "accounting-against-the-machine";
   }
-  return "reflections";
+  // Posts that only belong to retired categories are no longer part of the
+  // journal, so they get no prerendered page. Uncategorized posts fall back
+  // to Reflections.
+  return names.length > 0 ? null : "reflections";
 }
 
 function safeDecodeSlug(slug) {
@@ -164,6 +167,7 @@ async function fetchWordPressPostRoutes() {
       for (const p of posts) {
         const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
         const slug = mapCategoryToSlug(catNames);
+        if (!slug) continue;
         for (const postSlug of routeSlugVariantsForWordPressSlug(p.slug)) {
           routes.push(`/blog/${slug}/${postSlug}`);
         }
