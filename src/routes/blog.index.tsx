@@ -153,7 +153,13 @@ function Blog() {
   };
 
 
-  const latest = posts[0];
+  // Most recent activity: whichever post was published or edited last.
+  const activityTime = (p: WordPressPost) =>
+    Math.max(Date.parse(p.date) || 0, Date.parse(p.modified ?? "") || 0);
+  const latest = posts.reduce<WordPressPost | undefined>(
+    (best, p) => (!best || activityTime(p) > activityTime(best) ? p : best),
+    undefined,
+  );
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
   const latestReadMinutes = useFeaturedReadMinutes(latest);
 

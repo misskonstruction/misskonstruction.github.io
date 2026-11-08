@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Flame, Instagram } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 import { useLiveCategoryPosts } from "@/hooks/useLiveWordPressPosts";
 import {
-  effectiveJournalCategoryFor,
+  postInJournalCategory,
   findJournalCategory,
   type JournalCategory,
 } from "@/data/journalCategories";
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/blog/$category/")({
     try {
       const all = await getPublicWordPressPosts();
       const posts = cat
-        ? all.filter((p) => effectiveJournalCategoryFor(p)?.slug === cat.slug)
+        ? all.filter((p) => postInJournalCategory(p, cat.slug))
         : [];
       return { posts, category: serializableCategory };
     } catch (e) {

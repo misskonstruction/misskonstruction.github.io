@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
-import { effectiveJournalCategoryFor } from "@/data/journalCategories";
+import { postInJournalCategory } from "@/data/journalCategories";
 
 /**
  * Pages are prerendered at build time, so a shared/direct link serves whatever
@@ -43,7 +43,7 @@ export function useLiveCategoryPosts(
     getPublicWordPressPosts()
       .then((all) => {
         if (cancelled || !Array.isArray(all)) return;
-        setPosts(all.filter((p) => effectiveJournalCategoryFor(p)?.slug === categorySlug));
+        setPosts(all.filter((p) => postInJournalCategory(p, categorySlug)));
       })
       .catch((e) => {
         console.warn("Live WordPress refresh failed; keeping prerendered posts", e);

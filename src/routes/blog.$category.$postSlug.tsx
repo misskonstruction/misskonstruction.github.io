@@ -4,7 +4,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { JournalPostBody } from "@/components/JournalPostBody";
 import { SharePostBar } from "@/components/SharePostBar";
 import { getPublicWordPressPostBySlug } from "@/lib/wordpress-public";
-import { findJournalCategory, effectiveJournalCategoryFor } from "@/data/journalCategories";
+import { findJournalCategory, effectiveJournalCategoryFor, postInJournalCategory } from "@/data/journalCategories";
 
 function formatDate(iso: string): string {
   try {
@@ -23,7 +23,12 @@ export const Route = createFileRoute("/blog/$category/$postSlug")({
   loader: async ({ params }) => {
     const post = await getPublicWordPressPostBySlug(params.postSlug);
     if (!post) throw notFound();
-    const cat = effectiveJournalCategoryFor(post) ?? findJournalCategory(params.category);
+    const cat =
+      (postInJournalCategory(post, params.category)
+        ? findJournalCategory(params.category)
+        : undefined) ??
+      effectiveJournalCategoryFor(post) ??
+      findJournalCategory(params.category);
     return {
       post,
       category: cat

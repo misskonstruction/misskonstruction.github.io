@@ -168,8 +168,15 @@ async function fetchWordPressPostRoutes() {
         const catNames = p.categories ? Object.values(p.categories).map((c) => c.name) : [];
         const slug = mapCategoryToSlug(catNames);
         if (!slug) continue;
-        for (const postSlug of routeSlugVariantsForWordPressSlug(p.slug)) {
-          routes.push(`/blog/${slug}/${postSlug}`);
+        const slugs = new Set([slug]);
+        for (const n of catNames) {
+          const s = mapCategoryToSlug([n]);
+          if (s && KNOWN_CATEGORIES.has(s) && n.trim()) slugs.add(s);
+        }
+        for (const catSlug of slugs) {
+          for (const postSlug of routeSlugVariantsForWordPressSlug(p.slug)) {
+            routes.push(`/blog/${catSlug}/${postSlug}`);
+          }
         }
       }
       if (posts.length < 100) break;
