@@ -1,17 +1,13 @@
-import { Camera, UtensilsCrossed, Fish, BookOpen, Leaf, Plane, Feather, Heart, Activity, Hammer, Gamepad2, TrendingUp, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, PawPrint, BookOpen, Leaf, Plane, Heart, TrendingUp, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
-import platysImg from "@/assets/blog-platys.jpg";
 import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
-import rawUnhingedImg from "@/assets/raw-unhinged/category-card.jpg";
 import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
-import bodyBonesImg from "@/assets/blog-body-and-bones.jpg";
-import homeImprovementImg from "@/assets/blog-home-improvement.jpg";
-import gameReviewsImg from "@/assets/blog-game-reviews.jpg";
 import accountingImg from "@/assets/blog-accounting.jpg";
+import gladysImg from "@/assets/blog-the-lovely-gladys.jpg";
 
 export type JournalCategory = {
   slug: string;
@@ -44,13 +40,14 @@ export const journalCategories: JournalCategory[] = [
     aliases: ["kitchen", "recipes", "food"],
   },
   {
-    slug: "platy-pals",
-    title: "Platy Pals",
-    emoji: "🐠",
-    blurb: "An accidental little fish family — progress updates, fry milestones, and when sweet platys are ready to rehome.",
-    image: platysImg,
-    icon: Fish,
-    aliases: ["platy", "platys", "platy pals", "fish"],
+    slug: "the-lovely-gladys",
+    title: "The Lovely Gladys",
+    emoji: "🐾",
+    blurb:
+      "Rescued from Partners for Pets in Marianna, FL, and now running Mother's house. My adventures, my opinions, and the stuff that doesn't make it to Instagram.",
+    image: gladysImg,
+    icon: PawPrint,
+    aliases: ["gladys", "lovely gladys", "the lovely gladys", "gladys unsupervised"],
   },
   {
     slug: "faith-scripture",
@@ -80,15 +77,6 @@ export const journalCategories: JournalCategory[] = [
     aliases: ["wander", "roam", "wander and roam", "travel"],
   },
   {
-    slug: "raw-and-unhinged",
-    title: "Raw & Unhinged",
-    emoji: "🕯️",
-    blurb: "Unfiltered, handwritten pages from my desk — the thoughts that don't fit anywhere else. Photos of actual ink on actual paper.",
-    image: rawUnhingedImg,
-    icon: Feather,
-    aliases: ["raw", "unhinged", "raw and unhinged", "the longhand"],
-  },
-  {
     slug: "in-loving-memory-of-blitz",
     title: "In Loving Memory of Blitz",
     emoji: "🕊️",
@@ -102,59 +90,6 @@ export const journalCategories: JournalCategory[] = [
       "in loving memory of blitz",
       "loving memory of blitz",
       "memory of blitz",
-    ],
-  },
-  {
-    slug: "body-and-bones",
-    title: "Body & Bones",
-    emoji: "🥾",
-    blurb:
-      "My health journey in real time — movement that actually fits my life, food that loves me back, and living well with familial high cholesterol and autoimmune curveballs.",
-    image: bodyBonesImg,
-    icon: Activity,
-    aliases: [
-      "body bones",
-      "body and bones",
-      "health",
-      "health and wellness",
-      "wellness",
-      "fitness",
-    ],
-  },
-  {
-    slug: "home-improvement",
-    title: "Home Improvement",
-    emoji: "🔨",
-    blurb:
-      "Sawdust, half-finished walls, and the slow work of making a house feel like mine — projects, mistakes, and the small wins in between.",
-    image: homeImprovementImg,
-    icon: Hammer,
-    aliases: [
-      "home improvement",
-      "home",
-      "diy",
-      "renovation",
-      "home projects",
-      "under konstruction",
-    ],
-  },
-  {
-    slug: "game-reviews-walk-throughs",
-    title: "Game Reviews & Walk-Throughs",
-    emoji: "🎮",
-    blurb:
-      "Late-night controller sessions and honest takes — what's worth your hours, plus step-by-step help when a level won't let you go.",
-    image: gameReviewsImg,
-    icon: Gamepad2,
-    aliases: [
-      "game reviews & walk throughs",
-      "game reviews and walk throughs",
-      "game reviews walkthroughs",
-      "game reviews",
-      "walkthroughs",
-      "walk throughs",
-      "gaming",
-      "games",
     ],
   },
   {
@@ -181,7 +116,7 @@ export const journalCategories: JournalCategory[] = [
 
 /**
  * Per-post category overrides — used when a WordPress post is mis-categorized
- * (e.g. left in the old "Creative Life" category that was renamed to Platy Pals).
+ * (e.g. left in an old or renamed WordPress category).
  * Maps WordPress post slug → the category slug it should actually appear under.
  */
 export const postCategoryOverrides: Record<string, string> = {

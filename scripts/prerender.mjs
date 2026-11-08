@@ -19,14 +19,11 @@ const ROUTES = [
   "/blog",
   "/blog/coastal-photography",
   "/blog/from-the-kitchen",
-  "/blog/platy-pals",
+  "/blog/the-lovely-gladys",
   "/blog/faith-scripture",
   "/blog/reflections",
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
-  "/blog/body-and-bones",
-  "/blog/home-improvement",
-  "/blog/game-reviews-walk-throughs",
   "/blog/accounting-against-the-machine",
   "/gallery/maternity",
   "/gallery/newborns",
@@ -38,7 +35,6 @@ const ROUTES = [
   "/gallery/texture-form",
   "/gallery/konstruction-character",
   "/gallery/loose-frames",
-  "/blog/raw-and-unhinged",
   "/recipes/shrimp-poboy",
   "/recipes/bitchin-slow-cooker-porkchops",
   "/recipes/deep-fried-tilapia",
@@ -65,15 +61,11 @@ const ROUTES = [
 const KNOWN_CATEGORIES = new Set([
   "coastal-photography",
   "from-the-kitchen",
-  "platy-pals",
+  "the-lovely-gladys",
   "faith-scripture",
   "reflections",
   "wander-roam",
-  "raw-and-unhinged",
   "in-loving-memory-of-blitz",
-  "body-and-bones",
-  "home-improvement",
-  "game-reviews-walk-throughs",
   "accounting-against-the-machine",
 ]);
 
@@ -86,22 +78,9 @@ function mapCategoryToSlug(names) {
     if (s.includes("blitz") || s.includes("loving-memory")) return "in-loving-memory-of-blitz";
     if (s.includes("kitchen") || s.includes("recipe") || s.includes("food")) return "from-the-kitchen";
     if (s.includes("coastal") || s.includes("photo")) return "coastal-photography";
-    if (s.includes("platy") || s.includes("fish")) return "platy-pals";
+    if (s.includes("gladys")) return "the-lovely-gladys";
     if (s.includes("faith") || s.includes("scripture") || s.includes("bible")) return "faith-scripture";
     if (s.includes("wander") || s.includes("travel") || s.includes("roam")) return "wander-roam";
-    if (s.includes("raw") || s.includes("unhinged")) return "raw-and-unhinged";
-    if (
-      s.includes("body") ||
-      s.includes("bones") ||
-      s.includes("health") ||
-      s.includes("wellness") ||
-      s.includes("fitness")
-    )
-      return "body-and-bones";
-    if (s.includes("game") || s.includes("gaming") || s.includes("walk-through") || s.includes("walkthrough"))
-      return "game-reviews-walk-throughs";
-    if (s.includes("home") || s.includes("improvement") || s.includes("diy") || s.includes("renovat"))
-      return "home-improvement";
     if (
       s.includes("accounting") ||
       s.includes("qbo") ||
