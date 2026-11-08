@@ -144,6 +144,28 @@ export function effectiveJournalCategoryFor(post: {
   return undefined;
 }
 
+/** Every journal category a post belongs to (primary/override first). */
+export function journalCategoriesFor(post: {
+  slug: string;
+  categories: string[];
+}): JournalCategory[] {
+  const result: JournalCategory[] = [];
+  const primary = effectiveJournalCategoryFor(post);
+  if (primary) result.push(primary);
+  for (const name of post.categories) {
+    const match = journalCategories.find((c) => journalCategoryMatches(name, c));
+    if (match && !result.includes(match)) result.push(match);
+  }
+  return result;
+}
+
+export function postInJournalCategory(
+  post: { slug: string; categories: string[] },
+  slug: string,
+): boolean {
+  return journalCategoriesFor(post).some((c) => c.slug === slug);
+}
+
 function normalizeJournalCategory(value: string): string {
   return value
     .replace(/&amp;/gi, "&")
