@@ -1456,7 +1456,6 @@ export const recipes: Recipe[] = [
   {
     slug: "lemon-turmeric-cabbage-white-bean-soup",
     categorySlug: "from-the-kitchen",
-    alsoInCategories: ["body-and-bones"],
     kicker: "a bowl that loves my heart back",
     title: "Lemon-Turmeric **Cabbage & White Bean Soup**",
     intro:
@@ -1525,7 +1524,6 @@ export const recipes: Recipe[] = [
   {
     slug: "high-protein-dill-chicken-orzo",
     categorySlug: "from-the-kitchen",
-    alsoInCategories: ["body-and-bones"],
     kicker: "one pan, weeknight gold",
     title: "High-Protein **Dill Chicken Orzo**",
     intro:
@@ -1604,7 +1602,6 @@ export const recipes: Recipe[] = [
   {
     slug: "saag-aloo-matar",
     categorySlug: "from-the-kitchen",
-    alsoInCategories: ["body-and-bones"],
     kicker: "one skillet, all the greens",
     title: "**Saag Aloo Matar**",
     intro:

@@ -64,6 +64,17 @@ export function SiteFooter() {
           </a>
         </p>
         <p className="mt-3">
+          <a
+            href="https://www.instagram.com/gladysunsupervised?srtk=am01cXp1djRqeHB5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+          >
+            <Instagram className="h-3.5 w-3.5" />
+            @gladysunsupervised
+          </a>
+        </p>
+        <p className="mt-3">
           To view my work on GitHub, visit{" "}
           <a
             href="https://github.com/misskonstruction"

@@ -15,7 +15,6 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogCategoryRouteImport } from './routes/blog.$category'
-import { Route as BlogRawAndUnhingedRouteImport } from './routes/blog.raw-and-unhinged'
 import { Route as GalleryBirdingWildlifeRouteImport } from './routes/gallery.birding-wildlife'
 import { Route as GalleryBoatsRouteImport } from './routes/gallery.boats'
 import { Route as GalleryFloridaBirdingRouteImport } from './routes/gallery.florida-birding'
@@ -79,11 +78,6 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
 const BlogCategoryRoute = BlogCategoryRouteImport.update({
   id: '/$category',
   path: '/$category',
-  getParentRoute: () => BlogRoute,
-} as any)
-const BlogRawAndUnhingedRoute = BlogRawAndUnhingedRouteImport.update({
-  id: '/raw-and-unhinged',
-  path: '/raw-and-unhinged',
   getParentRoute: () => BlogRoute,
 } as any)
 const GalleryBirdingWildlifeRoute = GalleryBirdingWildlifeRouteImport.update({
@@ -279,7 +273,6 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/blog/$category': typeof BlogCategoryRouteWithChildren
-  '/blog/raw-and-unhinged': typeof BlogRawAndUnhingedRoute
   '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
@@ -320,7 +313,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/blog/raw-and-unhinged': typeof BlogRawAndUnhingedRoute
   '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
@@ -364,7 +356,6 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/blog/$category': typeof BlogCategoryRouteWithChildren
-  '/blog/raw-and-unhinged': typeof BlogRawAndUnhingedRoute
   '/gallery/birding-wildlife': typeof GalleryBirdingWildlifeRoute
   '/gallery/boats': typeof GalleryBoatsRoute
   '/gallery/florida-birding': typeof GalleryFloridaBirdingRoute
@@ -409,7 +400,6 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/blog/$category'
-    | '/blog/raw-and-unhinged'
     | '/gallery/birding-wildlife'
     | '/gallery/boats'
     | '/gallery/florida-birding'
@@ -450,7 +440,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
-    | '/blog/raw-and-unhinged'
     | '/gallery/birding-wildlife'
     | '/gallery/boats'
     | '/gallery/florida-birding'
@@ -493,7 +482,6 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/blog/$category'
-    | '/blog/raw-and-unhinged'
     | '/gallery/birding-wildlife'
     | '/gallery/boats'
     | '/gallery/florida-birding'
@@ -612,13 +600,6 @@ declare module '@tanstack/react-router' {
       path: '/$category'
       fullPath: '/blog/$category'
       preLoaderRoute: typeof BlogCategoryRouteImport
-      parentRoute: typeof BlogRoute
-    }
-    '/blog/raw-and-unhinged': {
-      id: '/blog/raw-and-unhinged'
-      path: '/raw-and-unhinged'
-      fullPath: '/blog/raw-and-unhinged'
-      preLoaderRoute: typeof BlogRawAndUnhingedRouteImport
       parentRoute: typeof BlogRoute
     }
     '/gallery/birding-wildlife': {
@@ -878,13 +859,11 @@ const BlogCategoryRouteWithChildren = BlogCategoryRoute._addFileChildren(
 
 interface BlogRouteChildren {
   BlogCategoryRoute: typeof BlogCategoryRouteWithChildren
-  BlogRawAndUnhingedRoute: typeof BlogRawAndUnhingedRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
   BlogCategoryRoute: BlogCategoryRouteWithChildren,
-  BlogRawAndUnhingedRoute: BlogRawAndUnhingedRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 

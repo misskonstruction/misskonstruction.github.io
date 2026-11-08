@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
-import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flame, Instagram } from "lucide-react";
 import { getPublicWordPressPosts, type WordPressPost } from "@/lib/wordpress-public";
 import { useLiveCategoryPosts } from "@/hooks/useLiveWordPressPosts";
 import {
@@ -182,6 +182,40 @@ function CategoryPage() {
           </div>
         </div>
       </section>
+
+      {fullCategory.instagram && (
+        <section className="container mx-auto px-4 pt-14 md:pt-16">
+          <a
+            href={fullCategory.instagram.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mx-auto flex max-w-xl flex-col sm:flex-row items-center gap-6 bg-card border border-border rounded-sm p-6 rotate-[-0.6deg] hover:rotate-0 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10"
+          >
+            <img
+              src={fullCategory.instagram.qr}
+              alt={`Instagram QR code for ${fullCategory.instagram.handle}`}
+              width={160}
+              height={160}
+              loading="lazy"
+              className="h-36 w-36 flex-shrink-0"
+            />
+            <div className="text-center sm:text-left">
+              <p className="text-primary text-2xl mb-1" style={{ fontFamily: "var(--font-hand)" }}>
+                follow along
+              </p>
+              <p className="text-2xl text-foreground mb-2" style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}>
+                {fullCategory.instagram.handle}
+              </p>
+              <p className="text-muted-foreground mb-3" style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}>
+                Scan the code or tap here to find me on Instagram.
+              </p>
+              <span className="inline-flex items-center gap-1.5 text-sm text-primary group-hover:gap-3 transition-all">
+                <Instagram className="h-3.5 w-3.5" /> Open Instagram
+              </span>
+            </div>
+          </a>
+        </section>
+      )}
 
       {featuredPrayers.length > 0 && (
         <section className="container mx-auto px-4 pt-16 md:pt-20">

@@ -17,7 +17,6 @@ import {
 } from "@/data/journalCategories";
 import { recipes } from "@/data/recipes";
 import { prayers } from "@/data/prayers";
-import { rawUnhingedEntries } from "@/data/rawUnhingedEntries";
 
 
 export const Route = createFileRoute("/blog/")({
@@ -67,43 +66,6 @@ function formatDate(iso: string): string {
   } catch {
     return iso;
   }
-}
-
-function formatShortDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    });
-  } catch {
-    return iso;
-  }
-}
-
-/** Posts whose ongoing updates should be announced in Margin Notes. */
-const MARGIN_NOTE_POST_IDS = new Set([
-  909, // I Finally Planted My Herb Garden!🌿
-  459, // I Was Supposed to Be Working... (TREAT)
-]);
-
-/**
- * Tracked posts edited meaningfully after publication (more than 12h later),
- * most recently updated first — capped at the three intentional Margin Notes.
- * Quick typo fixes right after publishing don't count.
- */
-function recentlyUpdatedPosts(posts: WordPressPost[], excludeId?: number): WordPressPost[] {
-  const THRESHOLD_MS = 12 * 60 * 60 * 1000;
-
-  return posts
-    .filter((p) => {
-      if (!p.modified || p.id === excludeId) return false;
-      if (!MARGIN_NOTE_POST_IDS.has(p.id)) return false;
-      const published = new Date(p.date).getTime();
-      const modified = new Date(p.modified).getTime();
-      return Number.isFinite(published) && Number.isFinite(modified) && modified - published > THRESHOLD_MS;
-    })
-    .sort((a, b) => new Date(b.modified!).getTime() - new Date(a.modified!).getTime())
-    .slice(0, 3);
 }
 
 /** Word count from (sanitized) post HTML. */
@@ -162,13 +124,15 @@ const inHouseEntriesByCategorySlug: Record<string, number> = (() => {
       acc[slug] = (acc[slug] ?? 0) + 1;
     }
   }
-  acc["raw-and-unhinged"] = (acc["raw-and-unhinged"] ?? 0) + rawUnhingedEntries.length;
   return acc;
 })();
 
 function Blog() {
   const { posts: prerenderedPosts } = Route.useLoaderData();
-  const posts = useLiveWordPressPosts(prerenderedPosts);
+  const livePosts = useLiveWordPressPosts(prerenderedPosts);
+  // Only posts that belong to a current journal category appear here; posts
+  // left in retired WordPress categories stay out of the journal.
+  const posts = (livePosts as WordPressPost[]).filter((p) => effectiveJournalCategoryFor(p));
 
   // Count WordPress posts per category using the shared alias-aware matcher,
   // so WordPress name variants land on the right card.
@@ -192,7 +156,6 @@ function Blog() {
   const latest = posts[0];
   const featuredImage = latest ? imageForPost(latest) : coastalImg;
   const latestReadMinutes = useFeaturedReadMinutes(latest);
-  const updatedPosts = recentlyUpdatedPosts(posts as WordPressPost[], latest?.id);
 
   return (
     <SiteLayout>
@@ -317,60 +280,6 @@ function Blog() {
               })()}
             </div>
           </article>
-        </section>
-      )}
-
-      {updatedPosts.length > 0 && (
-        <section className="container mx-auto px-4 pb-16 md:pb-20">
-          <p
-            className="text-primary text-xl md:text-2xl mb-6 text-center"
-            style={{ fontFamily: "var(--font-hand)" }}
-          >
-            ~ margin notes ~
-          </p>
-          <div className="mx-auto max-w-2xl space-y-5">
-            {updatedPosts.map((post) => {
-              const categorySlug = effectiveJournalCategoryFor(post)?.slug ?? "reflections";
-              return (
-                <Link
-                  key={post.id}
-                  to="/blog/$category/$postSlug"
-                  params={{ category: categorySlug, postSlug: post.slug }}
-                  hash="latest-update"
-                  className="group flex items-center gap-4 bg-card/60 border border-border/60 rounded-sm px-4 py-3 hover:border-primary/40 hover:bg-card transition-colors"
-                >
-                  <img
-                    src={imageForPost(post)}
-                    alt=""
-                    width={96}
-                    height={96}
-                    loading="lazy"
-                    className="h-16 w-16 rounded-sm object-cover flex-shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p
-                      className="text-foreground truncate"
-                      style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}
-                    >
-                      Update to "{post.title}"
-                    </p>
-                    <p
-                      className="text-sm text-muted-foreground line-clamp-2"
-                      style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}
-                    >
-                      {post.excerpt}
-                    </p>
-                  </div>
-                  <span
-                    className="text-primary text-lg flex-shrink-0"
-                    style={{ fontFamily: "var(--font-hand)" }}
-                  >
-                    updated {formatShortDate(post.modified!)}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
         </section>
       )}
 
