@@ -87,7 +87,7 @@ export const Route = createFileRoute("/blog/$category/")({
           <h1 className="text-3xl mb-4" style={{ fontFamily: "var(--font-journal)" }}>
             Something went wrong
           </h1>
-          <p className="text-muted-foreground mb-6">{error.message}</p>
+          <p className="text-muted-foreground mb-6">{error instanceof Error ? error.message : String(error)}</p>
           <button
             onClick={() => {
               router.invalidate();
