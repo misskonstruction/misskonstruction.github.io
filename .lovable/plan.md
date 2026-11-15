@@ -1,14 +1,16 @@
-# Remove the accounting journal category
+# Remove "Accounting Against The Machine" again
 
-The site has no category titled "Resistance Accountants" — that name is attached to **Accounting Against The Machine** (its description mentions "The Resistance Accountants", and WordPress posts filed under that name land there). This plan removes that whole category.
+## What the warning means
+Something was sent to your project from GitHub (your code copy) at 11:55 AM, and it overwrote my earlier removal of the category. That's why the card came back.
 
-## What changes
-- Remove the **Accounting Against The Machine** card from the journal page; remaining cards shift up to fill the gap.
-- Delete its card photo (not used anywhere else).
-- Its WordPress posts stay saved in WordPress but no longer appear on the website, and their old page links show "not found" (same as the categories removed earlier).
+- **Keep repository version** (suggested): keeps what came from GitHub. Nothing is lost; my earlier removal is kept in a backup. I then redo the removal below.
+- **Restore Lovable work**: brings my removal back, but could undo whatever was sent from GitHub.
+- **Decide later**: closes the box for now.
 
-## Technical details
-- `src/data/journalCategories.ts`: delete the category entry and the `blog-accounting.jpg` import.
-- Delete `src/assets/blog-accounting.jpg`.
-- `scripts/prerender.mjs`: remove the accounting/resistance slug mapping and the slug from the prerender list so those posts are skipped.
-- Verify journal page and `/blog/accounting-against-the-machine` in a test browser.
+If you don't remember changing anything on GitHub, either choice is safe, because I'll redo the removal regardless.
+
+## Steps
+1. Take the "Accounting Against The Machine" card off the journal.
+2. Delete its card photo (used nowhere else).
+3. Stop building its pages; its posts stay saved in WordPress but hidden on the site.
+4. Load the journal page and confirm the card is gone.
