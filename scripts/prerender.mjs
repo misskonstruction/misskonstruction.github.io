@@ -24,7 +24,6 @@ const ROUTES = [
   "/blog/reflections",
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
-  "/blog/accounting-against-the-machine",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -66,7 +65,6 @@ const KNOWN_CATEGORIES = new Set([
   "reflections",
   "wander-roam",
   "in-loving-memory-of-blitz",
-  "accounting-against-the-machine",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
@@ -81,15 +79,6 @@ function mapCategoryToSlug(names) {
     if (s.includes("gladys")) return "the-lovely-gladys";
     if (s.includes("faith") || s.includes("scripture") || s.includes("bible")) return "faith-scripture";
     if (s.includes("wander") || s.includes("travel") || s.includes("roam")) return "wander-roam";
-    if (
-      s.includes("accounting") ||
-      s.includes("qbo") ||
-      s.includes("proadvisor") ||
-      s.includes("pro-advisor") ||
-      s.includes("quickbooks") ||
-      s.includes("resistance")
-    )
-      return "accounting-against-the-machine";
   }
   // Posts that only belong to retired categories are no longer part of the
   // journal, so they get no prerendered page. Uncategorized posts fall back
