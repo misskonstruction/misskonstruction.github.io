@@ -24,7 +24,6 @@ const ROUTES = [
   "/blog/reflections",
   "/blog/wander-roam",
   "/blog/in-loving-memory-of-blitz",
-  "/blog/accounting-against-the-machine",
   "/gallery/maternity",
   "/gallery/newborns",
   "/gallery/florida-birding",
@@ -66,7 +65,6 @@ const KNOWN_CATEGORIES = new Set([
   "reflections",
   "wander-roam",
   "in-loving-memory-of-blitz",
-  "accounting-against-the-machine",
 ]);
 
 // Map a WordPress category name to one of our local category slugs.
