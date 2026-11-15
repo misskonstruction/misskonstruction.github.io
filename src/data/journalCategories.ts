@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, PawPrint, BookOpen, Leaf, Plane, Heart, TrendingUp, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, PawPrint, BookOpen, Leaf, Plane, Heart, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
