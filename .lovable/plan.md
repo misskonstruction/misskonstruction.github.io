@@ -10,7 +10,5 @@ Your site has an automatic publishing helper on GitHub. Every time I save a chan
 2. Take the "Accounting Against The Machine" card off the journal again and delete its photo. Its posts stay saved in WordPress.
 3. Check the journal page to confirm the card is gone.
 
-## One thing to check on your side
-On GitHub, open your site's **Settings → Pages**. Under "Branch" it should say **gh-pages**. If it says **main**, switch it to gh-pages and click Save, so your live site keeps updating after step 1.
-
-If the warning box shows up once more while this settles, click **"Decide later"** and tell me.
+## Already confirmed
+You've set GitHub Pages to **gh-pages** and chose "Decide later", so turning off that step won't affect your live site. You didn't cause this. It started when the publishing helper began saving its finished copy back into your project.
