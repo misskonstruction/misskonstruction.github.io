@@ -1,4 +1,4 @@
-import { Camera, UtensilsCrossed, PawPrint, BookOpen, Leaf, Plane, Heart, TrendingUp, type LucideIcon } from "lucide-react";
+import { Camera, UtensilsCrossed, PawPrint, BookOpen, Leaf, Plane, Heart, type LucideIcon } from "lucide-react";
 
 import coastalImg from "@/assets/blog-coastal.jpg";
 import kitchenImg from "@/assets/blog-kitchen.jpg";
@@ -6,7 +6,6 @@ import faithImg from "@/assets/blog-faith.jpg";
 import reflectionsImg from "@/assets/blog-reflections.jpg";
 import wanderImg from "@/assets/blog-wander.jpg";
 import blitzMemorialImg from "@/assets/blog-blitz-memorial.jpg";
-import accountingImg from "@/assets/blog-accounting.jpg";
 import gladysImg from "@/assets/blog-the-lovely-gladys.jpg";
 import gladysQr from "@/assets/gladys-instagram-qr.png";
 
@@ -96,25 +95,6 @@ export const journalCategories: JournalCategory[] = [
       "in loving memory of blitz",
       "loving memory of blitz",
       "memory of blitz",
-    ],
-  },
-  {
-    slug: "accounting-against-the-machine",
-    title: "Accounting Against The Machine",
-    emoji: "📊",
-    blurb:
-      "Training humans to be harder to replace. QBO tips, certification notes, and the occasional scavenger hunt for The Resistance Accountants.",
-    image: accountingImg,
-    icon: TrendingUp,
-    aliases: [
-      "accounting",
-      "qbo",
-      "proadvisor",
-      "pro advisor",
-      "quickbooks",
-      "resistance accountants",
-      "the resistance accountants",
-      "accounting against the machine",
     ],
   },
 ];
