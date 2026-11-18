@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link, useRouter, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -91,6 +92,16 @@ export const Route = createFileRoute("/blog/$category/$postSlug")({
 
 function PostPage() {
   const { post, category } = Route.useLoaderData();
+
+  // Deep-link support: margin notes link here with #latest-update — scroll to
+  // the last "Update:" section once the post body has rendered.
+  useEffect(() => {
+    if (window.location.hash !== "#latest-update") return;
+    const timer = window.setTimeout(() => {
+      document.getElementById("latest-update")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [post.id]);
 
 
 

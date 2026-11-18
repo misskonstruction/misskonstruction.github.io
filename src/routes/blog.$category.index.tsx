@@ -8,6 +8,7 @@ import {
   findJournalCategory,
   type JournalCategory,
 } from "@/data/journalCategories";
+import { MarginNotes } from "@/components/MarginNotes";
 import { getRecipesByCategory } from "@/data/recipes";
 import { getPrayersByCategory, prayerSharedHero } from "@/data/prayers";
 
@@ -215,6 +216,14 @@ function CategoryPage() {
             </div>
           </a>
         </section>
+      )}
+
+      {category?.slug === "the-lovely-gladys" && (
+        <MarginNotes
+          posts={posts as WordPressPost[]}
+          imageForPost={(p) => p.featuredImage ?? fullCategory.image}
+          className="container mx-auto px-4 pt-14 md:pt-16"
+        />
       )}
 
       {featuredPrayers.length > 0 && (

@@ -15,6 +15,7 @@ import {
   journalCategoryMatches,
   effectiveJournalCategoryFor,
 } from "@/data/journalCategories";
+import { MarginNotes } from "@/components/MarginNotes";
 import { recipes } from "@/data/recipes";
 import { prayers } from "@/data/prayers";
 
@@ -288,6 +289,8 @@ function Blog() {
           </article>
         </section>
       )}
+
+      <MarginNotes posts={posts} imageForPost={imageForPost} />
 
       {posts.length === 0 && (
         <section className="container mx-auto px-4 py-16 text-center">

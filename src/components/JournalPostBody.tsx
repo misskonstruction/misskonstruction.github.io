@@ -155,6 +155,19 @@ export function JournalPostBody({ html }: { html: string }) {
       }
     }
     flushRun();
+
+    // --- Tag the last "Update:" section so margin notes can deep-link to it ---
+    const blocks = Array.from(
+      root.querySelectorAll("h1, h2, h3, h4, h5, h6, p"),
+    ) as HTMLElement[];
+    const updateHeadings = blocks.filter((el) =>
+      /^update:/i.test((el.textContent ?? "").trim()),
+    );
+    const latestUpdate = updateHeadings[updateHeadings.length - 1];
+    if (latestUpdate) {
+      latestUpdate.id = "latest-update";
+      latestUpdate.style.scrollMarginTop = "6rem";
+    }
   }, [html, openLightbox]);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
