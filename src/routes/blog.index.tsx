@@ -154,9 +154,8 @@ function Blog() {
   };
 
 
-  // Most recent activity: whichever post was published or edited last.
-  const activityTime = (p: WordPressPost) =>
-    Math.max(Date.parse(p.date) || 0, Date.parse(p.modified ?? "") || 0);
+  // Newest published post only — edits never bump an older post back here.
+  const activityTime = (p: WordPressPost) => Date.parse(p.date) || 0;
   const latest = posts.reduce<WordPressPost | undefined>(
     (best, p) => (!best || activityTime(p) > activityTime(best) ? p : best),
     undefined,
