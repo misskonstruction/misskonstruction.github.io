@@ -11,21 +11,40 @@ function normalize(s: string): string {
     .trim();
 }
 
-/** The only post Margin Notes tracks: "Posts that don't make it to Instagram". */
-export function isMarginNotePost(post: Pick<WordPressPost, "title" | "slug">): boolean {
-  const key = "posts that dont make it to instagram";
-  return normalize(post.title).includes(key) || normalize(post.slug ?? "").includes(key);
+/** Posts Margin Notes tracks. alwaysShow posts appear as "New" before their first update. */
+const TRACKED = [
+  { key: "posts that dont make it to instagram", alwaysShow: false },
+  { key: "my service dog training chronicles", alwaysShow: true },
+];
+
+function trackedEntry(post: Pick<WordPressPost, "title" | "slug">) {
+  const t = normalize(post.title);
+  const s = normalize(post.slug ?? "");
+  return TRACKED.find((e) => t.includes(e.key) || s.includes(e.key));
 }
 
-/** Tracked posts edited 12h+ after publishing, most recently updated first. */
-export function marginNotePosts<T extends Pick<WordPressPost, "title" | "slug" | "date" | "modified">>(posts: T[]): T[] {
-  return posts
-    .filter((p) => {
-      if (!p.modified || !isMarginNotePost(p)) return false;
-      const published = new Date(p.date).getTime();
-      const modified = new Date(p.modified).getTime();
-      return Number.isFinite(published) && Number.isFinite(modified) && modified - published >= MARGIN_NOTE_THRESHOLD_MS;
-    })
-    .sort((a, b) => new Date(b.modified!).getTime() - new Date(a.modified!).getTime())
-    .slice(0, 1);
+export function isMarginNotePost(post: Pick<WordPressPost, "title" | "slug">): boolean {
+  return !!trackedEntry(post);
+}
+
+type Base = Pick<WordPressPost, "title" | "slug" | "date" | "modified">;
+export type MarginNote<T> = { post: T; kind: "update" | "new"; when: string };
+
+/** Tracked posts to announce, most recently changed first. */
+export function marginNotePosts<T extends Base>(posts: T[]): MarginNote<T>[] {
+  const notes: MarginNote<T>[] = [];
+  for (const p of posts) {
+    const entry = trackedEntry(p);
+    if (!entry) continue;
+    const published = new Date(p.date).getTime();
+    const modified = p.modified ? new Date(p.modified).getTime() : NaN;
+    if (Number.isFinite(published) && Number.isFinite(modified) && modified - published >= MARGIN_NOTE_THRESHOLD_MS) {
+      notes.push({ post: p, kind: "update", when: p.modified! });
+    } else if (entry.alwaysShow && Number.isFinite(published)) {
+      notes.push({ post: p, kind: "new", when: p.date });
+    }
+  }
+  return notes
+    .sort((a, b) => new Date(b.when).getTime() - new Date(a.when).getTime())
+    .slice(0, TRACKED.length);
 }

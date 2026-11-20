@@ -31,12 +31,12 @@ export function MarginNotes({
         ~ margin notes ~
       </p>
       <div className="mx-auto max-w-2xl space-y-5">
-        {notes.map((post) => (
+        {notes.map(({ post, kind, when }) => (
           <Link
             key={post.id}
             to="/blog/$category/$postSlug"
             params={{ category: CATEGORY, postSlug: post.slug }}
-            hash="latest-update"
+            hash={kind === "update" ? "latest-update" : undefined}
             className="group flex items-center gap-4 bg-card/60 border border-border/60 rounded-sm px-4 py-3 hover:border-primary/40 hover:bg-card transition-colors"
           >
             <img
@@ -49,14 +49,14 @@ export function MarginNotes({
             />
             <div className="min-w-0 flex-1">
               <p className="text-foreground truncate" style={{ fontFamily: "var(--font-journal)", fontWeight: 500 }}>
-                Update to "{post.title}"
+                {kind === "update" ? "Update to" : "New:"} "{post.title}"
               </p>
               <p className="text-sm text-muted-foreground line-clamp-2" style={{ fontFamily: "var(--font-journal)", fontStyle: "italic" }}>
                 {post.excerpt}
               </p>
             </div>
             <span className="text-primary text-lg flex-shrink-0" style={{ fontFamily: "var(--font-hand)" }}>
-              updated {formatShortDate(post.modified!)}
+              {kind === "update" ? "updated" : "posted"} {formatShortDate(when)}
             </span>
           </Link>
         ))}
